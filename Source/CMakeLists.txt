@@ -1,0 +1,14 @@
+﻿include_directories(
+    ${PROJECT_BINARY_DIR}
+)
+
+set(EXECUTABLE_NAME "algorithm_analysis")
+
+add_executable(${EXECUTABLE_NAME}
+    utils.hpp
+    graph.hpp
+    tests.hpp
+
+    main.cpp
+)
+set_target_properties(${EXECUTABLE_NAME} PROPERTIES LINKER_LANGUAGE CXX)
