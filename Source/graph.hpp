@@ -154,56 +154,6 @@ public:
         return distances;
     }
 
-    std::vector<WeightT> levit_algorithm_2(const value_type s) const
-    {
-        static_assert(std::is_integral_v<value_type>,
-                      "Vertex elements type has to be integral for Levit's algorthm!");
-
-        const std::size_t N = _adjacency_list.size();
-        constexpr WeightT INF = std::numeric_limits<WeightT>::max();
-
-        std::vector<WeightT> distances(N, INF);
-        distances.at(s) = 0;
-
-        std::vector<value_type> id(N);
-        std::deque<value_type> q;
-        q.push_back(s);
-        std::vector<value_type> p(N, -1);
-
-        int counter = 0;
-        while (!q.empty())
-        {
-            const value_type v = q.front();
-            q.pop_front();
-            id[v] = 1;
-            for (std::size_t i = 0; i < _adjacency_list.at(v).size(); ++i)
-            {
-                const value_type to = _adjacency_list.at(v).at(i).first;
-                const value_type len = _adjacency_list.at(v).at(i).second;
-                if (distances[to] > distances[v] + len)
-                {
-                    distances[to] = distances[v] + len;
-                    if (id[to] == 0)
-                    {
-                        q.push_back(to);
-                        ++counter;
-                    }
-                    else if (id[to] == 1)
-                    {
-                        q.push_front(to);
-                        ++counter;
-                    }
-                    p[to] = v;
-                    id[to] = 1;
-                }
-            }
-        }
-
-        std::cout << "Couner = " << counter << '\n';
-
-        return distances;
-    }
-
 private:
     // Construct a unordered_map of vectors of pairs to represent an adjacency list.
     data_container _adjacency_list;
