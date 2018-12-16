@@ -7,8 +7,8 @@
 int main()
 {
     //tests::time_tests_series();
-    //tests::average_time_tests_series();
-    tests::average_time_tests_relative();
+    //tests::average_time_tests();
+    tests::average_time_tests_series();
     //tests::create_theoretical_data();
 
     utils::pause();
