@@ -1,3 +1,5 @@
+// Copyright (C) 2018 Vasily Vasilyev (vasar007@yandex.ru)
+
 #pragma once
 
 #include <algorithm>
@@ -11,8 +13,6 @@
 
 namespace gen
 {
-
-
 
 [[nodiscard]] vv::edge<int, long long> create_edge(const int exclude_border)
 {

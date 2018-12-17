@@ -152,7 +152,6 @@ void average_time_tests_series()
     std::cout << "Execute tricky test suit\n";
     std::vector<std::pair<double, double>> time_results;
     time_results.reserve(end_value / start_value);
-    double prev = 1;
     for (int i = start_value; i * 3 + 1 <= end_value; i += 10)
     {
         const int size = i * 3 + 1;
@@ -164,18 +163,15 @@ void average_time_tests_series()
             result += launch_result;
         }
 
-        const double rel_result = result / launches_number / prev;
-        prev = result;
-        time_results.emplace_back(size, rel_result);
+        time_results.emplace_back(size, result / launches_number);
     }
-    utils::out_data("levit_complex_case_average_seriestxt", "1p", "def",
+    utils::out_data("levit_complex_case_average_series.txt", "1p", "def",
                     "Tricky case for Levit's algorithm", "Number of vertex", "Completion time, ms",
                     time_results);
 
     // Random test cases.
     std::cout << "Execute random test suit\n";
     time_results.clear();
-    prev = 1;
     for (int i = start_value; i <= end_value; i += 10)
     {
         std::cout << "Size: " << i << '\n';
@@ -186,9 +182,7 @@ void average_time_tests_series()
             result += launch_result;
         }
 
-        const double rel_result = result / launches_number / prev;
-        prev = result;
-        time_results.emplace_back(i, rel_result);
+        time_results.emplace_back(i, result / launches_number);
     }
     utils::out_data("levit_rand_tests_average_series.txt", "1p", "def",
                     "Random tests for Levit's algorithm", "Number of vertex", "Completion time, ms",
@@ -222,7 +216,8 @@ void average_time_tests_relative()
             result += launch_result;
         }
 
-        const double rel_result = result / launches_number / prev;
+        result /= launches_number;
+        const double rel_result = result / prev;
         prev = result;
         time_results.emplace_back(size, rel_result);
     }
@@ -245,7 +240,8 @@ void average_time_tests_relative()
             result += launch_result;
         }
 
-        const double rel_result = result / launches_number / prev;
+        result /= launches_number;
+        const double rel_result = result / prev;
         prev = result;
         time_results.emplace_back(i, rel_result);
     }
@@ -260,25 +256,33 @@ void create_theoretical_data()
     std::cout << "Create theoretical results\n";
     // Create tests array.
     constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
-    constexpr std::array vertices_number2{ 31, 61, 121, 241, 481, 961, 1921, 3841, 7681 };
+    constexpr std::array vertices_number2{ 31, 61, 121, 241, 481, 961, 1921 };
 
     const auto average_case = [](const int n) -> std::pair<double, double>
     {
-        //return { n, 0.01940832 - 0.0005256873 * n + 0.000006840334 * n * n + 5.826337e-9 * n * n * n };
-        //return { n, 0.0004967834 + 0.00003381961 * n + 4.244506e-8 * n * n };
-        return { n, 1.22541e-7 * std::pow(n, 2.33116) - 0.796133 };
-        //return { n, 8.735825e-7 * std::pow(n, 1.649123) };
+        //return { n, 5.337284676655264e-7 * std::pow(n, 1.7064882767951628) + 0.005903886140516 };
+        //return { n, 5.35413e-8 * std::pow(n, 2.00015798) + 0.0180708 }; // rand case
+        return { n, 8.83783e-7 * std::pow(n, 1.99995349) - 0.0360029 }; // bad case
     };
 
     std::vector<std::pair<double, double>> results;
     results.reserve(vertices_number.size());
-    for (const auto& i : vertices_number2)
+    for (const auto& i : vertices_number)
     {
         results.emplace_back(average_case(i));
     }
-    utils::out_data("levit_theory_axb.txt", "1p", "def",
+    utils::out_data("levit_theory.txt", "1p", "def",
                     "Theoretical results", "Number of vertex", "Completion time, ms",
                     results);
+
+    results.clear();
+    for (int i = vertices_number2.front(); i <= vertices_number2.back(); i += 10)
+    {
+        results.emplace_back(average_case(i));
+    }
+    utils::out_data("levit_theory2.txt", "1p", "def",
+        "Theoretical results", "Number of vertex", "Completion time, ms",
+        results);
 }
 
 } // namespace tests
