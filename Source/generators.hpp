@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "graph.hpp"
+#include "utils.hpp"
 
 
 namespace gen
