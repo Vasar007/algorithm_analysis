@@ -7,6 +7,7 @@ set(EXECUTABLE_NAME "algorithm_analysis")
 add_executable(${EXECUTABLE_NAME}
     utils.hpp
     graph.hpp
+    generators.hpp
     tests.hpp
 
     main.cpp

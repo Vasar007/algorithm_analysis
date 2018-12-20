@@ -12,6 +12,6 @@ int main()
     tests::create_theoretical_data();
 
     utils::pause();
- 
+
     return 0;
 }

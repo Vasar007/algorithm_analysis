@@ -88,7 +88,7 @@ public:
 
 
     graph(const std::vector<edge<value_type, weight_type>>& edges, const bool bilateral = false,
-          const size_type N = 1)
+          const size_type N = 100)
     : bilateral(bilateral)
     {
         // If N specified, we can reserve proper number of buckets in hash map and minimize hash
