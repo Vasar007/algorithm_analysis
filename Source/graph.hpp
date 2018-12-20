@@ -58,6 +58,7 @@ constexpr edge<Type, WeightT> reversed(edge<Type, WeightT> e) noexcept
     return e;
 }
 
+
 // Graph implementation with adjacency list.
 template <class Type, class WeightT = int>
 class graph
@@ -102,6 +103,7 @@ public:
         }
     }
 
+
     data_container_reference data() noexcept
     {
         return _adjacency_list;
@@ -113,10 +115,12 @@ public:
         return _adjacency_list;
     }
 
+
     container_size_type size() const noexcept
     {
         return _adjacency_list.size();
     }
+
 
     std::pair<size_type, container_size_type> fullsize() const
     {
@@ -131,6 +135,7 @@ public:
         );
         return { _adjacency_list.size(), edges_size };
     }
+
 
     void insert(const edge<value_type, weight_type>& new_edge)
     {
@@ -147,6 +152,7 @@ public:
         }
     }
 
+
     bool remove(const value_type& v)
     {
         if (const auto search = _adjacency_list.find(v); search != std::end(_adjacency_list))
@@ -156,6 +162,7 @@ public:
         }
         return false;
     }
+
 
     bool remove(const edge<value_type, weight_type>& e)
     {
@@ -169,6 +176,7 @@ public:
         }
         return false;
     }
+
 
     bool is_correct() const
     {
@@ -185,6 +193,7 @@ public:
         }
         return true;
     }
+
 
     // Remove incorrect verticies in adjency list.
     bool fix()
@@ -219,6 +228,7 @@ public:
         }
         return is_changed;
     }
+
 
     // Reassign incorrect verticies in adjency list.
     bool silent_fix()
@@ -289,6 +299,7 @@ std::ostream& operator<<(std::ostream& os, const graph<Type, WeightT>& g)
     }
     return os;
 }
+
 
 // Levit's algorithm implementation.
 template <class Type, class WeightT = int>

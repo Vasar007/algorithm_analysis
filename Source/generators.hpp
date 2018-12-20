@@ -30,6 +30,7 @@ namespace gen
     return { src, dest, utils::random_number<long long>(0, 10'000) };
 }
 
+
 template <class Type, class WeightT = int>
 void check_and_fix(vv::graph<Type, WeightT>& g)
 {
@@ -38,6 +39,7 @@ void check_and_fix(vv::graph<Type, WeightT>& g)
         g.silent_fix();
     }
 }
+
 
 // A function to generate random graph.
 [[nodiscard]] vv::graph<int, long long>

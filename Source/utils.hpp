@@ -32,6 +32,7 @@ namespace
 
 } // anonymous namespace
 
+
 template <class Type>
 [[nodiscard]] std::enable_if_t<std::is_arithmetic_v<Type>, Type>
 random_number(const Type& a = 0, const Type& b = std::numeric_limits<Type>::max())
@@ -41,12 +42,14 @@ random_number(const Type& a = 0, const Type& b = std::numeric_limits<Type>::max(
     return distr(RANDOM_ENGINE);
 }
 
+
 template <class Container>
 [[nodiscard]] typename Container::value_type take_accidentally(const Container& cont)
 {
     std::uniform_int_distribution<std::size_t> dis(0, cont.size() - 1);
     return *std::next(std::begin(cont), dis(RANDOM_ENGINE));
 }
+
 
 template <class OutputStream, class Container>
 void print(OutputStream& out, const Container& container)
@@ -55,12 +58,14 @@ void print(OutputStream& out, const Container& container)
               std::ostream_iterator<typename Container::value_type>(out, " "));
 }
 
+
 template <class OutputStream, class Container>
 void println(OutputStream& out, const Container& container)
 {
     print(out, container);
     std::cout << '\n';
 }
+
 
 template <class OutputStream, class Container>
 void print_pair(OutputStream& out, const Container& container)
@@ -71,12 +76,14 @@ void print_pair(OutputStream& out, const Container& container)
     }
 }
 
+
 template <class OutputStream, class Container>
 void println_pair(OutputStream& out, const Container& container)
 {
     print_pair(out, container);
     std::cout << '\n';
 }
+
 
 void pause(const std::string_view message = "\nPress the Enter key to continue...")
 {
@@ -96,6 +103,7 @@ void pause_clear(const std::string_view message = "Press ENTER to continue...")
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+
 void out_data(const std::string& file_name, const std::string_view mode,
     const std::string_view param, const std::string_view title,
     const std::string_view x_label, const std::string_view y_label,
@@ -114,6 +122,7 @@ void out_data(const std::string& file_name, const std::string_view mode,
         out_file << x << ' ' << y << '\n';
     }
 }
+
 
 void out_data(const std::string& file_name, const std::string_view mode,
               const std::string_view param, const std::string_view title,
