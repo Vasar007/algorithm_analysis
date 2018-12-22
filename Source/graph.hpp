@@ -303,7 +303,7 @@ std::ostream& operator<<(std::ostream& os, const graph<Type, WeightT>& g)
 
 // Levit's algorithm implementation.
 template <class Type, class WeightT = int>
-std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g, const Type& s)
+std::pair<std::unordered_map<Type, WeightT>, int> levit_algorithm(const graph<Type, WeightT>& g, const Type& s)
 {
     static_assert(std::is_integral_v<Type>,
                   "Vertex elements type has to be integral for Levit's algorithm!");
@@ -335,6 +335,7 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g,
         }
     }
 
+    int counter = 0;
     while (!m1.empty() || !m1_.empty())
     {
         Type u;
@@ -357,11 +358,13 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g,
                 m1.push_back(v);
                 m2.erase(search_m2);
                 distances.at(v) = std::min(distances.at(v), new_weight);
+                ++counter;
             }
             else if (std::find(std::begin(m1), std::end(m1), v) != std::end(m1) ||
                      std::find(std::begin(m1_), std::end(m1_), v) != std::end(m1_))
             {
                 distances.at(v) = std::min(distances.at(v), new_weight);
+                ++counter;
             }
             else if (const auto search_m0 = m0.find(v);
                      search_m0 != std::end(m0) && distances.at(v) > new_weight)
@@ -369,12 +372,14 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g,
                 m1_.push_back(v);
                 m0.erase(search_m0);
                 distances.at(v) = new_weight;
+                ++counter;
             }
+            //++counter;
         }
         m0.insert(u);
     }
 
-    return distances;
+    return { distances, counter };
 }
 
 } // namespace vv

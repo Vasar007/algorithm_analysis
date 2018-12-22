@@ -24,8 +24,10 @@ namespace tests
 namespace detail
 {
 
+using dmilliseconds = std::chrono::duration<double, std::milli>;
+
 template <class Type, class WeightT = int>
-std::chrono::duration<double> _make_test(
+int _make_test(
     const vv::graph<Type, WeightT>& g, const Type& s, const bool verbose = true)
 {
     // Print adjacency list representation of graph.
@@ -39,23 +41,24 @@ std::chrono::duration<double> _make_test(
     // Call Levit's algorithm.
     const auto result = vv::levit_algorithm(g, s);
     // Stop timer and calculate result's time.
-    const std::chrono::duration<double> duration = std::chrono::steady_clock::now() - start;
+    //const dmilliseconds elapsed = std::chrono::steady_clock::now() - start;
 
     // Print results.
-    std::cout << "Calculation time: " << duration.count() << " ms\n";
-    if (verbose)
-    {
-        std::cout << "Final vector of weights:\n";
-        utils::println_pair(std::cout, result);
-    }
-    std::cout << "\n\n";
+    //std::cout << "Calculation time: " << elapsed.count() << " ms\n";
+    //if (verbose)
+    //{
+    //    std::cout << "Final vector of weights:\n";
+    //    utils::println_pair(std::cout, result);
+    //}
+    //std::cout << "\n\n";
 
-    return duration;
+    //return elapsed;
+    return result.second;
 }
 
 } // namespace detail
 
-std::chrono::duration<double> test_0(const int s = 3, const bool verbose = true)
+int test_0(const int s = 3, const bool verbose = true)
 {
     // Number of nodes in the graph. NOT hardcoded value, need to help hash map to reserve proper
     // number of buckets.
@@ -80,7 +83,7 @@ std::chrono::duration<double> test_0(const int s = 3, const bool verbose = true)
     return detail::_make_test(g, s, verbose);
 }
 
-std::chrono::duration<double> test_1(const int vertices_number = 30, const int s = 0,
+int test_1(const int vertices_number = 30, const int s = 0,
                                      const bool verbose = true)
 {
     assert(0 <= s && s < vertices_number * 3 + 1);
@@ -88,7 +91,7 @@ std::chrono::duration<double> test_1(const int vertices_number = 30, const int s
     return detail::_make_test(g, s, verbose);
 }
 
-std::chrono::duration<double> test_2(const int vertices_number = 10, const bool verbose = true)
+int test_2(const int vertices_number = 10, const bool verbose = true)
 {
     const auto g = gen::generate_rand_graph(vertices_number);
     return detail::_make_test(g, utils::take_accidentally(g.data()).first, verbose);
@@ -96,57 +99,57 @@ std::chrono::duration<double> test_2(const int vertices_number = 10, const bool 
 
 /// Test section.
 
-void time_tests_series()
-{
-    std::cout << "Execute default test suit\n";
-    tests::test_0();
-
-    constexpr int s = 0; // Start vertex.
-    constexpr bool verbose = false; // Output result flag.
-    // Create tests array.
-    constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
-
-    // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
-    // merges queues M1' and M1'' into one M1.
-    std::cout << "Execute tricky test suit\n";
-    std::vector<std::pair<double, double>> time_results;
-    time_results.reserve(vertices_number.size());
-    for (const auto& i : vertices_number)
-    {
-        const int size = 3 * i + 1;
-        if (size > vertices_number.back()) break;
-
-        std::cout << "Size: " << size << '\n';
-        const auto result = tests::test_1(i, s, verbose);
-        time_results.emplace_back(size, result.count());
-    }
-    utils::out_data("levit_complex_case.txt", "1p", "def",
-                    "Tricky case for Levit's algorithm", "Number of vertex", "Completion time, ms",
-                    time_results);
-
-    // Random test cases.
-    std::cout << "Execute random test suit\n";
-    time_results.clear();
-    for (const auto& i : vertices_number)
-    {
-        std::cout << "Size: " << i << '\n';
-        const auto result = tests::test_2(i, verbose);
-        time_results.emplace_back(i, result.count());
-    }
-    utils::out_data("levit_rand_tests.txt", "1p", "def",
-                    "Random tests for Levit's algorithm", "Number of vertex", "Completion time, ms",
-                    time_results);
-}
+//void time_tests_series()
+//{
+//    std::cout << "Execute default test suit\n";
+//    tests::test_0();
+//
+//    constexpr int s = 0; // Start vertex.
+//    constexpr bool verbose = false; // Output result flag.
+//    // Create tests array.
+//    constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
+//
+//    // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
+//    // merges queues M1' and M1'' into one M1.
+//    std::cout << "Execute tricky test suit\n";
+//    std::vector<std::pair<double, double>> time_results;
+//    time_results.reserve(vertices_number.size());
+//    for (const auto& i : vertices_number)
+//    {
+//        const int size = 3 * i + 1;
+//        if (size >= vertices_number.back()) break;
+//
+//        std::cout << "Size: " << size << '\n';
+//        const auto result = tests::test_1(i, s, verbose).count();
+//        time_results.emplace_back(size, result);
+//    }
+//    utils::out_data("levit_complex_case.txt", "1p", "def",
+//                    "Tricky case for Levit's algorithm", "Number of vertex", "Completion time, ms",
+//                    time_results);
+//
+//    // Random test cases.
+//    std::cout << "Execute random test suit\n";
+//    time_results.clear();
+//    for (const auto& i : vertices_number)
+//    {
+//        std::cout << "Size: " << i << '\n';
+//        const auto result = tests::test_2(i, verbose).count();
+//        time_results.emplace_back(i, result);
+//    }
+//    utils::out_data("levit_rand_tests.txt", "1p", "def",
+//                    "Random tests for Levit's algorithm", "Number of vertex", "Completion time, ms",
+//                    time_results);
+//}
 
 
 void average_time_tests_series()
 {
     constexpr int s = 0; // Start vertex.
     constexpr bool verbose = false; // Output result flag.
-    // Create tests array.
-    constexpr int start_value = 10;
-    constexpr int end_value = 1280;
-    constexpr int launches_number = 10;
+
+    constexpr int start_value = 80;
+    constexpr int end_value = 320;
+    constexpr int launches_number = 54327; // 200
     constexpr int step = 10;
 
     // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
@@ -154,22 +157,22 @@ void average_time_tests_series()
     std::cout << "Execute tricky test suit\n";
     std::vector<std::pair<double, double>> time_results;
     time_results.reserve(end_value / start_value);
-    for (int i = start_value; i * 3 + 1 <= end_value; i += step)
-    {
-        const int size = i * 3 + 1; // Get such number because of tricky generator.
-        std::cout << "Size: " << size << '\n';
-        double result = 0;
-        for (int j = 1; j <= launches_number; ++j)
-        {
-            const auto launch_result = tests::test_1(i, s, verbose).count();
-            result += launch_result;
-        }
+    //for (int i = start_value; i * 3 + 1 <= end_value; i += step)
+    //{
+    //    const int size = i * 3 + 1; // Get such vertices number because of tricky generator.
+    //    std::cout << "Size: " << size << '\n';
+    //    double result = 0;
+    //    for (int j = 1; j <= launches_number; ++j)
+    //    {
+    //        const auto launch_result = tests::test_1(i, s, verbose).count();
+    //        result += launch_result;
+    //    }
 
-        time_results.emplace_back(size, result / launches_number);
-    }
-    utils::out_data("levit_complex_case_average_series.txt", "1p", "def",
-                    "Tricky case for Levit's algorithm", "Number of vertex", "Completion time, ms",
-                    time_results);
+    //    time_results.emplace_back(size, result / launches_number);
+    //}
+    //utils::out_data("levit_complex_case_average_series.txt", "1p", "def",
+    //                "Tricky case for Levit's algorithm", "Number of vertex", "Completion time, ms",
+    //                time_results);
 
     // Random test cases.
     std::cout << "Execute random test suit\n";
@@ -178,81 +181,97 @@ void average_time_tests_series()
     {
         std::cout << "Size: " << i << '\n';
         double result = 0;
+        //for (int j = 1; j <= launches_number; ++j)
+        //{
+        //    const auto launch_result = tests::test_2(i, verbose);
+        //    result += launch_result;
+        //}
+        std::vector<double> one_test_results;
+        one_test_results.reserve(launches_number);
         for (int j = 1; j <= launches_number; ++j)
         {
-            const auto launch_result = tests::test_2(i, verbose).count();
+            const auto launch_result = tests::test_2(i, verbose);
             result += launch_result;
+            one_test_results.emplace_back(launch_result);
+            std::cout << "Execution: " << j << "; Operations number: " << launch_result << '\n';
         }
 
+        const auto number = std::to_string(i);
+        utils::out_data("levit_rand_tests_average_" + number + ".txt", "1p", "def",
+                        "Random tests for Levit's algorithm, single test with n=" + number,
+                        "Number of vertex", "Operations number",
+                        one_test_results);
+        //return;
         time_results.emplace_back(i, result / launches_number);
     }
+    return;
     utils::out_data("levit_rand_tests_average_series.txt", "1p", "def",
-                    "Random tests for Levit's algorithm", "Number of vertex", "Completion time, ms",
+                    "Random tests for Levit's algorithm", "Number of vertex", "Operations number",
                     time_results);
 }
 
 
-void average_time_tests_relative()
-{
-    constexpr int s = 0; // Start vertex.
-    constexpr bool verbose = false; // Output result flag.
-    // Create tests array.
-    constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
-    constexpr int launches_number = 10;
-
-    // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
-    // merges queues M1' and M1'' into one M1.
-    std::cout << "Execute tricky test suit\n";
-    std::vector<std::pair<double, double>> time_results;
-    time_results.reserve(vertices_number.size());
-    double prev = 1;
-    for (const auto& i : vertices_number)
-    {
-        const int size = i * 3 + 1;
-        if (size > vertices_number.back()) break;
-
-        std::cout << "Size: " << size << '\n';
-        double result = 0;
-        for (int j = 1; j <= launches_number; ++j)
-        {
-            const auto launch_result = tests::test_1(i, s, verbose).count();
-            result += launch_result;
-        }
-
-        result /= launches_number;
-        const double rel_result = result / prev;
-        prev = result;
-        time_results.emplace_back(size, rel_result);
-    }
-    utils::out_data("levit_complex_case_average_series_rel.txt", "1p", "def",
-                    "Tricky case for Levit's algorithm, relative", "Number of vertex",
-                    "Completion time, ms",
-                    time_results);
-
-    // Random test cases.
-    std::cout << "Execute random test suit\n";
-    time_results.clear();
-    prev = 1;
-    for (const auto& i : vertices_number)
-    {
-        std::cout << "Size: " << i << '\n';
-        double result = 0;
-        for (int j = 1; j <= launches_number; ++j)
-        {
-            const auto launch_result = tests::test_2(i, verbose).count();
-            result += launch_result;
-        }
-
-        result /= launches_number;
-        const double rel_result = result / prev;
-        prev = result;
-        time_results.emplace_back(i, rel_result);
-    }
-    utils::out_data("levit_rand_tests_average_series_rel.txt", "1p", "def",
-                    "Random tests for Levit's algorithm, relative", "Number of vertex",
-                    "Completion time, ms",
-                    time_results);
-}
+//void average_time_tests_relative()
+//{
+//    constexpr int s = 0; // Start vertex.
+//    constexpr bool verbose = false; // Output result flag.
+//    // Create tests array.
+//    constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
+//    constexpr int launches_number = 10;
+//
+//    // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
+//    // merges queues M1' and M1'' into one M1.
+//    std::cout << "Execute tricky test suit\n";
+//    std::vector<std::pair<double, double>> time_results;
+//    time_results.reserve(vertices_number.size());
+//    double prev = 1;
+//    for (const auto& i : vertices_number)
+//    {
+//        const int size = i * 3 + 1;
+//        if (size >= vertices_number.back()) break;
+//
+//        std::cout << "Size: " << size << '\n';
+//        double result = 0;
+//        for (int j = 1; j <= launches_number; ++j)
+//        {
+//            const auto launch_result = tests::test_1(i, s, verbose).count();
+//            result += launch_result;
+//        }
+//
+//        result /= launches_number;
+//        const double rel_result = result / prev;
+//        prev = result;
+//        time_results.emplace_back(size, rel_result);
+//    }
+//    utils::out_data("levit_complex_case_average_series_rel.txt", "1p", "def",
+//                    "Tricky case for Levit's algorithm, relative", "Number of vertex",
+//                    "Completion time, ms",
+//                    time_results);
+//
+//    // Random test cases.
+//    std::cout << "Execute random test suit\n";
+//    time_results.clear();
+//    prev = 1;
+//    for (const auto& i : vertices_number)
+//    {
+//        std::cout << "Size: " << i << '\n';
+//        double result = 0;
+//        for (int j = 1; j <= launches_number; ++j)
+//        {
+//            const auto launch_result = tests::test_2(i, verbose).count();
+//            result += launch_result;
+//        }
+//
+//        result /= launches_number;
+//        const double rel_result = result / prev;
+//        prev = result;
+//        time_results.emplace_back(i, rel_result);
+//    }
+//    utils::out_data("levit_rand_tests_average_series_rel.txt", "1p", "def",
+//                    "Random tests for Levit's algorithm, relative", "Number of vertex",
+//                    "Completion time, ms",
+//                    time_results);
+//}
 
 void create_theoretical_data()
 {
