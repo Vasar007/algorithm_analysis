@@ -21,11 +21,11 @@ namespace utils
 namespace
 {
 
-    std::default_random_engine create_random_engine()
+    std::mt19937 create_random_engine()
     {
         // Obtain a time-based seed:
         const auto seed = static_cast<unsigned long>(std::time(nullptr));
-        return std::default_random_engine(seed);
+        return std::mt19937(seed);
     }
 
     auto RANDOM_ENGINE = create_random_engine();
@@ -101,6 +101,26 @@ void pause_clear(const std::string_view message = "Press ENTER to continue...")
     std::cin.seekg(0u, std::ios::end);
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+
+void out_data(const std::string& file_name, const std::string_view mode,
+    const std::string_view param, const std::string_view title,
+    const std::string_view x_label, const std::string_view y_label,
+    const std::vector<double>& data)
+{
+    if (data.empty())
+    {
+        std::cout << "ERROR: empty data to process for file " << file_name << ".\n";
+        return;
+    }
+
+    std::ofstream out_file(file_name);
+    out_file << mode << '|' << param << '|' << title << '|' << x_label << '|' << y_label << '\n';
+    for (const auto& x : data)
+    {
+        out_file << x << '\n';
+    }
 }
 
 
