@@ -94,7 +94,15 @@ generate_tricky_case(const int vertices_number = 30)
 
     for (int i = 0; i < vertices_number; ++i)
     {
-        edges.emplace_back(n, n + 2, W >> i);
+        // Process shift count overflow.
+        if (i >= 30)
+        {
+            edges.emplace_back(n, n + 2, 1);
+        }
+        else
+        {
+            edges.emplace_back(n, n + 2, W >> i);
+        }
         edges.emplace_back(n, n + 1, 0);
         edges.emplace_back(n + 1, n + 2, 0);
         n += 2;
