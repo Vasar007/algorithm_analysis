@@ -83,7 +83,7 @@ detail::dmilliseconds test_0(const int s = 3, const bool verbose = true)
 }
 
 detail::dmilliseconds test_1(const int vertices_number = 30, const int s = 0,
-                                     const bool verbose = true)
+                             const bool verbose = true)
 {
     assert(0 <= s && s < vertices_number * 3 + 1);
     const auto g = gen::generate_tricky_case(vertices_number);
