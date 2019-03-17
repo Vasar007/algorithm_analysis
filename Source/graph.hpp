@@ -89,12 +89,12 @@ public:
 
 
     graph(const std::vector<edge<value_type, weight_type>>& edges, const bool bilateral = false,
-          const size_type N = 100)
-    : bilateral(bilateral)
+          const size_type vertices_number = 100)
+    : _bilateral(bilateral)
     {
-        // If N specified, we can reserve proper number of buckets in hash map and minimize hash
-        // collisions.
-        _adjacency_list.reserve(N);
+        // If vertices_number specified, we can reserve proper number of buckets in hash map and
+        // minimize hash collisions.
+        _adjacency_list.reserve(vertices_number);
 
         // Add edges to the directed graph.
         for (const auto& e : edges)
@@ -143,10 +143,21 @@ public:
         const value_type& dest = new_edge.dest;
         const weight_type& weight = new_edge.weight;
 
+        if (const auto search = _adjacency_list.find(src); search == std::end(_adjacency_list))
+        {
+            _adjacency_list.emplace(src, container{});
+        }
+
         // Insert at the end.
         _adjacency_list[src].emplace_back(dest, weight);
+
+        if (const auto search = _adjacency_list.find(dest); search == std::end(_adjacency_list))
+        {
+            _adjacency_list.emplace(dest, container{});
+        }
+
         // If graph is bilateral, we add reverse edge.
-        if (bilateral)
+        if (_bilateral)
         {
             _adjacency_list[dest].emplace_back(src, weight);
         }
@@ -168,7 +179,7 @@ public:
     {
         if (_remove_edge(e))
         {
-            if (bilateral)
+            if (_bilateral)
             {
                 return _remove_edge(reversed(e));
             }
@@ -200,7 +211,7 @@ public:
     {
         bool is_changed = false;
         for (auto it_adj_list = std::begin(_adjacency_list);
-             it_adj_list != std::end(_adjacency_list);)
+             it_adj_list != std::end(_adjacency_list); ++it_adj_list)
         {
             auto& list = it_adj_list->second;
             for (auto it_cont = std::begin(list); it_cont != std::end(list);)
@@ -216,16 +227,9 @@ public:
                     ++it_cont;
                 }
             }
-
-            if (list.empty())
-            {
-                it_adj_list = _adjacency_list.erase(it_adj_list);
-            }
-            else
-            {
-                ++it_adj_list;
-            }
         }
+
+        assert(is_correct());
         return is_changed;
     }
 
@@ -241,11 +245,19 @@ public:
                 if (const auto search = _adjacency_list.find(dest);
                     search == std::end(_adjacency_list))
                 {
-                    dest = utils::take_accidentally(_adjacency_list).first;
+                    // Avoid self-cicled vertices.
+                    do
+                    {
+                        dest = utils::take_accidentally(_adjacency_list).first;
+                    }
+                    while (dest == vertex);
+
                     is_changed = true;
                 }
             }
         }
+
+        assert(is_correct());
         return is_changed;
     }
 
@@ -253,7 +265,7 @@ private:
     // Construct a unordered_map of vectors of pairs to represent an adjacency list.
     data_container _adjacency_list;
 
-    bool bilateral;
+    bool _bilateral;
 
 
     bool _remove_edge(const edge<value_type, weight_type>& e)
@@ -301,7 +313,7 @@ std::ostream& operator<<(std::ostream& os, const graph<Type, WeightT>& g)
 }
 
 
-// Levit's algorithm implementation.
+// Levit's algorithm implementation with two data strcutures for M1.
 template <class Type, class WeightT = int>
 std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g, const Type& s)
 {
@@ -316,11 +328,11 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g,
     const std::size_t N = g.data().size();
     constexpr WeightT INF = std::numeric_limits<WeightT>::max();
 
-    std::unordered_map<Type, WeightT> distances;
-    distances.reserve(N);
-
     m0.reserve(N);
     m2.reserve(N);
+
+    std::unordered_map<Type, WeightT> distances;
+    distances.reserve(N);
 
     for (const auto& [vertex, list] : g.data())
     {
@@ -335,6 +347,7 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g,
         }
     }
 
+    int counter = 0;
     while (!m1.empty() || !m1_.empty())
     {
         Type u;
@@ -357,11 +370,13 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g,
                 m1.push_back(v);
                 m2.erase(search_m2);
                 distances.at(v) = std::min(distances.at(v), new_weight);
+                ++counter;
             }
             else if (std::find(std::begin(m1), std::end(m1), v) != std::end(m1) ||
                      std::find(std::begin(m1_), std::end(m1_), v) != std::end(m1_))
             {
                 distances.at(v) = std::min(distances.at(v), new_weight);
+                ++counter;
             }
             else if (const auto search_m0 = m0.find(v);
                      search_m0 != std::end(m0) && distances.at(v) > new_weight)
@@ -369,10 +384,66 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g,
                 m1_.push_back(v);
                 m0.erase(search_m0);
                 distances.at(v) = new_weight;
+                ++counter;
             }
         }
         m0.insert(u);
     }
+
+    std::cout << "Operations: " << counter << '\n';
+
+    return distances;
+}
+
+
+// Levit's algorithm implementation with one data structure for M1.
+template <class Type, class WeightT = int>
+std::vector<WeightT> levit_algorithm_2(const graph<Type, WeightT>& g, const Type& s)
+{
+    static_assert(std::is_integral_v<Type>,
+        "Vertex elements type has to be integral for Levit's algorthm!");
+
+    const std::size_t N = g.data().size();
+    constexpr WeightT INF = std::numeric_limits<WeightT>::max();
+
+    std::vector<WeightT> distances(N, INF);
+    distances.at(s) = 0;
+
+    std::vector<Type> id(N);
+    std::deque<Type> q;
+    q.push_back(s);
+    std::vector<Type> p(N, -1);
+
+    int counter = 0;
+    while (!q.empty())
+    {
+        const Type v = q.front();
+        q.pop_front();
+        id[v] = 1;
+        for (std::size_t i = 0; i < g.data().at(v).size(); ++i)
+        {
+            const Type to = g.data().at(v).at(i).first;
+            const Type len = g.data().at(v).at(i).second;
+            if (distances[to] > distances[v] + len)
+            {
+                distances[to] = distances[v] + len;
+                if (id[to] == 0)
+                {
+                    q.push_back(to);
+                    ++counter;
+                }
+                else if (id[to] == 1)
+                {
+                    q.push_back(to);
+                    ++counter;
+                }
+                p[to] = v;
+                id[to] = 1;
+            }
+        }
+    }
+
+    std::cout << "Operations: " << counter << '\n';
 
     return distances;
 }

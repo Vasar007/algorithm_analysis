@@ -70,7 +70,7 @@ void println(OutputStream& out, const Container& container)
 template <class OutputStream, class Container>
 void print_pair(OutputStream& out, const Container& container)
 {
-    for (const auto&[first, second] : container)
+    for (const auto& [first, second] : container)
     {
         std::cout << first << ": " << second << '\n';
     }

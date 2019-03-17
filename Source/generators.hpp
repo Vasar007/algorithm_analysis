@@ -38,6 +38,7 @@ void check_and_fix(vv::graph<Type, WeightT>& g)
     {
         g.silent_fix();
     }
+    assert(g.is_correct());
 }
 
 
@@ -67,7 +68,10 @@ generate_rand_graph(const int vertices_number)
         ++i;
     }
 
-    vv::graph<int, long long> g(edges);
+    // Define bilateral graph property.
+    constexpr bool bilateral = false;
+
+    vv::graph<int, long long> g(edges, bilateral, vertices_number);
     check_and_fix(g);
     return g;
 }
@@ -119,6 +123,46 @@ generate_tricky_case(const int vertices_number = 30)
 
     // Construct graph.
     vv::graph<int, long long> g(edges, bilateral, N);
+    check_and_fix(g);
+    return g;
+}
+
+[[nodiscard]] vv::graph<int, long long>
+generate_tricky_case_article(const int n = 3)
+{
+    assert(0 < n && n < 31);
+
+    const int vertices_number = 2 * n + 1;
+    const int edges_number = 3 * n;
+
+    // Set some big value for edge weights.
+    const long long W = static_cast<long long>(std::pow(2, n + 1) + 1);
+
+    // Generate vector of graph edges. This is complex case which can cause exponential complexity
+    // if implementation of Levit's algorithm would use deque instead of two queues.
+    std::vector<vv::edge<int, long long>> edges;
+    for (int i = 0; i < n; ++i)
+    {
+        const int i_n = i * 2;
+        edges.emplace_back(i_n, i_n + 1, std::pow(2, n - i - 1));
+        edges.emplace_back(i_n + 1, i_n + 2, 0);
+        edges.emplace_back(i_n, i_n + 2, std::pow(2, n - i));
+
+        if (i > 0)
+        {
+            edges.emplace_back(0, i_n + 1, W);
+            edges.emplace_back(0, i_n + 2, W);
+        }
+    }
+
+    // Shuffle result edges.
+    std::shuffle(std::begin(edges), std::end(edges), utils::RANDOM_ENGINE);
+
+    // Define bilateral graph property.
+    constexpr bool bilateral = false;
+
+    // Construct graph.
+    vv::graph<int, long long> g(edges, bilateral, vertices_number);
     check_and_fix(g);
     return g;
 }
