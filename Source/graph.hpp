@@ -52,10 +52,10 @@ constexpr bool operator==(const edge<Type, WeightT>& lhs, const edge<Type, Weigh
 }
 
 template <class Type, class WeightT = int>
-constexpr edge<Type, WeightT> reversed(edge<Type, WeightT> e) noexcept
+constexpr edge<Type, WeightT> reversed(edge<Type, WeightT> edge_value) noexcept
 {
-    e.reverse();
-    return e;
+    edge_value.reverse();
+    return edge_value;
 }
 
 
@@ -103,26 +103,22 @@ public:
         }
     }
 
-
     data_container_reference data() noexcept
     {
         return _adjacency_list;
     }
-
 
     const_data_container_reference data() const noexcept
     {
         return _adjacency_list;
     }
 
-
     container_size_type size() const noexcept
     {
         return _adjacency_list.size();
     }
 
-
-    std::pair<size_type, container_size_type> fullsize() const
+    std::pair<size_type, container_size_type> full_size() const
     {
         // Calculate sizes of set V and set E.
         const container_size_type edges_size = std::accumulate(
@@ -135,7 +131,6 @@ public:
         );
         return { _adjacency_list.size(), edges_size };
     }
-
 
     void insert(const edge<value_type, weight_type>& new_edge)
     {
@@ -163,10 +158,9 @@ public:
         }
     }
 
-
-    bool remove(const value_type& v)
+    bool remove(const value_type& vertex)
     {
-        if (const auto search = _adjacency_list.find(v); search != std::end(_adjacency_list))
+        if (const auto search = _adjacency_list.find(vertex); search != std::end(_adjacency_list))
         {
             _adjacency_list.erase(search);
             return true;
@@ -174,20 +168,18 @@ public:
         return false;
     }
 
-
-    bool remove(const edge<value_type, weight_type>& e)
+    bool remove(const edge<value_type, weight_type>& edge_value)
     {
-        if (_remove_edge(e))
+        if (_remove_edge(edge_value))
         {
             if (_bilateral)
             {
-                return _remove_edge(reversed(e));
+                return _remove_edge(reversed(edge_value));
             }
             return true;
         }
         return false;
     }
-
 
     bool is_correct() const
     {
@@ -205,8 +197,7 @@ public:
         return true;
     }
 
-
-    // Remove incorrect verticies in adjency list.
+    // Remove incorrect vertices in adjacency list.
     bool fix()
     {
         bool is_changed = false;
@@ -233,8 +224,7 @@ public:
         return is_changed;
     }
 
-
-    // Reassign incorrect verticies in adjency list.
+    // Reassign incorrect vertices in adjacency list.
     bool silent_fix()
     {
         bool is_changed = false;
@@ -245,7 +235,7 @@ public:
                 if (const auto search = _adjacency_list.find(dest);
                     search == std::end(_adjacency_list))
                 {
-                    // Avoid self-cicled vertices.
+                    // Avoid self-circled vertices.
                     do
                     {
                         dest = utils::take_accidentally(_adjacency_list).first;
@@ -268,16 +258,17 @@ private:
     bool _bilateral;
 
 
-    bool _remove_edge(const edge<value_type, weight_type>& e)
+    bool _remove_edge(const edge<value_type, weight_type>& edge_value)
     {
-        if (const auto search = _adjacency_list.find(e.src); search != std::end(_adjacency_list))
+        if (const auto search = _adjacency_list.find(edge_value.src);
+            search != std::end(_adjacency_list))
         {
             const auto& list_container = search->second;
             const auto it = std::find_if(
                 std::begin(list_container), std::end(list_container),
-                [&e](const pair& p)
+                [&edge_value](const pair& p)
                 {
-                    return p.first == e.dest && p.second == e.weight;
+                    return p.first == edge_value.dest && p.second == edge_value.weight;
                 }
             );
             if (it != std::end(list_container))
@@ -291,13 +282,12 @@ private:
     }
 };
 
-
 template <class Type, class WeightT = int>
-std::ostream& operator<<(std::ostream& os, const graph<Type, WeightT>& g)
+std::ostream& operator<<(std::ostream& os, const graph<Type, WeightT>& graph_instance)
 {
-    const auto [vertices_size, edges_size] = g.fullsize();
+    const auto [vertices_size, edges_size] = graph_instance.full_size();
     os << "Graph size: [" << vertices_size << 'x' << edges_size << "]\n";
-    for (const auto& [vertex, list] : g.data())
+    for (const auto& [vertex, list] : graph_instance.data())
     {
         // Print current vertex number.
         os << vertex << " => ";
@@ -312,20 +302,20 @@ std::ostream& operator<<(std::ostream& os, const graph<Type, WeightT>& g)
     return os;
 }
 
-
-// Levit's algorithm implementation with two data strcutures for M1.
+// Levit's algorithm implementation with two data structures for M1.
 template <class Type, class WeightT = int>
-std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g, const Type& s)
+std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& graph_instance, 
+                                                  const Type& start_vertex)
 {
     static_assert(std::is_integral_v<Type>,
                   "Vertex elements type has to be integral for Levit's algorithm!");
 
     std::unordered_set<Type> m0;
-    std::deque<Type> m1{ s };
+    std::deque<Type> m1{ start_vertex };
     std::deque<Type> m1_;
     std::unordered_set<Type> m2;
 
-    const std::size_t N = g.data().size();
+    const std::size_t N = graph_instance.data().size();
     constexpr WeightT INF = std::numeric_limits<WeightT>::max();
 
     m0.reserve(N);
@@ -334,9 +324,9 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g,
     std::unordered_map<Type, WeightT> distances;
     distances.reserve(N);
 
-    for (const auto& [vertex, list] : g.data())
+    for (const auto& [vertex, list] : graph_instance.data())
     {
-        if (vertex != s)
+        if (vertex != start_vertex)
         {
             distances[vertex] = INF;
             m2.insert(vertex);
@@ -362,7 +352,7 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g,
             m1_.pop_front();
         }
 
-        for (const auto& [v, weight] : g.data().at(u))
+        for (const auto& [v, weight] : graph_instance.data().at(u))
         {
             const WeightT new_weight = distances.at(u) + weight;
             if (const auto search_m2 = m2.find(v); search_m2 != std::end(m2))
@@ -395,23 +385,23 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& g,
     return distances;
 }
 
-
 // Levit's algorithm implementation with one data structure for M1.
 template <class Type, class WeightT = int>
-std::vector<WeightT> levit_algorithm_2(const graph<Type, WeightT>& g, const Type& s)
+std::vector<WeightT> levit_algorithm_2(const graph<Type, WeightT>& graph_instance,
+                                       const Type& start_vertex)
 {
     static_assert(std::is_integral_v<Type>,
         "Vertex elements type has to be integral for Levit's algorthm!");
 
-    const std::size_t N = g.data().size();
+    const std::size_t N = graph_instance.data().size();
     constexpr WeightT INF = std::numeric_limits<WeightT>::max();
 
     std::vector<WeightT> distances(N, INF);
-    distances.at(s) = 0;
+    distances.at(start_vertex) = 0;
 
     std::vector<Type> id(N);
     std::deque<Type> q;
-    q.push_back(s);
+    q.push_back(start_vertex);
     std::vector<Type> p(N, -1);
 
     int counter = 0;
@@ -420,10 +410,10 @@ std::vector<WeightT> levit_algorithm_2(const graph<Type, WeightT>& g, const Type
         const Type v = q.front();
         q.pop_front();
         id[v] = 1;
-        for (std::size_t i = 0; i < g.data().at(v).size(); ++i)
+        for (std::size_t i = 0; i < graph_instance.data().at(v).size(); ++i)
         {
-            const Type to = g.data().at(v).at(i).first;
-            const Type len = g.data().at(v).at(i).second;
+            const Type to = graph_instance.data().at(v).at(i).first;
+            const Type len = graph_instance.data().at(v).at(i).second;
             if (distances[to] > distances[v] + len)
             {
                 distances[to] = distances[v] + len;

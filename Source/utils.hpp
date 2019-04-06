@@ -3,14 +3,11 @@
 #pragma once
 
 #include <cassert>
-#include <ctime>
 #include <iostream>
 #include <iterator>
-#include <fstream>
 #include <random>
 #include <string>
 #include <string_view>
-#include <type_traits>
 #include <vector>
 #include <utility>
 
@@ -18,38 +15,25 @@
 namespace utils
 {
 
-namespace
-{
+std::mt19937 create_random_engine();
 
-    std::mt19937 create_random_engine()
-    {
-        // Obtain a time-based seed:
-        const auto seed = static_cast<unsigned long>(std::time(nullptr));
-        return std::mt19937(seed);
-    }
-
-    auto RANDOM_ENGINE = create_random_engine();
-
-} // anonymous namespace
-
+inline std::mt19937 RANDOM_ENGINE = create_random_engine();
 
 template <class Type>
 [[nodiscard]] std::enable_if_t<std::is_arithmetic_v<Type>, Type>
 random_number(const Type& a = 0, const Type& b = std::numeric_limits<Type>::max())
 {
     assert(a <= b);
-    std::uniform_int_distribution<Type> distr(a, b);
-    return distr(RANDOM_ENGINE);
+    std::uniform_int_distribution<Type> distribution(a, b);
+    return distribution(RANDOM_ENGINE);
 }
-
 
 template <class Container>
 [[nodiscard]] typename Container::value_type take_accidentally(const Container& cont)
 {
-    std::uniform_int_distribution<std::size_t> dis(0, cont.size() - 1);
-    return *std::next(std::begin(cont), dis(RANDOM_ENGINE));
+    std::uniform_int_distribution<std::size_t> distribution(0, cont.size() - 1);
+    return *std::next(std::begin(cont), distribution(RANDOM_ENGINE));
 }
-
 
 template <class OutputStream, class Container>
 void print(OutputStream& out, const Container& container)
@@ -58,14 +42,12 @@ void print(OutputStream& out, const Container& container)
               std::ostream_iterator<typename Container::value_type>(out, " "));
 }
 
-
 template <class OutputStream, class Container>
 void println(OutputStream& out, const Container& container)
 {
     print(out, container);
     std::cout << '\n';
 }
-
 
 template <class OutputStream, class Container>
 void print_pair(OutputStream& out, const Container& container)
@@ -76,7 +58,6 @@ void print_pair(OutputStream& out, const Container& container)
     }
 }
 
-
 template <class OutputStream, class Container>
 void println_pair(OutputStream& out, const Container& container)
 {
@@ -84,89 +65,24 @@ void println_pair(OutputStream& out, const Container& container)
     std::cout << '\n';
 }
 
+void pause(const std::string_view message = "\nPress the Enter key to continue...");
 
-void pause(const std::string_view message = "\nPress the Enter key to continue...")
-{
-    do
-    {
-        std::cout << message;
-    }
-    while (std::cin.get() != '\n');
-}
-
-
-void pause_clear(const std::string_view message = "Press ENTER to continue...")
-{
-    std::cout << message << std::flush;
-    std::cin.seekg(0u, std::ios::end);
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-}
-
+void pause_clear(const std::string_view message = "Press ENTER to continue...");
 
 void out_data(const std::string& file_name, const std::string_view mode,
-    const std::string_view param, const std::string_view title,
-    const std::string_view x_label, const std::string_view y_label,
-    const std::vector<double>& data)
-{
-    if (data.empty())
-    {
-        std::cout << "ERROR: empty data to process for file " << file_name << ".\n";
-        return;
-    }
-
-    std::ofstream out_file(file_name);
-    out_file << mode << '|' << param << '|' << title << '|' << x_label << '|' << y_label << '\n';
-    for (const auto& x : data)
-    {
-        out_file << x << '\n';
-    }
-}
-
+              const std::string_view param, const std::string_view title,
+              const std::string_view x_label, const std::string_view y_label,
+              const std::vector<double>& data);
 
 void out_data(const std::string& file_name, const std::string_view mode,
-    const std::string_view param, const std::string_view title,
-    const std::string_view x_label, const std::string_view y_label,
-    const std::vector<std::pair<double, double>>& data)
-{
-    if (data.empty())
-    {
-        std::cout << "ERROR: empty data to process for file " << file_name << ".\n";
-        return;
-    }
-
-    std::ofstream out_file(file_name);
-    out_file << mode << '|' << param << '|' << title << '|' << x_label << '|' << y_label << '\n';
-    for (const auto& [x, y] : data)
-    {
-        out_file << x << ' ' << y << '\n';
-    }
-}
-
+              const std::string_view param, const std::string_view title,
+              const std::string_view x_label, const std::string_view y_label,
+              const std::vector<std::pair<double, double>>& data);
 
 void out_data(const std::string& file_name, const std::string_view mode,
               const std::string_view param, const std::string_view title,
               const std::string_view x_label, const std::string_view y_label,
               const std::vector<std::pair<double, double>>& data_1,
-              const std::vector<std::pair<double, double>>& data_2)
-{
-    if (data_1.empty() || data_2.empty())
-    {
-        std::cout << "ERROR: empty data to process for file " << file_name << ".\n";
-        return;
-    }
-
-    std::ofstream out_file(file_name);
-    out_file << mode << '|' << param << '|' << title << '|' << x_label << '|' << y_label << '\n';
-    for (const auto& [x, y] : data_1)
-    {
-        out_file << x << ' ' << y << '\n';
-    }
-    out_file << "#\n";
-    for (const auto [x, y] : data_2)
-    {
-        out_file << x << ' ' << y << '\n';
-    }
-}
+              const std::vector<std::pair<double, double>>& data_2);
 
 } // namespace utils

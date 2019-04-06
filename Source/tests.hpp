@@ -8,7 +8,6 @@
 #include <chrono>
 #include <cmath>
 #include <iostream>
-#include <iterator>
 #include <random>
 #include <utility>
 #include <vector>
@@ -27,19 +26,19 @@ namespace detail
 using dmilliseconds = std::chrono::duration<double, std::milli>;
 
 template <class Type, class WeightT = int>
-dmilliseconds _make_test(
-    const vv::graph<Type, WeightT>& g, const Type& s, const bool verbose = true)
+dmilliseconds _make_test(const vv::graph<Type, WeightT>& graph_instance, const Type& start_vertex,
+                         const bool verbose = true)
 {
     // Print adjacency list representation of graph.
     if (verbose)
     {
-        std::cout << g << '\n';
+        std::cout << graph_instance << '\n';
     }
 
     // Set start time.
     const auto start = std::chrono::steady_clock::now();
     // Call Levit's algorithm.
-    const auto result = vv::levit_algorithm(g, s);
+    const auto result = vv::levit_algorithm(graph_instance, start_vertex);
     // Stop timer and calculate result's time.
     const dmilliseconds elapsed = std::chrono::steady_clock::now() - start;
 
@@ -57,16 +56,16 @@ dmilliseconds _make_test(
 
 } // namespace detail
 
-detail::dmilliseconds test_0(const int s = 3, const bool verbose = true)
+detail::dmilliseconds test_0(const int start_vertex_id = 3, const bool verbose = true)
 {
     // Number of nodes in the graph. NOT hardcoded value, need to help hash map to reserve proper
     // number of buckets.
     constexpr std::size_t N = 6;
 
-    assert(0 <= s && s < N);
+    assert(0 <= start_vertex_id && start_vertex_id < N);
 
     // Vector of graph edges.
-    std::vector<vv::edge<int, long long>> edges =
+    const std::vector<vv::edge<int, long long>> edges =
     {
         // (u, v, w) -> edge from u to v having weight w.
         { 0, 1, 6 }, { 1, 2, 7 }, { 2, 0, 5 }, { 2, 1, 4 },
@@ -79,7 +78,7 @@ detail::dmilliseconds test_0(const int s = 3, const bool verbose = true)
     // Construct graph.
     vv::graph<int, long long> g(edges, bilateral, N);
 
-    return detail::_make_test(g, s, verbose);
+    return detail::_make_test(g, start_vertex_id, verbose);
 }
 
 detail::dmilliseconds test_1(const int vertices_number = 30, const int s = 0,
@@ -103,7 +102,7 @@ void time_tests_series()
     std::cout << "Execute default test suit\n";
     tests::test_0();
 
-    constexpr int s = 0; // Start vertex.
+    constexpr int start_vertex_id = 0; // Start vertex.
     constexpr bool verbose = false; // Output result flag.
     // Create tests array.
     constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
@@ -119,7 +118,7 @@ void time_tests_series()
         if (size >= vertices_number.back()) break;
 
         std::cout << "Size: " << size << '\n';
-        const auto result = tests::test_1(i, s, verbose).count();
+        const auto result = tests::test_1(i, start_vertex_id, verbose).count();
         time_results.emplace_back(size, result);
     }
     utils::out_data("levit_complex_case.txt", "1p", "def",
@@ -140,10 +139,9 @@ void time_tests_series()
                     time_results);
 }
 
-
 void average_time_tests_series()
 {
-    constexpr int s = 0; // Start vertex.
+    constexpr int start_vertex_id = 0; // Start vertex.
     constexpr bool verbose = false; // Output result flag.
 
     constexpr int start_value = 80;
@@ -163,7 +161,7 @@ void average_time_tests_series()
         double result = 0;
         for (int j = 1; j <= launches_number; ++j)
         {
-            const auto launch_result = tests::test_1(i, s, verbose).count();
+            const auto launch_result = tests::test_1(i, start_vertex_id, verbose).count();
             result += launch_result;
         }
 
@@ -194,10 +192,9 @@ void average_time_tests_series()
                     time_results);
 }
 
-
 void average_time_tests_relative()
 {
-    constexpr int s = 0; // Start vertex.
+    constexpr int start_vertex_id = 0; // Start vertex.
     constexpr bool verbose = false; // Output result flag.
     // Create tests array.
     constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
@@ -218,7 +215,7 @@ void average_time_tests_relative()
         double result = 0;
         for (int j = 1; j <= launches_number; ++j)
         {
-            const auto launch_result = tests::test_1(i, s, verbose).count();
+            const auto launch_result = tests::test_1(i, start_vertex_id, verbose).count();
             result += launch_result;
         }
 
@@ -286,8 +283,8 @@ void create_theoretical_data()
         results.emplace_back(average_case(i));
     }
     utils::out_data("levit_theory2.txt", "1p", "def",
-        "Theoretical results", "Number of vertex", "Completion time, ms",
-        results);
+                    "Theoretical results", "Number of vertex", "Completion time, ms",
+                    results);
 }
 
 } // namespace tests
