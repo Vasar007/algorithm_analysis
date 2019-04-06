@@ -88,8 +88,8 @@ public:
     using const_reference                = const value_type&;
 
 
-    graph(const std::vector<edge<value_type, weight_type>>& edges, const bool bilateral = false,
-          const size_type vertices_number = 100)
+    explicit graph(const std::vector<edge<value_type, weight_type>>& edges,
+                   const bool bilateral = false, const size_type vertices_number = 100)
     : _bilateral(bilateral)
     {
         // If vertices_number specified, we can reserve proper number of buckets in hash map and
@@ -200,7 +200,7 @@ public:
     // Remove incorrect vertices in adjacency list.
     bool fix()
     {
-        bool is_changed = false;
+        bool was_changed = false;
         for (auto it_adj_list = std::begin(_adjacency_list);
              it_adj_list != std::end(_adjacency_list); ++it_adj_list)
         {
@@ -211,7 +211,7 @@ public:
                     search == std::end(_adjacency_list))
                 {
                     it_cont = list.erase(it_cont);
-                    is_changed = true;
+                    was_changed = true;
                 }
                 else
                 {
@@ -221,13 +221,13 @@ public:
         }
 
         assert(is_correct());
-        return is_changed;
+        return was_changed;
     }
 
     // Reassign incorrect vertices in adjacency list.
     bool silent_fix()
     {
-        bool is_changed = false;
+        bool was_changed = false;
         for (auto& [vertex, list] : _adjacency_list)
         {
             for (auto& [dest, weight] : list)
@@ -242,13 +242,13 @@ public:
                     }
                     while (dest == vertex);
 
-                    is_changed = true;
+                    was_changed = true;
                 }
             }
         }
 
         assert(is_correct());
-        return is_changed;
+        return was_changed;
     }
 
 private:
