@@ -8,6 +8,7 @@
 #include <random>
 #include <string>
 #include <string_view>
+#include <type_traits>
 #include <vector>
 #include <utility>
 
