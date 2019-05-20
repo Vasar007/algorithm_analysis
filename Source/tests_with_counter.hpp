@@ -77,7 +77,7 @@ int test_1(const int vertices_number = 30, const int s = 0, const bool verbose =
 
 int test_2(const int vertices_number = 10, const bool verbose = true)
 {
-    const auto graph_instance = gen::generate_rand_graph(vertices_number);
+    const auto graph_instance = gen::generate_tricky_case(vertices_number);
     return detail::_make_test(graph_instance,
                               utils::take_accidentally(graph_instance.data()).first, verbose);
 }
@@ -90,7 +90,7 @@ void average_time_tests_series()
 
     constexpr int start_value = 80;
     constexpr int end_value = 320;
-    constexpr int launches_number = 52992;
+    constexpr int launches_number = 200;
     constexpr int step = 10;
 
     // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
@@ -120,9 +120,7 @@ void average_time_tests_series()
                         "Number of vertex", "Operations number",
                         one_test_results);
         time_results.emplace_back(i, result / launches_number);
-        return;
     }
-    return;
     utils::out_data("levit_rand_tests_average_series.txt", "1p", "def",
                     "Random tests for Levit's algorithm", "Number of vertex", "Operations number",
                     time_results);
