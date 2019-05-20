@@ -438,4 +438,86 @@ std::vector<WeightT> levit_algorithm_2(const graph<Type, WeightT>& graph_instanc
     return distances;
 }
 
+// Levit's algorithm implementation with counter.
+template <class Type, class WeightT = int>
+std::pair<std::unordered_map<Type, WeightT>, int> levit_algorithm_with_counter(
+    const graph<Type, WeightT>& graph_instance, const Type& s)
+{
+    static_assert(std::is_integral_v<Type>,
+                  "Vertex elements type has to be integral for Levit's algorithm!");
+
+    std::unordered_set<Type> m0;
+    std::deque<Type> m1{ s };
+    std::deque<Type> m1_;
+    std::unordered_set<Type> m2;
+
+    const std::size_t N = graph_instance.data().size();
+    constexpr WeightT INF = std::numeric_limits<WeightT>::max();
+
+    std::unordered_map<Type, WeightT> distances;
+    distances.reserve(N);
+
+    m0.reserve(N);
+    m2.reserve(N);
+
+    for (const auto& [vertex, list] : graph_instance.data())
+    {
+        if (vertex != s)
+        {
+            distances[vertex] = INF;
+            m2.insert(vertex);
+        }
+        else
+        {
+            distances[vertex] = 0;
+        }
+    }
+
+    int counter = 0;
+    while (!m1.empty() || !m1_.empty())
+    {
+        Type u;
+        if (m1_.empty())
+        {
+            u = std::move(m1.front());
+            m1.pop_front();
+        }
+        else
+        {
+            u = std::move(m1_.front());
+            m1_.pop_front();
+        }
+
+        for (const auto& [v, weight] : graph_instance.data().at(u))
+        {
+            const WeightT new_weight = distances.at(u) + weight;
+            if (const auto search_m2 = m2.find(v); search_m2 != std::end(m2))
+            {
+                m1.push_back(v);
+                m2.erase(search_m2);
+                distances.at(v) = std::min(distances.at(v), new_weight);
+                ++counter;
+            }
+            else if (std::find(std::begin(m1), std::end(m1), v) != std::end(m1) ||
+                     std::find(std::begin(m1_), std::end(m1_), v) != std::end(m1_))
+            {
+                distances.at(v) = std::min(distances.at(v), new_weight);
+                ++counter;
+            }
+            else if (const auto search_m0 = m0.find(v);
+                     search_m0 != std::end(m0) && distances.at(v) > new_weight)
+            {
+                m1_.push_back(v);
+                m0.erase(search_m0);
+                distances.at(v) = new_weight;
+                ++counter;
+            }
+            //++counter;
+        }
+        m0.insert(u);
+    }
+
+    return { distances, counter };
+}
+
 } // namespace vv

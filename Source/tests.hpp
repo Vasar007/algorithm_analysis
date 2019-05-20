@@ -100,7 +100,7 @@ detail::dmilliseconds test_2(const int vertices_number = 10, const bool verbose 
 void time_tests_series()
 {
     std::cout << "Execute default test suit\n";
-    tests::test_0();
+    test_0();
 
     constexpr int start_vertex_id = 0; // Start vertex.
     constexpr bool verbose = false; // Output result flag.
@@ -118,7 +118,7 @@ void time_tests_series()
         if (size >= vertices_number.back()) break;
 
         std::cout << "Size: " << size << '\n';
-        const auto result = tests::test_1(i, start_vertex_id, verbose).count();
+        const auto result = test_1(i, start_vertex_id, verbose).count();
         time_results.emplace_back(size, result);
     }
     utils::out_data("levit_complex_case.txt", "1p", "def",
@@ -131,7 +131,7 @@ void time_tests_series()
     for (const auto& i : vertices_number)
     {
         std::cout << "Size: " << i << '\n';
-        const auto result = tests::test_2(i, verbose).count();
+        const auto result = test_2(i, verbose).count();
         time_results.emplace_back(i, result);
     }
     utils::out_data("levit_rand_tests.txt", "1p", "def",
@@ -161,7 +161,7 @@ void average_time_tests_series()
         double result = 0;
         for (int j = 1; j <= launches_number; ++j)
         {
-            const auto launch_result = tests::test_1(i, start_vertex_id, verbose).count();
+            const auto launch_result = test_1(i, start_vertex_id, verbose).count();
             result += launch_result;
         }
 
@@ -180,7 +180,7 @@ void average_time_tests_series()
         double result = 0;
         for (int j = 1; j <= launches_number; ++j)
         {
-            const auto launch_result = tests::test_2(i, verbose).count();
+            const auto launch_result = test_2(i, verbose).count();
             result += launch_result;
         }
 
@@ -215,7 +215,7 @@ void average_time_tests_relative()
         double result = 0;
         for (int j = 1; j <= launches_number; ++j)
         {
-            const auto launch_result = tests::test_1(i, start_vertex_id, verbose).count();
+            const auto launch_result = test_1(i, start_vertex_id, verbose).count();
             result += launch_result;
         }
 
@@ -239,7 +239,7 @@ void average_time_tests_relative()
         double result = 0;
         for (int j = 1; j <= launches_number; ++j)
         {
-            const auto launch_result = tests::test_2(i, verbose).count();
+            const auto launch_result = test_2(i, verbose).count();
             result += launch_result;
         }
 

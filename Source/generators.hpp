@@ -7,6 +7,7 @@
 #include <iterator>
 #include <limits>
 #include <vector>
+#include <utility>
 
 #include "graph.hpp"
 #include "utils.hpp"
@@ -143,7 +144,7 @@ generate_tricky_case_article(const int n_value = 3)
     const int edges_number = 3 * n_value + 2 * (n_value - 1);
 
     // Set some big value for edge weights.
-    const long long big_value = static_cast<long long>(std::pow(2, n_value + 1) + 1);
+    const auto big_value = static_cast<long long>(std::pow(2, n_value + 1) + 1);
 
     // Generate vector of graph edges. This is complex case which can cause exponential complexity
     // if implementation of Levit's algorithm would use deque instead of two queues.

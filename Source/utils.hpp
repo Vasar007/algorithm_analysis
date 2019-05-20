@@ -2,12 +2,13 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <iterator>
+#include <limits>
 #include <random>
 #include <string>
-#include <string_view>
 #include <vector>
 #include <utility>
 
