@@ -76,24 +76,24 @@ detail::dmilliseconds test_0(const int start_vertex = 3, const bool verbose = tr
     constexpr bool bilateral = false;
 
     // Construct graph.
-    vv::graph<int, long long> g(edges, bilateral, N);
+    vv::graph<int, long long> graph_instance(edges, bilateral, N);
 
-    return detail::_make_test(g, start_vertex, verbose);
+    return detail::_make_test(graph_instance, start_vertex, verbose);
 }
 
 detail::dmilliseconds test_1(const int vertices_number = 30, const int s = 0,
                              const bool verbose = true)
 {
     assert(0 <= s && s < vertices_number * 3 + 1);
-    const auto g = gen::generate_tricky_case(vertices_number);
-    return detail::_make_test(g, s, verbose);
+    const auto graph_instance = gen::generate_tricky_case(vertices_number);
+    return detail::_make_test(graph_instance, s, verbose);
 }
 
 detail::dmilliseconds test_2(const int vertices_number = 10, const bool verbose = true)
 {
     const int edges_number = vv::get_full_graph_edges_number(vertices_number);
-    const auto g = gen::generate_rand_graph(vertices_number, edges_number);
-    return detail::_make_test(g, utils::take_accidentally(g.data()).first, verbose);
+    const auto graph_instance = gen::generate_rand_graph(vertices_number, edges_number);
+    return detail::_make_test(graph_instance, utils::take_accidentally(graph_instance.data()).first, verbose);
 }
 
 /// Test section.
