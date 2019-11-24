@@ -56,13 +56,13 @@ dmilliseconds _make_test(const vv::graph<Type, WeightT>& graph_instance, const T
 
 } // namespace detail
 
-detail::dmilliseconds test_0(const int start_vertex_id = 3, const bool verbose = true)
+detail::dmilliseconds test_0(const int start_vertex = 3, const bool verbose = true)
 {
     // Number of nodes in the graph. NOT hardcoded value, need to help hash map to reserve proper
     // number of buckets.
     constexpr std::size_t N = 6;
 
-    assert(0 <= start_vertex_id && start_vertex_id < N);
+    assert(0 <= start_vertex && start_vertex < N);
 
     // Vector of graph edges.
     const std::vector<vv::edge<int, long long>> edges =
@@ -78,7 +78,7 @@ detail::dmilliseconds test_0(const int start_vertex_id = 3, const bool verbose =
     // Construct graph.
     vv::graph<int, long long> g(edges, bilateral, N);
 
-    return detail::_make_test(g, start_vertex_id, verbose);
+    return detail::_make_test(g, start_vertex, verbose);
 }
 
 detail::dmilliseconds test_1(const int vertices_number = 30, const int s = 0,
