@@ -13,19 +13,20 @@
 
 #include "generators.hpp"
 #include "graph.hpp"
+#include "sort.hpp"
 #include "utils.hpp"
 
 
-namespace tests_research
+namespace tests_with_counter
 {
 
-namespace detail
+namespace details
 {
 
 using dmilliseconds = std::chrono::duration<double, std::milli>;
 
 template <class Type, class WeightT = int>
-int _make_test(const vv::graph<Type, WeightT>& graph_instance, const Type& s,
+int _make_test(const vv::graph<Type, WeightT>& graph_instance, const Type& start_vertex,
     const bool verbose = true)
 {
     // Print adjacency list representation of graph.
@@ -35,21 +36,28 @@ int _make_test(const vv::graph<Type, WeightT>& graph_instance, const Type& s,
     }
 
     // Call Levit's algorithm.
-    const auto result = vv::levit_algorithm_with_counter(graph_instance, s);
+    const auto result = vv::levit_algorithm_with_counter(graph_instance, start_vertex);
 
-    //return elapsed;
     return result.second;
 }
 
-} // namespace detail
+int _make_test(std::vector<int>& arr)
+{
+    // Call insertion sort.
+    const auto result = sort::insertion_sort(arr);
 
-int test_0(const int s = 3, const bool verbose = true)
+    return result;
+}
+
+} // namespace details
+
+int test_0(const int start_vertex = 3, const bool verbose = true)
 {
     // Number of nodes in the graph. NOT hardcoded value, need to help hash map to reserve proper
     // number of buckets.
     constexpr std::size_t N = 6;
 
-    assert(0 <= s && s < N);
+    assert(0 <= start_vertex && start_vertex < N);
 
     // Vector of graph edges.
     const std::vector<vv::edge<int, long long>> edges =
@@ -65,26 +73,33 @@ int test_0(const int s = 3, const bool verbose = true)
     // Construct graph.
     const vv::graph<int, long long> graph_instance(edges, bilateral, N);
 
-    return detail::_make_test(graph_instance, s, verbose);
+    return details::_make_test(graph_instance, start_vertex, verbose);
 }
 
-int test_1(const int vertices_number = 30, const int s = 0, const bool verbose = true)
+int test_1(const int vertices_number = 30, const int start_vertex = 0, const bool verbose = true)
 {
-    assert(0 <= s && s < vertices_number * 3 + 1);
+    assert(0 <= start_vertex && start_vertex < vertices_number * 3 + 1);
     const auto graph_instance = gen::generate_tricky_case(vertices_number);
-    return detail::_make_test(graph_instance, s, verbose);
+    return details::_make_test(graph_instance, start_vertex, verbose);
 }
 
 int test_2(const int vertices_number = 10, const bool verbose = true)
 {
-    const auto graph_instance = gen::generate_tricky_case(vertices_number);
-    return detail::_make_test(graph_instance,
+    //const auto graph_instance = gen::generate_tricky_case(vertices_number);
+    const auto graph_instance = vv::read_csv_and_add_weights("test.csv");
+    return details::_make_test(graph_instance, //static_cast<int>(vertices_number / 2), verbose);
                               utils::take_accidentally(graph_instance.data()).first, verbose);
 }
 
+int test_array_sort(const int elements_number = 10, const bool verbose = true)
+{
+    auto arr = gen_array::create_random_array(elements_number);
+    return details::_make_test(arr);
+}
 
 /// Test section.
-void average_time_tests_series()
+
+void average_operation_number_tests_series()
 {
     constexpr bool verbose = false; // Output result flag.
 
@@ -95,8 +110,8 @@ void average_time_tests_series()
 
     // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
     // merges queues M1' and M1'' into one M1.
-    std::vector<std::pair<double, double>> time_results;
-    time_results.reserve(end_value / start_value);
+    std::vector<std::pair<double, double>> operation_results;
+    operation_results.reserve(end_value / start_value);
 
     // Random test cases.
     std::cout << "Execute random test suit\n";
@@ -108,22 +123,22 @@ void average_time_tests_series()
         one_test_results.reserve(launches_number);
         for (int j = 1; j <= launches_number; ++j)
         {
-            const auto launch_result = test_2(i, verbose);
+            const auto launch_result = test_array_sort(i, verbose);
             result += launch_result;
             one_test_results.emplace_back(launch_result);
             std::cout << "Execution: " << j << "; Operations number: " << launch_result << '\n';
         }
 
         const auto number = std::to_string(i);
-        utils::out_data("levit_rand_tests_average_" + number + ".txt", "1p", "def",
-                        "Random tests for Levit's algorithm, single test with n=" + number,
+        utils::out_data("rand_tests_average_" + number + ".txt", "1p", "def",
+                        "Random tests for algorithm analysis, single test with n=" + number,
                         "Number of vertex", "Operations number",
                         one_test_results);
-        time_results.emplace_back(i, result / launches_number);
+        operation_results.emplace_back(i, result / launches_number);
     }
-    utils::out_data("levit_rand_tests_average_series.txt", "1p", "def",
-                    "Random tests for Levit's algorithm", "Number of vertex", "Operations number",
-                    time_results);
+    utils::out_data("rand_tests_average_series.txt", "1p", "def",
+                    "Random tests for algorithm analysis", "Number of vertex", "Operations number",
+                    operation_results);
 }
 
 
@@ -147,7 +162,7 @@ void create_theoretical_data()
     {
         results.emplace_back(average_case(i));
     }
-    utils::out_data("levit_theory.txt", "1p", "def",
+    utils::out_data("theory_data.txt", "1p", "def",
                     "Theoretical results", "Number of vertex", "Completion time, ms",
                     results);
 
@@ -156,9 +171,9 @@ void create_theoretical_data()
     {
         results.emplace_back(average_case(i));
     }
-    utils::out_data("levit_theory2.txt", "1p", "def",
+    utils::out_data("theory_data2.txt", "1p", "def",
                     "Theoretical results", "Number of vertex", "Completion time, ms",
                     results);
 }
 
-} // namespace tests_research
+} // namespace tests_with_counter

@@ -8,9 +8,10 @@ add_executable(${EXECUTABLE_NAME}
     utils.hpp
     utils.cpp
 
+    sort.hpp
     graph.hpp
     generators.hpp
-    tests.hpp
+    tests_with_time.hpp
     tests_with_counter.hpp
 
     main.cpp

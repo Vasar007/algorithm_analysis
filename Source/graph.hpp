@@ -4,9 +4,13 @@
 
 #include <algorithm>
 #include <deque>
+#include <fstream>
 #include <limits>
 #include <numeric>
 #include <ostream>
+#include <sstream>
+#include <string>
+#include <string_view>
 #include <type_traits>
 #include <unordered_map>
 #include <unordered_set>
@@ -87,6 +91,11 @@ public:
     using reference                      = value_type&;
     using const_reference                = const value_type&;
 
+
+    explicit graph(const bool bilateral = false)
+    : _bilateral(bilateral)
+    {
+    }
 
     explicit graph(const std::vector<edge<value_type, weight_type>>& edges,
                    const bool bilateral = false, const size_type vertices_number = 100)
@@ -302,6 +311,52 @@ std::ostream& operator<<(std::ostream& os, const graph<Type, WeightT>& graph_ins
     return os;
 }
 
+int get_full_graph_edges_number(const int vertices_number)
+{
+    return vertices_number * (vertices_number - 1) / 2;
+}
+
+
+graph<int, long long> read_csv_and_add_weights(const std::string_view path)
+{
+    if (std::ifstream infile(path.data()); infile.is_open())
+    {
+        std::string line;
+        std::vector<vv::edge<int, long long>> edges;
+        std::size_t vertices_number = 0;
+
+        while (std::getline(infile, line))
+        {
+            std::istringstream iss(line);
+            
+            int source = -1;
+            int dest;
+            while (iss >> dest)
+            {
+                if (source == -1)
+                {
+                    source = dest;
+                    ++vertices_number;
+                    continue;
+                }
+
+                edges.emplace_back(source, dest, utils::random_number<long long>(0, 10'000));
+            }
+        }
+
+        // Define bilateral graph property.
+        constexpr bool bilateral = false;
+
+        graph<int, long long> graph_instance(edges, bilateral, vertices_number);
+        assert(graph_instance.is_correct());
+
+        return graph_instance;
+    }
+    
+    std::cout << "Could not open file!\n";
+    return graph<int, long long>{};
+}
+
 // Levit's algorithm implementation with two data structures for M1.
 template <class Type, class WeightT = int>
 std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& graph_instance, 
@@ -441,13 +496,13 @@ std::vector<WeightT> levit_algorithm_2(const graph<Type, WeightT>& graph_instanc
 // Levit's algorithm implementation with counter.
 template <class Type, class WeightT = int>
 std::pair<std::unordered_map<Type, WeightT>, int> levit_algorithm_with_counter(
-    const graph<Type, WeightT>& graph_instance, const Type& s)
+    const graph<Type, WeightT>& graph_instance, const Type& start_vertex)
 {
     static_assert(std::is_integral_v<Type>,
                   "Vertex elements type has to be integral for Levit's algorithm!");
 
     std::unordered_set<Type> m0;
-    std::deque<Type> m1{ s };
+    std::deque<Type> m1{ start_vertex };
     std::deque<Type> m1_;
     std::unordered_set<Type> m2;
 
@@ -462,7 +517,7 @@ std::pair<std::unordered_map<Type, WeightT>, int> levit_algorithm_with_counter(
 
     for (const auto& [vertex, list] : graph_instance.data())
     {
-        if (vertex != s)
+        if (vertex != start_vertex)
         {
             distances[vertex] = INF;
             m2.insert(vertex);
@@ -512,9 +567,56 @@ std::pair<std::unordered_map<Type, WeightT>, int> levit_algorithm_with_counter(
                 distances.at(v) = new_weight;
                 ++counter;
             }
-            //++counter;
         }
         m0.insert(u);
+    }
+
+    return { distances, counter };
+}
+
+// Ford-Bellman's algorithm implementation with counter.
+template <class Type, class WeightT = int>
+std::pair<std::unordered_map<Type, WeightT>, int> ford_bellman_algorithm_with_counter(
+    const graph<Type, WeightT>& graph_instance, const Type& s)
+{
+    static_assert(std::is_integral_v<Type>,
+                  "Vertex elements type has to be integral for Levit's algorithm!");
+
+    const std::size_t N = graph_instance.data().size();
+    constexpr WeightT INF = std::numeric_limits<WeightT>::max();
+
+    std::unordered_map<Type, WeightT> distances;
+    distances.reserve(N);
+
+    for (const auto& [vertex, list] : graph_instance.data())
+    {
+        if (vertex != s)
+        {
+            distances[vertex] = INF;
+        }
+        else
+        {
+            distances[vertex] = 0;
+        }
+    }
+
+    int counter = 0;
+    bool stop = false;
+    for (std::size_t k = 0; k < N - 1 && !stop; ++k)
+    {
+        stop = true;
+        for (const auto& [u, list] : graph_instance.data())
+        {
+            for (const auto& [v, weight] : list)
+            {
+                if (distances.at(u) != INF && distances.at(u) + weight < distances.at(v))
+                {
+                    distances.at(v) = distances.at(u) + weight;
+                    stop = false;
+                    ++counter;
+                }
+            }
+        }
     }
 
     return { distances, counter };

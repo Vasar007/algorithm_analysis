@@ -43,11 +43,12 @@ void check_and_fix(vv::graph<Type, WeightT>& graph_instance)
 
 // A function to generate random graph.
 [[nodiscard]] vv::graph<int, long long>
-generate_rand_graph(const int vertices_number)
+generate_rand_graph(const int vertices_number, const int edges_number)
 {
+    // Reject simple graph.
     assert(vertices_number > 1);
+    assert(edges_number > 0);
 
-    const int edges_number = 3 * vertices_number;
     std::vector<vv::edge<int, long long>> edges;
     edges.reserve(edges_number);
 
@@ -70,7 +71,7 @@ generate_rand_graph(const int vertices_number)
 
         if (!contains)
         {
-            edges.emplace_back(std::move(new_edge));
+            edges.emplace_back(new_edge);
             ++i;
         }
     }
@@ -84,7 +85,7 @@ generate_rand_graph(const int vertices_number)
 }
 
 [[nodiscard]] vv::graph<int, long long>
-generate_tricky_case(const int vertices_number = 30)
+generate_tricky_case(const std::size_t vertices_number = 30)
 {
     assert(vertices_number > 1);
 
@@ -94,7 +95,7 @@ generate_tricky_case(const int vertices_number = 30)
     // Generate vector of graph edges. This is complex case which can cause exponential complexity
     // if implementation of Levit's algorithm would use deque instead of two queues.
     std::vector<vv::edge<int, long long>> edges;
-    edges.reserve(vertices_number * 4);
+    edges.reserve(vertices_number * 4 + 1);
     for (int i = 0; i < vertices_number; ++i)
     {
         edges.emplace_back(i, i + 1, 0);
