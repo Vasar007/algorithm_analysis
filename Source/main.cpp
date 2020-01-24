@@ -11,8 +11,6 @@
 
 int main(const int argc, const char* const * const argv)
 {
-    
-
     // The first argument is path to executed file.
 
     if (constexpr int no_additional_arguments = 1;
