@@ -16,19 +16,19 @@
 namespace gen
 {
 
-[[nodiscard]] vv::edge<int, long long> create_edge(const int exclude_border)
+[[nodiscard]] vv::edge<int, long long> create_edge(const int upper_border)
 {
-    int src = utils::random_number(0, exclude_border);
-    int dest = utils::random_number(0, exclude_border);
+    int src = utils::random_number(0, upper_border);
+    int dest = utils::random_number(0, upper_border);
 
     // Check if we have self-connected edge.
     while (src == dest)
     {
-        src = utils::random_number(0, exclude_border);
-        dest = utils::random_number(0, exclude_border);
+        src = utils::random_number(0, upper_border);
+        dest = utils::random_number(0, upper_border);
     }
 
-    return { src, dest, utils::random_number<long long>(0, 10'000) };
+    return { src, dest, utils::random_number<long long>(0, utils::UPPER_BORDER) };
 }
 
 template <class Type, class WeightT = int>
@@ -84,6 +84,38 @@ generate_rand_graph(const int vertices_number, const int edges_number)
     return graph_instance;
 }
 
+// A function to generate random graph.
+[[nodiscard]] vv::graph<int, long long>
+generate_full_graph(const int vertices_number)
+{
+    // Reject simple graph.
+    assert(vertices_number > 1);
+
+    const int edges_number = vv::get_full_graph_edges_number(vertices_number);
+
+    std::vector<vv::edge<int, long long>> edges;
+    edges.reserve(edges_number);
+
+    for (int src = 0; src < vertices_number; ++src)
+    {
+        for (int dest = src + 1; dest < vertices_number; ++dest)
+        {
+            edges.emplace_back(
+                src, dest, utils::random_number<long long>(0, utils::UPPER_BORDER)
+            );
+        }
+    }
+
+    // TODO: check triangle inequality and fix graph.
+
+    // Define bilateral graph property.
+    constexpr bool bilateral = true;
+
+    vv::graph<int, long long> graph_instance(edges, bilateral, vertices_number);
+    assert(graph_instance.is_correct());
+    return graph_instance;
+}
+
 [[nodiscard]] vv::graph<int, long long>
 generate_tricky_case(const std::size_t vertices_number = 30)
 {
@@ -102,7 +134,7 @@ generate_tricky_case(const std::size_t vertices_number = 30)
     }
 
     edges.emplace_back(0, vertices_number, big_value);
-    int n = vertices_number;
+    int n = static_cast<int>(vertices_number);
 
     for (int i = 0; i < vertices_number; ++i)
     {

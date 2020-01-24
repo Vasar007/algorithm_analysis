@@ -18,15 +18,16 @@
 namespace utils
 {
 
-std::mt19937 create_random_engine();
+constexpr int UPPER_BORDER = 10'000;
 
+std::mt19937 create_random_engine();
 inline std::mt19937 RANDOM_ENGINE = create_random_engine();
 
 template <class Type>
 [[nodiscard]] std::enable_if_t<std::is_arithmetic_v<Type>, Type>
 random_number(const Type& a = 0, const Type& b = std::numeric_limits<Type>::max())
 {
-    assert(a <= b);
+    assert(a <= b); // According to doc, we can get values in segment [a, b].
     std::uniform_int_distribution<Type> distribution(a, b);
     return distribution(RANDOM_ENGINE);
 }
@@ -49,7 +50,7 @@ template <class OutputStream, class Container>
 void println(OutputStream& out, const Container& container)
 {
     print(out, container);
-    std::cout << '\n';
+    out << '\n';
 }
 
 template <class OutputStream, class Container>
@@ -57,7 +58,7 @@ void print_pair(OutputStream& out, const Container& container)
 {
     for (const auto& [first, second] : container)
     {
-        std::cout << first << ": " << second << '\n';
+        out << first << ": " << second << '\n';
     }
 }
 
@@ -72,17 +73,17 @@ void pause(const std::string_view message = "\nPress the Enter key to continue..
 
 void pause_clear(const std::string_view message = "Press ENTER to continue...");
 
-void out_data(const std::string& file_name, const std::string_view mode,
+void out_data(const std::string_view file_name, const std::string_view mode,
               const std::string_view param, const std::string_view title,
               const std::string_view x_label, const std::string_view y_label,
               const std::vector<double>& data);
 
-void out_data(const std::string& file_name, const std::string_view mode,
+void out_data(const std::string_view file_name, const std::string_view mode,
               const std::string_view param, const std::string_view title,
               const std::string_view x_label, const std::string_view y_label,
               const std::vector<std::pair<double, double>>& data);
 
-void out_data(const std::string& file_name, const std::string_view mode,
+void out_data(const std::string_view file_name, const std::string_view mode,
               const std::string_view param, const std::string_view title,
               const std::string_view x_label, const std::string_view y_label,
               const std::vector<std::pair<double, double>>& data_1,

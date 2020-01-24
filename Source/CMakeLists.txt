@@ -11,6 +11,7 @@ add_executable(${EXECUTABLE_NAME}
     sort.hpp
     graph.hpp
     generators.hpp
+    common_logic.hpp
     tests_with_time.hpp
     tests_with_counter.hpp
 

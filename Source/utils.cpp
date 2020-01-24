@@ -41,7 +41,7 @@ void pause_clear(const std::string_view message)
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-void out_data(const std::string& file_name, const std::string_view mode,
+void out_data(const std::string_view file_name, const std::string_view mode,
               const std::string_view param, const std::string_view title,
               const std::string_view x_label, const std::string_view y_label,
               const std::vector<double>& data)
@@ -52,15 +52,17 @@ void out_data(const std::string& file_name, const std::string_view mode,
         return;
     }
 
-    std::ofstream out_file(file_name);
+    std::ofstream out_file(file_name.data());
     out_file << mode << '|' << param << '|' << title << '|' << x_label << '|' << y_label << '\n';
     for (const auto& x : data)
     {
         out_file << x << '\n';
     }
+
+    out_file.flush();
 }
 
-void out_data(const std::string& file_name, const std::string_view mode,
+void out_data(const std::string_view file_name, const std::string_view mode,
               const std::string_view param, const std::string_view title,
               const std::string_view x_label, const std::string_view y_label,
               const std::vector<std::pair<double, double>>& data)
@@ -71,15 +73,17 @@ void out_data(const std::string& file_name, const std::string_view mode,
         return;
     }
 
-    std::ofstream out_file(file_name);
+    std::ofstream out_file(file_name.data());
     out_file << mode << '|' << param << '|' << title << '|' << x_label << '|' << y_label << '\n';
     for (const auto& [x, y] : data)
     {
         out_file << x << ' ' << y << '\n';
     }
+
+    out_file.flush();
 }
 
-void out_data(const std::string& file_name, const std::string_view mode,
+void out_data(const std::string_view file_name, const std::string_view mode,
               const std::string_view param, const std::string_view title,
               const std::string_view x_label, const std::string_view y_label,
               const std::vector<std::pair<double, double>>& data_1,
@@ -91,17 +95,20 @@ void out_data(const std::string& file_name, const std::string_view mode,
         return;
     }
 
-    std::ofstream out_file(file_name);
+    std::ofstream out_file(file_name.data());
     out_file << mode << '|' << param << '|' << title << '|' << x_label << '|' << y_label << '\n';
     for (const auto& [x, y] : data_1)
     {
         out_file << x << ' ' << y << '\n';
     }
+
     out_file << "#\n";
     for (const auto [x, y] : data_2)
     {
         out_file << x << ' ' << y << '\n';
     }
+
+    out_file.flush();
 }
 
 } // namespace utils

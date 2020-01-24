@@ -85,13 +85,14 @@ int test_1(const int vertices_number = 30, const int start_vertex = 0, const boo
 
 int test_2(const int vertices_number = 10, const bool verbose = true)
 {
-    //const auto graph_instance = gen::generate_tricky_case(vertices_number);
-    const auto graph_instance = vv::read_csv_and_add_weights("test.csv");
-    return details::_make_test(graph_instance, //static_cast<int>(vertices_number / 2), verbose);
-                              utils::take_accidentally(graph_instance.data()).first, verbose);
+    const auto graph_instance = gen::generate_full_graph(vertices_number);
+    //const auto graph_instance = vv::read_csv_and_add_weights("test.csv");
+    return details::_make_test(
+        graph_instance, utils::take_accidentally(graph_instance.data()).first, verbose
+    );
 }
 
-int test_array_sort(const int elements_number = 10, const bool verbose = true)
+int test_array_sort(const int elements_number = 10)
 {
     auto arr = gen_array::create_random_array(elements_number);
     return details::_make_test(arr);
@@ -105,11 +106,9 @@ void average_operation_number_tests_series()
 
     constexpr int start_value = 80;
     constexpr int end_value = 320;
-    constexpr int launches_number = 200;
+    constexpr int launches_number = 149192; // 200
     constexpr int step = 10;
 
-    // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
-    // merges queues M1' and M1'' into one M1.
     std::vector<std::pair<double, double>> operation_results;
     operation_results.reserve(end_value / start_value);
 
@@ -123,7 +122,7 @@ void average_operation_number_tests_series()
         one_test_results.reserve(launches_number);
         for (int j = 1; j <= launches_number; ++j)
         {
-            const auto launch_result = test_array_sort(i, verbose);
+            const auto launch_result = test_2(i, verbose);
             result += launch_result;
             one_test_results.emplace_back(launch_result);
             std::cout << "Execution: " << j << "; Operations number: " << launch_result << '\n';
@@ -135,45 +134,12 @@ void average_operation_number_tests_series()
                         "Number of vertex", "Operations number",
                         one_test_results);
         operation_results.emplace_back(i, result / launches_number);
+        //return;
     }
+    return;
     utils::out_data("rand_tests_average_series.txt", "1p", "def",
                     "Random tests for algorithm analysis", "Number of vertex", "Operations number",
                     operation_results);
-}
-
-
-void create_theoretical_data()
-{
-    std::cout << "Create theoretical results\n";
-    // Create tests array.
-    constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
-    constexpr std::array vertices_number2{ 31, 61, 121, 241, 481, 961, 1921 };
-
-    const auto average_case = [](const int n) -> std::pair<double, double>
-    {
-        //return { n, 5.337284676655264e-7 * std::pow(n, 1.7064882767951628) + 0.005903886140516 };
-        //return { n, 5.35413e-8 * std::pow(n, 2.00015798) + 0.0180708 }; // rand case
-        return { n, 8.83783e-7 * std::pow(n, 1.99995349) - 0.0360029 }; // bad case
-    };
-
-    std::vector<std::pair<double, double>> results;
-    results.reserve(vertices_number.size());
-    for (const auto& i : vertices_number)
-    {
-        results.emplace_back(average_case(i));
-    }
-    utils::out_data("theory_data.txt", "1p", "def",
-                    "Theoretical results", "Number of vertex", "Completion time, ms",
-                    results);
-
-    results.clear();
-    for (int i = vertices_number2.front(); i <= vertices_number2.back(); i += 10)
-    {
-        results.emplace_back(average_case(i));
-    }
-    utils::out_data("theory_data2.txt", "1p", "def",
-                    "Theoretical results", "Number of vertex", "Completion time, ms",
-                    results);
 }
 
 } // namespace tests_with_counter

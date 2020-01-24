@@ -340,7 +340,9 @@ graph<int, long long> read_csv_and_add_weights(const std::string_view path)
                     continue;
                 }
 
-                edges.emplace_back(source, dest, utils::random_number<long long>(0, 10'000));
+                edges.emplace_back(
+                    source, dest, utils::random_number<long long>(0, utils::UPPER_BORDER)
+                );
             }
         }
 

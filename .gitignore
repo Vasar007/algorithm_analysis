@@ -34,3 +34,8 @@
 # User defined block
 .vscode/
 .vs/
+*xlsx
+*.log
+*.aux
+*.toc
+*.gz

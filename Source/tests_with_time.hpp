@@ -81,19 +81,21 @@ detail::dmilliseconds test_0(const int start_vertex = 3, const bool verbose = tr
     return detail::_make_test(graph_instance, start_vertex, verbose);
 }
 
-detail::dmilliseconds test_1(const int vertices_number = 30, const int s = 0,
+detail::dmilliseconds test_1(const int vertices_number = 30, const int start_vertex = 0,
                              const bool verbose = true)
 {
-    assert(0 <= s && s < vertices_number * 3 + 1);
+    assert(0 <= start_vertex && start_vertex < vertices_number * 3 + 1);
     const auto graph_instance = gen::generate_tricky_case(vertices_number);
-    return detail::_make_test(graph_instance, s, verbose);
+    return detail::_make_test(graph_instance, start_vertex, verbose);
 }
 
 detail::dmilliseconds test_2(const int vertices_number = 10, const bool verbose = true)
 {
     const int edges_number = vv::get_full_graph_edges_number(vertices_number);
     const auto graph_instance = gen::generate_rand_graph(vertices_number, edges_number);
-    return detail::_make_test(graph_instance, utils::take_accidentally(graph_instance.data()).first, verbose);
+    return detail::_make_test(
+        graph_instance, utils::take_accidentally(graph_instance.data()).first, verbose
+    );
 }
 
 /// Test section.
@@ -108,7 +110,7 @@ void time_tests_series()
     // Create tests array.
     constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
 
-    // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
+    // Tricky case for Levit'start_vertex algorithm which can cause exponential complexity if implementation
     // merges queues M1' and M1'' into one M1.
     std::cout << "Execute tricky test suit\n";
     std::vector<std::pair<double, double>> time_results;
@@ -151,7 +153,7 @@ void average_time_tests_series()
     constexpr int launches_number = 10;
     constexpr int step = 10;
 
-    // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
+    // Tricky case for Levit'start_vertex algorithm which can cause exponential complexity if implementation
     // merges queues M1' and M1'' into one M1.
     std::cout << "Execute tricky test suit\n";
     std::vector<std::pair<double, double>> time_results;
@@ -202,7 +204,7 @@ void average_time_tests_relative()
     constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
     constexpr int launches_number = 10;
 
-    // Tricky case for Levit's algorithm which can cause exponential complexity if implementation
+    // Tricky case for Levit'start_vertex algorithm which can cause exponential complexity if implementation
     // merges queues M1' and M1'' into one M1.
     std::cout << "Execute tricky test suit\n";
     std::vector<std::pair<double, double>> time_results;
@@ -254,39 +256,6 @@ void average_time_tests_relative()
                     "Random tests for algorithm analysis, relative", "Number of vertex",
                     "Completion time, ms",
                     time_results);
-}
-
-void create_theoretical_data()
-{
-    std::cout << "Create theoretical results\n";
-    // Create tests array.
-    constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
-    constexpr std::array vertices_number2{ 31, 61, 121, 241, 481, 961, 1921 };
-
-    const auto average_case = [](const int n) -> std::pair<double, double>
-    {
-        //return { n, 5.35413e-8 * std::pow(n, 2.00015798) + 0.0180708 }; // rand case
-        return { n, 8.83783e-7 * std::pow(n, 1.99995349) - 0.0360029 }; // bad case
-    };
-
-    std::vector<std::pair<double, double>> results;
-    results.reserve(vertices_number.size());
-    for (const auto& i : vertices_number)
-    {
-        results.emplace_back(average_case(i));
-    }
-    utils::out_data("theory_data.txt", "1p", "def",
-                    "Theoretical results", "Number of vertex", "Completion time, ms",
-                    results);
-
-    results.clear();
-    for (int i = vertices_number2.front(); i <= vertices_number2.back(); i += 10)
-    {
-        results.emplace_back(average_case(i));
-    }
-    utils::out_data("theory_data2.txt", "1p", "def",
-                    "Theoretical results", "Number of vertex", "Completion time, ms",
-                    results);
 }
 
 } // namespace tests_with_time
