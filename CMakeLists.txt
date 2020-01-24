@@ -28,4 +28,4 @@ else ()
 endif()
 
 # Include sub-projects.
-add_subdirectory(Source)
+add_subdirectory("Source/algorithms")
