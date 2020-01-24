@@ -1,3 +1,3 @@
 # algorithm_analysis
 
-Empirical analysis of Levit's algorithm.
+Empirical analysis of algorithms.
