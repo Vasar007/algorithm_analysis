@@ -202,7 +202,7 @@ struct parameters_pack
 
     static constexpr parameters_pack create_default() noexcept
     {
-        return parameters_pack();
+        return parameters_pack(80, 80, 200, 10);
     }
 
     static parameters_pack try_parse(const std::array<std::string_view, 4>& args) noexcept
