@@ -1,5 +1,8 @@
 // Copyright (C) 2018 Vasily Vasilyev (vasar007@yandex.ru)
 
+#include <array>
+#include <string_view>
+
 #include "common_logic.hpp"
 #include "tests_with_time.hpp"
 #include "tests_with_counter.hpp"
@@ -8,24 +11,31 @@
 
 int main(const int argc, const char* const * const argv)
 {
-    if (constexpr int no_arguments = 1;
-        argc == no_arguments)
+    if (constexpr int no_additional_arguments = 1;
+        argc == no_additional_arguments)
     {
-        //tests_with_time::time_tests_series();
-        //tests_with_time::average_time_tests_series();
-        //tests_with_time::average_time_tests_relative();
-        //tests_with_time::create_theoretical_data();
+        tests_with_time::time_tests_series();
+        tests_with_time::average_time_tests_series();
+        tests_with_time::average_time_tests_relative();
+        common_logic::create_theoretical_data();
 
-        tests_with_counter::average_operation_number_tests_series();
+        constexpr auto params = utils::parameters_pack::create_default();
+        tests_with_counter::average_operation_number_tests_series(params);
     }
-    else if (constexpr int parametric_launch = 3;
+    else if (constexpr int parametric_launch = 5;
              argc == parametric_launch)
     {
+        const std::array<std::string_view, 4> args{ argv[1], argv[2], argv[3], argv[4] };
+        const auto params = utils::parameters_pack::try_parse(args);
+        tests_with_counter::average_operation_number_tests_series(params);
     }
     else
     {
-        std::cout << "Invalid arguments number. Usage: " << argv[0]
-                  << " <param_1> <param_2>" << std::endl;
+        constexpr std::string_view error_message = "Invalid arguments number. Usages: \n"
+            "- Without any arguments: <program_name> \n"
+            "- With specified arguments: <program_name> <start_value> <end_value> <launches_number> <step>";
+
+        utils::std_output(error_message);
     }
 
     utils::pause();

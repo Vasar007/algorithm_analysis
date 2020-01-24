@@ -105,7 +105,7 @@ void time_tests_series()
     std::cout << "Execute default test suit\n";
     test_0();
 
-    constexpr int start_vertex_id = 0; // Start vertex.
+    constexpr int start_vertex_id = 0;
     constexpr bool verbose = false; // Output result flag.
     // Create tests array.
     constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };
@@ -145,7 +145,7 @@ void time_tests_series()
 
 void average_time_tests_series()
 {
-    constexpr int start_vertex_id = 0; // Start vertex.
+    constexpr int start_vertex_id = 0;
     constexpr bool verbose = false; // Output result flag.
 
     constexpr int start_value = 80;
@@ -198,7 +198,7 @@ void average_time_tests_series()
 
 void average_time_tests_relative()
 {
-    constexpr int start_vertex_id = 0; // Start vertex.
+    constexpr int start_vertex_id = 0;
     constexpr bool verbose = false; // Output result flag.
     // Create tests array.
     constexpr std::array vertices_number{ 10, 20, 40, 80, 160, 320, 640, 1280, 2560 };

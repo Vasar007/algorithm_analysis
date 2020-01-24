@@ -100,14 +100,14 @@ int test_array_sort(const int elements_number = 10)
 
 /// Test section.
 
-void average_operation_number_tests_series()
+void average_operation_number_tests_series(const utils::parameters_pack params)
 {
     constexpr bool verbose = false; // Output result flag.
 
-    constexpr int start_value = 80;
-    constexpr int end_value = 320;
-    constexpr int launches_number = 149192; // 200
-    constexpr int step = 10;
+    const int start_value = params.start_value;
+    const int end_value = params.end_value;
+    const int launches_number = params.launches_number;
+    const int step = params.step;
 
     std::vector<std::pair<double, double>> operation_results;
     operation_results.reserve(end_value / start_value);
@@ -134,9 +134,7 @@ void average_operation_number_tests_series()
                         "Number of vertex", "Operations number",
                         one_test_results);
         operation_results.emplace_back(i, result / launches_number);
-        //return;
     }
-    return;
     utils::out_data("rand_tests_average_series.txt", "1p", "def",
                     "Random tests for algorithm analysis", "Number of vertex", "Operations number",
                     operation_results);

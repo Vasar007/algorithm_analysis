@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <ctime>
+#include <cstdio>
 #include <iostream>
 #include <iterator>
 #include <fstream>
@@ -22,6 +23,21 @@ std::mt19937 create_random_engine()
     // Obtain a time-based seed:
     const auto seed = static_cast<unsigned long>(std::time(nullptr));
     return std::mt19937(seed);
+}
+
+void std_output(const std::string_view str)
+{
+    std::cout << str;
+}
+
+void fast_output(const std::string_view str) noexcept
+{
+    if (const int returnValue = std::puts(str.data());
+        returnValue == EOF)
+    {
+        // POSIX requires that errno is set.
+        std::perror("puts() failed.");
+    }
 }
 
 void pause(const std::string_view message)
@@ -48,7 +64,7 @@ void out_data(const std::string_view file_name, const std::string_view mode,
 {
     if (data.empty())
     {
-        std::cout << "ERROR: empty data to process for file " << file_name << ".\n";
+        std::cout << "ERROR: empty data to process for file '" << file_name << "'.\n";
         return;
     }
 
@@ -69,7 +85,7 @@ void out_data(const std::string_view file_name, const std::string_view mode,
 {
     if (data.empty())
     {
-        std::cout << "ERROR: empty data to process for file " << file_name << ".\n";
+        std::cout << "ERROR: empty data to process for file '" << file_name << "'.\n";
         return;
     }
 
@@ -91,7 +107,7 @@ void out_data(const std::string_view file_name, const std::string_view mode,
 {
     if (data_1.empty() || data_2.empty())
     {
-        std::cout << "ERROR: empty data to process for file " << file_name << ".\n";
+        std::cout << "ERROR: empty data to process for file '" << file_name << "'.\n";
         return;
     }
 
@@ -109,6 +125,19 @@ void out_data(const std::string_view file_name, const std::string_view mode,
     }
 
     out_file.flush();
+}
+
+int try_parse_int(const std::string_view str) noexcept
+{
+    int result;
+    if (const auto [ptr, ec] = std::from_chars(str.data(), str.data() + str.size(), result);
+        ec == std::errc())
+    {
+        return result;
+    }
+
+    std::cout << "ERROR: invalid argument to parse '" << str << "'.\n";
+    return int{};
 }
 
 } // namespace utils
