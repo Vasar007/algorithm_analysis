@@ -31,6 +31,8 @@ namespace gen
     return { src, dest, utils::random_number<long long>(0, utils::UPPER_BORDER) };
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 template <class Type, class WeightT = int>
 void check_and_fix(vv::graph<Type, WeightT>& graph_instance)
 {
@@ -40,6 +42,8 @@ void check_and_fix(vv::graph<Type, WeightT>& graph_instance)
     }
     assert(graph_instance.is_correct());
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // A function to generate random graph.
 [[nodiscard]] vv::graph<int, long long>
@@ -83,6 +87,8 @@ generate_rand_graph(const int vertices_number, const int edges_number)
     check_and_fix(graph_instance);
     return graph_instance;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // A function to generate random graph.
 [[nodiscard]] vv::graph<int, long long>
@@ -167,6 +173,8 @@ generate_tricky_case(const std::size_t vertices_number = 30)
     check_and_fix(graph_instance);
     return graph_instance;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 [[nodiscard]] vv::graph<int, long long>
 generate_tricky_case_article(const int n_value = 3)

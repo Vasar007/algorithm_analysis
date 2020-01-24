@@ -248,42 +248,46 @@ struct parameters_pack
         }
         else
         {
-            const auto min_type_value = static_cast<int>(algorithm_type::unknown);
-            const auto max_type_value = static_cast<int>(algorithm_type::algorithms_count);
-            std::cout << "ERROR: 'algorithm_type' is out of range. Expected range: [" << (min_type_value + 1)
-                << ", " << (max_type_value - 1) << "], actual value: " << type_as_int << ".\n";
+            constexpr auto min_type_value = static_cast<int>(algorithm_type::unknown);
+            constexpr auto max_type_value = static_cast<int>(algorithm_type::algorithms_count);
+
+            std::cout << "ERROR: 'algorithm_type' is out of range. Expected range: ["
+                      << (min_type_value + 1) << ", " << (max_type_value - 1)
+                      << "], actual value: " << type_as_int << ".\n";
 
             this->type = algorithm_type::unknown;
-            is_valid = false;
+            this->is_valid = false;
         }
 
         // Integer overflow should be contriolled by caller.
+        constexpr auto max_int = std::numeric_limits<decltype(start_value)>::max();
+
         if (start_value <= 0)
         {
-            std::cout << "ERROR: 'start_value' is out of range. Expected range: [1, 2^31 - 1], actual value: "
-                      << start_value << ".\n";
-            is_valid = false;
+            std::cout << "ERROR: 'start_value' is out of range. Expected range: [1, "
+                      << max_int << "], actual value: " << start_value << ".\n";
+            this->is_valid = false;
         }
 
         if (end_value <= 0 || end_value < start_value)
         {
-            std::cout << "ERROR: 'end_value' is out of range. Expected range: ['start_value', 2^31 - 1], actual value: "
-                      << end_value << ".\n";
-            is_valid = false;
+            std::cout << "ERROR: 'end_value' is out of range. Expected range: ['start_value', "
+                      << max_int << "], actual value: " << end_value << ".\n";
+            this->is_valid = false;
         }
 
         if (launches_number <= 0)
         {
-            std::cout << "ERROR: 'launches_number' is out of range. Expected range: [1, 2^31 - 1], actual value: "
-                      << launches_number << ".\n";
-            is_valid = false;
+            std::cout << "ERROR: 'launches_number' is out of range. Expected range: [1, "
+                      << max_int << "], actual value: " << launches_number << ".\n";
+            this->is_valid = false;
         }
 
         if (step <= 0)
         {
-            std::cout << "ERROR: 'step' is out of range. Expected range: [1, 2^31 - 1], actual value: "
-                      << step << ".\n";
-            is_valid = false;
+            std::cout << "ERROR: 'step' is out of range. Expected range: [1, "
+                      << max_int << "], actual value: " << step << ".\n";
+            this->is_valid = false;
         }
     }
 

@@ -49,6 +49,8 @@ struct edge
     }
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 template <class Type, class WeightT = int>
 constexpr bool operator==(const edge<Type, WeightT>& lhs, const edge<Type, WeightT>& rhs) noexcept
 {
@@ -62,6 +64,7 @@ constexpr edge<Type, WeightT> reversed(edge<Type, WeightT> edge_value) noexcept
     return edge_value;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Graph implementation with adjacency list.
 template <class Type, class WeightT = int>
@@ -291,6 +294,8 @@ private:
     }
 };
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 template <class Type, class WeightT = int>
 std::ostream& operator<<(std::ostream& os, const graph<Type, WeightT>& graph_instance)
 {
@@ -311,11 +316,14 @@ std::ostream& operator<<(std::ostream& os, const graph<Type, WeightT>& graph_ins
     return os;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int get_full_graph_edges_number(const int vertices_number)
 {
     return vertices_number * (vertices_number - 1) / 2;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 graph<int, long long> read_csv_and_add_weights(const std::string_view path)
 {
@@ -358,6 +366,8 @@ graph<int, long long> read_csv_and_add_weights(const std::string_view path)
     std::cout << "Could not open file!\n";
     return graph<int, long long>{};
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Levit's algorithm implementation with two data structures for M1.
 template <class Type, class WeightT = int>
@@ -442,6 +452,8 @@ std::unordered_map<Type, WeightT> levit_algorithm(const graph<Type, WeightT>& gr
     return distances;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Levit's algorithm implementation with one data structure for M1.
 template <class Type, class WeightT = int>
 std::vector<WeightT> levit_algorithm_2(const graph<Type, WeightT>& graph_instance,
@@ -494,6 +506,8 @@ std::vector<WeightT> levit_algorithm_2(const graph<Type, WeightT>& graph_instanc
 
     return distances;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Levit's algorithm implementation with counter.
 template <class Type, class WeightT = int>
@@ -575,6 +589,8 @@ std::pair<std::unordered_map<Type, WeightT>, int> levit_algorithm_with_counter(
 
     return { distances, counter };
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Ford-Bellman's algorithm implementation with counter.
 template <class Type, class WeightT = int>

@@ -51,6 +51,8 @@ int _make_test(std::vector<int>& arr)
 
 } // namespace details
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int test_0(const int start_vertex = 3, const bool verbose = true)
 {
     // Number of nodes in the graph. NOT hardcoded value, need to help hash map to reserve proper
@@ -76,12 +78,16 @@ int test_0(const int start_vertex = 3, const bool verbose = true)
     return details::_make_test(graph_instance, start_vertex, verbose);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int test_1(const int vertices_number = 30, const int start_vertex = 0, const bool verbose = true)
 {
     assert(0 <= start_vertex && start_vertex < vertices_number * 3 + 1);
     const auto graph_instance = gen::generate_tricky_case(vertices_number);
     return details::_make_test(graph_instance, start_vertex, verbose);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int test_2(const int vertices_number = 10, const bool verbose = true)
 {
@@ -92,11 +98,15 @@ int test_2(const int vertices_number = 10, const bool verbose = true)
     );
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int test_array_sort(const int elements_number = 10, [[maybe_unused]] const bool verbose = true)
 {
     auto arr = gen_array::create_random_array(elements_number);
     return details::_make_test(arr);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /// Test section.
 

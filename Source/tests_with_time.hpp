@@ -56,6 +56,8 @@ dmilliseconds _make_test(const vv::graph<Type, WeightT>& graph_instance, const T
 
 } // namespace detail
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 detail::dmilliseconds test_0(const int start_vertex = 3, const bool verbose = true)
 {
     // Number of nodes in the graph. NOT hardcoded value, need to help hash map to reserve proper
@@ -81,6 +83,8 @@ detail::dmilliseconds test_0(const int start_vertex = 3, const bool verbose = tr
     return detail::_make_test(graph_instance, start_vertex, verbose);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 detail::dmilliseconds test_1(const int vertices_number = 30, const int start_vertex = 0,
                              const bool verbose = true)
 {
@@ -88,6 +92,8 @@ detail::dmilliseconds test_1(const int vertices_number = 30, const int start_ver
     const auto graph_instance = gen::generate_tricky_case(vertices_number);
     return detail::_make_test(graph_instance, start_vertex, verbose);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 detail::dmilliseconds test_2(const int vertices_number = 10, const bool verbose = true)
 {
@@ -97,6 +103,8 @@ detail::dmilliseconds test_2(const int vertices_number = 10, const bool verbose 
         graph_instance, utils::take_accidentally(graph_instance.data()).first, verbose
     );
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /// Test section.
 
@@ -142,6 +150,8 @@ void time_tests_series()
                     "Completion time, ms",
                     time_results);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void average_time_tests_series()
 {
@@ -195,6 +205,8 @@ void average_time_tests_series()
                     "Random tests for algorithm analysis", "Number of vertex", "Operations number",
                     time_results);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void average_time_tests_relative()
 {
