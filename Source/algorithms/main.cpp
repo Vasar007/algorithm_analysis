@@ -25,6 +25,7 @@ int main(const int argc, const char* const * const argv)
 
             const auto params = utils::parameters_pack::create_default();
             tests_with_counter::average_operation_number_tests_series(params);
+            utils::pause();
         }
         else if (constexpr int parametric_launch = utils::parameters_pack::expected_args_number + 1;
                  argc == parametric_launch)
@@ -43,6 +44,7 @@ int main(const int argc, const char* const * const argv)
                 "- With specified arguments: <program_name> <algorithm_type> <start_value> <end_value> <launches_number> <step>\n";
 
             utils::std_output(error_message);
+            utils::pause();
         }
     }
     catch (const std::exception & ex)
@@ -51,15 +53,15 @@ int main(const int argc, const char* const * const argv)
         utils::std_output(exception_message);
         utils::std_output(ex.what());
         utils::std_output("\n");
+        utils::pause();
     }
     catch (...)
     {
         constexpr std::string_view exception_message = "Unknown exception occured.\n";
 
         utils::std_output(exception_message);
+        utils::pause();
     }
-
-    utils::pause();
 
     return 0;
 }
