@@ -302,7 +302,7 @@ struct parameters_pack
         return parameters_pack(algorithm_type::pallotino, 80, 80, 200, 10);
     }
 
-    static parameters_pack try_parse(const std::array<std::string_view, 5>& args) noexcept
+    static parameters_pack try_parse(const std::array<std::string_view, utils::parameters_pack::expected_args_number>& args) noexcept
     {
         const int type_as_int = try_parse_int(args[0]);
         const int start_value = try_parse_int(args[1]);

@@ -29,7 +29,10 @@ int main(const int argc, const char* const * const argv)
         else if (constexpr int parametric_launch = utils::parameters_pack::expected_args_number + 1;
                  argc == parametric_launch)
         {
-            const std::array<std::string_view, 5> args{ argv[1], argv[2], argv[3], argv[4], argv[5] };
+            const std::array<std::string_view, utils::parameters_pack::expected_args_number> args
+            {
+                argv[1], argv[2], argv[3], argv[4], argv[5]
+            };
             const auto params = utils::parameters_pack::try_parse(args);
             tests_with_counter::average_operation_number_tests_series(params);
         }
