@@ -92,7 +92,7 @@ int test_2(const int vertices_number = 10, const bool verbose = true)
     );
 }
 
-int test_array_sort(const int elements_number = 10)
+int test_array_sort(const int elements_number = 10, [[maybe_unused]] const bool verbose = true)
 {
     auto arr = gen_array::create_random_array(elements_number);
     return details::_make_test(arr);
@@ -102,13 +102,37 @@ int test_array_sort(const int elements_number = 10)
 
 void average_operation_number_tests_series(const utils::parameters_pack params)
 {
+    if (!params.is_valid)
+    {
+        // Return control if parameters are invalid.
+        return;
+    }
+
     constexpr bool verbose = false; // Output result flag.
+
+    // Deconstruct parameters pack.
+    const utils::algorithm_type type = params.type;
+    const auto func = [type](const int arg, const bool verbose) -> int
+    {
+        switch (type)
+        {
+            case utils::algorithm_type::pallotino:
+                return test_2(arg, verbose);
+
+            case utils::algorithm_type::insertion_sort:
+                return test_array_sort(arg, verbose);
+
+            default:
+                return 0;
+        }
+    };
 
     const int start_value = params.start_value;
     const int end_value = params.end_value;
     const int launches_number = params.launches_number;
     const int step = params.step;
 
+    // Create container and execute tests.
     std::vector<std::pair<double, double>> operation_results;
     operation_results.reserve(end_value / start_value);
 
@@ -122,7 +146,7 @@ void average_operation_number_tests_series(const utils::parameters_pack params)
         one_test_results.reserve(launches_number);
         for (int j = 1; j <= launches_number; ++j)
         {
-            const auto launch_result = test_2(i, verbose);
+            const auto launch_result = func(i, verbose);
             result += launch_result;
             one_test_results.emplace_back(launch_result);
             std::cout << "Execution: " << j << "; Operations number: " << launch_result << '\n';

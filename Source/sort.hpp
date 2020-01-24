@@ -14,10 +14,10 @@ namespace sort
 
 int insertion_sort(std::vector<int>& arr)
 {
-    const int n = static_cast<int>(arr.size());
+    const int elements_number = static_cast<int>(arr.size());
 
     int counter = 0;
-    for (int i = 1; i < n; ++i)
+    for (int i = 1; i < elements_number; ++i)
     {
         for (int j = i; j > 0 && arr.at(j - 1) > arr.at(j); --j)
         {
@@ -34,11 +34,11 @@ int insertion_sort(std::vector<int>& arr)
 namespace gen_array
 {
 
-std::vector<int> create_random_array(const int n)
+std::vector<int> create_random_array(const int elements_number)
 {
-    assert(n > 0);
+    assert(elements_number > 0);
 
-    std::vector<int> result(n);
+    std::vector<int> result(elements_number);
     std::generate(std::begin(result), std::end(result),
                   []() { return utils::random_number<int>(0, 10'000); });
 
