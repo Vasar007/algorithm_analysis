@@ -44,7 +44,7 @@ int main(const int argc, const char* const * const argv)
             constexpr std::string_view error_message = "Invalid arguments number. Usages:\n"
                 "- Default launch (without any arguments): <program_name>\n"
                 "- Time series launch: <program_name> time"
-                "- Empirical analysis launch: <program_name> <algorithm_type> <start_value> <end_value> <launches_number> <step> <output_filename>\n";
+                "- Empirical analysis launch: <program_name> <algorithm_type> <start_value> <end_value> <launches_number> <step> <output_filename_pattern>\n";
             utils::std_output(error_message);
         }
     }

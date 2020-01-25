@@ -1,7 +1,8 @@
 ﻿using System;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.DesktopApp.Domain;
 using Prism.Mvvm;
+using AlgorithmAnalysis.DesktopApp.Domain;
+using AlgorithmAnalysis.DomainLogic;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
@@ -65,26 +66,33 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public ParametersPack Convert()
         {
             return new ParametersPack(
+                analysisProgramName: DesktopOptions.DefaultAnalysisProgramName,
                 algorythmType: TransformAlgorithmValue(AlgorythmType),
                 startValue: int.Parse(StartValue),
                 endValue: int.Parse(EndValue),
                 launchesNumber: int.Parse(LaunchesNumber),
-                step: int.Parse(Step)
+                step: int.Parse(Step),
+                outputFilenamePattern: DesktopOptions.DefaultOutputFilenamePattern
             );
         }
 
         private static int TransformAlgorithmValue(string value)
         {
-            return value switch
+            value.ThrowIfNullOrEmpty(nameof(value));
+
+            for (int i = 0; i < DesktopOptions.AvailableAlgorithms.Count; ++i)
             {
-                "A1" => 0,
+                bool equality = StringComparer.OrdinalIgnoreCase.Equals(
+                    value,
+                    DesktopOptions.AvailableAlgorithms[i]
+                );
 
-                "A2" => 1,
+                if (equality) return i;
+            }
 
-                _ => throw new ArgumentOutOfRangeException(
-                         nameof(value), value,$"Unknown value to transform: '{value}'."
-                     )
-            };
+            throw new ArgumentOutOfRangeException(
+                nameof(value), value, $"Unknown value to transform: '{value}'."
+            );
         }
     }
 }

@@ -1,16 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Prism.Mvvm;
+using Prism.Commands;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Models;
-using Prism.Commands;
-using System;
-using System.Diagnostics;
+using AlgorithmAnalysis.DomainLogic;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
     internal sealed class MainWindowViewModel : BindableBase
     {
+        private readonly AnalysisPerformer _performer;
+
         public string Title { get; }
 
         public IReadOnlyList<string> AvailableAlgorithms { get; }
@@ -24,41 +26,30 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public MainWindowViewModel()
         {
+            _performer = new AnalysisPerformer();
+
             Title = DesktopOptions.Title;
             AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
             Parameters = new RawParametersPack();
 
-            RunCommand = new DelegateCommand(StartAnalysis);
+            RunCommand = new DelegateCommand(LaunchAnalysis);
             ResetCommand = new DelegateCommand(ResetFields);
         }
 
-        private void StartAnalysis()
+        private void LaunchAnalysis()
         {
             try
             {
-                ParametersPack args = Parameters.Convert();
-
-                var starterInfo = new ProcessStartInfo(
-                    DesktopOptions.AnalysisProgramName,
-                    args.PackAsInputArguments()
-                )
-                {
-                    WindowStyle = ProcessWindowStyle.Hidden,
-                    CreateNoWindow = true
-                };
+                // TODO: check that all text boxes has a valid content.
 
                 // TODO: disable controls on main window when analysis started.
                 // TODO: display waiting message (and progress bar, if it's possible).
-                using (Process algorithmApp = Process.Start(starterInfo))
-                {
-                    algorithmApp.WaitForExit();
-                }
-                
-                // TODO: find output files with data and parse them.
-                // TODO: save output data to the Excel tables and apply formulas.
-                // TODO: delete output files with data.
 
-                MessageBoxProvider.ShowInfo($"Analysis finished.");
+                _performer.PerformAnalysis(Parameters.Convert());
+
+                MessageBoxProvider.ShowInfo("Analysis finished.");
+
+                // TODO: enable controls on main window when analysis finished.
             }
             catch (Exception ex)
             {

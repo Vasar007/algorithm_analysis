@@ -221,7 +221,7 @@ struct parameters_pack
     int end_value;
     int launches_number;
     int step;
-    std::string_view output_filename;
+    std::string_view output_filename_pattern;
     bool is_valid;
 
 
@@ -231,19 +231,19 @@ struct parameters_pack
     , end_value(0)
     , launches_number(0)
     , step(0)
-    , output_filename("")
+    , output_filename_pattern("")
     , is_valid(false)
     {
     }
 
     parameters_pack(const int type_as_int, const int start_value, const int end_value,
                     const int launches_number, const int step,
-                    const std::string_view output_filename)
+                    const std::string_view output_filename_pattern)
     : start_value(start_value)
     , end_value(end_value)
     , launches_number(launches_number)
     , step(step)
-    , output_filename(output_filename)
+    , output_filename_pattern(output_filename_pattern)
     , is_valid(true)
     {
         if (enum_is_defined(type_as_int))
@@ -297,9 +297,9 @@ struct parameters_pack
 
     parameters_pack(const algorithm_type type, const int start_value, const int end_value,
                     const int launches_number, const int step,
-                    const std::string_view output_filename)
+                    const std::string_view output_filename_pattern)
     : parameters_pack(static_cast<int>(type), start_value, end_value, launches_number, step,
-                      output_filename)
+                      output_filename_pattern)
     {
     }
 
@@ -315,10 +315,10 @@ struct parameters_pack
         const int end_value = try_parse_int(args[2]);
         const int launches_number = try_parse_int(args[3]);
         const int step = try_parse_int(args[4]);
-        const std::string_view output_filename = args[5];
+        const std::string_view output_filename_pattern = args[5];
 
         return parameters_pack(
-            type_as_int, start_value, end_value, launches_number, step, output_filename
+            type_as_int, start_value, end_value, launches_number, step, output_filename_pattern
         );
     }
 };

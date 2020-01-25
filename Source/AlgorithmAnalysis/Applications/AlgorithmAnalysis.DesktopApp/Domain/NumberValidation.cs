@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Linq;
 using System.Windows.Controls;
 
 namespace AlgorithmAnalysis.DesktopApp.Domain
@@ -19,6 +20,11 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
             if (str.Length == 0)
             {
                 return new ValidationResult(false, "Text box is empty.");
+            }
+
+            if (str.All(char.IsWhiteSpace))
+            {
+                return new ValidationResult(false, "Text box contains only whitespaces.");
             }
 
             if (!int.TryParse(str, out int result))
