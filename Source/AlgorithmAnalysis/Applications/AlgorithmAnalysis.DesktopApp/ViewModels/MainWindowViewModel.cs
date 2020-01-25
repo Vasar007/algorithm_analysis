@@ -38,7 +38,10 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             {
                 ParametersPack args = Parameters.Convert();
 
-                var starterInfo = new ProcessStartInfo("algorithm_analysis.exe", args.GetPack())
+                var starterInfo = new ProcessStartInfo(
+                    DesktopOptions.AnalysisProgramName,
+                    args.GetPack()
+                )
                 {
                     WindowStyle = ProcessWindowStyle.Hidden,
                     CreateNoWindow = true
@@ -49,6 +52,10 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 {
                     algorithmApp.WaitForExit();
                 }
+                
+                // TODO: found output files with data and parse them.
+                // TODO: save output data to the Excel tables and apply formulas.
+                // TODO: delete output files with data.
 
                 MessageBoxProvider.ShowInfo($"Analysis finished.");
             }
