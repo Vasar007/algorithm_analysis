@@ -48,6 +48,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 };
 
                 // TODO: disable controls on main window when analysis started.
+                // TODO: display waiting message (and progress bar, if it's possible).
                 using (Process algorithmApp = Process.Start(starterInfo))
                 {
                     algorithmApp.WaitForExit();
