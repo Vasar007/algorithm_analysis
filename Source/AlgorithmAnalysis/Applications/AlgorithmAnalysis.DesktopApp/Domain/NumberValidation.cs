@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace AlgorithmAnalysis.DesktopApp.Models
+namespace AlgorithmAnalysis.DesktopApp.Domain
 {
     internal sealed class NumberValidation : ValidationRule
     {
