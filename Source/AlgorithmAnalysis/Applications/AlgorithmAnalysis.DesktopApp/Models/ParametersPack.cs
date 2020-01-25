@@ -1,4 +1,5 @@
 ﻿using Acolyte.Assertions;
+using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
@@ -14,6 +15,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public int Step { get; }
 
+        public string OutputFilename { get; }
+
 
         public ParametersPack(
             int algorythmType,
@@ -27,12 +30,18 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             EndValue = endValue.ThrowIfValueIsOutOfRange(nameof(algorythmType), StartValue, int.MaxValue);
             LaunchesNumber = launchesNumber.ThrowIfValueIsOutOfRange(nameof(algorythmType), 1, int.MaxValue);
             Step = step.ThrowIfValueIsOutOfRange(nameof(algorythmType), 1, int.MaxValue);
+
+            OutputFilename = DesktopOptions.DefaultOutputFilename;
         }
 
         public string GetPack()
         {
-            return $"{AlgorythmType.ToString()} {StartValue.ToString()} {EndValue.ToString()} " +
-                   $"{LaunchesNumber.ToString()} {Step.ToString()}";
+            return $"{AlgorythmType.ToString()} " +
+                   $"{StartValue.ToString()} " +
+                   $"{EndValue.ToString()} " +
+                   $"{LaunchesNumber.ToString()} " +
+                   $"{Step.ToString()} " +
+                   $"{OutputFilename}";
         }
     }
 }

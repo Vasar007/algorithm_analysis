@@ -214,13 +214,14 @@ constexpr bool enum_is_defined(const algorithm_type type)
 
 struct parameters_pack
 {
-    static constexpr int expected_args_number = 5;
+    static constexpr int expected_args_number = 6;
 
     algorithm_type type;
     int start_value;
     int end_value;
     int launches_number;
     int step;
+    std::string_view output_filename;
     bool is_valid;
 
 
@@ -230,16 +231,19 @@ struct parameters_pack
     , end_value(0)
     , launches_number(0)
     , step(0)
+    , output_filename("")
     , is_valid(false)
     {
     }
 
     parameters_pack(const int type_as_int, const int start_value, const int end_value,
-                    const int launches_number, const int step)
+                    const int launches_number, const int step,
+                    const std::string_view output_filename)
     : start_value(start_value)
     , end_value(end_value)
     , launches_number(launches_number)
     , step(step)
+    , output_filename(output_filename)
     , is_valid(true)
     {
         if (enum_is_defined(type_as_int))
@@ -292,14 +296,16 @@ struct parameters_pack
     }
 
     parameters_pack(const algorithm_type type, const int start_value, const int end_value,
-                    const int launches_number, const int step)
-    : parameters_pack(static_cast<int>(type), start_value, end_value, launches_number, step)
+                    const int launches_number, const int step,
+                    const std::string_view output_filename)
+    : parameters_pack(static_cast<int>(type), start_value, end_value, launches_number, step,
+                      output_filename)
     {
     }
 
     static parameters_pack create_default()
     {
-        return parameters_pack(algorithm_type::pallotino, 80, 80, 200, 10);
+        return parameters_pack(algorithm_type::pallotino, 80, 80, 200, 10, "tests_average_");
     }
 
     static parameters_pack try_parse(const std::array<std::string_view, utils::parameters_pack::expected_args_number>& args) noexcept
@@ -309,7 +315,11 @@ struct parameters_pack
         const int end_value = try_parse_int(args[2]);
         const int launches_number = try_parse_int(args[3]);
         const int step = try_parse_int(args[4]);
-        return parameters_pack(type_as_int, start_value, end_value, launches_number, step);
+        const std::string_view output_filename = args[5];
+
+        return parameters_pack(
+            type_as_int, start_value, end_value, launches_number, step, output_filename
+        );
     }
 };
 

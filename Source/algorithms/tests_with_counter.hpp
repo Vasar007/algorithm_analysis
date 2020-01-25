@@ -163,13 +163,13 @@ void average_operation_number_tests_series(const utils::parameters_pack params)
         }
 
         const auto number = std::to_string(i);
-        utils::out_data("rand_tests_average_" + number + ".txt", "1p", "def",
+        utils::out_data("tests_average_" + number + ".txt", "1p", "def",
                         "Random tests for algorithm analysis, single test with n=" + number,
                         "Number of vertex", "Operations number",
                         one_test_results);
         operation_results.emplace_back(i, result / launches_number);
     }
-    utils::out_data("rand_tests_average_series.txt", "1p", "def",
+    utils::out_data("tests_average_series.txt", "1p", "def",
                     "Random tests for algorithm analysis", "Number of vertex", "Operations number",
                     operation_results);
 }

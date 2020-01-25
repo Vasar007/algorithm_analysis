@@ -18,21 +18,23 @@ int main(const int argc, const char* const * const argv)
         if (constexpr int no_additional_arguments = 1;
             argc == no_additional_arguments)
         {
+            const auto params = utils::parameters_pack::create_default();
+            tests_with_counter::average_operation_number_tests_series(params);
+        }
+        else if (constexpr int time_series_launch = 2;
+                 argc == time_series_launch && argv[1] == "time")
+        {
             tests_with_time::time_tests_series();
             tests_with_time::average_time_tests_series();
             tests_with_time::average_time_tests_relative();
             common_logic::create_theoretical_data();
-
-            const auto params = utils::parameters_pack::create_default();
-            tests_with_counter::average_operation_number_tests_series(params);
-            utils::pause();
         }
         else if (constexpr int parametric_launch = utils::parameters_pack::expected_args_number + 1;
                  argc == parametric_launch)
         {
             const std::array<std::string_view, utils::parameters_pack::expected_args_number> args
             {
-                argv[1], argv[2], argv[3], argv[4], argv[5]
+                argv[1], argv[2], argv[3], argv[4], argv[5], argv[6]
             };
             const auto params = utils::parameters_pack::try_parse(args);
             tests_with_counter::average_operation_number_tests_series(params);
@@ -40,11 +42,10 @@ int main(const int argc, const char* const * const argv)
         else
         {
             constexpr std::string_view error_message = "Invalid arguments number. Usages:\n"
-                "- Without any arguments: <program_name>\n"
-                "- With specified arguments: <program_name> <algorithm_type> <start_value> <end_value> <launches_number> <step>\n";
-
+                "- Default launch (without any arguments): <program_name>\n"
+                "- Time series launch: <program_name> time"
+                "- Empirical analysis launch: <program_name> <algorithm_type> <start_value> <end_value> <launches_number> <step> <output_filename>\n";
             utils::std_output(error_message);
-            utils::pause();
         }
     }
     catch (const std::exception & ex)
@@ -53,14 +54,11 @@ int main(const int argc, const char* const * const argv)
         utils::std_output(exception_message);
         utils::std_output(ex.what());
         utils::std_output("\n");
-        utils::pause();
     }
     catch (...)
     {
         constexpr std::string_view exception_message = "Unknown exception occured.\n";
-
         utils::std_output(exception_message);
-        utils::pause();
     }
 
     return 0;
