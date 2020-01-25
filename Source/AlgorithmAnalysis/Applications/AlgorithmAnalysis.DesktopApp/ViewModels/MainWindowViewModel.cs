@@ -40,7 +40,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
                 var starterInfo = new ProcessStartInfo(
                     DesktopOptions.AnalysisProgramName,
-                    args.GetPack()
+                    args.PackAsInputArguments()
                 )
                 {
                     WindowStyle = ProcessWindowStyle.Hidden,

@@ -34,7 +34,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             OutputFilename = DesktopOptions.DefaultOutputFilename;
         }
 
-        public string GetPack()
+        public string PackAsInputArguments()
         {
             return $"{AlgorythmType.ToString()} " +
                    $"{StartValue.ToString()} " +
