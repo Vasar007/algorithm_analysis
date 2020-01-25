@@ -53,7 +53,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                     algorithmApp.WaitForExit();
                 }
                 
-                // TODO: found output files with data and parse them.
+                // TODO: find output files with data and parse them.
                 // TODO: save output data to the Excel tables and apply formulas.
                 // TODO: delete output files with data.
 
