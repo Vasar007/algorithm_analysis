@@ -47,10 +47,11 @@ namespace AlgorithmAnalysis.DomainLogic
             }
 
             string finalOutputFilename = finalOutputFilenames.First();
-            IReadOnlyList<int> data = _fileWorker.ReadDataFile(finalOutputFilename, args);
+            DataObject<OutputFileData> data = _fileWorker.ReadDataFile(finalOutputFilename, args);
+            IEnumerable<int> operationNumbers = data.GetData(item => item.operationNumber);
 
             // TODO: save output data to the Excel tables and apply formulas.
-            _excelWrapper.SaveDataToExcelFile(data);
+            _excelWrapper.SaveDataToExcelFile(operationNumbers);
 
             // TODO: delete output files with data.
 

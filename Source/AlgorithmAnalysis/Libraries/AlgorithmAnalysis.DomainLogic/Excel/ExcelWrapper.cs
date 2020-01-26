@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Acolyte.Assertions;
-using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel
 {
@@ -12,7 +12,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
         {
         }
 
-        public void SaveDataToExcelFile(IReadOnlyList<int> data)
+        public void SaveDataToExcelFile(IEnumerable<int> data)
         {
             data.ThrowIfNullOrEmpty(nameof(data));
 
