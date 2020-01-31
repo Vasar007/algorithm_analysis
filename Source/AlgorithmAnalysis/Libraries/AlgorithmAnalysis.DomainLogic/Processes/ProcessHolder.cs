@@ -6,17 +6,22 @@ namespace AlgorithmAnalysis.DomainLogic.Processes
 {
     internal sealed class ProcessHolder : IDisposable
     {
+        private readonly Process _process;
+
         private bool _disposed;
 
-        // Initializes through "StartProgram" method in ctor.
-        private Process _process = default!;
 
-
-        public ProcessHolder(ParametersPack args)
+        private ProcessHolder(Process process)
         {
-            args.ThrowIfNull(nameof(args));
+            _process = process.ThrowIfNull(nameof(process));
+        }
 
-            StartProgram(args);
+        public static ProcessHolder Start(string filename, string args)
+        {
+            filename.ThrowIfNullOrWhiteSpace(nameof(filename));
+            args.ThrowIfNullOrEmpty(nameof(args));
+
+            return new ProcessHolder(StartProgram(filename, args));
         }
 
         #region IDisposable Implementation
@@ -34,27 +39,53 @@ namespace AlgorithmAnalysis.DomainLogic.Processes
 
         public void WaitForExit()
         {
+            if (_process.HasExited) return;
+
             _process.WaitForExit();
         }
 
-        public void WaitForExit(int milliseconds)
+        public bool WaitForExit(int milliseconds)
         {
-            _process.WaitForExit(milliseconds);
+            if (_process.HasExited) return true;
+
+            return _process.WaitForExit(milliseconds);
         }
 
-        private void StartProgram(ParametersPack args)
+        public void Kill()
+        {
+            if (!_process.HasExited)
+            {
+                _process.Kill();
+            }
+        }
+
+        public string GetOutput()
+        {
+            return _process.StandardOutput.ReadToEnd();
+        }
+
+        public void CheckExecutionStatus()
+        {
+            string error = _process.StandardError.ReadToEnd();
+            if (_process.ExitCode != ExitCode.EXIT_SUCCESS.AsInt32())
+            {
+                throw new ApplicationException(error);
+            }
+        }
+
+        private static Process StartProgram(string filename, string args)
         {
             // Contract: the analysis program is located in the same directory as our app.
-            var starterInfo = new ProcessStartInfo(
-                args.AnalysisProgramName,
-                args.PackAsInputArguments()
-            )
+            var starterInfo = new ProcessStartInfo(filename, args)
             {
                 WindowStyle = ProcessWindowStyle.Hidden,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory,
+                RedirectStandardError = true,
+                UseShellExecute = false
             };
 
-            _process = Process.Start(starterInfo);
+            return Process.Start(starterInfo);
         }
     }
 }

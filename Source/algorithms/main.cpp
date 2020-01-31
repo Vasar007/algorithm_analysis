@@ -2,6 +2,7 @@
 
 #include <array>
 #include <string_view>
+#include <cstdlib>
 
 #include "common_logic.hpp"
 #include "tests_with_time.hpp"
@@ -54,12 +55,16 @@ int main(const int argc, const char* const * const argv)
         utils::std_output(exception_message);
         utils::std_output(ex.what());
         utils::std_output("\n");
+
+        return EXIT_FAILURE;
     }
     catch (...)
     {
         constexpr std::string_view exception_message = "Unknown exception occured.\n";
         utils::std_output(exception_message);
+
+        return EXIT_FAILURE;
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }

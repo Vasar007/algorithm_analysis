@@ -60,6 +60,21 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold" />
 
+                <TextBlock Text="Analysis kind for phase one"
+                           HorizontalAlignment="Center"
+                           Margin="0 7 0 3" />
+                <ComboBox HorizontalAlignment="Center"
+                          MinWidth="200"
+                          SelectedIndex="0"
+                          ItemsSource="{Binding Path=AvailableAnalysisKindForPhaseOne}"
+                          SelectedItem="{Binding Path=Parameters.AnalysisKind}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
                 <TextBlock Text="Algorithm"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />

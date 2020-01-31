@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AlgorithmAnalysis.DomainLogic;
 
 namespace AlgorithmAnalysis.DesktopApp.Domain
 {
@@ -11,11 +12,16 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
 
         public static string DefaultOutputFilenamePattern { get; } = "tests_average_";
 
+        public static IReadOnlyList<string> AvailableAnalysisKindForPhaseOne { get; } =
+            AnalysisHelper.GetAvailableAnalysisKindForPhaseOne();
+
         // TODO: refactor algorythm type related logic.
         public static IReadOnlyList<string> AvailableAlgorithms { get; } = new[]
         {
             "Pallottino's algorithm",
             "Insertion sort"
         };
+
+        public static string FinalExcelFilename { get; } = @"test.xlsx";
     }
 }

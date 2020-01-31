@@ -54,7 +54,17 @@ namespace AlgorithmAnalysis.DomainLogic
                 .ToList();
         }
 
-        public string PackAsInputArguments()
+        public string PackAsInputArgumentsForPhaseOne()
+        {
+            return $"{AlgorythmType.ToString()} " +
+                   $"{StartValue.ToString()} " +
+                   $"{StartValue.ToString()} " +
+                   $"{LaunchesNumber.ToString()} " +
+                   $"{Step.ToString()} " +
+                   $"{OutputFilenamePattern}";
+        }
+
+        public string PackAsInputArgumentsForPhaseTwo()
         {
             return $"{AlgorythmType.ToString()} " +
                    $"{StartValue.ToString()} " +

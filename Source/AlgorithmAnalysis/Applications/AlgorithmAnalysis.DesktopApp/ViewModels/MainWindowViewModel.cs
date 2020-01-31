@@ -15,6 +15,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public string Title { get; }
 
+        public IReadOnlyList<string> AvailableAnalysisKindForPhaseOne { get; }
+
         public IReadOnlyList<string> AvailableAlgorithms { get; }
 
         public RawParametersPack Parameters { get; }
@@ -26,9 +28,10 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public MainWindowViewModel()
         {
-            _performer = new AnalysisPerformer();
+            _performer = new AnalysisPerformer(DesktopOptions.FinalExcelFilename);
 
             Title = DesktopOptions.Title;
+            AvailableAnalysisKindForPhaseOne = DesktopOptions.AvailableAnalysisKindForPhaseOne;
             AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
             Parameters = new RawParametersPack();
 
@@ -45,7 +48,12 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 // TODO: disable controls on main window when analysis started.
                 // TODO: display waiting message (and progress bar, if it's possible).
 
-                _performer.PerformAnalysis(Parameters.Convert());
+                var context = new AnalysisContext(
+                    args: Parameters.Convert(),
+                    analysisKind: Parameters.GetAnalysisKind()
+                );
+
+                _performer.PerformAnalysis(context);
 
                 MessageBoxProvider.ShowInfo("Analysis finished.");
 

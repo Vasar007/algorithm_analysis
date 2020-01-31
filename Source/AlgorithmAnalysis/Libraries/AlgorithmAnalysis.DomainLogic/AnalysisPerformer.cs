@@ -15,24 +15,28 @@ namespace AlgorithmAnalysis.DomainLogic
         private readonly ExcelWrapper _excelWrapper;
 
 
-        public AnalysisPerformer()
+        public AnalysisPerformer(string filename)
         {
             _fileWorker = new LocalFileWorker();
-            _excelWrapper = new ExcelWrapper();
+            _excelWrapper = new ExcelWrapper(filename);
         }
 
-        public void PerformAnalysis(ParametersPack args)
+        public void PerformAnalysis(AnalysisContext context)
         {
-            args.ThrowIfNull(nameof(args));
+            context.ThrowIfNull(nameof(context));
 
-            PerformPhaseOne(args);
-            PerformPhaseTwo(args);
+            PerformPhaseOne(context);
+            PerformPhaseTwo(context);
         }
 
-        private void PerformPhaseOne(ParametersPack args)
+        private void PerformPhaseOne(AnalysisContext context)
         {
-            using (var holder = new ProcessHolder(args))
+            ParametersPack args = context.Args;
+
+            using (var holder = ProcessHolder.Start(args.AnalysisProgramName,
+                                                    args.PackAsInputArgumentsForPhaseOne()))
             {
+                holder.CheckExecutionStatus();
                 holder.WaitForExit();
             }
 
@@ -41,26 +45,40 @@ namespace AlgorithmAnalysis.DomainLogic
 
             if (finalOutputFilenames.Count > 1)
             {
-                throw new InvalidOperationException(
-                    "Phase 1 of analysis failed: there are more than one output files."
-                );
+                string message =
+                    "Phase 1 of analysis failed: there are more than one output files.";
+
+                throw new InvalidOperationException(message);
             }
 
             string finalOutputFilename = finalOutputFilenames.First();
-            DataObject<OutputFileData> data = _fileWorker.ReadDataFile(finalOutputFilename, args);
-            IEnumerable<int> operationNumbers = data.GetData(item => item.operationNumber);
+            using (DataObject<OutputFileData> data = _fileWorker.ReadDataFile(finalOutputFilename,
+                                                                              args))
+            {
+                IEnumerable<int> operationNumbers = data.GetData(item => item.operationNumber);
 
-            // TODO: save output data to the Excel tables and apply formulas.
-            _excelWrapper.SaveDataToExcelFile(operationNumbers);
-
+                // TODO: add formulas for solution based on beta distribution.
+                _excelWrapper.ApplyAnalysisAndSaveData(operationNumbers, context, "Sheet1-1");
+            }
             // TODO: delete output files with data.
 
             // TODO: find appropriate launches number iteratively (part 1 of phase 1).
             // TODO: check H0 hypothesis on calculated launches number (part 2 of phase 1).
         }
 
-        private static void PerformPhaseTwo(ParametersPack args)
+        private static void PerformPhaseTwo(AnalysisContext context)
         {
+            ParametersPack args = context.Args;
+
+            using (var holder = ProcessHolder.Start(
+                       args.AnalysisProgramName,
+                       args.PackAsInputArgumentsForPhaseTwo()
+                   ))
+            {
+                holder.WaitForExit();
+                holder.CheckExecutionStatus();
+            }
+
             // TODO: launch analysis several times in segment [StartValue, EndValue] with step=Step.
             // TODO: find output files with data and parse them.
             // TODO: save output data to the Excel tables and apply formulas.

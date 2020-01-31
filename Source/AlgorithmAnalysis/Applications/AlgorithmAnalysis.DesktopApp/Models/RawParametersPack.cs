@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Acolyte.Assertions;
+using Acolyte.Common;
 using Prism.Mvvm;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
@@ -8,6 +10,14 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 {
     internal sealed class RawParametersPack : BindableBase
     {
+        // Initializes through Reset method in ctor.
+        private string _analysisKind = default!;
+        public string AnalysisKind
+        {
+            get => _analysisKind;
+            set => SetProperty(ref _analysisKind, value.ThrowIfNull(nameof(value)));
+        }
+
         // Initializes through Reset method in ctor.
         private string _algorythmType = default!;
         public string AlgorythmType
@@ -56,6 +66,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void Reset()
         {
+            AnalysisKind = DesktopOptions.AvailableAnalysisKindForPhaseOne[0];
             AlgorythmType = DesktopOptions.AvailableAlgorithms[0];
             StartValue = "80";
             EndValue = "80";
@@ -74,6 +85,16 @@ namespace AlgorithmAnalysis.DesktopApp.Models
                 step: int.Parse(Step),
                 outputFilenamePattern: DesktopOptions.DefaultOutputFilenamePattern
             );
+        }
+
+        public PhaseOnePartOneAnalysisKind GetAnalysisKind()
+        {
+            PhaseOnePartOneAnalysisKind analysisKind = EnumHelper.GetValues<PhaseOnePartOneAnalysisKind>()
+                .Select(enumValue => (enumValue: enumValue, description: enumValue.GetDescription()))
+                .First(pair => StringComparer.OrdinalIgnoreCase.Equals(pair.description, AnalysisKind))
+                .enumValue;
+
+            return analysisKind;
         }
 
         private static int TransformAlgorithmValue(string value)

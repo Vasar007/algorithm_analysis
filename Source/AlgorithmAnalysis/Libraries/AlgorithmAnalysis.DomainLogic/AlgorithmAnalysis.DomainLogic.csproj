@@ -14,4 +14,19 @@
       <PackageReference Include="NPOI" Version="2.4.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Properties\ExcelStrings.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>ExcelStrings.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\ExcelStrings.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>ExcelStrings.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
 </Project>
