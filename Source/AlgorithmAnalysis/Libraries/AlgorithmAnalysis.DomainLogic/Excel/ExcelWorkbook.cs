@@ -5,6 +5,8 @@ using NPOI.XSSF.UserModel;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel
 {
+    // Suitable for Excel 2007. If you try to use the latest Excel 2019 functions, NPOI can throw
+    // NotImplementedException.
     internal sealed class ExcelWorkbook
     {
         private readonly IWorkbook _workbook;
@@ -13,6 +15,14 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
         public ExcelWorkbook()
         {
             _workbook = new XSSFWorkbook();
+        }
+
+        public ExcelWorkbook(string pathToWorkbook)
+        {
+            pathToWorkbook.ThrowIfNullOrWhiteSpace(nameof(pathToWorkbook));
+
+            using var file = new FileStream(pathToWorkbook, FileMode.Open, FileAccess.Read);
+            _workbook = new XSSFWorkbook(file);
         }
 
         public ExcelSheet CreateSheet(string sheetName)

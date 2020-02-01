@@ -11,20 +11,26 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public PhaseOnePartOneAnalysisKind AnalysisKind { get; }
 
+        public bool ShowAnalysisWindow { get; }
 
-        public AnalysisContext(ParametersPack args, PhaseOnePartOneAnalysisKind analysisKind)
+        public AnalysisContext(
+            ParametersPack args,
+            PhaseOnePartOneAnalysisKind analysisKind,
+            bool showAnalysisWindow)
         {
             Args = args.ThrowIfNull(nameof(args));
             AnalysisKind = analysisKind.ThrowIfEnumValueIsUndefined(nameof(analysisKind));
+            ShowAnalysisWindow = showAnalysisWindow;
         }
 
-        internal IPhaseOnePartOneAnalysis CreatePhaseOnePartOneAnalysis(ExcelSheet sheet)
+        internal IAnalysisPhaseOnePartOne CreateAnalysisPhaseOnePartOne(ExcelSheet sheet)
         {
             return AnalysisKind switch
             {
                 PhaseOnePartOneAnalysisKind.NormalDistribution =>
                     new NormalDistributionAnalysis(sheet, Args),
 
+                // TODO: add formulas for solution based on beta distribution.
                 PhaseOnePartOneAnalysisKind.BetaDistribution =>
                     throw new NotImplementedException(
                         "Beta distribution analysis for phase one part one is not implemented."

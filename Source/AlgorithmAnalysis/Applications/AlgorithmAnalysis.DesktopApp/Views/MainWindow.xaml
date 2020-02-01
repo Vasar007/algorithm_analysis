@@ -48,7 +48,8 @@
     </Window.Resources>
 
     <Grid VerticalAlignment="Stretch"
-          HorizontalAlignment="Stretch">
+          HorizontalAlignment="Stretch"
+          IsEnabled="{Binding Path=CanExecuteAnalysis}">
 
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center">
@@ -93,7 +94,7 @@
                 <TextBlock Text="Start value"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />
-                <TextBox Style="{StaticResource TextBoxInError}">
+                <TextBox Style="{StaticResource ResourceKey=TextBoxInError}">
                     <TextBox.Text>
                         <Binding Path="Parameters.StartValue"
                                  UpdateSourceTrigger="PropertyChanged"
@@ -108,7 +109,7 @@
                 <TextBlock Text="End value"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />
-                <TextBox Style="{StaticResource TextBoxInError}">
+                <TextBox Style="{StaticResource ResourceKey=TextBoxInError}">
                     <TextBox.Text>
                         <Binding Path="Parameters.EndValue"
                                  UpdateSourceTrigger="PropertyChanged"
@@ -123,7 +124,7 @@
                 <TextBlock Text="Launches number"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />
-                <TextBox Style="{StaticResource TextBoxInError}">
+                <TextBox Style="{StaticResource ResourceKey=TextBoxInError}">
                     <TextBox.Text>
                         <Binding Path="Parameters.LaunchesNumber"
                                  UpdateSourceTrigger="PropertyChanged"
@@ -138,7 +139,7 @@
                 <TextBlock Text="Step"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />
-                <TextBox Style="{StaticResource TextBoxInError}">
+                <TextBox Style="{StaticResource ResourceKey=TextBoxInError}">
                     <TextBox.Text>
                         <Binding Path="Parameters.Step"
                                  UpdateSourceTrigger="PropertyChanged"
@@ -149,6 +150,12 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
+                
+                <CheckBox Content="Show analysis window"
+                          HorizontalAlignment="Center"
+                          Margin="0 14 0 6"
+                          IsChecked="{Binding Path=Parameters.ShowAnalysisWindow}"
+                          Foreground="White" />
             </StackPanel>
 
             <StackPanel Width="280">

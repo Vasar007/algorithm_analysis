@@ -47,6 +47,8 @@ int main(const int argc, const char* const * const argv)
                 "- Time series launch: <program_name> time"
                 "- Empirical analysis launch: <program_name> <algorithm_type> <start_value> <end_value> <launches_number> <step> <output_filename_pattern>\n";
             utils::std_output(error_message);
+
+            return EXIT_FAILURE;
         }
     }
     catch (const std::exception & ex)

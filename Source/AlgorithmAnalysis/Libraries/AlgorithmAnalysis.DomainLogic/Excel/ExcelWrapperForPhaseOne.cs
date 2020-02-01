@@ -1,39 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Acolyte.Assertions;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis;
 using AlgorithmAnalysis.DomainLogic.Properties;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel
 {
-    // Suitable for Excel 2007. If you try to use the latest Excel 2019 functions, NPOI can throw
-    // NotImplementedException.
-    internal sealed class ExcelWrapper
+    internal sealed class ExcelWrapperForPhaseOne
     {
-        private readonly string _filename;
+        private readonly string _outputExcelFilename;
 
 
-        public ExcelWrapper(string filename)
+        public ExcelWrapperForPhaseOne(string outputExcelFilename)
         {
-            _filename = filename.ThrowIfNullOrWhiteSpace(nameof(filename));
+            _outputExcelFilename = outputExcelFilename.ThrowIfNullOrWhiteSpace(nameof(outputExcelFilename));
         }
 
-        public void ApplyAnalysisAndSaveData(IEnumerable<int> data, AnalysisContext context,
-            string sheetName)
+        public int ApplyAnalysisAndSaveData(IEnumerable<int> data,
+            ExcelContextForPhaseOne excelContext)
         {
             data.ThrowIfNullOrEmpty(nameof(data));
-            sheetName.ThrowIfNullOrEmpty(nameof(sheetName));
-            context.ThrowIfNull(nameof(context));
+            excelContext.ThrowIfNull(nameof(excelContext));
 
-            var workbook = new ExcelWorkbook();
+            ExcelWorkbook workbook = GetWorkbook();
 
             // Create the first sheet using analysis data.
-            ExcelSheet sheet = workbook.CreateSheet(sheetName);
-            FillSheetHeader(sheet, context.Args);
+            ExcelSheet sheet = workbook.CreateSheet(excelContext.SheetName);
+            FillSheetHeader(sheet, excelContext.Args);
 
-            IPhaseOnePartOneAnalysis analysis = context.CreatePhaseOnePartOneAnalysis(sheet);
+            IAnalysisPhaseOnePartOne analysis = excelContext.AnalysisFactory(sheet);
 
             int rowCounter = 2;
             foreach (int item in data)
@@ -49,44 +44,19 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
             analysis.ApplyAnalysisToDataset();
 
-            workbook.SaveToFile(_filename);
+            workbook.SaveToFile(_outputExcelFilename);
+
+            return analysis.GetCalculatedSampleSize();
         }
 
-        // TODO: remove this sample code.
-        public void SaveDataToExcelFileExample(IEnumerable<int> data)
+        private ExcelWorkbook GetWorkbook()
         {
-            data.ThrowIfNullOrEmpty(nameof(data));
+            if (File.Exists(_outputExcelFilename))
+            {
+                return new ExcelWorkbook(_outputExcelFilename);
+            }
 
-            IWorkbook workbook = new XSSFWorkbook();
-
-            ISheet s1 = workbook.CreateSheet("Sheet1");
-            //set A2
-            s1.CreateRow(1).CreateCell(0).SetCellValue(-5);
-            //set B2
-            s1.GetRow(1).CreateCell(1).SetCellValue(1111);
-            //set C2
-            s1.GetRow(1).CreateCell(2).SetCellValue(7.623);
-            //set A3
-            s1.CreateRow(2).CreateCell(0).SetCellValue(2.2);
-
-            //set A4=A2+A3
-            s1.CreateRow(3).CreateCell(0).SetCellFormula("A2+A3");
-            //set D2=SUM(A2:C2);
-            s1.GetRow(1).CreateCell(3).SetCellFormula("SUM(A2:C2)");
-            //set A5=cos(5)+sin(10)
-            s1.CreateRow(4).CreateCell(0).SetCellFormula("cos(5)+sin(10)");
-
-            //create another sheet
-            ISheet s2 = workbook.CreateSheet("Sheet2");
-            //set cross-sheet reference
-            var cell = s2.CreateRow(0).CreateCell(0);
-            cell.SetCellFormula("Sheet1!A2+Sheet1!A3");
-            IFormulaEvaluator e = WorkbookFactory.CreateFormulaEvaluator(workbook);
-            var _ = e.Evaluate(cell);
-
-            // Write the stream data of workbook to the root directory.
-            using FileStream file = new FileStream(_filename, FileMode.Create);
-            workbook.Write(file);
+            return new ExcelWorkbook();
         }
 
         private static void FillSheetHeader(ExcelSheet sheet, ParametersPack args)
@@ -94,10 +64,6 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             sheet
                 .GetOrCreateCenterizedCell(ExcelColumnIndex.A, 1)
                 .SetCellValue(ExcelStrings.OperationColumnName);
-
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.B, 1)
-                .SetCellValue(ExcelStrings.NormalizedColumnName);
 
             sheet
                 .GetOrCreateCenterizedCell(ExcelColumnIndex.E, 1)
@@ -156,7 +122,6 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
                 .SetCellValue(double.Parse(ExcelStrings.EpsilonValue));
 
             sheet.AutoSizeColumn(ExcelColumnIndex.A);
-            sheet.AutoSizeColumn(ExcelColumnIndex.B);
             sheet.AutoSizeColumn(ExcelColumnIndex.E);
             sheet.AutoSizeColumn(ExcelColumnIndex.F);
         }

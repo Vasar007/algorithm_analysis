@@ -6,6 +6,8 @@ namespace AlgorithmAnalysis.DomainLogic
 {
     public sealed class ParametersPack
     {
+        private const string CommonAnalysisFilenameSuffix = "series";
+
         public string AnalysisProgramName { get; }
 
         public int AlgorythmType { get; }
@@ -35,14 +37,27 @@ namespace AlgorithmAnalysis.DomainLogic
             // TODO: refactor algorythm type related logic.
             AlgorythmType = algorythmType.ThrowIfValueIsOutOfRange(nameof(algorythmType), 0, 1);
 
-            StartValue = startValue.ThrowIfValueIsOutOfRange(nameof(algorythmType), 1, int.MaxValue);
-            EndValue = endValue.ThrowIfValueIsOutOfRange(nameof(algorythmType), StartValue, int.MaxValue);
-            LaunchesNumber = launchesNumber.ThrowIfValueIsOutOfRange(nameof(algorythmType), 1, int.MaxValue);
-            Step = step.ThrowIfValueIsOutOfRange(nameof(algorythmType), 1, int.MaxValue);
+            StartValue = startValue.ThrowIfValueIsOutOfRange(nameof(startValue), 1, int.MaxValue);
+            EndValue = endValue.ThrowIfValueIsOutOfRange(nameof(endValue), StartValue, int.MaxValue);
+            LaunchesNumber = launchesNumber.ThrowIfValueIsOutOfRange(nameof(launchesNumber), 1, int.MaxValue);
+            Step = step.ThrowIfValueIsOutOfRange(nameof(step), 1, int.MaxValue);
             OutputFilenamePattern = outputFilenamePattern.ThrowIfNullOrWhiteSpace(nameof(outputFilenamePattern));
         }
 
-        public IReadOnlyList<string> GetOutputFilenames()
+        internal ParametersPack CreateWith(int newLaunchesNumber)
+        {
+            return new ParametersPack(
+                analysisProgramName: AnalysisProgramName,
+                algorythmType: AlgorythmType,
+                startValue: StartValue,
+                endValue: EndValue,
+                launchesNumber: newLaunchesNumber,
+                step: Step,
+                outputFilenamePattern: OutputFilenamePattern
+            );
+        }
+
+        internal IReadOnlyList<string> GetOutputFilenames()
         {
             int iterations = (EndValue - StartValue) / LaunchesNumber;
 
@@ -51,10 +66,11 @@ namespace AlgorithmAnalysis.DomainLogic
             return Enumerable.Range(0, iterations + 1)
                 .Select(i => StartValue + i * Step)
                 .Select(actualQuantity => $"{OutputFilenamePattern}{actualQuantity.ToString()}.txt")
+                .Append($"{OutputFilenamePattern}{CommonAnalysisFilenameSuffix}.txt")
                 .ToList();
         }
 
-        public string PackAsInputArgumentsForPhaseOne()
+        internal string PackAsInputArgumentsForPhaseOne()
         {
             return $"{AlgorythmType.ToString()} " +
                    $"{StartValue.ToString()} " +
@@ -64,7 +80,7 @@ namespace AlgorithmAnalysis.DomainLogic
                    $"{OutputFilenamePattern}";
         }
 
-        public string PackAsInputArgumentsForPhaseTwo()
+        internal string PackAsInputArgumentsForPhaseTwo()
         {
             return $"{AlgorythmType.ToString()} " +
                    $"{StartValue.ToString()} " +

@@ -1,9 +1,11 @@
-﻿using Acolyte.Assertions;
+﻿using System;
+using Acolyte.Assertions;
 using AlgorithmAnalysis.DomainLogic.Properties;
+using NPOI.SS.UserModel;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
 {
-    internal sealed class NormalDistributionAnalysis : IPhaseOnePartOneAnalysis
+    internal sealed class NormalDistributionAnalysis : IAnalysisPhaseOnePartOne
     {
         private readonly ExcelSheet _sheet;
 
@@ -20,10 +22,13 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
 
         public void ApplyAnalysisToSingleLaunch(int operationNumber, int currentRow)
         {
-            _sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.B, currentRow)
-                // TODO: use formulas for min and max and fix this formula with $I$5 and $I$6 (min and max).
-                .SetCellFormula($"($A{currentRow.ToString()} - $F$2) / ($F$6 - $F$2)");
+            // DO nothing.
+
+            // TODO: move this code to the beta distribution analysis.
+            //_sheet
+            //    .GetOrCreateCenterizedCell(ExcelColumnIndex.B, currentRow)
+            //    // TODO: use formulas for min and max and fix this formula with $I$5 and $I$6 (min and max).
+            //    .SetCellFormula($"($A{currentRow.ToString()} - $F$2) / ($F$6 - $F$2)");
         }
 
         public void ApplyAnalysisToDataset()
@@ -77,6 +82,17 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
 
             _sheet.AutoSizeColumn(ExcelColumnIndex.J);
             _sheet.AutoSizeColumn(ExcelColumnIndex.K, useMergedCells: true);
+        }
+
+        public int GetCalculatedSampleSize()
+        {
+            ICell cellWithResult = _sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.K, 7);
+            IWorkbook workbook = cellWithResult.Sheet.Workbook;
+
+            IFormulaEvaluator evaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
+            CellValue cellValue = evaluator.Evaluate(cellWithResult);
+
+            return Convert.ToInt32(cellValue.NumberValue);
         }
 
         #endregion

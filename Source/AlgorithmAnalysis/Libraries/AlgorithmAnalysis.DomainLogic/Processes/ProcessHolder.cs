@@ -16,12 +16,12 @@ namespace AlgorithmAnalysis.DomainLogic.Processes
             _process = process.ThrowIfNull(nameof(process));
         }
 
-        public static ProcessHolder Start(string filename, string args)
+        public static ProcessHolder Start(string filename, string args, bool showWindow)
         {
             filename.ThrowIfNullOrWhiteSpace(nameof(filename));
             args.ThrowIfNullOrEmpty(nameof(args));
 
-            return new ProcessHolder(StartProgram(filename, args));
+            return new ProcessHolder(StartProgram(filename, args, showWindow));
         }
 
         #region IDisposable Implementation
@@ -30,6 +30,8 @@ namespace AlgorithmAnalysis.DomainLogic.Processes
         {
             if (_disposed) return;
 
+            // TODO: process should be killed if desktop application will be terminated.
+            Kill();
             _process.Dispose();
 
             _disposed = true;
@@ -53,15 +55,9 @@ namespace AlgorithmAnalysis.DomainLogic.Processes
 
         public void Kill()
         {
-            if (!_process.HasExited)
-            {
-                _process.Kill();
-            }
-        }
+            if (_process.HasExited) return;
 
-        public string GetOutput()
-        {
-            return _process.StandardOutput.ReadToEnd();
+            _process.Kill();
         }
 
         public void CheckExecutionStatus()
@@ -69,23 +65,38 @@ namespace AlgorithmAnalysis.DomainLogic.Processes
             string error = _process.StandardError.ReadToEnd();
             if (_process.ExitCode != ExitCode.EXIT_SUCCESS.AsInt32())
             {
-                throw new ApplicationException(error);
+                throw new ApplicationException($"Exception occured in analysis module: {error}");
             }
         }
 
-        private static Process StartProgram(string filename, string args)
+        private static Process StartProgram(string filename, string args, bool showWindow)
         {
             // Contract: the analysis program is located in the same directory as our app.
+            ProcessStartInfo starterInfo = CreateStartInfo(filename, args, showWindow);
+
+            return Process.Start(starterInfo);
+        }
+
+        private static ProcessStartInfo CreateStartInfo(string filename, string args,
+            bool showWindow)
+        {
             var starterInfo = new ProcessStartInfo(filename, args)
             {
-                WindowStyle = ProcessWindowStyle.Hidden,
-                CreateNoWindow = true,
                 WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory,
                 RedirectStandardError = true,
                 UseShellExecute = false
             };
 
-            return Process.Start(starterInfo);
+            if (showWindow)
+            {
+                starterInfo.WindowStyle = ProcessWindowStyle.Normal;
+                starterInfo.CreateNoWindow = false;
+                return starterInfo;
+            }
+
+            starterInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            starterInfo.CreateNoWindow = true;
+            return starterInfo;
         }
     }
 }

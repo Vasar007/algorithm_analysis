@@ -58,6 +58,13 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _step, value.ThrowIfNull(nameof(value)));
         }
 
+        private bool _showAnalysisWindow;
+        public bool ShowAnalysisWindow
+        {
+            get => _showAnalysisWindow;
+            set => SetProperty(ref _showAnalysisWindow, value);
+        }
+
 
         public RawParametersPack()
         {
@@ -72,9 +79,19 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             EndValue = "80";
             LaunchesNumber = "200";
             Step = "10";
+            ShowAnalysisWindow = false;
         }
 
-        public ParametersPack Convert()
+        public AnalysisContext CreateContext()
+        {
+            return new AnalysisContext(
+                args: ConvertArgs(),
+                analysisKind: GetAnalysisKind(),
+                showAnalysisWindow: ShowAnalysisWindow
+            );
+        }
+
+        private ParametersPack ConvertArgs()
         {
             return new ParametersPack(
                 analysisProgramName: DesktopOptions.DefaultAnalysisProgramName,
@@ -87,7 +104,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             );
         }
 
-        public PhaseOnePartOneAnalysisKind GetAnalysisKind()
+        private PhaseOnePartOneAnalysisKind GetAnalysisKind()
         {
             PhaseOnePartOneAnalysisKind analysisKind = EnumHelper.GetValues<PhaseOnePartOneAnalysisKind>()
                 .Select(enumValue => (enumValue: enumValue, description: enumValue.GetDescription()))
