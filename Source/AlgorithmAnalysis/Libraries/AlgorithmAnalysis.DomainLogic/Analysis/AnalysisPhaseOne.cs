@@ -54,6 +54,8 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
                 ++iterationNumber;
             }
+
+            // TODO: set bold on text with final calculated sample size.
         }
 
         private int PerformOneIterationOfPartOne(ExcelContextForPhaseOne excelContext)
