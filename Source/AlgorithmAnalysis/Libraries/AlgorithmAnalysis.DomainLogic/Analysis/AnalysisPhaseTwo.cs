@@ -5,6 +5,9 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
     internal sealed class AnalysisPhaseTwo : IAnalysis
     {
+        private const int PhaseNumber = 2;
+
+
         public AnalysisPhaseTwo()
         {
         }

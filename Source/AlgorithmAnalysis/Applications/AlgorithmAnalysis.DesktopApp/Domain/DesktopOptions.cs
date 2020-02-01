@@ -16,11 +16,8 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
             AnalysisHelper.GetAvailableAnalysisKindForPhaseOne();
 
         // TODO: refactor algorythm type related logic.
-        public static IReadOnlyList<string> AvailableAlgorithms { get; } = new[]
-        {
-            "Pallottino's algorithm",
-            "Insertion sort"
-        };
+        public static IReadOnlyList<string> AvailableAlgorithms { get; } =
+            AnalysisHelper.GetAvailableAlgorithms();
 
         public static string FinalExcelFilename { get; } = @"test.xlsx";
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
 using Acolyte.Common;
@@ -10,9 +11,25 @@ namespace AlgorithmAnalysis.DomainLogic
     {
         public static IReadOnlyList<string> GetAvailableAnalysisKindForPhaseOne()
         {
-            return EnumHelper.GetValues<PhaseOnePartOneAnalysisKind>()
-                .Select(enumValue => enumValue.GetDescription())
-                .ToList();
+            return GetAllEnumDescriptionValues<PhaseOnePartOneAnalysisKind>();
+        }
+
+        public static IReadOnlyList<string> GetAvailableAlgorithms()
+        {
+            return GetAllEnumDescriptionValues<AlgorithmType>();
+        }
+
+        public static TEnum GetEnumValueByDescription<TEnum>(string enumDescription)
+            where TEnum : struct, Enum
+        {
+            enumDescription.ThrowIfNull(nameof(enumDescription));
+
+            TEnum enumResult = EnumHelper.GetValues<TEnum>()
+                .Select(enumValue => (enumValue: enumValue, description: enumValue.GetDescription()))
+                .First(pair => StringComparer.OrdinalIgnoreCase.Equals(pair.description, enumDescription))
+                .enumValue;
+
+            return enumResult;
         }
 
         internal static void RunAnalysisProgram(string analysisProgramName, string args,
@@ -27,6 +44,14 @@ namespace AlgorithmAnalysis.DomainLogic
 
             processHolder.CheckExecutionStatus();
             processHolder.WaitForExit();
+        }
+
+        private static IReadOnlyList<string> GetAllEnumDescriptionValues<TEnum>()
+            where TEnum : struct, Enum
+        {
+            return EnumHelper.GetValues<TEnum>()
+                .Select(enumValue => enumValue.GetDescription())
+                .ToList();
         }
     }
 }

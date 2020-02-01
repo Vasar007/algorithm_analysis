@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using Acolyte.Assertions;
-using Acolyte.Common;
+﻿using Acolyte.Assertions;
 using Prism.Mvvm;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
@@ -11,19 +8,19 @@ namespace AlgorithmAnalysis.DesktopApp.Models
     internal sealed class RawParametersPack : BindableBase
     {
         // Initializes through Reset method in ctor.
-        private string _analysisKind = default!;
-        public string AnalysisKind
+        private string _selectedAnalysisKind = default!;
+        public string SelectedAnalysisKind
         {
-            get => _analysisKind;
-            set => SetProperty(ref _analysisKind, value.ThrowIfNull(nameof(value)));
+            get => _selectedAnalysisKind;
+            set => SetProperty(ref _selectedAnalysisKind, value.ThrowIfNull(nameof(value)));
         }
 
         // Initializes through Reset method in ctor.
-        private string _algorythmType = default!;
-        public string AlgorythmType
+        private string _selectedAlgorithmType = default!;
+        public string SelectedAlgorithmType
         {
-            get => _algorythmType;
-            set => SetProperty(ref _algorythmType, value.ThrowIfNull(nameof(value)));
+            get => _selectedAlgorithmType;
+            set => SetProperty(ref _selectedAlgorithmType, value.ThrowIfNull(nameof(value)));
         }
 
         // Initializes through Reset method in ctor.
@@ -73,8 +70,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void Reset()
         {
-            AnalysisKind = DesktopOptions.AvailableAnalysisKindForPhaseOne[0];
-            AlgorythmType = DesktopOptions.AvailableAlgorithms[0];
+            SelectedAnalysisKind = DesktopOptions.AvailableAnalysisKindForPhaseOne[0];
+            SelectedAlgorithmType = DesktopOptions.AvailableAlgorithms[0];
             StartValue = "80";
             EndValue = "80";
             LaunchesNumber = "200";
@@ -84,52 +81,29 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public AnalysisContext CreateContext()
         {
+            var analysisKind = AnalysisHelper
+                .GetEnumValueByDescription<PhaseOnePartOneAnalysisKind>(SelectedAnalysisKind);
+
             return new AnalysisContext(
                 args: ConvertArgs(),
-                analysisKind: GetAnalysisKind(),
+                analysisKind: analysisKind,
                 showAnalysisWindow: ShowAnalysisWindow
             );
         }
 
         private ParametersPack ConvertArgs()
         {
+            var algorithmType = AnalysisHelper
+                .GetEnumValueByDescription<AlgorithmType>(SelectedAlgorithmType);
+
             return new ParametersPack(
                 analysisProgramName: DesktopOptions.DefaultAnalysisProgramName,
-                algorythmType: TransformAlgorithmValue(AlgorythmType),
+                algorithmType: algorithmType,
                 startValue: int.Parse(StartValue),
                 endValue: int.Parse(EndValue),
                 launchesNumber: int.Parse(LaunchesNumber),
                 step: int.Parse(Step),
                 outputFilenamePattern: DesktopOptions.DefaultOutputFilenamePattern
-            );
-        }
-
-        private PhaseOnePartOneAnalysisKind GetAnalysisKind()
-        {
-            PhaseOnePartOneAnalysisKind analysisKind = EnumHelper.GetValues<PhaseOnePartOneAnalysisKind>()
-                .Select(enumValue => (enumValue: enumValue, description: enumValue.GetDescription()))
-                .First(pair => StringComparer.OrdinalIgnoreCase.Equals(pair.description, AnalysisKind))
-                .enumValue;
-
-            return analysisKind;
-        }
-
-        private static int TransformAlgorithmValue(string value)
-        {
-            value.ThrowIfNullOrEmpty(nameof(value));
-
-            for (int i = 0; i < DesktopOptions.AvailableAlgorithms.Count; ++i)
-            {
-                bool equality = StringComparer.OrdinalIgnoreCase.Equals(
-                    value,
-                    DesktopOptions.AvailableAlgorithms[i]
-                );
-
-                if (equality) return i;
-            }
-
-            throw new ArgumentOutOfRangeException(
-                nameof(value), value, $"Unknown value to transform: '{value}'."
             );
         }
     }

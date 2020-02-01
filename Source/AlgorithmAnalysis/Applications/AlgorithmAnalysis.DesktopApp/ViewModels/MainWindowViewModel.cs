@@ -69,6 +69,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 AnalysisContext context = Parameters.CreateContext();
                 await Task.Run(() => _performer.PerformAnalysis(context)).ConfigureAwait(false);
 
+                // TODO: add cancellation button to interupt analysis.
+
                 MessageBoxProvider.ShowInfo("Analysis finished.");
             }
             catch (Exception ex)

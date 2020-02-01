@@ -10,7 +10,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public string AnalysisProgramName { get; }
 
-        public int AlgorythmType { get; }
+        public AlgorithmType AlgorithmType { get; }
 
         public int StartValue { get; }
 
@@ -25,7 +25,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public ParametersPack(
             string analysisProgramName,
-            int algorythmType,
+            AlgorithmType algorithmType,
             int startValue,
             int endValue,
             int launchesNumber,
@@ -33,10 +33,7 @@ namespace AlgorithmAnalysis.DomainLogic
             string outputFilenamePattern)
         {
             AnalysisProgramName = analysisProgramName.ThrowIfNullOrWhiteSpace(nameof(analysisProgramName));
-
-            // TODO: refactor algorythm type related logic.
-            AlgorythmType = algorythmType.ThrowIfValueIsOutOfRange(nameof(algorythmType), 0, 1);
-
+            AlgorithmType = algorithmType.ThrowIfEnumValueIsUndefined(nameof(algorithmType));
             StartValue = startValue.ThrowIfValueIsOutOfRange(nameof(startValue), 1, int.MaxValue);
             EndValue = endValue.ThrowIfValueIsOutOfRange(nameof(endValue), StartValue, int.MaxValue);
             LaunchesNumber = launchesNumber.ThrowIfValueIsOutOfRange(nameof(launchesNumber), 1, int.MaxValue);
@@ -48,7 +45,7 @@ namespace AlgorithmAnalysis.DomainLogic
         {
             return new ParametersPack(
                 analysisProgramName: AnalysisProgramName,
-                algorythmType: AlgorythmType,
+                algorithmType: AlgorithmType,
                 startValue: StartValue,
                 endValue: EndValue,
                 launchesNumber: newLaunchesNumber,
@@ -72,7 +69,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
         internal string PackAsInputArgumentsForPhaseOne()
         {
-            return $"{AlgorythmType.ToString()} " +
+            return $"{AlgorithmType.AsInt32().ToString()} " +
                    $"{StartValue.ToString()} " +
                    $"{StartValue.ToString()} " +
                    $"{LaunchesNumber.ToString()} " +
@@ -82,7 +79,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
         internal string PackAsInputArgumentsForPhaseTwo()
         {
-            return $"{AlgorythmType.ToString()} " +
+            return $"{AlgorithmType.AsInt32().ToString()} " +
                    $"{StartValue.ToString()} " +
                    $"{EndValue.ToString()} " +
                    $"{LaunchesNumber.ToString()} " +

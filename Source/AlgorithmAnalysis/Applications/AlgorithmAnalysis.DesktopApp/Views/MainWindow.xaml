@@ -68,7 +68,7 @@
                           MinWidth="200"
                           SelectedIndex="0"
                           ItemsSource="{Binding Path=AvailableAnalysisKindForPhaseOne}"
-                          SelectedItem="{Binding Path=Parameters.AnalysisKind}">
+                          SelectedItem="{Binding Path=Parameters.SelectedAnalysisKind}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />
@@ -83,7 +83,7 @@
                           MinWidth="200"
                           SelectedIndex="0"
                           ItemsSource="{Binding Path=AvailableAlgorithms}"
-                          SelectedItem="{Binding Path=Parameters.AlgorythmType}">
+                          SelectedItem="{Binding Path=Parameters.SelectedAlgorithmType}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />

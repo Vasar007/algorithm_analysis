@@ -52,9 +52,6 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 );
                 calculatedSampleSize = PerformOneIterationOfPartOne(excelContext);
 
-                if (iterationNumber == 2) break;
-                calculatedSampleSize = 3000;
-
                 ++iterationNumber;
             }
         }
