@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
 using Acolyte.Common;
+using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DomainLogic.Processes;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DomainLogic
 {
@@ -14,9 +16,9 @@ namespace AlgorithmAnalysis.DomainLogic
             return GetAllEnumDescriptionValues<PhaseOnePartOneAnalysisKind>();
         }
 
-        public static IReadOnlyList<string> GetAvailableAlgorithms()
+        public static IReadOnlyList<AlgorithmType> GetAvailableAlgorithms()
         {
-            return GetAllEnumDescriptionValues<AlgorithmType>();
+            return ConfigOptions.Algorithms.GetAlgorithmTypes();
         }
 
         public static TEnum GetEnumValueByDescription<TEnum>(string enumDescription)

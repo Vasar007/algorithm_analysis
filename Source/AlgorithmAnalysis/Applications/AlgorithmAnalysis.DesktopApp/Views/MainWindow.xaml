@@ -83,7 +83,7 @@
                           MinWidth="200"
                           SelectedIndex="0"
                           ItemsSource="{Binding Path=AvailableAlgorithms}"
-                          SelectedItem="{Binding Path=Parameters.SelectedAlgorithmType}">
+                          SelectedItem="{Binding Path=Parameters.SelectedAlgorithmType, Mode=OneWay}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />

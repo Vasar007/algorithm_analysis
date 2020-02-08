@@ -1,0 +1,8 @@
+{
+  "AlgorithmOptions": {
+    "AvailableAlgorithms": {
+      "0": "Pallottino's algorithm",
+      "1": "Insertion sort"
+    }
+  }
+}

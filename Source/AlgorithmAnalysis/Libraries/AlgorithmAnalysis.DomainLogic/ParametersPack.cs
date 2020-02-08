@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DomainLogic
 {
@@ -33,7 +34,7 @@ namespace AlgorithmAnalysis.DomainLogic
             string outputFilenamePattern)
         {
             AnalysisProgramName = analysisProgramName.ThrowIfNullOrWhiteSpace(nameof(analysisProgramName));
-            AlgorithmType = algorithmType.ThrowIfEnumValueIsUndefined(nameof(algorithmType));
+            AlgorithmType = algorithmType.ThrowIfNull(nameof(algorithmType));
             StartValue = startValue.ThrowIfValueIsOutOfRange(nameof(startValue), 1, int.MaxValue);
             EndValue = endValue.ThrowIfValueIsOutOfRange(nameof(endValue), StartValue, int.MaxValue);
             LaunchesNumber = launchesNumber.ThrowIfValueIsOutOfRange(nameof(launchesNumber), 1, int.MaxValue);
@@ -69,7 +70,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
         internal string PackAsInputArgumentsForPhaseOne()
         {
-            return $"{AlgorithmType.AsInt32().ToString()} " +
+            return $"{AlgorithmType.Value.ToString()} " +
                    $"{StartValue.ToString()} " +
                    $"{StartValue.ToString()} " +
                    $"{LaunchesNumber.ToString()} " +
@@ -79,7 +80,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
         internal string PackAsInputArgumentsForPhaseTwo()
         {
-            return $"{AlgorithmType.AsInt32().ToString()} " +
+            return $"{AlgorithmType.Value.ToString()} " +
                    $"{StartValue.ToString()} " +
                    $"{EndValue.ToString()} " +
                    $"{LaunchesNumber.ToString()} " +

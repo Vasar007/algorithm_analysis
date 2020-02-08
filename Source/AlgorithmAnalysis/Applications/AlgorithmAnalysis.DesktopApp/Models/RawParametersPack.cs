@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
@@ -16,8 +17,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         }
 
         // Initializes through Reset method in ctor.
-        private string _selectedAlgorithmType = default!;
-        public string SelectedAlgorithmType
+        private AlgorithmType _selectedAlgorithmType = default!;
+        public AlgorithmType SelectedAlgorithmType
         {
             get => _selectedAlgorithmType;
             set => SetProperty(ref _selectedAlgorithmType, value.ThrowIfNull(nameof(value)));
@@ -93,12 +94,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         private ParametersPack ConvertArgs()
         {
-            var algorithmType = AnalysisHelper
-                .GetEnumValueByDescription<AlgorithmType>(SelectedAlgorithmType);
-
             return new ParametersPack(
                 analysisProgramName: DesktopOptions.DefaultAnalysisProgramName,
-                algorithmType: algorithmType,
+                algorithmType: SelectedAlgorithmType,
                 startValue: int.Parse(StartValue),
                 endValue: int.Parse(EndValue),
                 launchesNumber: int.Parse(LaunchesNumber),

@@ -62,8 +62,10 @@ namespace AlgorithmAnalysis.DomainLogic.Processes
 
         public void CheckExecutionStatus()
         {
+            const int exitSuccess = (int) ExitCode.EXIT_SUCCESS;
+
             string error = _process.StandardError.ReadToEnd();
-            if (_process.ExitCode != ExitCode.EXIT_SUCCESS.AsInt32())
+            if (_process.ExitCode != exitSuccess)
             {
                 throw new ApplicationException($"Exception occured in analysis module: {error}");
             }

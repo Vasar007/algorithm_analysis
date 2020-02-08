@@ -1,9 +1,9 @@
 ﻿using System;
 using Acolyte.Assertions;
 
-namespace AlgorithmAnalysis.DomainLogic
+namespace AlgorithmAnalysis.Models
 {
-    internal static class EnumExtensions
+    public static class EnumExtensions
     {
         public static int AsInt32<TEnum>(this TEnum enumValue)
             where TEnum : struct, Enum

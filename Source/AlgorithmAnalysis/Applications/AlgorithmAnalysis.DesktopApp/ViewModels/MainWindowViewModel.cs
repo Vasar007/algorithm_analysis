@@ -9,6 +9,7 @@ using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.Commands;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.DomainLogic;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
@@ -22,7 +23,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public IReadOnlyList<string> AvailableAnalysisKindForPhaseOne { get; }
 
-        public IReadOnlyList<string> AvailableAlgorithms { get; }
+        public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
 
         public RawParametersPack Parameters { get; }
 

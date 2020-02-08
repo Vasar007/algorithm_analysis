@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using AlgorithmAnalysis.DomainLogic;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.Domain
 {
@@ -15,10 +16,9 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
         public static IReadOnlyList<string> AvailableAnalysisKindForPhaseOne { get; } =
             AnalysisHelper.GetAvailableAnalysisKindForPhaseOne();
 
-        // TODO: refactor algorythm type related logic.
-        public static IReadOnlyList<string> AvailableAlgorithms { get; } =
+        public static IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; } =
             AnalysisHelper.GetAvailableAlgorithms();
 
-        public static string FinalExcelFilename { get; } = @"test.xlsx";
+        public static string FinalExcelFilename { get; } = "test.xlsx";
     }
 }

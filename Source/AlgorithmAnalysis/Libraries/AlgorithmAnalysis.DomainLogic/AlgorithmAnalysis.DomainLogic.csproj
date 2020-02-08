@@ -15,6 +15,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AlgorithmAnalysis.Configuration\AlgorithmAnalysis.Configuration.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Compile Update="Properties\ExcelStrings.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
