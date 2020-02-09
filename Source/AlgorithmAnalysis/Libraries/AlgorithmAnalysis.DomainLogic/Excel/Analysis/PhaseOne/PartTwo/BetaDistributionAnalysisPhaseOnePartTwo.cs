@@ -27,6 +27,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
         public void ApplyAnalysisToDataset(ExcelSheet sheet)
         {
+            // TODO: change this function to apply appropriate formulas.
             sheet
                 .GetOrCreateCenterizedCell(ExcelColumnIndex.L, 1)
                 .SetCellValue(ExcelStrings.NormalDistributionSolutionColumnName);
@@ -80,6 +81,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
         public bool CheckH0Hypothesis(ExcelSheet sheet)
         {
+            // TODO: change this function to read critical chi^2 value of the result Excel sheet.
             ICell cellWithResult = sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.M, 7);
             IWorkbook workbook = cellWithResult.Sheet.Workbook;
 
