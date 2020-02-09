@@ -20,7 +20,10 @@ namespace AlgorithmAnalysis.DomainLogic
 
             foreach (IAnalysis analysis in _analyses)
             {
-                analysis.Analyze(context);
+                AnalysisResult result = analysis.Analyze(context);
+
+                // TODO: return progress statuses with messages.
+                if (!result.Success) break;
             }
         }
 
@@ -29,7 +32,7 @@ namespace AlgorithmAnalysis.DomainLogic
             return new List<IAnalysis>
             {
                 new AnalysisPhaseOne(outputExcelFilename),
-                new AnalysisPhaseTwo()
+                new AnalysisPhaseTwo(outputExcelFilename)
             };
         }
     }

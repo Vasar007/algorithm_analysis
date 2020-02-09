@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.DomainLogic.Excel.Analysis;
+using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Properties;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel
 {
-    internal sealed class ExcelWrapperForPhaseOne
+    internal sealed class ExcelWrapperForPhaseOnePartOne
     {
         private readonly string _outputExcelFilename;
 
 
-        public ExcelWrapperForPhaseOne(string outputExcelFilename)
+        public ExcelWrapperForPhaseOnePartOne(string outputExcelFilename)
         {
             _outputExcelFilename = outputExcelFilename.ThrowIfNullOrWhiteSpace(nameof(outputExcelFilename));
         }
@@ -22,13 +21,12 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             data.ThrowIfNullOrEmpty(nameof(data));
             excelContext.ThrowIfNull(nameof(excelContext));
 
-            ExcelWorkbook workbook = GetWorkbook();
+            ExcelWorkbook workbook = ExcelHelper.GetWorkbook(_outputExcelFilename);
 
-            // Create the first sheet using analysis data.
             ExcelSheet sheet = workbook.CreateSheet(excelContext.SheetName);
             FillSheetHeader(sheet, excelContext.Args);
 
-            IAnalysisPhaseOnePartOne analysis = excelContext.AnalysisFactory(sheet);
+            IAnalysisPhaseOnePartOne analysis = excelContext.PartOneFactory();
 
             int rowCounter = 2;
             foreach (int item in data)
@@ -39,24 +37,14 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
                     .GetOrCreateCenterizedCell(ExcelColumnIndex.A, currentRow)
                     .SetCellValue(item);
 
-                analysis.ApplyAnalysisToSingleLaunch(item, currentRow);
+                analysis.ApplyAnalysisToSingleLaunch(sheet, item, currentRow);
             }
 
-            analysis.ApplyAnalysisToDataset();
+            analysis.ApplyAnalysisToDataset(sheet);
 
             workbook.SaveToFile(_outputExcelFilename);
 
-            return analysis.GetCalculatedSampleSize();
-        }
-
-        private ExcelWorkbook GetWorkbook()
-        {
-            if (File.Exists(_outputExcelFilename))
-            {
-                return new ExcelWorkbook(_outputExcelFilename);
-            }
-
-            return new ExcelWorkbook();
+            return analysis.GetCalculatedSampleSize(sheet);
         }
 
         private static void FillSheetHeader(ExcelSheet sheet, ParametersPack args)
@@ -114,9 +102,15 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             sheet
                 .GetOrCreateCenterizedCell(ExcelColumnIndex.F, 7)
                 .SetCellValue(double.Parse(ExcelStrings.ConfidenceFactorValue));
+
+            string formulaF8 = string.Format(
+                ExcelStrings.SignificanceLevelFormula,
+                ExcelColumnIndex.F.ToString(),
+                "7"
+            );
             sheet
                 .GetOrCreateCenterizedCell(ExcelColumnIndex.F, 8)
-                .SetCellFormula(ExcelStrings.SignificanceLevelFormula);
+                .SetCellFormula(formulaF8);
             sheet
                 .GetOrCreateCenterizedCell(ExcelColumnIndex.F, 9)
                 .SetCellValue(double.Parse(ExcelStrings.EpsilonValue));

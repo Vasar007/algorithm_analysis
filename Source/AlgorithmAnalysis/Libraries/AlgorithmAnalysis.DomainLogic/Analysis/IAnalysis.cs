@@ -2,6 +2,6 @@
 {
     internal interface IAnalysis
     {
-        void Analyze(AnalysisContext context);
+        AnalysisResult Analyze(AnalysisContext context);
     }
 }

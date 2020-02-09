@@ -11,9 +11,14 @@ namespace AlgorithmAnalysis.DomainLogic
 {
     public static class AnalysisHelper
     {
-        public static IReadOnlyList<string> GetAvailableAnalysisKindForPhaseOne()
+        public static IReadOnlyList<string> GetAvailableAnalysisKindForPhaseOnePartOne()
         {
             return GetAllEnumDescriptionValues<PhaseOnePartOneAnalysisKind>();
+        }
+
+        public static IReadOnlyList<string> GetAvailableAnalysisKindForPhaseOnePartTwo()
+        {
+            return GetAllEnumDescriptionValues<PhaseOnePartTwoAnalysisKind>();
         }
 
         public static IReadOnlyList<AlgorithmType> GetAvailableAlgorithms()

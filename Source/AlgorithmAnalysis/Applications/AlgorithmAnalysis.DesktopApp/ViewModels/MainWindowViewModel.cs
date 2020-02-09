@@ -21,7 +21,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public string Title { get; }
 
-        public IReadOnlyList<string> AvailableAnalysisKindForPhaseOne { get; }
+        public IReadOnlyList<string> AvailableAnalysisKindForPhaseOnePartOne { get; }
+
+        public IReadOnlyList<string> AvailableAnalysisKindForPhaseOnePartTwo { get; }
 
         public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
 
@@ -45,7 +47,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             _performer = new AnalysisPerformer(_finalExcelFilename);
 
             Title = DesktopOptions.Title;
-            AvailableAnalysisKindForPhaseOne = DesktopOptions.AvailableAnalysisKindForPhaseOne;
+            AvailableAnalysisKindForPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOne;
+            AvailableAnalysisKindForPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseTwo;
             AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
             Parameters = new RawParametersPack();
             CanExecuteAnalysis = true;
@@ -65,9 +68,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
                 // TODO: display waiting message (and progress bar, if it's possible).
 
-                CheckOutputFile();
-
                 AnalysisContext context = Parameters.CreateContext();
+
+                CheckOutputFile();
                 await Task.Run(() => _performer.PerformAnalysis(context)).ConfigureAwait(false);
 
                 // TODO: add cancellation button to interupt analysis.

@@ -14,7 +14,10 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
         public static string DefaultOutputFilenamePattern { get; } = "tests_average_";
 
         public static IReadOnlyList<string> AvailableAnalysisKindForPhaseOne { get; } =
-            AnalysisHelper.GetAvailableAnalysisKindForPhaseOne();
+            AnalysisHelper.GetAvailableAnalysisKindForPhaseOnePartOne();
+
+        public static IReadOnlyList<string> AvailableAnalysisKindForPhaseTwo { get; } =
+         AnalysisHelper.GetAvailableAnalysisKindForPhaseOnePartTwo();
 
         public static IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; } =
             AnalysisHelper.GetAvailableAlgorithms();

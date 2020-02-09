@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.DomainLogic.Excel;
+using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Files;
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
@@ -13,28 +14,36 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
         private readonly LocalFileWorker _fileWorker;
 
-        private readonly ExcelWrapperForPhaseOne _excelWrapper;
+        private readonly ExcelWrapperForPhaseOnePartOne _excelWrapperPartOne;
+
+        private readonly ExcelWrapperForPhaseOnePartTwo _excelWrapperPartTwo;
 
 
         public AnalysisPhaseOne(string outputExcelFilename)
         {
             _fileWorker = new LocalFileWorker();
-            _excelWrapper = new ExcelWrapperForPhaseOne(outputExcelFilename);
+            _excelWrapperPartOne = new ExcelWrapperForPhaseOnePartOne(outputExcelFilename);
+            _excelWrapperPartTwo = new ExcelWrapperForPhaseOnePartTwo(outputExcelFilename);
         }
 
-        #region Implementation of IAnalysis
+        #region IAnalysis Implementation
 
-        public void Analyze(AnalysisContext context)
+        public AnalysisResult Analyze(AnalysisContext context)
         {
             // Find appropriate launches number iteratively (part 1 of phase 1).
-            PerformPartOne(context);
+            AnalysisPhaseOneResult partOneResult = PerformPartOne(context);
 
             // TODO: check H0 hypothesis on calculated launches number (part 2 of phase 1).
+            bool isH0HypothesisProved = PerfromPartTwo(context, partOneResult);
+
+            return isH0HypothesisProved
+                ? AnalysisResult.CreateSuccess("H0 hypothesis for the algorithm was proved.")
+                : AnalysisResult.CreateFailure("H0 hypothesis for the algorithm was not proved.");
         }
 
         #endregion
 
-        private void PerformPartOne(AnalysisContext context)
+        private AnalysisPhaseOneResult PerformPartOne(AnalysisContext context)
         {
             int iterationNumber = 1;
             int calculatedSampleSize = context.Args.LaunchesNumber;
@@ -44,11 +53,11 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             {
                 previousCalculatedSampleSize = calculatedSampleSize;
 
-                var excelContext = new ExcelContextForPhaseOne(
+                var excelContext = ExcelContextForPhaseOne.CreateForPartOne(
                     args: context.Args.CreateWith(calculatedSampleSize),
                     showAnalysisWindow: context.ShowAnalysisWindow,
-                    analysisFactory: context.CreateAnalysisPhaseOnePartOne,
-                    sheetName: $"Sheet{PhaseNumber.ToString()}-{iterationNumber.ToString()}"
+                    sheetName: $"Sheet{PhaseNumber.ToString()}-{iterationNumber.ToString()}",
+                    partOneFactory: context.CreateAnalysisPhaseOnePartOne
                 );
                 calculatedSampleSize = PerformOneIterationOfPartOne(excelContext);
 
@@ -56,49 +65,37 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             }
 
             // TODO: set bold on text with final calculated sample size.
+            return new AnalysisPhaseOneResult(calculatedSampleSize, iterationNumber);
+        }
+
+        private bool PerfromPartTwo(AnalysisContext context, AnalysisPhaseOneResult partOneResult)
+        {
+            // Perform the final iteration to get actual data using calculated sample size.
+            var excelContext = ExcelContextForPhaseOne.CreateForPartTwo(
+                args: context.Args.CreateWith(partOneResult.CalculatedSampleSize),
+                showAnalysisWindow: context.ShowAnalysisWindow,
+                sheetName: $"Sheet{PhaseNumber.ToString()}-{partOneResult.TotalIterationNumber.ToString()}",
+                partTwoFactory: context.CreateAnalysisPhaseOnePartTwo
+            );
+
+            using FileObject fileObject = ExcelHelper.PerformOneIterationOfPhaseOne(
+                 excelContext.Args, excelContext.ShowAnalysisWindow, _fileWorker
+             );
+
+            return _excelWrapperPartTwo.ApplyAnalysisAndSaveData(
+                fileObject.Data.GetData(item => item.operationNumber), excelContext
+            );
         }
 
         private int PerformOneIterationOfPartOne(ExcelContextForPhaseOne excelContext)
         {
-            // Contract: output files are located in the same directory as our app.
-            IReadOnlyList<string> finalOutputFilenames = excelContext.Args.GetOutputFilenames();
-            CheckExpectedFilenamesNumber(expectedFilenamessNumber: 2, finalOutputFilenames);
-
-            using var fileHolder = new FileHolder(finalOutputFilenames);
-
-            AnalysisHelper.RunAnalysisProgram(
-                excelContext.Args.AnalysisProgramName,
-                excelContext.Args.PackAsInputArgumentsForPhaseOne(),
-                excelContext.ShowAnalysisWindow
+            using FileObject fileObject = ExcelHelper.PerformOneIterationOfPhaseOne(
+                excelContext.Args, excelContext.ShowAnalysisWindow, _fileWorker
             );
 
-            string finalOutputFilename = finalOutputFilenames.First();
-
-            using DataObject<OutputFileData> data = _fileWorker.ReadDataFile(
-                finalOutputFilename, excelContext.Args
+            return _excelWrapperPartOne.ApplyAnalysisAndSaveData(
+                fileObject.Data.GetData(item => item.operationNumber), excelContext
             );
-            
-            IEnumerable<int> operationNumbers = data.GetData(item => item.operationNumber);
-
-            return _excelWrapper.ApplyAnalysisAndSaveData(
-                operationNumbers, excelContext
-            );
-        }
-
-        private static void CheckExpectedFilenamesNumber(int expectedFilenamessNumber,
-            IReadOnlyList<string> actualOutputFilenames)
-        {
-            expectedFilenamessNumber.ThrowIfValueIsOutOfRange(nameof(expectedFilenamessNumber), 1, int.MaxValue);
-
-            if (actualOutputFilenames.Count != expectedFilenamessNumber)
-            {
-                string message =
-                    "Phase 1 of analysis failed. Should be only " +
-                    $"{expectedFilenamessNumber.ToString()} output filenames but was " +
-                    $"{actualOutputFilenames.Count.ToString()}.";
-
-                throw new InvalidOperationException(message);
-            }
         }
     }
 }

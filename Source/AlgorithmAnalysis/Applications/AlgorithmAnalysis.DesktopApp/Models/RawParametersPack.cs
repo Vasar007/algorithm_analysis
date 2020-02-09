@@ -9,11 +9,19 @@ namespace AlgorithmAnalysis.DesktopApp.Models
     internal sealed class RawParametersPack : BindableBase
     {
         // Initializes through Reset method in ctor.
-        private string _selectedAnalysisKind = default!;
-        public string SelectedAnalysisKind
+        private string _selectedPhaseOnePartOne = default!;
+        public string SelectedPhaseOnePartOne
         {
-            get => _selectedAnalysisKind;
-            set => SetProperty(ref _selectedAnalysisKind, value.ThrowIfNull(nameof(value)));
+            get => _selectedPhaseOnePartOne;
+            set => SetProperty(ref _selectedPhaseOnePartOne, value.ThrowIfNull(nameof(value)));
+        }
+
+        // Initializes through Reset method in ctor.
+        private string _selectedPhaseOnePartTwo = default!;
+        public string SelectedPhaseOnePartTwo
+        {
+            get => _selectedPhaseOnePartTwo;
+            set => SetProperty(ref _selectedPhaseOnePartTwo, value.ThrowIfNull(nameof(value)));
         }
 
         // Initializes through Reset method in ctor.
@@ -71,10 +79,11 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void Reset()
         {
-            SelectedAnalysisKind = DesktopOptions.AvailableAnalysisKindForPhaseOne[0];
+            SelectedPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOne[0];
+            SelectedPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseTwo[0];
             SelectedAlgorithmType = DesktopOptions.AvailableAlgorithms[0];
             StartValue = "80";
-            EndValue = "80";
+            EndValue = "320";
             LaunchesNumber = "200";
             Step = "10";
             ShowAnalysisWindow = false;
@@ -82,13 +91,16 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public AnalysisContext CreateContext()
         {
-            var analysisKind = AnalysisHelper
-                .GetEnumValueByDescription<PhaseOnePartOneAnalysisKind>(SelectedAnalysisKind);
+            var phaseOnePartOne = AnalysisHelper
+                .GetEnumValueByDescription<PhaseOnePartOneAnalysisKind>(SelectedPhaseOnePartOne);
+            var phaseOnePartTwo = AnalysisHelper
+                .GetEnumValueByDescription<PhaseOnePartTwoAnalysisKind>(SelectedPhaseOnePartTwo);
 
             return new AnalysisContext(
                 args: ConvertArgs(),
-                analysisKind: analysisKind,
-                showAnalysisWindow: ShowAnalysisWindow
+                showAnalysisWindow: ShowAnalysisWindow,
+                phaseOnePartOne: phaseOnePartOne,
+                phaseOnePartTwo: phaseOnePartTwo
             );
         }
 

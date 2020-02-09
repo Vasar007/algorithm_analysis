@@ -61,14 +61,29 @@
                            HorizontalAlignment="Center"
                            FontWeight="Bold" />
 
-                <TextBlock Text="Analysis kind for phase one"
+                <TextBlock Text="Analysis kind for phase one part one"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />
                 <ComboBox HorizontalAlignment="Center"
-                          MinWidth="200"
+                          MinWidth="350"
                           SelectedIndex="0"
-                          ItemsSource="{Binding Path=AvailableAnalysisKindForPhaseOne}"
-                          SelectedItem="{Binding Path=Parameters.SelectedAnalysisKind}">
+                          ItemsSource="{Binding Path=AvailableAnalysisKindForPhaseOnePartOne}"
+                          SelectedItem="{Binding Path=Parameters.SelectedPhaseOnePartOne}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
+                <TextBlock Text="Analysis kind for phase one part two"
+                           HorizontalAlignment="Center"
+                           Margin="0 7 0 3" />
+                <ComboBox HorizontalAlignment="Center"
+                          MinWidth="350"
+                          SelectedIndex="0"
+                          ItemsSource="{Binding Path=AvailableAnalysisKindForPhaseOnePartTwo}"
+                          SelectedItem="{Binding Path=Parameters.SelectedPhaseOnePartTwo}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />
@@ -80,7 +95,7 @@
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />
                 <ComboBox HorizontalAlignment="Center"
-                          MinWidth="200"
+                          MinWidth="350"
                           SelectedIndex="0"
                           ItemsSource="{Binding Path=AvailableAlgorithms}"
                           SelectedItem="{Binding Path=Parameters.SelectedAlgorithmType, Mode=OneWay}">
@@ -91,7 +106,7 @@
                     </ComboBox.ItemsPanel>
                 </ComboBox>
 
-                <TextBlock Text="Start value"
+                <TextBlock Text="First value of segment"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />
                 <TextBox Style="{StaticResource ResourceKey=TextBoxInError}">
@@ -106,7 +121,7 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBlock Text="End value"
+                <TextBlock Text="Last value of segment"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />
                 <TextBox Style="{StaticResource ResourceKey=TextBoxInError}">

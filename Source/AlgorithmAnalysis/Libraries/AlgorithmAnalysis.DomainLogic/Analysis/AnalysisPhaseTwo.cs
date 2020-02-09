@@ -8,18 +8,19 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         private const int PhaseNumber = 2;
 
 
-        public AnalysisPhaseTwo()
+        public AnalysisPhaseTwo(string outputExcelFilename)
         {
         }
 
-        #region Implementation of IAnalysis
+        #region IAnalysis Implementation
 
-        public void Analyze(AnalysisContext context)
+        public AnalysisResult Analyze(AnalysisContext context)
         {
             // TODO: launch analysis several times in segment [StartValue, EndValue] with step=Step.
             // TODO: find output files with data and parse them.
             // TODO: save output data to the Excel tables and apply formulas.
             // TODO: delete output files with data.
+            return AnalysisResult.CreateFailure("Phase 2 is not implemented.");
         }
 
         #endregion
