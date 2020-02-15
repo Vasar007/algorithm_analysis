@@ -37,11 +37,11 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
             sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 6, ExcelStrings.VariationCoefficient);
             sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 7, ExcelStrings.CalculatedSampleSize);
 
-            string lastRowIndex = (_args.LaunchesNumber + 1).ToString();
+            string lastValueRowIndex = _args.LaunchesNumber.SkipHeader().ToString();
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 2, "$F$6");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 3, $"AVERAGE($A$2:$A${lastRowIndex})");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 4, $"VAR($A$2:$A${lastRowIndex})"); // VAR == VAR.S
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 5, $"STDEV($A$2:$A${lastRowIndex})"); // STDEV == STDEV.S
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 3, $"AVERAGE($A$2:$A${lastValueRowIndex})");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 4, $"VAR($A$2:$A${lastValueRowIndex})"); // VAR == VAR.S
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 5, $"STDEV($A$2:$A${lastValueRowIndex})"); // STDEV == STDEV.S
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 6, "$K$5 / $K$3");
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 7, "ROUNDUP(3.8416 * $K$6^2 / $F$9^2, 0)");
 
@@ -51,13 +51,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
 
         public int GetCalculatedSampleSize(ExcelSheet sheet)
         {
-            ICell cellWithResult = sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.K, 7);
-            IWorkbook workbook = cellWithResult.Sheet.Workbook;
+            CellValue calculatedSampleSize = sheet.EvaluateCell(ExcelColumnIndex.K, 7);
 
-            IFormulaEvaluator evaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
-            CellValue cellValue = evaluator.Evaluate(cellWithResult);
-
-            return Convert.ToInt32(cellValue.NumberValue);
+            return Convert.ToInt32(calculatedSampleSize.NumberValue);
         }
 
         #endregion

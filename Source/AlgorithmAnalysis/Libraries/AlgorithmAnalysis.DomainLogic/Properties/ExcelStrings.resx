@@ -147,14 +147,14 @@
   </data>
   <data name="CheckTestFucntion" xml:space="preserve">
     <value>Проверка гитотезы функцией ТЕСТ</value>
-    <comment>Descriptive cell (I15).</comment>
-  </data>
-  <data name="Chi2" xml:space="preserve">
-    <value>χ2</value>
-    <comment>Descriptive cell (I12).</comment>
+    <comment>Descriptive cell (I17).</comment>
   </data>
   <data name="Chi2Critical" xml:space="preserve">
     <value>Критическое значение χ2</value>
+    <comment>Descriptive cell (I16).</comment>
+  </data>
+  <data name="Chi2Observable" xml:space="preserve">
+    <value>χ2 наблюдаемое</value>
     <comment>Descriptive cell (I14).</comment>
   </data>
   <data name="Chi2ValueColumnName" xml:space="preserve">
@@ -191,7 +191,7 @@
   </data>
   <data name="FreedomDegreesNumber" xml:space="preserve">
     <value>Кол-во степеней свободы</value>
-    <comment>Descriptive cell (I13).</comment>
+    <comment>Descriptive cell (I15).</comment>
   </data>
   <data name="FrequencyColumnName" xml:space="preserve">
     <value>Частота</value>
@@ -199,7 +199,7 @@
   </data>
   <data name="HistogramSemisegmentsNumber" xml:space="preserve">
     <value>Число полусегментов для гистограммы</value>
-    <comment>Descriptive cell (I11).</comment>
+    <comment>Descriptive cell (I13).</comment>
   </data>
   <data name="InputDataSize" xml:space="preserve">
     <value>Размер входа</value>
@@ -207,7 +207,7 @@
   </data>
   <data name="IntervalLength" xml:space="preserve">
     <value>Длина интервала</value>
-    <comment>Descriptive cell (I10).</comment>
+    <comment>Descriptive cell (I12).</comment>
   </data>
   <data name="LowerIntegrationBound" xml:space="preserve">
     <value>Нижний предел интегрирования</value>
@@ -217,9 +217,17 @@
     <value>max f(n)</value>
     <comment>Descriptive cell (E5, I5).</comment>
   </data>
+  <data name="MaximumValue" xml:space="preserve">
+    <value>Максимальное значение выборки</value>
+    <comment>Descriptive cell (I11).</comment>
+  </data>
   <data name="MinFunc" xml:space="preserve">
     <value>min f(n)</value>
     <comment>Descriptive cell (E3, I3).</comment>
+  </data>
+  <data name="MinimumValue" xml:space="preserve">
+    <value>Минимальное значение выборки</value>
+    <comment>Descriptive cell (I10).</comment>
   </data>
   <data name="NormalDistributionSolutionColumnName" xml:space="preserve">
     <value>Решение на основе нормального распределения</value>

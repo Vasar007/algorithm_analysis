@@ -8,6 +8,16 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 {
     internal sealed class ExcelSheet
     {
+        // Suitable for Excel 2007. If you try to use the latest Excel 2019 functions, NPOI can
+        // throw NotImplementedException.
+
+        // ATTENTION! This class serves as suitable interface to work with Excel sheet.
+        // NPOI library uses zero-based indexing which is counterintuitive.
+        // That's why we use one-based indexing for row indexing. We use enum to work with
+        // column indexing. However, enum values are zero-based to simplify internal conversion to 
+        // NPOI library calls. You should never usually use AsInt32 method in outside logic for
+        // ExcelColumnIndex enum.
+
         private readonly ISheet _sheet;
 
 
@@ -101,6 +111,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         public void SetCellFormula(ExcelColumnIndex columnIndex, int rowIndex, string formula)
         {
+            formula.ThrowIfNullOrWhiteSpace(nameof(formula));
+
             GetOrCreateCell(columnIndex, rowIndex).SetCellFormula(formula);
         }
 
@@ -132,6 +144,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         public void SetCenterizedCellFormula(ExcelColumnIndex columnIndex, int rowIndex, string formula)
         {
+            formula.ThrowIfNullOrWhiteSpace(nameof(formula));
+
             GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellFormula(formula);
         }
 
@@ -167,6 +181,37 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
 
             _sheet.AutoSizeColumn(columnIndex.AsInt32(), useMergedCells);
+        }
+
+        public CellValue EvaluateCell(ExcelColumnIndex columnIndex, int rowIndex)
+        {
+            ICell cellWithResult = GetOrCreateCenterizedCell(columnIndex, rowIndex);
+            IWorkbook workbook = cellWithResult.Sheet.Workbook;
+
+            IFormulaEvaluator evaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
+            return evaluator.Evaluate(cellWithResult);
+        }
+
+        public void SetArrayFormula(
+            string formula,
+            ExcelColumnIndex firstColumnIndex,
+            int firstRowIndex,
+            ExcelColumnIndex lastColumnIndex,
+            int lastRowIndex)
+        {
+            formula.ThrowIfNullOrWhiteSpace(nameof(formula));
+            firstColumnIndex.ThrowIfEnumValueIsUndefined(nameof(firstColumnIndex));
+            firstRowIndex.ThrowIfValueIsOutOfRange(nameof(firstRowIndex), 1, int.MaxValue);
+            lastColumnIndex.ThrowIfEnumValueIsUndefined(nameof(lastColumnIndex));
+            lastRowIndex.ThrowIfValueIsOutOfRange(nameof(lastRowIndex), 1, int.MaxValue);
+
+            var cra = new CellRangeAddress(
+                firstRow: firstRowIndex - 1, // Because of using one-based indexing.
+                lastRow: lastRowIndex - 1, // Because of using one-based indexing.
+                firstCol: firstColumnIndex.AsInt32(),
+                lastCol: lastColumnIndex.AsInt32()
+            );
+            _sheet.SetArrayFormula(formula, cra);
         }
     }
 }

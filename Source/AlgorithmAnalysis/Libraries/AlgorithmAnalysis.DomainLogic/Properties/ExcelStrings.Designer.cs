@@ -133,20 +133,20 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to χ2.
-        /// </summary>
-        internal static string Chi2 {
-            get {
-                return ResourceManager.GetString("Chi2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Критическое значение χ2.
         /// </summary>
         internal static string Chi2Critical {
             get {
                 return ResourceManager.GetString("Chi2Critical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to χ2 наблюдаемое.
+        /// </summary>
+        internal static string Chi2Observable {
+            get {
+                return ResourceManager.GetString("Chi2Observable", resourceCulture);
             }
         }
         
@@ -286,11 +286,29 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Максимальное значение выборки.
+        /// </summary>
+        internal static string MaximumValue {
+            get {
+                return ResourceManager.GetString("MaximumValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to min f(n).
         /// </summary>
         internal static string MinFunc {
             get {
                 return ResourceManager.GetString("MinFunc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Минимальное значение выборки.
+        /// </summary>
+        internal static string MinimumValue {
+            get {
+                return ResourceManager.GetString("MinimumValue", resourceCulture);
             }
         }
         

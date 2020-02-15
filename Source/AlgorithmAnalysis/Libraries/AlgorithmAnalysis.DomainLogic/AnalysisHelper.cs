@@ -84,7 +84,9 @@ namespace AlgorithmAnalysis.DomainLogic
             return phaseOnePartTwo switch
             {
                 PhaseOnePartTwoAnalysisKind.BetaDistributionWithScott =>
-                    new BetaDistributionAnalysisPhaseOnePartTwo(new ScottFrequencyHistogramBuilder(), args),
+                    new BetaDistributionAnalysisPhaseOnePartTwo(
+                        new ScottFrequencyHistogramBuilder(args), args
+                    ),
 
                 // TODO: add formulas for solution based on Sturges's formula.
                 PhaseOnePartTwoAnalysisKind.BetaDistributionWithSturges =>

@@ -56,6 +56,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 7, ExcelStrings.ConfidenceFactor);
             sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 8, ExcelStrings.SignificanceLevel);
             sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 9, ExcelStrings.Epsilon);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 10, ExcelStrings.MinimumValue);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 11, ExcelStrings.MaximumValue);
 
             sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 1, ExcelStrings.AdditionalParametersValuesColumnName);
             sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 2, args.StartValue);

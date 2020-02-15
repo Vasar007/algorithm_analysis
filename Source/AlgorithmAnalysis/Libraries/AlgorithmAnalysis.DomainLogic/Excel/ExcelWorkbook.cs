@@ -5,10 +5,11 @@ using NPOI.XSSF.UserModel;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel
 {
-    // Suitable for Excel 2007. If you try to use the latest Excel 2019 functions, NPOI can throw
-    // NotImplementedException.
     internal sealed class ExcelWorkbook
     {
+        // Suitable for Excel 2007. If you try to use the latest Excel 2019 functions, NPOI can
+        // throw NotImplementedException.
+
         private readonly IWorkbook _workbook;
 
 

@@ -47,20 +47,16 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 11, ExcelStrings.Alpha);
             sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 12, ExcelStrings.Beta);
 
-            string lastRowIndex = (_args.LaunchesNumber + 1).ToString();
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 2, $"AVERAGE($A$2:$A${lastRowIndex})");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 3, $"VAR($A$2:$A${lastRowIndex})"); // VAR == VAR.S
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 4, $"STDEV($A$2:$A${lastRowIndex})"); // STDEV == STDEV.S
+            string lastValueRowIndex = _args.LaunchesNumber.SkipHeader().ToString();
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 2, $"AVERAGE($A$2:$A${lastValueRowIndex})");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 3, $"VAR($A$2:$A${lastValueRowIndex})"); // VAR == VAR.S
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 4, $"STDEV($A$2:$A${lastValueRowIndex})"); // STDEV == STDEV.S
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 5, "$M$4 / $M$2");
-
-            string minFormula = AnalysisHelper.GetMinFormula(ExcelColumnIndex.J, 2);
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 6, minFormula);
-
-            string maxFormula = AnalysisHelper.GetMaxFormula(ExcelColumnIndex.J, 2);
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 7, maxFormula);
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 6, "$J$3");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 7, "$J$5");
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 8, "$M$7 - $M$6");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 9, $"AVERAGE($B$2:$B${lastRowIndex})");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 10, $"VAR($B$2:$B${lastRowIndex})"); // VAR == VAR.S
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 9, $"AVERAGE($B$2:$B${lastValueRowIndex})");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 10, $"VAR($B$2:$B${lastValueRowIndex})"); // VAR == VAR.S
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 11, "$M$9 * (($M$9 * (1 - $M$9) / $M$10) - 1)");
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 12, "(1 - $M$9) * (($M$9 * (1 - $M$9) / $M$10) - 1)");
 
