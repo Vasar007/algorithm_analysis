@@ -1,16 +1,20 @@
 ﻿using Acolyte.Assertions;
-using NPOI.SS.UserModel;
 using AlgorithmAnalysis.DomainLogic.Properties;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 {
     internal sealed class BetaDistributionAnalysisPhaseOnePartTwo : IAnalysisPhaseOnePartTwo
     {
+        private readonly IFrequencyHistogramBuilder _histogramBuilder;
+
         private readonly ParametersPack _args;
 
 
-        public BetaDistributionAnalysisPhaseOnePartTwo(ParametersPack args)
+        public BetaDistributionAnalysisPhaseOnePartTwo(
+            IFrequencyHistogramBuilder histogramBuilder,
+            ParametersPack args)
         {
+            _histogramBuilder = histogramBuilder.ThrowIfNull(nameof(histogramBuilder));
             _args = args.ThrowIfNull(nameof(args));
         }
 
@@ -19,76 +23,57 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
         public void ApplyAnalysisToSingleLaunch(ExcelSheet sheet, int operationNumber,
             int currentRow)
         {
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.B, currentRow)
-                // TODO: use formulas for min and max and fix this formula with $I$5 and $I$6 (min and max).
-                .SetCellFormula($"($A{currentRow.ToString()} - $J$2) / ($J$6 - $J$2)");
+            string formula = $"($A{currentRow.ToString()} - $M$6) / ($M$7 - $M$6)";
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.B, currentRow, formula);
         }
 
         public void ApplyAnalysisToDataset(ExcelSheet sheet)
         {
-            // TODO: change this function to apply appropriate formulas.
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.L, 1)
-                .SetCellValue(ExcelStrings.NormalDistributionSolutionColumnName);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.M, 1);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.B, 1, ExcelStrings.NormalizedColumnName);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 1, ExcelStrings.NormalDistributionSolutionColumnName);
+            sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.M, 1);
 
             sheet.AddMergedRegion(ExcelColumnIndex.L, 1, ExcelColumnIndex.M, 1);
 
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.L, 2)
-                .SetCellValue(ExcelStrings.PreliminarySampleSize);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.L, 3)
-                .SetCellValue(ExcelStrings.SampleMean);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.L, 4)
-                .SetCellValue(ExcelStrings.SampleVariance);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.L, 5)
-                .SetCellValue(ExcelStrings.SampleDeviation);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.L, 6)
-                .SetCellValue(ExcelStrings.VariationCoefficient);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.L, 7)
-                .SetCellValue(ExcelStrings.CalculatedSampleSize);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 2, ExcelStrings.SampleMean);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 3, ExcelStrings.SampleVariance);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 4, ExcelStrings.SampleDeviation);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 5, ExcelStrings.VariationCoefficient);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 6, ExcelStrings.TheoreticalMin);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 7, ExcelStrings.TheoreticalMax);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 8, ExcelStrings.Span);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 9, ExcelStrings.NormalizedMean);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 10, ExcelStrings.NormalizedVarience);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 11, ExcelStrings.Alpha);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 12, ExcelStrings.Beta);
 
             string lastRowIndex = (_args.LaunchesNumber + 1).ToString();
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.M, 2)
-                .SetCellFormula("$F$6");
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.M, 3)
-                .SetCellFormula($"AVERAGE($A$2:$A${lastRowIndex})");
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.M, 4)
-                .SetCellFormula($"VAR($A$2:$A${lastRowIndex})"); // VAR == VAR.S
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.M, 5)
-                .SetCellFormula($"STDEV($A$2:$A${lastRowIndex})"); // STDEV == STDEV.S
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.M, 6)
-                .SetCellFormula("$M$5 / $M$3");
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.M, 7)
-                .SetCellFormula("ROUNDUP(3.8416 * $M$6^2 / $J$9^2, 0)");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 2, $"AVERAGE($A$2:$A${lastRowIndex})");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 3, $"VAR($A$2:$A${lastRowIndex})"); // VAR == VAR.S
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 4, $"STDEV($A$2:$A${lastRowIndex})"); // STDEV == STDEV.S
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 5, "$M$4 / $M$2");
 
+            string minFormula = AnalysisHelper.GetMinFormula(ExcelColumnIndex.J, 2);
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 6, minFormula);
+
+            string maxFormula = AnalysisHelper.GetMaxFormula(ExcelColumnIndex.J, 2);
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 7, maxFormula);
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 8, "$M$7 - $M$6");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 9, $"AVERAGE($B$2:$B${lastRowIndex})");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 10, $"VAR($B$2:$B${lastRowIndex})"); // VAR == VAR.S
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 11, "$M$9 * (($M$9 * (1 - $M$9) / $M$10) - 1)");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 12, "(1 - $M$9) * (($M$9 * (1 - $M$9) / $M$10) - 1)");
+
+            sheet.AutoSizeColumn(ExcelColumnIndex.B);
             sheet.AutoSizeColumn(ExcelColumnIndex.L);
             sheet.AutoSizeColumn(ExcelColumnIndex.M, useMergedCells: true);
+
+            _histogramBuilder.CreateHistogramData(sheet);
         }
 
         public bool CheckH0Hypothesis(ExcelSheet sheet)
         {
-            // TODO: change this function to read critical chi^2 value of the result Excel sheet.
-            ICell cellWithResult = sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.M, 7);
-            IWorkbook workbook = cellWithResult.Sheet.Workbook;
-
-            IFormulaEvaluator evaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
-            CellValue cellValue = evaluator.Evaluate(cellWithResult);
-
-            return cellValue.NumberValue > 0.0;
+            return _histogramBuilder.CheckH0HypothesisByHistogramData(sheet);
         }
 
         #endregion

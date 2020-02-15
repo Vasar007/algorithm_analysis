@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Acolyte.Assertions;
-using AlgorithmAnalysis.DomainLogic.Excel;
-using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
+﻿using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Files;
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
@@ -57,7 +52,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                     args: context.Args.CreateWith(calculatedSampleSize),
                     showAnalysisWindow: context.ShowAnalysisWindow,
                     sheetName: $"Sheet{PhaseNumber.ToString()}-{iterationNumber.ToString()}",
-                    partOneFactory: context.CreateAnalysisPhaseOnePartOne
+                    partOneFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartOne(context.PhaseOnePartOne, args)
                 );
                 calculatedSampleSize = PerformOneIterationOfPartOne(excelContext);
 
@@ -68,25 +63,6 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             return new AnalysisPhaseOneResult(calculatedSampleSize, iterationNumber);
         }
 
-        private bool PerfromPartTwo(AnalysisContext context, AnalysisPhaseOneResult partOneResult)
-        {
-            // Perform the final iteration to get actual data using calculated sample size.
-            var excelContext = ExcelContextForPhaseOne.CreateForPartTwo(
-                args: context.Args.CreateWith(partOneResult.CalculatedSampleSize),
-                showAnalysisWindow: context.ShowAnalysisWindow,
-                sheetName: $"Sheet{PhaseNumber.ToString()}-{partOneResult.TotalIterationNumber.ToString()}",
-                partTwoFactory: context.CreateAnalysisPhaseOnePartTwo
-            );
-
-            using FileObject fileObject = ExcelHelper.PerformOneIterationOfPhaseOne(
-                 excelContext.Args, excelContext.ShowAnalysisWindow, _fileWorker
-             );
-
-            return _excelWrapperPartTwo.ApplyAnalysisAndSaveData(
-                fileObject.Data.GetData(item => item.operationNumber), excelContext
-            );
-        }
-
         private int PerformOneIterationOfPartOne(ExcelContextForPhaseOne excelContext)
         {
             using FileObject fileObject = ExcelHelper.PerformOneIterationOfPhaseOne(
@@ -94,6 +70,25 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             );
 
             return _excelWrapperPartOne.ApplyAnalysisAndSaveData(
+                fileObject.Data.GetData(item => item.operationNumber), excelContext
+            );
+        }
+
+        private bool PerfromPartTwo(AnalysisContext context, AnalysisPhaseOneResult partOneResult)
+        {
+            // Perform the final iteration to get actual data using calculated sample size.
+            var excelContext = ExcelContextForPhaseOne.CreateForPartTwo(
+                args: context.Args.CreateWith(partOneResult.CalculatedSampleSize),
+                showAnalysisWindow: context.ShowAnalysisWindow,
+                sheetName: $"Sheet{PhaseNumber.ToString()}-{partOneResult.TotalIterationNumber.ToString()}",
+                partTwoFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args)
+            );
+
+            using FileObject fileObject = ExcelHelper.PerformOneIterationOfPhaseOne(
+                 excelContext.Args, excelContext.ShowAnalysisWindow, _fileWorker
+             );
+
+            return _excelWrapperPartTwo.ApplyAnalysisAndSaveData(
                 fileObject.Data.GetData(item => item.operationNumber), excelContext
             );
         }

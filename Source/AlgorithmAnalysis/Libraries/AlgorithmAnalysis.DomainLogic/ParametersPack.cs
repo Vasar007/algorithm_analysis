@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Models;
@@ -55,9 +56,21 @@ namespace AlgorithmAnalysis.DomainLogic
             );
         }
 
-        internal IReadOnlyList<string> GetOutputFilenames()
+        internal IReadOnlyList<string> GetOutputFilenames(int phaseNumber)
         {
-            int iterations = (EndValue - StartValue) / LaunchesNumber;
+            phaseNumber.ThrowIfValueIsOutOfRange(nameof(phaseNumber), 1, int.MaxValue);
+
+            int iterations = phaseNumber switch
+            {
+                1 => 0,
+
+                2 => (EndValue - StartValue) / Step,
+
+                _ => throw new ArgumentOutOfRangeException(
+                         nameof(phaseNumber), phaseNumber,
+                         $"Unsupported phase number: '{phaseNumber.ToString()}'."
+                     )
+            };
 
             // Contract: final output filenames should be constructed as in the line
             // with "actualQuantity".

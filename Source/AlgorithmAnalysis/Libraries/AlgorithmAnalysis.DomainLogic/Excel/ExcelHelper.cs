@@ -28,7 +28,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             fileWorker.ThrowIfNull(nameof(fileWorker));
 
             // Contract: output files are located in the same directory as our app.
-            IReadOnlyList<string> finalOutputFilenames = args.GetOutputFilenames();
+            IReadOnlyList<string> finalOutputFilenames = args.GetOutputFilenames(phaseNumber: 1);
             CheckExpectedFilenamesNumber(expectedFilenamessNumber: 2, finalOutputFilenames);
 
             var fileHolder = new FileHolder(finalOutputFilenames);

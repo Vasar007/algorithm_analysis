@@ -30,7 +30,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             ParametersPack args = context.Args;
 
             // Contract: output files are located in the same directory as our app.
-            IReadOnlyList<string> finalOutputFilenames = args.GetOutputFilenames();
+            IReadOnlyList<string> finalOutputFilenames = args.GetOutputFilenames(PhaseNumber);
             using var fileHolder = new FileHolder(finalOutputFilenames);
 
             AnalysisHelper.RunAnalysisProgram(

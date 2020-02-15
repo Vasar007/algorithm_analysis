@@ -133,10 +133,6 @@
     <value>average f(n)</value>
     <comment>Descriptive cell (E4, I4).</comment>
   </data>
-  <data name="AverageFuncFormula" xml:space="preserve">
-    <value>average f(n)</value>
-    <comment>Formula cell (F4).</comment>
-  </data>
   <data name="Beta" xml:space="preserve">
     <value>Бета</value>
     <comment>Descriptive cell (H11, L11).</comment>
@@ -151,15 +147,15 @@
   </data>
   <data name="CheckTestFucntion" xml:space="preserve">
     <value>Проверка гитотезы функцией ТЕСТ</value>
-    <comment>Descriptive cell (I13).</comment>
+    <comment>Descriptive cell (I15).</comment>
   </data>
   <data name="Chi2" xml:space="preserve">
     <value>χ2</value>
-    <comment>Descriptive cell (I11).</comment>
-  </data>
-  <data name="Chi2CriticalValue" xml:space="preserve">
-    <value>Критическое значение χ2</value>
     <comment>Descriptive cell (I12).</comment>
+  </data>
+  <data name="Chi2Critical" xml:space="preserve">
+    <value>Критическое значение χ2</value>
+    <comment>Descriptive cell (I14).</comment>
   </data>
   <data name="Chi2ValueColumnName" xml:space="preserve">
     <value>Значение для χ2</value>
@@ -193,17 +189,25 @@
     <value>Кол-во экспериментов</value>
     <comment>Descriptive cell (E6, I6).</comment>
   </data>
+  <data name="FreedomDegreesNumber" xml:space="preserve">
+    <value>Кол-во степеней свободы</value>
+    <comment>Descriptive cell (I13).</comment>
+  </data>
   <data name="FrequencyColumnName" xml:space="preserve">
     <value>Частота</value>
     <comment>Column name (E1).</comment>
   </data>
   <data name="HistogramSemisegmentsNumber" xml:space="preserve">
     <value>Число полусегментов для гистограммы</value>
-    <comment>Descriptive cell (I10).</comment>
+    <comment>Descriptive cell (I11).</comment>
   </data>
   <data name="InputDataSize" xml:space="preserve">
     <value>Размер входа</value>
     <comment>Descriptive cell (E2, I2).</comment>
+  </data>
+  <data name="IntervalLength" xml:space="preserve">
+    <value>Длина интервала</value>
+    <comment>Descriptive cell (I10).</comment>
   </data>
   <data name="LowerIntegrationBound" xml:space="preserve">
     <value>Нижний предел интегрирования</value>
@@ -213,17 +217,9 @@
     <value>max f(n)</value>
     <comment>Descriptive cell (E5, I5).</comment>
   </data>
-  <data name="MaxFuncFormula" xml:space="preserve">
-    <value>max f(n)</value>
-    <comment>Formula cell (F5).</comment>
-  </data>
   <data name="MinFunc" xml:space="preserve">
     <value>min f(n)</value>
     <comment>Descriptive cell (E3, I3).</comment>
-  </data>
-  <data name="MinFuncFormula" xml:space="preserve">
-    <value>min f(n)</value>
-    <comment>Formula cell (F3).</comment>
   </data>
   <data name="NormalDistributionSolutionColumnName" xml:space="preserve">
     <value>Решение на основе нормального распределения</value>
@@ -263,7 +259,7 @@
   </data>
   <data name="PreliminarySampleSize" xml:space="preserve">
     <value>Предварительный объём выборки</value>
-    <comment>Descriptive cell (H2, J2).</comment>
+    <comment>Descriptive cell (H2, J2, L2).</comment>
   </data>
   <data name="SampleDeviation" xml:space="preserve">
     <value>Выборочное отклонение</value>
@@ -271,11 +267,11 @@
   </data>
   <data name="SampleMean" xml:space="preserve">
     <value>Выборочное среднее</value>
-    <comment>Descriptive cell (H3, J3).</comment>
+    <comment>Descriptive cell (H3, J3, L3).</comment>
   </data>
   <data name="SampleVariance" xml:space="preserve">
     <value>Выборочная дисперсия</value>
-    <comment>Descriptive cell (H4, J4).</comment>
+    <comment>Descriptive cell (H4, J4, L4).</comment>
   </data>
   <data name="SignificanceLevel" xml:space="preserve">
     <value>Уровень значимости</value>
@@ -288,10 +284,6 @@
   <data name="Span" xml:space="preserve">
     <value>Размах</value>
     <comment>Descriptive cell (H7, L7).</comment>
-  </data>
-  <data name="String3" xml:space="preserve">
-    <value>Кол-во степеней свободы</value>
-    <comment>Descriptive cell (I11).</comment>
   </data>
   <data name="Sum" xml:space="preserve">
     <value>Сумма</value>

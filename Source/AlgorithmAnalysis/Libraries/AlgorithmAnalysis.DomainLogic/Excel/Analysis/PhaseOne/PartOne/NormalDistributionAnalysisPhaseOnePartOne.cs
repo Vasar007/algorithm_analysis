@@ -21,62 +21,29 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
             int currentRow)
         {
             // Do nothing.
-
-            // TODO: move this code to the beta distribution analysis.
-            //sheet
-            //    .GetOrCreateCenterizedCell(ExcelColumnIndex.B, currentRow)
-            //    // TODO: use formulas for min and max and fix this formula with $I$5 and $I$6 (min and max).
-            //    .SetCellFormula($"($A{currentRow.ToString()} - $F$2) / ($F$6 - $F$2)");
         }
 
         public void ApplyAnalysisToDataset(ExcelSheet sheet)
         {
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.J, 1)
-                .SetCellValue(ExcelStrings.NormalDistributionSolutionColumnName);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.K, 1);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 1, ExcelStrings.NormalDistributionSolutionColumnName);
+            sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.K, 1);
 
             sheet.AddMergedRegion(ExcelColumnIndex.J, 1, ExcelColumnIndex.K, 1);
 
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.J, 2)
-                .SetCellValue(ExcelStrings.PreliminarySampleSize);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.J, 3)
-                .SetCellValue(ExcelStrings.SampleMean);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.J, 4)
-                .SetCellValue(ExcelStrings.SampleVariance);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.J, 5)
-                .SetCellValue(ExcelStrings.SampleDeviation);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.J, 6)
-                .SetCellValue(ExcelStrings.VariationCoefficient);
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.J, 7)
-                .SetCellValue(ExcelStrings.CalculatedSampleSize);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 2, ExcelStrings.PreliminarySampleSize);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 3, ExcelStrings.SampleMean);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 4, ExcelStrings.SampleVariance);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 5, ExcelStrings.SampleDeviation);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 6, ExcelStrings.VariationCoefficient);
+            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 7, ExcelStrings.CalculatedSampleSize);
 
             string lastRowIndex = (_args.LaunchesNumber + 1).ToString();
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.K, 2)
-                .SetCellFormula("$F$6");
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.K, 3)
-                .SetCellFormula($"AVERAGE($A$2:$A${lastRowIndex})");
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.K, 4)
-                .SetCellFormula($"VAR($A$2:$A${lastRowIndex})"); // VAR == VAR.S
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.K, 5)
-                .SetCellFormula($"STDEV($A$2:$A${lastRowIndex})"); // STDEV == STDEV.S
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.K, 6)
-                .SetCellFormula("$K$5 / $K$3");
-            sheet
-                .GetOrCreateCenterizedCell(ExcelColumnIndex.K, 7)
-                .SetCellFormula("ROUNDUP(3.8416 * $K$6^2 / $F$9^2, 0)");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 2, "$F$6");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 3, $"AVERAGE($A$2:$A${lastRowIndex})");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 4, $"VAR($A$2:$A${lastRowIndex})"); // VAR == VAR.S
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 5, $"STDEV($A$2:$A${lastRowIndex})"); // STDEV == STDEV.S
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 6, "$K$5 / $K$3");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 7, "ROUNDUP(3.8416 * $K$6^2 / $F$9^2, 0)");
 
             sheet.AutoSizeColumn(ExcelColumnIndex.J);
             sheet.AutoSizeColumn(ExcelColumnIndex.K, useMergedCells: true);

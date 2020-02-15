@@ -1,4 +1,5 @@
-﻿using Acolyte.Assertions;
+﻿using System;
+using Acolyte.Assertions;
 using AlgorithmAnalysis.Models;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
@@ -70,6 +71,68 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
         public ICell GetOrCreateCenterizedCell(ExcelColumnIndex columnIndex, int rowIndex)
         {
             return GetOrCreateCell(columnIndex, rowIndex).Center();
+        }
+
+        public void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex, string value)
+        {
+            GetOrCreateCell(columnIndex, rowIndex).SetCellValue(value);
+        }
+
+        public void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex, bool value)
+        {
+            GetOrCreateCell(columnIndex, rowIndex).SetCellValue(value);
+        }
+
+        public void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex, double value)
+        {
+            GetOrCreateCell(columnIndex, rowIndex).SetCellValue(value);
+        }
+
+        public void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex, DateTime value)
+        {
+            GetOrCreateCell(columnIndex, rowIndex).SetCellValue(value);
+        }
+
+        public void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex,
+            IRichTextString value)
+        {
+            GetOrCreateCell(columnIndex, rowIndex).SetCellValue(value);
+        }
+
+        public void SetCellFormula(ExcelColumnIndex columnIndex, int rowIndex, string formula)
+        {
+            GetOrCreateCell(columnIndex, rowIndex).SetCellFormula(formula);
+        }
+
+        public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex, string value)
+        {
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellValue(value);
+        }
+
+        public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex, bool value)
+        {
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellValue(value);
+        }
+
+        public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex, double value)
+        {
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellValue(value);
+        }
+
+        public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex, DateTime value)
+        {
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellValue(value);
+        }
+
+        public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex,
+            IRichTextString value)
+        {
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellValue(value);
+        }
+
+        public void SetCenterizedCellFormula(ExcelColumnIndex columnIndex, int rowIndex, string formula)
+        {
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellFormula(formula);
         }
 
         public int AddMergedRegion(

@@ -97,15 +97,6 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to average f(n).
-        /// </summary>
-        internal static string AverageFuncFormula {
-            get {
-                return ResourceManager.GetString("AverageFuncFormula", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Бета.
         /// </summary>
         internal static string Beta {
@@ -153,9 +144,9 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Критическое значение χ2.
         /// </summary>
-        internal static string Chi2CriticalValue {
+        internal static string Chi2Critical {
             get {
-                return ResourceManager.GetString("Chi2CriticalValue", resourceCulture);
+                return ResourceManager.GetString("Chi2Critical", resourceCulture);
             }
         }
         
@@ -232,6 +223,15 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Кол-во степеней свободы.
+        /// </summary>
+        internal static string FreedomDegreesNumber {
+            get {
+                return ResourceManager.GetString("FreedomDegreesNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Частота.
         /// </summary>
         internal static string FrequencyColumnName {
@@ -259,6 +259,15 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Длина интервала.
+        /// </summary>
+        internal static string IntervalLength {
+            get {
+                return ResourceManager.GetString("IntervalLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Нижний предел интегрирования.
         /// </summary>
         internal static string LowerIntegrationBound {
@@ -277,29 +286,11 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to max f(n).
-        /// </summary>
-        internal static string MaxFuncFormula {
-            get {
-                return ResourceManager.GetString("MaxFuncFormula", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to min f(n).
         /// </summary>
         internal static string MinFunc {
             get {
                 return ResourceManager.GetString("MinFunc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to min f(n).
-        /// </summary>
-        internal static string MinFuncFormula {
-            get {
-                return ResourceManager.GetString("MinFuncFormula", resourceCulture);
             }
         }
         
@@ -444,15 +435,6 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         internal static string Span {
             get {
                 return ResourceManager.GetString("Span", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Кол-во степеней свободы.
-        /// </summary>
-        internal static string String3 {
-            get {
-                return ResourceManager.GetString("String3", resourceCulture);
             }
         }
         
