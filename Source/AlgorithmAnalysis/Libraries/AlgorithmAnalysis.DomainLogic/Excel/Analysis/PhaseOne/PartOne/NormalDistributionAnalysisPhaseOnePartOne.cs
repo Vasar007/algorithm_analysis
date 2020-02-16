@@ -1,6 +1,5 @@
 ﻿using System;
 using Acolyte.Assertions;
-using NPOI.SS.UserModel;
 using AlgorithmAnalysis.DomainLogic.Properties;
 using AlgorithmAnalysis.Excel;
 
@@ -52,9 +51,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
 
         public int GetCalculatedSampleSize(ExcelSheet sheet)
         {
-            CellValue calculatedSampleSize = sheet.EvaluateCell(ExcelColumnIndex.K, 7);
+            CellValueHolder calculatedSampleSize = sheet.EvaluateCell(ExcelColumnIndex.K, 7);
 
-            return Convert.ToInt32(calculatedSampleSize.NumberValue);
+            return Convert.ToInt32(calculatedSampleSize.NumericValue);
         }
 
         #endregion

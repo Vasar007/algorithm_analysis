@@ -1,6 +1,5 @@
 ﻿using System;
 using Acolyte.Assertions;
-using NPOI.SS.UserModel;
 using AlgorithmAnalysis.DomainLogic.Properties;
 using AlgorithmAnalysis.Excel;
 
@@ -43,8 +42,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 12, scottFormula);
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 13, "ROUNDUP(($J$11 - $J$10) / $J$12, 0)");
 
-            CellValue histogramSegmentsNumber = sheet.EvaluateCell(ExcelColumnIndex.J, 13);
-            int histogramSegmentsNumberInt = Convert.ToInt32(histogramSegmentsNumber.NumberValue);
+            CellValueHolder histogramSegmentsNumber = sheet.EvaluateCell(ExcelColumnIndex.J, 13);
+            int histogramSegmentsNumberInt = Convert.ToInt32(histogramSegmentsNumber.NumericValue);
             string histogramSegmentsNumberIndex = histogramSegmentsNumberInt.SkipHeader().ToString();
 
             CreateIntervalData(sheet, histogramSegmentsNumberInt, histogramSegmentsNumberIndex);
@@ -67,10 +66,10 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
         public bool CheckH0HypothesisByHistogramData(ExcelSheet sheet)
         {
-            CellValue chi2Observable = sheet.EvaluateCell(ExcelColumnIndex.J, 14);
-            CellValue chi2Critical = sheet.EvaluateCell(ExcelColumnIndex.J, 16);
+            CellValueHolder chi2Observable = sheet.EvaluateCell(ExcelColumnIndex.J, 14);
+            CellValueHolder chi2Critical = sheet.EvaluateCell(ExcelColumnIndex.J, 16);
 
-            return chi2Observable.NumberValue < chi2Critical.NumberValue;
+            return chi2Observable.NumericValue < chi2Critical.NumericValue;
         }
 
         #endregion

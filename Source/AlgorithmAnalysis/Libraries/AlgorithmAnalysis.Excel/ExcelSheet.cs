@@ -23,15 +23,17 @@ namespace AlgorithmAnalysis.Excel
 
         private readonly ExcelOptions _excelOptions;
 
-        public ICell this[ExcelColumnIndex columnIndex, int rowIndex]
+        public CellHolder this[ExcelColumnIndex columnIndex, int rowIndex]
         {
             get
             {
                 return _excelOptions.CellCreationMode switch
                 {
-                    ExcelCellCreationMode.Default => GetOrCreateCell(columnIndex, rowIndex),
+                    ExcelCellCreationMode.Default =>
+                        GetOrCreateCell(columnIndex, rowIndex),
 
-                    ExcelCellCreationMode.Centerized => GetOrCreateCenterizedCell(columnIndex, rowIndex),
+                    ExcelCellCreationMode.Centerized =>
+                        GetOrCreateCenterizedCell(columnIndex, rowIndex),
 
                     _ => throw new ArgumentOutOfRangeException(
                              nameof(_excelOptions), _excelOptions.CellCreationMode,
@@ -53,23 +55,8 @@ namespace AlgorithmAnalysis.Excel
         {
         }
 
-        public IRow GetOrCreateRow(int rowIndex)
-        {
-            rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 0, int.MaxValue);
-
-            IRow row = _sheet.GetRow(rowIndex);
-
-            return row is null
-                ? _sheet.CreateRow(rowIndex)
-                : row;
-        }
-
-        public IRow GetOrCreateCenterizedRow(int rowIndex)
-        {
-            return GetOrCreateRow(rowIndex).Center();
-        }
-
-        public ICell GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex, bool centrized)
+        public CellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex,
+            bool centrized)
         {
             columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
             rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
@@ -90,90 +77,75 @@ namespace AlgorithmAnalysis.Excel
                 ? row.CreateCell(columIndexInt)
                 : cell;
 
-            return centrized
+            result = centrized
                 ? result.Center()
                 : result;
+
+            return new CellHolder(result);
         }
 
-        public ICell GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex)
+        public CellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex)
         {
             return GetOrCreateCell(columnIndex, rowIndex, centrized: false);
         }
 
-        public ICell GetOrCreateCellInCentrizedRow(ExcelColumnIndex columnIndex, int rowIndex)
+        public CellHolder GetOrCreateCenterizedCell(ExcelColumnIndex columnIndex, int rowIndex)
         {
             return GetOrCreateCell(columnIndex, rowIndex, centrized: true);
         }
 
-        public ICell GetOrCreateCenterizedCell(ExcelColumnIndex columnIndex, int rowIndex)
-        {
-            return GetOrCreateCell(columnIndex, rowIndex).Center();
-        }
-
         public void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex, string value)
         {
-            GetOrCreateCell(columnIndex, rowIndex).SetCellValue(value);
+            GetOrCreateCell(columnIndex, rowIndex).SetValue(value);
         }
 
         public void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex, bool value)
         {
-            GetOrCreateCell(columnIndex, rowIndex).SetCellValue(value);
+            GetOrCreateCell(columnIndex, rowIndex).SetValue(value);
         }
 
         public void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex, double value)
         {
-            GetOrCreateCell(columnIndex, rowIndex).SetCellValue(value);
+            GetOrCreateCell(columnIndex, rowIndex).SetValue(value);
         }
 
         public void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex, DateTime value)
         {
-            GetOrCreateCell(columnIndex, rowIndex).SetCellValue(value);
-        }
-
-        public void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex,
-            IRichTextString value)
-        {
-            GetOrCreateCell(columnIndex, rowIndex).SetCellValue(value);
+            GetOrCreateCell(columnIndex, rowIndex).SetValue(value);
         }
 
         public void SetCellFormula(ExcelColumnIndex columnIndex, int rowIndex, string formula)
         {
             formula.ThrowIfNullOrWhiteSpace(nameof(formula));
 
-            GetOrCreateCell(columnIndex, rowIndex).SetCellFormula(formula);
+            GetOrCreateCell(columnIndex, rowIndex).SetFormula(formula);
         }
 
         public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex, string value)
         {
-            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellValue(value);
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetValue(value);
         }
 
         public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex, bool value)
         {
-            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellValue(value);
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetValue(value);
         }
 
         public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex, double value)
         {
-            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellValue(value);
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetValue(value);
         }
 
         public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex, DateTime value)
         {
-            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellValue(value);
-        }
-
-        public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex,
-            IRichTextString value)
-        {
-            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellValue(value);
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetValue(value);
         }
 
         public void SetCenterizedCellFormula(ExcelColumnIndex columnIndex, int rowIndex, string formula)
         {
             formula.ThrowIfNullOrWhiteSpace(nameof(formula));
 
-            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetCellFormula(formula);
+            GetOrCreateCenterizedCell(columnIndex, rowIndex).SetFormula(formula);
         }
 
         public int AddMergedRegion(
@@ -210,13 +182,13 @@ namespace AlgorithmAnalysis.Excel
             _sheet.AutoSizeColumn(columnIndex.AsInt32(), useMergedCells);
         }
 
-        public CellValue EvaluateCell(ExcelColumnIndex columnIndex, int rowIndex)
+        public CellValueHolder EvaluateCell(ExcelColumnIndex columnIndex, int rowIndex)
         {
-            ICell cellWithResult = GetOrCreateCenterizedCell(columnIndex, rowIndex);
+            CellHolder cellWithResult = GetOrCreateCenterizedCell(columnIndex, rowIndex);
             IWorkbook workbook = cellWithResult.Sheet.Workbook;
 
             IFormulaEvaluator evaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
-            return evaluator.Evaluate(cellWithResult);
+            return CellValueHolder.CreateFrom(evaluator.Evaluate(cellWithResult.Cell));
         }
 
         public void SetArrayFormula(
@@ -239,6 +211,17 @@ namespace AlgorithmAnalysis.Excel
                 lastCol: lastColumnIndex.AsInt32()
             );
             _sheet.SetArrayFormula(formula, cra);
+        }
+
+        private IRow GetOrCreateRow(int rowIndex)
+        {
+            rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 0, int.MaxValue);
+
+            IRow row = _sheet.GetRow(rowIndex);
+
+            return row is null
+                ? _sheet.CreateRow(rowIndex)
+                : row;
         }
     }
 }
