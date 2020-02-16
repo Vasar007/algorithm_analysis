@@ -57,7 +57,6 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 calculatedSampleSize = PerformOneIterationOfPartOne(excelContext);
 
                 ++iterationNumber;
-                break; // TODO: remove this statement when finish debugging Scott's formula for frequency histogram.
             }
 
             // TODO: set bold on text with final calculated sample size.
@@ -79,7 +78,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         {
             // Perform the final iteration to get actual data using calculated sample size.
             var excelContext = ExcelContextForPhaseOne.CreateForPartTwo(
-                args: context.Args.CreateWith(1000), // partOneResult.CalculatedSampleSize
+                args: context.Args.CreateWith(partOneResult.CalculatedSampleSize),
                 showAnalysisWindow: context.ShowAnalysisWindow,
                 sheetName: $"Sheet{PhaseNumber.ToString()}-{partOneResult.TotalIterationNumber.ToString()}",
                 partTwoFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args)
