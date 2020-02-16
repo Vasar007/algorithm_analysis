@@ -4,5 +4,9 @@
       "0": "Pallottino's algorithm",
       "1": "Insertion sort"
     }
+  },
+
+  "ExcelOptions": {
+    "CellCreationMode": "ExcelCellCreationMode.Centerized"
   }
 }

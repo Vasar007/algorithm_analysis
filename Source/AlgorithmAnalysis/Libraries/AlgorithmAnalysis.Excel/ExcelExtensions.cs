@@ -1,9 +1,9 @@
 ﻿using Acolyte.Assertions;
 using NPOI.SS.UserModel;
 
-namespace AlgorithmAnalysis.DomainLogic.Excel
+namespace AlgorithmAnalysis.Excel
 {
-    internal static class ExcelExtensions
+    public static class ExcelExtensions
     {
         public static ICell Center(this ICell cell)
         {
@@ -28,6 +28,20 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             row.RowStyle = cellStyle;
 
             return row;
+        }
+
+        public static int UseOneBasedIndexing(this int zeroBasedIndex)
+        {
+            zeroBasedIndex.ThrowIfValueIsOutOfRange(nameof(zeroBasedIndex), 0, int.MaxValue);
+
+            return zeroBasedIndex + 1;
+        }
+
+        public static int SkipHeader(this int oneBasedIndex)
+        {
+            oneBasedIndex.ThrowIfValueIsOutOfRange(nameof(oneBasedIndex), 1, int.MaxValue);
+
+            return oneBasedIndex + 1;
         }
     }
 }

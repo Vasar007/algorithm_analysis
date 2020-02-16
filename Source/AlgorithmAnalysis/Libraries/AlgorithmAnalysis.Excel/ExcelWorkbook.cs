@@ -3,9 +3,9 @@ using Acolyte.Assertions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
-namespace AlgorithmAnalysis.DomainLogic.Excel
+namespace AlgorithmAnalysis.Excel
 {
-    internal sealed class ExcelWorkbook
+    public sealed class ExcelWorkbook
     {
         // Suitable for Excel 2007. If you try to use the latest Excel 2019 functions, NPOI can
         // throw NotImplementedException.

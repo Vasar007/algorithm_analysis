@@ -1,7 +1,8 @@
 ﻿using System;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.DomainLogic.Properties;
 using NPOI.SS.UserModel;
+using AlgorithmAnalysis.DomainLogic.Properties;
+using AlgorithmAnalysis.Excel;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
 {

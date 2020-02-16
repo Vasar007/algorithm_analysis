@@ -14,6 +14,8 @@ namespace AlgorithmAnalysis.Configuration
 
         public static AlgorithmOptions Algorithms => GetOptions<AlgorithmOptions>();
 
+        public static ExcelOptions Excel => GetOptions<ExcelOptions>();
+
 
         public static T GetOptions<T>()
             where T : IOptions, new()

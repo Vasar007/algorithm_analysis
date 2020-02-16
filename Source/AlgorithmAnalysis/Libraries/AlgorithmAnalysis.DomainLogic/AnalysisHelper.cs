@@ -4,10 +4,10 @@ using System.Linq;
 using Acolyte.Assertions;
 using Acolyte.Common;
 using AlgorithmAnalysis.Configuration;
-using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
 using AlgorithmAnalysis.DomainLogic.Processes;
+using AlgorithmAnalysis.Excel;
 using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DomainLogic

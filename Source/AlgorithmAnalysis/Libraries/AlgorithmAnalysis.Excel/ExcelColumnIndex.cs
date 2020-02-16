@@ -1,6 +1,6 @@
-﻿namespace AlgorithmAnalysis.DomainLogic.Excel
+﻿namespace AlgorithmAnalysis.Excel
 {
-    internal enum ExcelColumnIndex
+    public enum ExcelColumnIndex
     {
         A = 0,
         B = 1,

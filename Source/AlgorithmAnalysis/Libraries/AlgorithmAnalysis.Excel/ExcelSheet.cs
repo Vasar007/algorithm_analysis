@@ -1,12 +1,13 @@
 ﻿using System;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Models;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 
-namespace AlgorithmAnalysis.DomainLogic.Excel
+namespace AlgorithmAnalysis.Excel
 {
-    internal sealed class ExcelSheet
+    public sealed class ExcelSheet
     {
         // Suitable for Excel 2007. If you try to use the latest Excel 2019 functions, NPOI can
         // throw NotImplementedException.
@@ -20,10 +21,36 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         private readonly ISheet _sheet;
 
+        private readonly ExcelOptions _excelOptions;
 
-        public ExcelSheet(ISheet sheet)
+        public ICell this[ExcelColumnIndex columnIndex, int rowIndex]
+        {
+            get
+            {
+                return _excelOptions.CellCreationMode switch
+                {
+                    ExcelCellCreationMode.Default => GetOrCreateCell(columnIndex, rowIndex),
+
+                    ExcelCellCreationMode.Centerized => GetOrCreateCenterizedCell(columnIndex, rowIndex),
+
+                    _ => throw new ArgumentOutOfRangeException(
+                             nameof(_excelOptions), _excelOptions.CellCreationMode,
+                             $"Unknown cell creation mode: '{_excelOptions.CellCreationMode.ToString()}'."
+                         )
+                };
+            }
+        }
+
+
+        public ExcelSheet(ISheet sheet, ExcelOptions excelOptions)
         {
             _sheet = sheet.ThrowIfNull(nameof(sheet));
+            _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
+        }
+
+        public ExcelSheet(ISheet sheet)
+            : this(sheet, ConfigOptions.Excel)
+        {
         }
 
         public IRow GetOrCreateRow(int rowIndex)

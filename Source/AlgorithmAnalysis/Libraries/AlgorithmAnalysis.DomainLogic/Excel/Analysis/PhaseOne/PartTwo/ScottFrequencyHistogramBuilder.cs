@@ -1,7 +1,8 @@
-﻿using Acolyte.Assertions;
+﻿using System;
+using Acolyte.Assertions;
 using NPOI.SS.UserModel;
 using AlgorithmAnalysis.DomainLogic.Properties;
-using System;
+using AlgorithmAnalysis.Excel;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 {
@@ -17,7 +18,6 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
         #region IFrequencyHistogramBuilder Implementation
 
-        
         public void CreateHistogramData(ExcelSheet sheet)
         {
             sheet.SetCenterizedCellValue(ExcelColumnIndex.D, 1, ExcelStrings.PocketColumnName);

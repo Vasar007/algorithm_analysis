@@ -1,4 +1,6 @@
-﻿namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
+﻿using AlgorithmAnalysis.Excel;
+
+namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
 {
     internal sealed class DummyAnalysisPhaseOnePartOne : IAnalysisPhaseOnePartOne
     {

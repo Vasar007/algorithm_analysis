@@ -2,6 +2,7 @@
 using Acolyte.Assertions;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
 using AlgorithmAnalysis.DomainLogic.Properties;
+using AlgorithmAnalysis.Excel;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel
 {
