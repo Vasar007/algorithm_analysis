@@ -22,9 +22,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             data.ThrowIfNullOrEmpty(nameof(data));
             excelContext.ThrowIfNull(nameof(excelContext));
 
-            ExcelWorkbook workbook = ExcelHelper.GetWorkbook(_outputExcelFilename);
+            IExcelWorkbook workbook = ExcelHelper.GetWorkbook(_outputExcelFilename);
 
-            ExcelSheet sheet = workbook.CreateSheet(excelContext.SheetName);
+            IExcelSheet sheet = workbook.CreateSheet(excelContext.SheetName);
             FillSheetHeader(sheet, excelContext.Args);
 
             IAnalysisPhaseOnePartOne analysis = excelContext.CreatePartOne();
@@ -44,7 +44,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             return analysis.GetCalculatedSampleSize(sheet);
         }
 
-        private static void FillSheetHeader(ExcelSheet sheet, ParametersPack args)
+        private static void FillSheetHeader(IExcelSheet sheet, ParametersPack args)
         {
             sheet.SetCenterizedCellValue(ExcelColumnIndex.A, 1, ExcelStrings.OperationColumnName);
 

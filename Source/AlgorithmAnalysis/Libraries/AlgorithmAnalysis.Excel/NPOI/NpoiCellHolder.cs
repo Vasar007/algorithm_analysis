@@ -2,9 +2,9 @@
 using Acolyte.Assertions;
 using NPOI.SS.UserModel;
 
-namespace AlgorithmAnalysis.Excel
+namespace AlgorithmAnalysis.Excel.NPOI
 {
-    public sealed class CellHolder
+    internal sealed class NpoiCellHolder : ICellHolder
     {
         private readonly ICell _cell;
 
@@ -81,7 +81,7 @@ namespace AlgorithmAnalysis.Excel
         internal ICell Cell => _cell;
 
 
-        public CellHolder(ICell cell)
+        public NpoiCellHolder(ICell cell)
         {
             ResetActiveType();
             _cell = cell.ThrowIfNull(nameof(cell));

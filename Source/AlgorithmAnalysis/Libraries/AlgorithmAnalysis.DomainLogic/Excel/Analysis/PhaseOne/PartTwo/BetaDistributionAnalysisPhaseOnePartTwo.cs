@@ -21,14 +21,14 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
         #region IPhaseOnePartOneAnalysis Implementation
 
-        public void ApplyAnalysisToSingleLaunch(ExcelSheet sheet, int operationNumber,
+        public void ApplyAnalysisToSingleLaunch(IExcelSheet sheet, int operationNumber,
             int currentRow)
         {
             string formula = $"($A{currentRow.ToString()} - $M$6) / ($M$7 - $M$6)";
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.B, currentRow, formula);
         }
 
-        public void ApplyAnalysisToDataset(ExcelSheet sheet)
+        public void ApplyAnalysisToDataset(IExcelSheet sheet)
         {
             sheet.SetCenterizedCellValue(ExcelColumnIndex.B, 1, ExcelStrings.NormalizedColumnName);
             sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 1, ExcelStrings.NormalDistributionSolutionColumnName);
@@ -68,7 +68,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             _histogramBuilder.CreateHistogramData(sheet);
         }
 
-        public bool CheckH0Hypothesis(ExcelSheet sheet)
+        public bool CheckH0Hypothesis(IExcelSheet sheet)
         {
             return _histogramBuilder.CheckH0HypothesisByHistogramData(sheet);
         }

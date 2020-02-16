@@ -17,7 +17,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
         #region IFrequencyHistogramBuilder Implementation
 
-        public void CreateHistogramData(ExcelSheet sheet)
+        public void CreateHistogramData(IExcelSheet sheet)
         {
             sheet.SetCenterizedCellValue(ExcelColumnIndex.D, 1, ExcelStrings.PocketColumnName);
             sheet.SetCenterizedCellValue(ExcelColumnIndex.E, 1, ExcelStrings.FrequencyColumnName);
@@ -42,7 +42,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 12, scottFormula);
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 13, "ROUNDUP(($J$11 - $J$10) / $J$12, 0)");
 
-            CellValueHolder histogramSegmentsNumber = sheet.EvaluateCell(ExcelColumnIndex.J, 13);
+            ICellValueHolder histogramSegmentsNumber = sheet.EvaluateCell(ExcelColumnIndex.J, 13);
             int histogramSegmentsNumberInt = Convert.ToInt32(histogramSegmentsNumber.NumericValue);
             string histogramSegmentsNumberIndex = histogramSegmentsNumberInt.SkipHeader().ToString();
 
@@ -64,17 +64,17 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             sheet.AutoSizeColumn(ExcelColumnIndex.J);
         }
 
-        public bool CheckH0HypothesisByHistogramData(ExcelSheet sheet)
+        public bool CheckH0HypothesisByHistogramData(IExcelSheet sheet)
         {
-            CellValueHolder chi2Observable = sheet.EvaluateCell(ExcelColumnIndex.J, 14);
-            CellValueHolder chi2Critical = sheet.EvaluateCell(ExcelColumnIndex.J, 16);
+            ICellValueHolder chi2Observable = sheet.EvaluateCell(ExcelColumnIndex.J, 14);
+            ICellValueHolder chi2Critical = sheet.EvaluateCell(ExcelColumnIndex.J, 16);
 
             return chi2Observable.NumericValue < chi2Critical.NumericValue;
         }
 
         #endregion
 
-        private void CreateIntervalData(ExcelSheet sheet, int histogramSegmentsNumber,
+        private void CreateIntervalData(IExcelSheet sheet, int histogramSegmentsNumber,
             string histogramSegmentsNumberIndex)
         {
             histogramSegmentsNumber.ThrowIfValueIsOutOfRange(nameof(histogramSegmentsNumber), 1, int.MaxValue);

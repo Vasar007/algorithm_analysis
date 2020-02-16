@@ -9,12 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="5.0.1-beta" />
     <PackageReference Include="NPOI" Version="2.4.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AlgorithmAnalysis.Configuration\AlgorithmAnalysis.Configuration.csproj" />
     <ProjectReference Include="..\AlgorithmAnalysis.Models\AlgorithmAnalysis.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EPPlus\" />
   </ItemGroup>
 
 </Project>

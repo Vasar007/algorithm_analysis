@@ -15,18 +15,18 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
 
         #region IAnalysisPhaseOnePartOne Implementation
 
-        public void ApplyAnalysisToSingleLaunch(ExcelSheet sheet, int operationNumber,
+        public void ApplyAnalysisToSingleLaunch(IExcelSheet sheet, int operationNumber,
             int currentRow)
         {
             // Do nothing.
         }
 
-        public void ApplyAnalysisToDataset(ExcelSheet sheet)
+        public void ApplyAnalysisToDataset(IExcelSheet sheet)
         {
             // Do nothing.
         }
 
-        public int GetCalculatedSampleSize(ExcelSheet sheet)
+        public int GetCalculatedSampleSize(IExcelSheet sheet)
         {
             // Do nothing.
             return default;

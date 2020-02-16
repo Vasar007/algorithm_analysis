@@ -5,9 +5,9 @@ using AlgorithmAnalysis.Models;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 
-namespace AlgorithmAnalysis.Excel
+namespace AlgorithmAnalysis.Excel.NPOI
 {
-    public sealed class ExcelSheet
+    internal sealed class NpoiExcelSheet : IExcelSheet
     {
         // Suitable for Excel 2007. If you try to use the latest Excel 2019 functions, NPOI can
         // throw NotImplementedException.
@@ -23,7 +23,7 @@ namespace AlgorithmAnalysis.Excel
 
         private readonly ExcelOptions _excelOptions;
 
-        public CellHolder this[ExcelColumnIndex columnIndex, int rowIndex]
+        public ICellHolder this[ExcelColumnIndex columnIndex, int rowIndex]
         {
             get
             {
@@ -44,18 +44,13 @@ namespace AlgorithmAnalysis.Excel
         }
 
 
-        internal ExcelSheet(ISheet sheet, ExcelOptions excelOptions)
+        internal NpoiExcelSheet(ISheet sheet, ExcelOptions excelOptions)
         {
             _sheet = sheet.ThrowIfNull(nameof(sheet));
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
         }
 
-        internal ExcelSheet(ISheet sheet)
-            : this(sheet, ConfigOptions.Excel)
-        {
-        }
-
-        public CellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex,
+        public ICellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex,
             bool centrized)
         {
             columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
@@ -81,15 +76,15 @@ namespace AlgorithmAnalysis.Excel
                 ? result.Center()
                 : result;
 
-            return new CellHolder(result);
+            return new NpoiCellHolder(result);
         }
 
-        public CellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex)
+        public ICellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex)
         {
             return GetOrCreateCell(columnIndex, rowIndex, centrized: false);
         }
 
-        public CellHolder GetOrCreateCenterizedCell(ExcelColumnIndex columnIndex, int rowIndex)
+        public ICellHolder GetOrCreateCenterizedCell(ExcelColumnIndex columnIndex, int rowIndex)
         {
             return GetOrCreateCell(columnIndex, rowIndex, centrized: true);
         }
@@ -136,19 +131,21 @@ namespace AlgorithmAnalysis.Excel
             GetOrCreateCenterizedCell(columnIndex, rowIndex).SetValue(value);
         }
 
-        public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex, DateTime value)
+        public void SetCenterizedCellValue(ExcelColumnIndex columnIndex, int rowIndex,
+            DateTime value)
         {
             GetOrCreateCenterizedCell(columnIndex, rowIndex).SetValue(value);
         }
 
-        public void SetCenterizedCellFormula(ExcelColumnIndex columnIndex, int rowIndex, string formula)
+        public void SetCenterizedCellFormula(ExcelColumnIndex columnIndex, int rowIndex,
+            string formula)
         {
             formula.ThrowIfNullOrWhiteSpace(nameof(formula));
 
             GetOrCreateCenterizedCell(columnIndex, rowIndex).SetFormula(formula);
         }
 
-        public int AddMergedRegion(
+        public void AddMergedRegion(
             ExcelColumnIndex firstColumnIndex,
             int firstRowIndex,
             ExcelColumnIndex lastColumnIndex,
@@ -165,7 +162,7 @@ namespace AlgorithmAnalysis.Excel
                 firstCol: firstColumnIndex.AsInt32(),
                 lastCol: lastColumnIndex.AsInt32()
             );
-            return _sheet.AddMergedRegion(cra);
+            _sheet.AddMergedRegion(cra);
         }
 
         public void AutoSizeColumn(ExcelColumnIndex columnIndex)
@@ -182,13 +179,20 @@ namespace AlgorithmAnalysis.Excel
             _sheet.AutoSizeColumn(columnIndex.AsInt32(), useMergedCells);
         }
 
-        public CellValueHolder EvaluateCell(ExcelColumnIndex columnIndex, int rowIndex)
+        public ICellValueHolder EvaluateCell(ExcelColumnIndex columnIndex, int rowIndex)
         {
-            CellHolder cellWithResult = GetOrCreateCenterizedCell(columnIndex, rowIndex);
-            IWorkbook workbook = cellWithResult.Sheet.Workbook;
+            ICellHolder cellWithResult = GetOrCreateCenterizedCell(columnIndex, rowIndex);
+            if (!(cellWithResult is NpoiCellHolder cellHolder))
+            {
+                throw new InvalidOperationException(
+                    "Failed to evaluate cell: sheet class uses inappropriate cell type."
+                );
+            }
+
+            IWorkbook workbook = cellHolder.Sheet.Workbook;
 
             IFormulaEvaluator evaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
-            return CellValueHolder.CreateFrom(evaluator.Evaluate(cellWithResult.Cell));
+            return NpoiCellValueHolder.CreateFrom(evaluator.Evaluate(cellHolder.Cell));
         }
 
         public void SetArrayFormula(

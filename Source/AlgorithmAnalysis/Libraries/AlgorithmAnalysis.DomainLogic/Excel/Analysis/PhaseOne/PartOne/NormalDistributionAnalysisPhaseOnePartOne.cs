@@ -17,13 +17,13 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
 
         #region IPhaseOnePartOneAnalysis Implementation
 
-        public void ApplyAnalysisToSingleLaunch(ExcelSheet sheet, int operationNumber,
+        public void ApplyAnalysisToSingleLaunch(IExcelSheet sheet, int operationNumber,
             int currentRow)
         {
             // Do nothing.
         }
 
-        public void ApplyAnalysisToDataset(ExcelSheet sheet)
+        public void ApplyAnalysisToDataset(IExcelSheet sheet)
         {
             sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 1, ExcelStrings.NormalDistributionSolutionColumnName);
             sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.K, 1);
@@ -49,9 +49,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
             sheet.AutoSizeColumn(ExcelColumnIndex.K, useMergedCells: true);
         }
 
-        public int GetCalculatedSampleSize(ExcelSheet sheet)
+        public int GetCalculatedSampleSize(IExcelSheet sheet)
         {
-            CellValueHolder calculatedSampleSize = sheet.EvaluateCell(ExcelColumnIndex.K, 7);
+            ICellValueHolder calculatedSampleSize = sheet.EvaluateCell(ExcelColumnIndex.K, 7);
 
             return Convert.ToInt32(calculatedSampleSize.NumericValue);
         }

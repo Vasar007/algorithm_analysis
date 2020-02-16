@@ -10,16 +10,16 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 {
     internal static class ExcelHelper
     {
-        public static ExcelWorkbook GetWorkbook(string outputExcelFilename)
+        public static IExcelWorkbook GetWorkbook(string outputExcelFilename)
         {
             outputExcelFilename.ThrowIfNullOrWhiteSpace(nameof(outputExcelFilename));
 
             if (File.Exists(outputExcelFilename))
             {
-                return new ExcelWorkbook(outputExcelFilename);
+                return ExcelWrapperFactory.CreateWorkbook(outputExcelFilename);
             }
 
-            return new ExcelWorkbook();
+            return ExcelWrapperFactory.CreateWorkbook();
         }
 
         public static FileObject PerformOneIterationOfPhaseOne(ParametersPack args,

@@ -6,6 +6,8 @@ namespace AlgorithmAnalysis.Configuration
     {
         public ExcelCellCreationMode CellCreationMode { get; set; } = ExcelCellCreationMode.Default;
 
+        public ExcelLibraryProvider LibraryProvider { get; set; } = ExcelLibraryProvider.Default;
+
 
         public ExcelOptions()
         {
