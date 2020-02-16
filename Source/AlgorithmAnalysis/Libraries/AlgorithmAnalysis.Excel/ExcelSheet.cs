@@ -44,13 +44,13 @@ namespace AlgorithmAnalysis.Excel
         }
 
 
-        public ExcelSheet(ISheet sheet, ExcelOptions excelOptions)
+        internal ExcelSheet(ISheet sheet, ExcelOptions excelOptions)
         {
             _sheet = sheet.ThrowIfNull(nameof(sheet));
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
         }
 
-        public ExcelSheet(ISheet sheet)
+        internal ExcelSheet(ISheet sheet)
             : this(sheet, ConfigOptions.Excel)
         {
         }

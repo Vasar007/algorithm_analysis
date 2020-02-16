@@ -1,12 +1,11 @@
-﻿using System;
-using Acolyte.Assertions;
+﻿using Acolyte.Assertions;
 using NPOI.SS.UserModel;
 
 namespace AlgorithmAnalysis.Excel
 {
     public static class ExcelExtensions
     {
-        public static ICell Center(this ICell cell)
+        internal static ICell Center(this ICell cell)
         {
             cell.ThrowIfNull(nameof(cell));
 
@@ -18,7 +17,7 @@ namespace AlgorithmAnalysis.Excel
             return cell;
         }
 
-        public static IRow Center(this IRow row)
+        internal static IRow Center(this IRow row)
         {
             row.ThrowIfNull(nameof(row));
 
