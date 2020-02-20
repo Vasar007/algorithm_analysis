@@ -1,8 +1,10 @@
-﻿namespace AlgorithmAnalysis.Excel
+﻿using System;
+
+namespace AlgorithmAnalysis.Excel
 {
-    public interface IExcelWorkbook
+    public interface IExcelWorkbook : IDisposable
     {
-        IExcelSheet CreateSheet(string sheetName);
+        IExcelSheet GetOrCreateSheet(string sheetName);
 
         void SaveToFile(string filename);
     }

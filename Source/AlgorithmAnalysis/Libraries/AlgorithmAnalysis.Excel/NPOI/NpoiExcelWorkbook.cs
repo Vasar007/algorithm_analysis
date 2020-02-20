@@ -12,7 +12,7 @@ namespace AlgorithmAnalysis.Excel.NPOI
         // throw NotImplementedException.
 
         private readonly IWorkbook _workbook;
-        
+
         private readonly ExcelOptions _excelOptions;
 
 
@@ -32,13 +32,25 @@ namespace AlgorithmAnalysis.Excel.NPOI
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
         }
 
+        #region IDisposable Implementation
+
+        public void Dispose()
+        {
+            // Nothing to dispose.
+        }
+
+        #endregion
+
         #region IExcelWorkbook Implementation
 
-        public IExcelSheet CreateSheet(string sheetName)
+        public IExcelSheet GetOrCreateSheet(string sheetName)
         {
             sheetName.ThrowIfNullOrEmpty(sheetName);
 
-            ISheet sheet = _workbook.CreateSheet(sheetName);
+            ISheet sheet = _workbook.GetSheet(sheetName);
+            if (sheet is null)
+                sheet = _workbook.CreateSheet(sheetName);
+
             return new NpoiExcelSheet(sheet, _excelOptions);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Configuration;
+using AlgorithmAnalysis.Excel.EPPlus;
 using AlgorithmAnalysis.Excel.NPOI;
 using AlgorithmAnalysis.Models;
 
@@ -15,11 +16,14 @@ namespace AlgorithmAnalysis.Excel
 
             return excelOptions.LibraryProvider switch
             {
-                ExcelLibraryProvider.Default => CreateDefaultWorkbook(outputExcelFilename, excelOptions),
+                ExcelLibraryProvider.Default =>
+                    CreateDefaultWorkbook(outputExcelFilename, excelOptions),
 
-                ExcelLibraryProvider.NPOI => new NpoiExcelWorkbook(outputExcelFilename, excelOptions),
+                ExcelLibraryProvider.NPOI =>
+                    new NpoiExcelWorkbook(outputExcelFilename, excelOptions),
 
-                ExcelLibraryProvider.EPPlus => new NpoiExcelWorkbook(outputExcelFilename, excelOptions),
+                ExcelLibraryProvider.EPPlus =>
+                    new EpplusExcelWorkbook(outputExcelFilename, excelOptions),
 
                 _ => throw new ArgumentOutOfRangeException(
                          nameof(excelOptions), excelOptions.LibraryProvider,
@@ -38,7 +42,7 @@ namespace AlgorithmAnalysis.Excel
 
                 ExcelLibraryProvider.NPOI => new NpoiExcelWorkbook(excelOptions),
 
-                ExcelLibraryProvider.EPPlus => new NpoiExcelWorkbook(excelOptions),
+                ExcelLibraryProvider.EPPlus => new EpplusExcelWorkbook(excelOptions),
 
                 _ => throw new ArgumentOutOfRangeException(
                          nameof(excelOptions), excelOptions.LibraryProvider,

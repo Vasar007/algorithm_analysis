@@ -4,9 +4,11 @@ using NPOI.SS.UserModel;
 
 namespace AlgorithmAnalysis.Excel.NPOI
 {
-    internal sealed class NpoiCellValueHolder : ICellValueHolder
+    internal sealed class NpoiExcelCellValueHolder : IExcelCellValueHolder
     {
-        public ActiveCellType ActiveType { get; }
+        #region IExcelCellValueHolder Implementation
+
+        public ActiveExcelCellType ActiveType { get; }
 
         private readonly string? _stringValue;
         public string StringValue => _stringValue.ThrowIfNull(nameof(_stringValue));
@@ -26,73 +28,69 @@ namespace AlgorithmAnalysis.Excel.NPOI
         private readonly string? _formula;
         public string Formula => _formula.ThrowIfNull(nameof(_formula));
 
+        #endregion
 
-        public NpoiCellValueHolder()
+
+        private NpoiExcelCellValueHolder()
         {
-            ActiveType = ActiveCellType.Unknown;
+            ActiveType = ActiveExcelCellType.Unknown;
         }
 
-        public NpoiCellValueHolder(double value)
-            : this()
+        private NpoiExcelCellValueHolder(double value)
         {
             _numericValue = value;
-            ActiveType = ActiveCellType.Numeric;
+            ActiveType = ActiveExcelCellType.Numeric;
         }
 
-        public NpoiCellValueHolder(bool value)
-            : this()
+        private NpoiExcelCellValueHolder(bool value)
         {
             _booleanValue = value;
-            ActiveType = ActiveCellType.Boolean;
+            ActiveType = ActiveExcelCellType.Boolean;
         }
 
-        public NpoiCellValueHolder(DateTime value)
-            : this()
+        private NpoiExcelCellValueHolder(DateTime value)
         {
             _dateTimeValue = value;
-            ActiveType = ActiveCellType.DateTime;
+            ActiveType = ActiveExcelCellType.DateTime;
         }
 
-        public NpoiCellValueHolder(byte error)
-            : this()
+        private NpoiExcelCellValueHolder(byte error)
         {
             _errorValue = error;
-            ActiveType = ActiveCellType.Error;
+            ActiveType = ActiveExcelCellType.Error;
         }
 
-        public NpoiCellValueHolder(string stringValue, bool isFormula)
-            : this()
+        private NpoiExcelCellValueHolder(string stringValue, bool isFormula)
         {
             stringValue.ThrowIfNull(nameof(stringValue));
 
             if (isFormula)
             {
                 _formula = stringValue;
-                ActiveType = ActiveCellType.Formula;
+                ActiveType = ActiveExcelCellType.Formula;
             }
             else
             {
                 _stringValue = stringValue;
-                ActiveType = ActiveCellType.String;
+                ActiveType = ActiveExcelCellType.String;
             }
-            
         }
 
-        internal static NpoiCellValueHolder CreateFrom(CellValue cellValue)
+        internal static NpoiExcelCellValueHolder CreateFrom(CellValue cellValue)
         {
             cellValue.ThrowIfNull(nameof(cellValue));
 
             return cellValue.CellType switch
             {
-                CellType.String => new NpoiCellValueHolder(cellValue.StringValue, isFormula: false),
+                CellType.String => new NpoiExcelCellValueHolder(cellValue.StringValue, isFormula: false),
 
-                CellType.Numeric => new NpoiCellValueHolder(cellValue.NumberValue),
+                CellType.Numeric => new NpoiExcelCellValueHolder(cellValue.NumberValue),
 
-                CellType.Boolean => new NpoiCellValueHolder(cellValue.BooleanValue),
+                CellType.Boolean => new NpoiExcelCellValueHolder(cellValue.BooleanValue),
 
-                CellType.Error => new NpoiCellValueHolder(cellValue.ErrorValue),
+                CellType.Error => new NpoiExcelCellValueHolder(cellValue.ErrorValue),
 
-                CellType.Formula => new NpoiCellValueHolder(cellValue.StringValue, isFormula: true),
+                CellType.Formula => new NpoiExcelCellValueHolder(cellValue.StringValue, isFormula: true),
 
                 _ => throw new ArgumentOutOfRangeException(
                         nameof(cellValue), cellValue.CellType,

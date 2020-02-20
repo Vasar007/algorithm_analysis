@@ -7,7 +7,7 @@
   },
 
   "ExcelOptions": {
-    "CellCreationMode": "ExcelCellCreationMode.Centerized",
-    "ExcelLibraryProvider": "ExcelLibraryProvider.EPPlus"
+    "CellCreationMode": "Centerized",
+    "LibraryProvider": "EPPlus"
   }
 }

@@ -4,11 +4,11 @@ using NPOI.SS.UserModel;
 
 namespace AlgorithmAnalysis.Excel.NPOI
 {
-    internal sealed class NpoiCellHolder : ICellHolder
+    internal sealed class NpoiExcelCellHolder : IExcelCellHolder
     {
         private readonly ICell _cell;
 
-        public ActiveCellType ActiveType { get; private set; }
+        public ActiveExcelCellType ActiveType { get; private set; }
 
         public string StringValue
         {
@@ -78,54 +78,59 @@ namespace AlgorithmAnalysis.Excel.NPOI
 
         internal ISheet Sheet => _cell.Sheet;
 
+        // This property is used only to evaluate cell value.
         internal ICell Cell => _cell;
 
 
-        public NpoiCellHolder(ICell cell)
+        public NpoiExcelCellHolder(ICell cell)
         {
-            ResetActiveType();
             _cell = cell.ThrowIfNull(nameof(cell));
+            ActiveType = cell.CellType.TransformCellType();
         }
 
         public void SetValue(string value)
         {
-            _cell.SetCellValue(value.ThrowIfNull(nameof(value)));
-            ActiveType = ActiveCellType.String;
+            value.ThrowIfNull(nameof(value));
+
+            _cell.SetCellValue(value);
+            ActiveType = ActiveExcelCellType.String;
         }
 
         public void SetValue(double value)
         {
             _cell.SetCellValue(value);
-            ActiveType = ActiveCellType.Numeric;
+            ActiveType = ActiveExcelCellType.Numeric;
         }
 
         public void SetValue(bool value)
         {
             _cell.SetCellValue(value);
-            ActiveType = ActiveCellType.Boolean;
+            ActiveType = ActiveExcelCellType.Boolean;
         }
 
         public void SetValue(DateTime value)
         {
             _cell.SetCellValue(value);
-            ActiveType = ActiveCellType.DateTime;
+            ActiveType = ActiveExcelCellType.DateTime;
         }
 
         public void SetErrorValue(byte value)
         {
             _cell.SetCellErrorValue(value);
-            ActiveType = ActiveCellType.Error;
+            ActiveType = ActiveExcelCellType.Error;
         }
 
         public void SetFormula(string formula)
         {
-            _cell.SetCellFormula(formula.ThrowIfNull(nameof(formula)));
-            ActiveType = ActiveCellType.Formula;
+            formula.ThrowIfNull(nameof(formula));
+
+            _cell.SetCellFormula(formula);
+            ActiveType = ActiveExcelCellType.Formula;
         }
 
         private void ResetActiveType()
         {
-            ActiveType = ActiveCellType.Unknown;
+            ActiveType = ActiveExcelCellType.Unknown;
         }
     }
 }

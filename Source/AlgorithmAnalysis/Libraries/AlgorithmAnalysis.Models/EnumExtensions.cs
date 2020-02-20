@@ -12,5 +12,13 @@ namespace AlgorithmAnalysis.Models
 
             return Convert.ToInt32(enumValue);
         }
+
+        public static int AsInt32<TEnum>(this TEnum enumValue, int shift)
+            where TEnum : struct, Enum
+        {
+            enumValue.ThrowIfEnumValueIsUndefined(nameof(enumValue));
+
+            return Convert.ToInt32(enumValue) + shift;
+        }
     }
 }

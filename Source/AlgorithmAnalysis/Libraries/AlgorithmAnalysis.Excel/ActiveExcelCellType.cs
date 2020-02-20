@@ -1,6 +1,6 @@
 ﻿namespace AlgorithmAnalysis.Excel
 {
-    public enum ActiveCellType
+    public enum ActiveExcelCellType
     {
         Unknown = 0,
 

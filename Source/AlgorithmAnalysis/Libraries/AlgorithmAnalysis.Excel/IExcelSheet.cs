@@ -4,14 +4,14 @@ namespace AlgorithmAnalysis.Excel
 {
     public interface IExcelSheet
     {
-        ICellHolder this[ExcelColumnIndex columnIndex, int rowIndex] { get; }
+        IExcelCellHolder this[ExcelColumnIndex columnIndex, int rowIndex] { get; }
 
 
-        ICellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex, bool centrized);
+        IExcelCellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex, bool centrized);
 
-        ICellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex);
+        IExcelCellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex);
 
-        ICellHolder GetOrCreateCenterizedCell(ExcelColumnIndex columnIndex, int rowIndex);
+        IExcelCellHolder GetOrCreateCenterizedCell(ExcelColumnIndex columnIndex, int rowIndex);
         
         void SetCellValue(ExcelColumnIndex columnIndex, int rowIndex, string value);
         
@@ -40,9 +40,11 @@ namespace AlgorithmAnalysis.Excel
         
         void AutoSizeColumn(ExcelColumnIndex columnIndex, bool useMergedCells);
 
-        ICellValueHolder EvaluateCell(ExcelColumnIndex columnIndex, int rowIndex);
+        void EvaluateAll();
+
+        IExcelCellValueHolder EvaluateCell(ExcelColumnIndex columnIndex, int rowIndex);
         
-        void SetArrayFormula(string formula,
+        void SetArrayFormula(string arrayFormula,
             ExcelColumnIndex firstColumnIndex, int firstRowIndex,
             ExcelColumnIndex lastColumnIndex, int lastRowIndex);
 

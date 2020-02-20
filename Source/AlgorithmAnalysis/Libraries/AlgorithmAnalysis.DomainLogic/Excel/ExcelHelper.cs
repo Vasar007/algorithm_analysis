@@ -10,7 +10,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 {
     internal static class ExcelHelper
     {
-        public static IExcelWorkbook GetWorkbook(string outputExcelFilename)
+        public static IExcelWorkbook GetOrCreateWorkbook(string outputExcelFilename)
         {
             outputExcelFilename.ThrowIfNullOrWhiteSpace(nameof(outputExcelFilename));
 

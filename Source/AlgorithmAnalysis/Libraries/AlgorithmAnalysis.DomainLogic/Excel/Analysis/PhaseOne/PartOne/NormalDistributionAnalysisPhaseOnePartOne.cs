@@ -51,7 +51,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
 
         public int GetCalculatedSampleSize(IExcelSheet sheet)
         {
-            ICellValueHolder calculatedSampleSize = sheet.EvaluateCell(ExcelColumnIndex.K, 7);
+            IExcelCellValueHolder calculatedSampleSize = sheet.EvaluateCell(ExcelColumnIndex.K, 7);
 
             return Convert.ToInt32(calculatedSampleSize.NumericValue);
         }

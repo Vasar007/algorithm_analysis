@@ -2,9 +2,9 @@
 
 namespace AlgorithmAnalysis.Excel
 {
-    public interface ICellValueHolder
+    public interface IExcelCellValueHolder
     {
-        ActiveCellType ActiveType { get; }
+        ActiveExcelCellType ActiveType { get; }
 
         string StringValue { get; }
 

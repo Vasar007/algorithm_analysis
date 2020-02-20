@@ -22,9 +22,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             data.ThrowIfNullOrEmpty(nameof(data));
             excelContext.ThrowIfNull(nameof(excelContext));
 
-            IExcelWorkbook workbook = ExcelHelper.GetWorkbook(_outputExcelFilename);
+            using IExcelWorkbook workbook = ExcelHelper.GetOrCreateWorkbook(_outputExcelFilename);
 
-            IExcelSheet sheet = workbook.CreateSheet(excelContext.SheetName);
+            IExcelSheet sheet = workbook.GetOrCreateSheet(excelContext.SheetName);
             FillSheetHeader(sheet, excelContext.Args);
 
             IAnalysisPhaseOnePartOne analysis = excelContext.CreatePartOne();
@@ -39,9 +39,11 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             }
 
             analysis.ApplyAnalysisToDataset(sheet);
+
+            int calculatedSampleSize = analysis.GetCalculatedSampleSize(sheet);
             workbook.SaveToFile(_outputExcelFilename);
 
-            return analysis.GetCalculatedSampleSize(sheet);
+            return calculatedSampleSize;
         }
 
         private static void FillSheetHeader(IExcelSheet sheet, ParametersPack args)
