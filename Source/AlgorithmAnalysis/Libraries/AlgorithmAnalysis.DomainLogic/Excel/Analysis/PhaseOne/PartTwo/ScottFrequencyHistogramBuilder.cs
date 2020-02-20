@@ -48,13 +48,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
             CreateIntervalData(sheet, histogramSegmentsNumberInt, histogramSegmentsNumberIndex);
 
-            sheet.EvaluateAll();
-
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 14, $"SUM($H$2:$H${histogramSegmentsNumberIndex}) * $J$6");
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 15, "$J$13 - 1 - 2");
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 16, "CHIINV($J$8, $J$15)"); // CHIINV == CHISQ.INV.RT
-
-            sheet.EvaluateAll();
 
             string testFormula = $"CHITEST($F$2:$F${histogramSegmentsNumberIndex}, $G$2:$G${histogramSegmentsNumberIndex})"; // CHITEST == CHISQ.TEST
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 17, testFormula);
