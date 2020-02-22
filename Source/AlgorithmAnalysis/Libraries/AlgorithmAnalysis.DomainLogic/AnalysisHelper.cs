@@ -26,7 +26,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public static IReadOnlyList<AlgorithmType> GetAvailableAlgorithms()
         {
-            return ConfigOptions.Algorithms.GetAlgorithmTypes();
+            return ConfigOptions.Analysis.GetAlgorithmTypes();
         }
 
         public static TEnum GetEnumValueByDescription<TEnum>(string enumDescription)

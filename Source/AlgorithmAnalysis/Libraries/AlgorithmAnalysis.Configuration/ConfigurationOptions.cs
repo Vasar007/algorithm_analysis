@@ -12,7 +12,7 @@ namespace AlgorithmAnalysis.Configuration
 
         public static readonly string ConfigFilename = "config.json";
 
-        public static AlgorithmOptions Algorithms => GetOptions<AlgorithmOptions>();
+        public static AnalysisOptions Analysis => GetOptions<AnalysisOptions>();
 
         public static ExcelOptions Excel => GetOptions<ExcelOptions>();
 

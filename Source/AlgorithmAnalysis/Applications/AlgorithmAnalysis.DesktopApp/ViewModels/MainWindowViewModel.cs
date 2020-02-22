@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Commands;
+using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.Commands;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.DomainLogic;
-using AlgorithmAnalysis.Models;
 using AlgorithmAnalysis.DomainLogic.Analysis;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
@@ -18,7 +19,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
     {
         private readonly AnalysisPerformer _performer;
 
-        private readonly string _finalExcelFilename;
+        private readonly string _outputExcelFilename;
 
         public string Title { get; }
 
@@ -44,8 +45,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public MainWindowViewModel()
         {
-            _finalExcelFilename = DesktopOptions.FinalExcelFilename;
-            _performer = new AnalysisPerformer(_finalExcelFilename);
+            _outputExcelFilename = ConfigOptions.Excel.OutputExcelFilename;
+            _performer = new AnalysisPerformer(_outputExcelFilename);
 
             Title = DesktopOptions.Title;
             AvailableAnalysisKindForPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOne;
@@ -97,20 +98,20 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         private void CheckOutputFile()
         {
-            if (!File.Exists(_finalExcelFilename)) return;
+            if (!File.Exists(_outputExcelFilename)) return;
 
             // TODO: check final excel file and ASK user to delete file or change output name.
             string message =
                 "There are file with the same name as output analysis file " +
-                $"('{_finalExcelFilename}'). " +
+                $"('{_outputExcelFilename}'). " +
                 "This file will be removed.";
 
             MessageBoxProvider.ShowInfo(message);
 
-            File.Delete(_finalExcelFilename);
+            File.Delete(_outputExcelFilename);
         }
 
-        private void ProcessResult(AnalysisResult result)
+        private static void ProcessResult(AnalysisResult result)
         {
             if (result.Success)
             {

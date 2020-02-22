@@ -1,17 +1,20 @@
 {
-  "AlgorithmOptions": {
+  "AnalysisOptions": {
     "AvailableAlgorithms": {
       "0": "Pallottino's algorithm",
       "1": "Insertion sort"
-    }
+    },
+    "DefaultAnalysisProgramName": "algorithm_analysis.exe",
+    "DefaultOutputFilenamePattern": "tests_average_"
   },
 
   "ExcelOptions": {
     "CellCreationMode": "Centerized",
-    "LibraryProvider": "EPPlus"
+    "LibraryProvider": "EPPlus",
+    "OutputExcelFilename": "results.xlsx"
   },
 
   "LoggerOptions": {
-    "RelativeLogFolderPath":  "logs"
+    "RelativeLogFolderPath": "logs"
   }
 }

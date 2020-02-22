@@ -8,6 +8,8 @@ namespace AlgorithmAnalysis.Configuration
 
         public ExcelLibraryProvider LibraryProvider { get; set; } = ExcelLibraryProvider.Default;
 
+        public string OutputExcelFilename { get; set; } = "results.xlsx";
+
 
         public ExcelOptions()
         {

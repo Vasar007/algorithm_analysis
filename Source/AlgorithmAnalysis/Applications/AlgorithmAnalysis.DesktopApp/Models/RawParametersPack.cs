@@ -1,5 +1,6 @@
 ﻿using Acolyte.Assertions;
 using Prism.Mvvm;
+using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.Models;
@@ -107,13 +108,13 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         private ParametersPack ConvertArgs()
         {
             return new ParametersPack(
-                analysisProgramName: DesktopOptions.DefaultAnalysisProgramName,
+                analysisProgramName: ConfigOptions.Analysis.DefaultAnalysisProgramName,
                 algorithmType: SelectedAlgorithmType,
                 startValue: int.Parse(StartValue),
                 endValue: int.Parse(EndValue),
                 launchesNumber: int.Parse(LaunchesNumber),
                 step: int.Parse(Step),
-                outputFilenamePattern: DesktopOptions.DefaultOutputFilenamePattern
+                outputFilenamePattern: ConfigOptions.Analysis.DefaultOutputFilenamePattern
             );
         }
     }
