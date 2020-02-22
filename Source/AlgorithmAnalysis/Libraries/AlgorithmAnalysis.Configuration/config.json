@@ -9,5 +9,9 @@
   "ExcelOptions": {
     "CellCreationMode": "Centerized",
     "LibraryProvider": "EPPlus"
+  },
+
+  "LoggerOptions": {
+    "RelativeLogFolderPath":  "logs"
   }
 }

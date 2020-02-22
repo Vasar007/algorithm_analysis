@@ -9,11 +9,11 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>CS8600,CS8602,CS8603,CS8618,CS8625</WarningsAsErrors>
-    <RootNamespace>AlgorithmAnalysis.Models</RootNamespace>
+    <RootNamespace>AlgorithmAnalysis.Common</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlgorithmAnalysis.Common\AlgorithmAnalysis.Common.csproj" />
+    <PackageReference Include="Acolyte.NET" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

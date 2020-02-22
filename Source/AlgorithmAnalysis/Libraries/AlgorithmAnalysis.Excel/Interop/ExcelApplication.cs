@@ -1,4 +1,4 @@
-﻿using System;
+﻿using AlgorithmAnalysis.Common;
 using Microsoft.Office.Interop.Excel;
 
 namespace AlgorithmAnalysis.Excel.Interop
@@ -29,10 +29,13 @@ namespace AlgorithmAnalysis.Excel.Interop
 
         public static void Dispose()
         {
-            _application?.Quit();
-            _application = null;
+            if (_application is null)
+                return;
 
-            GC.Collect();
+            ComObjectHelper.ReleaseComObjectSafe(_application.WorksheetFunction);
+            _application.Quit();
+            ComObjectHelper.ReleaseComObjectSafe(_application);
+            _application = null;
         }
     }
 }

@@ -9,6 +9,8 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 {
     internal sealed class EpplusExcelWorkbook : IExcelWorkbook
     {
+        private const string EpplusLibLogFilename = "epplus.log";
+
         private readonly ExcelPackage _package;
 
         private readonly ExcelOptions _excelOptions;
@@ -23,6 +25,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             _package = new ExcelPackage();
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
 
+            AttachLogger();
             RegisterFunctionModules();
         }
 
@@ -35,6 +38,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             _package = new ExcelPackage(new FileInfo(pathToWorkbook));
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
 
+            AttachLogger();
             RegisterFunctionModules();
         }
 
@@ -43,6 +47,8 @@ namespace AlgorithmAnalysis.Excel.EPPlus
         public void Dispose()
         {
             if (_disposed) return;
+
+            _package.Workbook.FormulaParserManager.DetachLogger();
 
             _package.Dispose();
             ExcelApplication.Dispose();
@@ -60,7 +66,9 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 
             ExcelWorksheet sheet = _package.Workbook.Worksheets[sheetName];
             if (sheet is null)
+            {
                 sheet = _package.Workbook.Worksheets.Add(sheetName);
+            }
 
             return new EpplusExcelSheet(sheet, _excelOptions);
         }
@@ -80,6 +88,20 @@ namespace AlgorithmAnalysis.Excel.EPPlus
         private void RegisterFunctionModules()
         {
             _package.Workbook.FormulaParserManager.LoadFunctionModule(new ExtendedFunctionModule());
+        }
+
+        private void AttachLogger()
+        {
+            string logFolderPath = ConfigOptions.Logger.RelativeLogFolderPath;
+            if (!Directory.Exists(logFolderPath))
+            {
+                Directory.CreateDirectory(logFolderPath);
+            }
+
+            string logFilePath = Path.Combine(logFolderPath, EpplusLibLogFilename);
+
+            var logfile = new FileInfo(logFilePath);
+            _package.Workbook.FormulaParserManager.AttachLogger(logfile);
         }
     }
 }

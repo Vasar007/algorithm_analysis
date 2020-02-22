@@ -49,7 +49,9 @@ namespace AlgorithmAnalysis.Excel.NPOI
 
             ISheet sheet = _workbook.GetSheet(sheetName);
             if (sheet is null)
+            {
                 sheet = _workbook.CreateSheet(sheetName);
+            }
 
             return new NpoiExcelSheet(sheet, _excelOptions);
         }

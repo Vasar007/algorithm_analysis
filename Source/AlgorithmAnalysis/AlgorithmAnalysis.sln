@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Models", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Excel", "Libraries\AlgorithmAnalysis.Excel\AlgorithmAnalysis.Excel.csproj", "{8F7E7742-8751-41BE-A19F-5E2F9AA65585}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmAnalysis.Logger", "Libraries\AlgorithmAnalysis.Logger\AlgorithmAnalysis.Logger.csproj", "{32D109ED-C543-4FA1-9C2C-26FF68FF5626}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmAnalysis.Common", "Libraries\AlgorithmAnalysis.Common\AlgorithmAnalysis.Common.csproj", "{93DDFD75-E613-4EA4-A191-C79613228E5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -45,6 +49,14 @@ Global
 		{8F7E7742-8751-41BE-A19F-5E2F9AA65585}.Debug|x64.Build.0 = Debug|x64
 		{8F7E7742-8751-41BE-A19F-5E2F9AA65585}.Release|x64.ActiveCfg = Release|x64
 		{8F7E7742-8751-41BE-A19F-5E2F9AA65585}.Release|x64.Build.0 = Release|x64
+		{32D109ED-C543-4FA1-9C2C-26FF68FF5626}.Debug|x64.ActiveCfg = Debug|x64
+		{32D109ED-C543-4FA1-9C2C-26FF68FF5626}.Debug|x64.Build.0 = Debug|x64
+		{32D109ED-C543-4FA1-9C2C-26FF68FF5626}.Release|x64.ActiveCfg = Release|x64
+		{32D109ED-C543-4FA1-9C2C-26FF68FF5626}.Release|x64.Build.0 = Release|x64
+		{93DDFD75-E613-4EA4-A191-C79613228E5E}.Debug|x64.ActiveCfg = Debug|x64
+		{93DDFD75-E613-4EA4-A191-C79613228E5E}.Debug|x64.Build.0 = Debug|x64
+		{93DDFD75-E613-4EA4-A191-C79613228E5E}.Release|x64.ActiveCfg = Release|x64
+		{93DDFD75-E613-4EA4-A191-C79613228E5E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +67,8 @@ Global
 		{17497257-782A-476D-A0FA-34A16782A72A} = {221ADEF8-495F-4A11-B453-15153C636930}
 		{917404CC-2612-4FB4-86FB-D0EC8EEE002A} = {221ADEF8-495F-4A11-B453-15153C636930}
 		{8F7E7742-8751-41BE-A19F-5E2F9AA65585} = {221ADEF8-495F-4A11-B453-15153C636930}
+		{32D109ED-C543-4FA1-9C2C-26FF68FF5626} = {221ADEF8-495F-4A11-B453-15153C636930}
+		{93DDFD75-E613-4EA4-A191-C79613228E5E} = {221ADEF8-495F-4A11-B453-15153C636930}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {71599CFB-855E-4F42-B219-B17234CCB145}

@@ -1,6 +1,6 @@
 ﻿using Acolyte.Assertions;
 using AlgorithmAnalysis.Configuration;
-using AlgorithmAnalysis.Models;
+using AlgorithmAnalysis.Common;
 using OfficeOpenXml;
 
 namespace AlgorithmAnalysis.Excel.EPPlus

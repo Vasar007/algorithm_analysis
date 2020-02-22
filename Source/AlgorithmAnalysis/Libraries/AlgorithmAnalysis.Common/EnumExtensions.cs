@@ -1,7 +1,7 @@
 ﻿using System;
 using Acolyte.Assertions;
 
-namespace AlgorithmAnalysis.Models
+namespace AlgorithmAnalysis.Common
 {
     public static class EnumExtensions
     {

@@ -16,6 +16,8 @@ namespace AlgorithmAnalysis.Configuration
 
         public static ExcelOptions Excel => GetOptions<ExcelOptions>();
 
+        public static LoggerOptions Logger => GetOptions<LoggerOptions>();
+
 
         public static T GetOptions<T>()
             where T : IOptions, new()

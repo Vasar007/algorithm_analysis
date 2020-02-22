@@ -1,7 +1,7 @@
 ﻿using System;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Configuration;
-using AlgorithmAnalysis.Models;
+using AlgorithmAnalysis.Common;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
