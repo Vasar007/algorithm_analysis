@@ -10,6 +10,7 @@ using AlgorithmAnalysis.DesktopApp.Domain.Commands;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.Models;
+using AlgorithmAnalysis.DomainLogic.Analysis;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
@@ -71,15 +72,17 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 AnalysisContext context = Parameters.CreateContext();
 
                 CheckOutputFile();
-                await Task.Run(() => _performer.PerformAnalysis(context)).ConfigureAwait(false);
-
+                
                 // TODO: add cancellation button to interupt analysis.
+                AnalysisResult result = await Task
+                    .Run(() => _performer.PerformAnalysis(context))
+                    .ConfigureAwait(false);
 
-                MessageBoxProvider.ShowInfo("Analysis finished.");
+                ProcessResult(result);
             }
             catch (Exception ex)
             {
-                MessageBoxProvider.ShowError($"Exception occurred: {ex.Message}");
+                MessageBoxProvider.ShowError($"Analysis failed. Exception occurred: {ex.Message}");
             }
             finally
             {
@@ -105,6 +108,18 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             MessageBoxProvider.ShowInfo(message);
 
             File.Delete(_finalExcelFilename);
+        }
+
+        private void ProcessResult(AnalysisResult result)
+        {
+            if (result.Success)
+            {
+                MessageBoxProvider.ShowInfo(result.Message);
+            }
+            else
+            {
+                MessageBoxProvider.ShowError(result.Message);
+            }
         }
     }
 }

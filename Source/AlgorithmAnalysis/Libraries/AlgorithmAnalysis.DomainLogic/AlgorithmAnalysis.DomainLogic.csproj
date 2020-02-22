@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AlgorithmAnalysis.Configuration\AlgorithmAnalysis.Configuration.csproj" />
     <ProjectReference Include="..\AlgorithmAnalysis.Excel\AlgorithmAnalysis.Excel.csproj" />
+    <ProjectReference Include="..\AlgorithmAnalysis.Logging\AlgorithmAnalysis.Logging.csproj" />
     <ProjectReference Include="..\AlgorithmAnalysis.Models\AlgorithmAnalysis.Models.csproj" />
   </ItemGroup>
 

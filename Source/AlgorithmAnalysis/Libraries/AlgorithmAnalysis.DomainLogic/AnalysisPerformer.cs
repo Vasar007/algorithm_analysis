@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.DomainLogic.Analysis;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DomainLogic
 {
     public sealed class AnalysisPerformer
     {
+        private static readonly ILogger _logger =
+            LoggerFactory.CreateLoggerFor<AnalysisPerformer>();
+
         private readonly IReadOnlyList<IAnalysis> _analyses;
 
 
@@ -15,7 +19,7 @@ namespace AlgorithmAnalysis.DomainLogic
             _analyses = ConstructAnalysis(outputExcelFilename);
         }
 
-        public void PerformAnalysis(AnalysisContext context)
+        public AnalysisResult PerformAnalysis(AnalysisContext context)
         {
             context.ThrowIfNull(nameof(context));
 
@@ -25,12 +29,16 @@ namespace AlgorithmAnalysis.DomainLogic
                 throw new NotImplementedException("Library can work with only one algorithm type.");
             }
 
-            foreach (IAnalysis analysis in _analyses)
+            try
             {
-                AnalysisResult result = analysis.Analyze(context);
+                return PerformInternal(context);
+            }
+            catch (Exception ex)
+            {
+                string message = $"Analysis failed: {ex.Message}";
 
-                // TODO: return progress statuses with messages.
-                if (!result.Success) break;
+                _logger.Error(ex, message);
+                return AnalysisResult.CreateFailure(message);
             }
         }
 
@@ -41,6 +49,19 @@ namespace AlgorithmAnalysis.DomainLogic
                 new AnalysisPhaseOne(outputExcelFilename),
                 new AnalysisPhaseTwo(outputExcelFilename)
             };
+        }
+
+        private AnalysisResult PerformInternal(AnalysisContext context)
+        {
+            foreach (IAnalysis analysis in _analyses)
+            {
+                AnalysisResult result = analysis.Analyze(context);
+
+                // TODO: return progress statuses with messages.
+                if (!result.Success) return result;
+            }
+
+            return AnalysisResult.CreateSuccess("Analysis finished successfully.");
         }
     }
 }

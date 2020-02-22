@@ -14,7 +14,10 @@ namespace AlgorithmAnalysis.Common
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Unable to release the COM object: {ex}");
+                string message = $"Unable to release the COM object: {ex}";
+
+                Debug.WriteLine(message);
+                Trace.WriteLine(message);
             }
             finally
             {
