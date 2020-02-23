@@ -10,16 +10,16 @@ namespace AlgorithmAnalysis.DesktopApp.Models
     internal sealed class RawParametersPack : BindableBase
     {
         // Initializes through Reset method in ctor.
-        private string _selectedPhaseOnePartOne = default!;
-        public string SelectedPhaseOnePartOne
+        private PhaseOnePartOneAnalysisKind _selectedPhaseOnePartOne = default!;
+        public PhaseOnePartOneAnalysisKind SelectedPhaseOnePartOne
         {
             get => _selectedPhaseOnePartOne;
             set => SetProperty(ref _selectedPhaseOnePartOne, value.ThrowIfNull(nameof(value)));
         }
 
         // Initializes through Reset method in ctor.
-        private string _selectedPhaseOnePartTwo = default!;
-        public string SelectedPhaseOnePartTwo
+        private PhaseOnePartTwoAnalysisKind _selectedPhaseOnePartTwo = default!;
+        public PhaseOnePartTwoAnalysisKind SelectedPhaseOnePartTwo
         {
             get => _selectedPhaseOnePartTwo;
             set => SetProperty(ref _selectedPhaseOnePartTwo, value.ThrowIfNull(nameof(value)));
@@ -92,29 +92,23 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public AnalysisContext CreateContext()
         {
-            var phaseOnePartOne = AnalysisHelper
-                .GetEnumValueByDescription<PhaseOnePartOneAnalysisKind>(SelectedPhaseOnePartOne);
-            var phaseOnePartTwo = AnalysisHelper
-                .GetEnumValueByDescription<PhaseOnePartTwoAnalysisKind>(SelectedPhaseOnePartTwo);
-
             return new AnalysisContext(
                 args: ConvertArgs(),
                 showAnalysisWindow: ShowAnalysisWindow,
-                phaseOnePartOne: phaseOnePartOne,
-                phaseOnePartTwo: phaseOnePartTwo
+                phaseOnePartOne: SelectedPhaseOnePartOne,
+                phaseOnePartTwo: SelectedPhaseOnePartTwo
             );
         }
 
         private ParametersPack ConvertArgs()
         {
-            return new ParametersPack(
-                analysisProgramName: ConfigOptions.Analysis.DefaultAnalysisProgramName,
+            return ParametersPack.Create(
+                analysisOptions: ConfigOptions.Analysis,
                 algorithmType: SelectedAlgorithmType,
                 startValue: int.Parse(StartValue),
                 endValue: int.Parse(EndValue),
                 launchesNumber: int.Parse(LaunchesNumber),
-                step: int.Parse(Step),
-                outputFilenamePattern: ConfigOptions.Analysis.DefaultOutputFilenamePattern
+                step: int.Parse(Step)
             );
         }
     }

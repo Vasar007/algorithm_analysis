@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DomainLogic
 {
-    public sealed class ParametersPack
+    public sealed class ParametersPack : ILoggable
     {
-        private const string CommonAnalysisFilenameSuffix = "series";
-
         public string AnalysisProgramName { get; }
 
         public AlgorithmType AlgorithmType { get; }
@@ -24,6 +24,8 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public string OutputFilenamePattern { get; }
 
+        public string CommonAnalysisFilenameSuffix { get; }
+
 
         public ParametersPack(
             string analysisProgramName,
@@ -32,7 +34,8 @@ namespace AlgorithmAnalysis.DomainLogic
             int endValue,
             int launchesNumber,
             int step,
-            string outputFilenamePattern)
+            string outputFilenamePattern,
+            string commonAnalysisFilenameSuffix)
         {
             AnalysisProgramName = analysisProgramName.ThrowIfNullOrWhiteSpace(nameof(analysisProgramName));
             AlgorithmType = algorithmType.ThrowIfNull(nameof(algorithmType));
@@ -41,6 +44,29 @@ namespace AlgorithmAnalysis.DomainLogic
             LaunchesNumber = launchesNumber.ThrowIfValueIsOutOfRange(nameof(launchesNumber), 1, int.MaxValue);
             Step = step.ThrowIfValueIsOutOfRange(nameof(step), 1, int.MaxValue);
             OutputFilenamePattern = outputFilenamePattern.ThrowIfNullOrWhiteSpace(nameof(outputFilenamePattern));
+            CommonAnalysisFilenameSuffix = commonAnalysisFilenameSuffix.ThrowIfNullOrWhiteSpace(nameof(commonAnalysisFilenameSuffix));
+        }
+
+        public static ParametersPack Create(
+            AnalysisOptions analysisOptions,
+            AlgorithmType algorithmType,
+            int startValue,
+            int endValue,
+            int launchesNumber,
+            int step)
+        {
+            analysisOptions.ThrowIfNull(nameof(analysisOptions));
+
+            return new ParametersPack(
+                analysisProgramName: analysisOptions.AnalysisProgramName,
+                algorithmType: algorithmType,
+                startValue: startValue,
+                endValue: endValue,
+                launchesNumber: launchesNumber,
+                step: step,
+                outputFilenamePattern: analysisOptions.OutputFilenamePattern,
+                commonAnalysisFilenameSuffix: analysisOptions.CommonAnalysisFilenameSuffix
+            );
         }
 
         internal ParametersPack CreateWith(int newLaunchesNumber)
@@ -52,9 +78,29 @@ namespace AlgorithmAnalysis.DomainLogic
                 endValue: EndValue,
                 launchesNumber: newLaunchesNumber,
                 step: Step,
-                outputFilenamePattern: OutputFilenamePattern
+                outputFilenamePattern: OutputFilenamePattern,
+                commonAnalysisFilenameSuffix: CommonAnalysisFilenameSuffix
             );
         }
+
+        #region ILoggable Implementation
+
+        public string ToLogString()
+        {
+            var sb = new StringBuilder()
+                .AppendLine($"[{nameof(ParametersPack)}]")
+                .AppendLine($"AnalysisProgramName: '{AnalysisProgramName.ToString()}'")
+                .AppendLine($"AlgorithmType: {AlgorithmType.ToLogString()}")
+                .AppendLine($"StartValue: '{StartValue.ToString()}'")
+                .AppendLine($"EndValue: '{EndValue.ToString()}'")
+                .AppendLine($"LaunchesNumber: '{LaunchesNumber.ToString()}'")
+                .AppendLine($"Step: '{Step.ToString()}'")
+                .AppendLine($"OutputFilenamePattern: '{OutputFilenamePattern.ToString()}'");
+
+            return sb.ToString();
+        }
+
+        #endregion
 
         internal IReadOnlyList<string> GetOutputFilenames(int phaseNumber)
         {

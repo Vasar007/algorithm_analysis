@@ -23,9 +23,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public string Title { get; }
 
-        public IReadOnlyList<string> AvailableAnalysisKindForPhaseOnePartOne { get; }
+        public IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne { get; }
 
-        public IReadOnlyList<string> AvailableAnalysisKindForPhaseOnePartTwo { get; }
+        public IReadOnlyList<PhaseOnePartTwoAnalysisKind> AvailableAnalysisKindForPhaseOnePartTwo { get; }
 
         public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
 

@@ -22,6 +22,16 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             return ExcelWrapperFactory.CreateWorkbook();
         }
 
+        public static string CreateSheetName(int phaseNumber, int iterationNumber)
+        {
+            phaseNumber.ThrowIfValueIsOutOfRange(nameof(phaseNumber), 1, int.MaxValue);
+            iterationNumber.ThrowIfValueIsOutOfRange(nameof(iterationNumber), 1, int.MaxValue);
+
+            const string sheetNamePrefix = "Sheet";
+
+            return $"{sheetNamePrefix}{phaseNumber.ToString()}-{iterationNumber.ToString()}";
+        }
+
         public static FileObject PerformOneIterationOfPhaseOne(ParametersPack args,
             bool showAnalysisWindow, LocalFileWorker fileWorker)
         {

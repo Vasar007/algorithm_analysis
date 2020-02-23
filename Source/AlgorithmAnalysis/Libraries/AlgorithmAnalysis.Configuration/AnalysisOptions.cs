@@ -10,9 +10,11 @@ namespace AlgorithmAnalysis.Configuration
             new Dictionary<string, string>();
 
         // Contract: the analysis program is located in the same directory as our app.
-        public string DefaultAnalysisProgramName { get; } = "algorithm_analysis.exe";
+        public string AnalysisProgramName { get; set; } = "algorithm_analysis.exe";
 
-        public string DefaultOutputFilenamePattern { get; } = "tests_average_";
+        public string OutputFilenamePattern { get; set; } = "tests_average_";
+
+        public string CommonAnalysisFilenameSuffix { get; set; } = "series";
 
 
         public AnalysisOptions()

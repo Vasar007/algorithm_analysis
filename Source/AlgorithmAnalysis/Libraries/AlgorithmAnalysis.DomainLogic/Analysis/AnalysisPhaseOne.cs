@@ -28,7 +28,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             // Find appropriate launches number iteratively (part 1 of phase 1).
             AnalysisPhaseOneResult partOneResult = PerformPartOne(context);
 
-            // TODO: check H0 hypothesis on calculated launches number (part 2 of phase 1).
+            // Check H0 hypothesis on calculated launches number (part 2 of phase 1).
             bool isH0HypothesisProved = PerfromPartTwo(context, partOneResult);
 
             return isH0HypothesisProved
@@ -51,7 +51,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 var excelContext = ExcelContextForPhaseOne.CreateForPartOne(
                     args: context.Args.CreateWith(calculatedSampleSize),
                     showAnalysisWindow: context.ShowAnalysisWindow,
-                    sheetName: $"Sheet{PhaseNumber.ToString()}-{iterationNumber.ToString()}",
+                    sheetName: ExcelHelper.CreateSheetName(PhaseNumber, iterationNumber),
                     partOneFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartOne(context.PhaseOnePartOne, args)
                 );
                 calculatedSampleSize = PerformOneIterationOfPartOne(excelContext);
@@ -80,7 +80,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             var excelContext = ExcelContextForPhaseOne.CreateForPartTwo(
                 args: context.Args.CreateWith(partOneResult.CalculatedSampleSize),
                 showAnalysisWindow: context.ShowAnalysisWindow,
-                sheetName: $"Sheet{PhaseNumber.ToString()}-{partOneResult.TotalIterationNumber.ToString()}",
+                sheetName: ExcelHelper.CreateSheetName(PhaseNumber, partOneResult.TotalIterationNumber),
                 partTwoFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args)
             );
 

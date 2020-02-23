@@ -23,6 +23,9 @@ namespace AlgorithmAnalysis.DomainLogic
         {
             context.ThrowIfNull(nameof(context));
 
+            _logger.Info("Starting algorithm analysis.");
+            _logger.Info($"Parameters: {context.ToLogString()}");
+
             // TODO: remove when implement algorithm min/average/max formulas.
             if (context.Args.AlgorithmType.Value > 0)
             {
@@ -31,7 +34,12 @@ namespace AlgorithmAnalysis.DomainLogic
 
             try
             {
-                return PerformInternal(context);
+                AnalysisResult result = PerformInternal(context);
+                _logger.Info(
+                    "Analysis finished. " +
+                    $"Success: {result.Success.ToString()}, message: {result.Message}"
+                );
+                return result;
             }
             catch (Exception ex)
             {

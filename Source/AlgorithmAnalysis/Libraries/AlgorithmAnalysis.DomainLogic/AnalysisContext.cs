@@ -1,8 +1,10 @@
-﻿using Acolyte.Assertions;
+﻿using System.Text;
+using Acolyte.Assertions;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DomainLogic
 {
-    public sealed class AnalysisContext
+    public sealed class AnalysisContext : ILoggable
     {
         public ParametersPack Args { get; }
 
@@ -12,6 +14,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public bool ShowAnalysisWindow { get; }
 
+
         public AnalysisContext(
             ParametersPack args,
             bool showAnalysisWindow,
@@ -19,9 +22,25 @@ namespace AlgorithmAnalysis.DomainLogic
             PhaseOnePartTwoAnalysisKind phaseOnePartTwo)
         {
             Args = args.ThrowIfNull(nameof(args));
-            PhaseOnePartOne = phaseOnePartOne.ThrowIfEnumValueIsUndefined(nameof(phaseOnePartOne));
-            PhaseOnePartTwo = phaseOnePartTwo.ThrowIfEnumValueIsUndefined(nameof(phaseOnePartTwo));
+            PhaseOnePartOne = phaseOnePartOne.ThrowIfNull(nameof(phaseOnePartOne));
+            PhaseOnePartTwo = phaseOnePartTwo.ThrowIfNull(nameof(phaseOnePartTwo));
             ShowAnalysisWindow = showAnalysisWindow;
         }
+
+        #region ILoggable Implementation
+
+        public string ToLogString()
+        {
+            var sb = new StringBuilder()
+                .AppendLine($"[{nameof(AnalysisContext)}]")
+                .AppendLine($"Args: {Args.ToLogString()}")
+                .AppendLine($"PhaseOnePartOne: {PhaseOnePartOne.ToLogString()}")
+                .AppendLine($"PhaseOnePartTwo: {PhaseOnePartTwo.ToLogString()}")
+                .AppendLine($"ShowAnalysisWindow: '{ShowAnalysisWindow.ToString()}'");
+
+            return sb.ToString();
+        }
+
+        #endregion
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Acolyte.Assertions
 {
-    public static class AcolyteExtensions
+    public static class AcolyteAssertionsExtensions
     {
         public static T ThrowIfNull<T>(this T? value, string paramName)
              where T : struct

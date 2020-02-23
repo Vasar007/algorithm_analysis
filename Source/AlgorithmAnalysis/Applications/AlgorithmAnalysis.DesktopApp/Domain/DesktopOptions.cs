@@ -8,13 +8,13 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
     {
         public static string Title { get; } = "Algorithm analysis";
 
-        public static IReadOnlyList<string> AvailableAnalysisKindForPhaseOne { get; } =
+        public static IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOne { get; } =
             AnalysisHelper.GetAvailableAnalysisKindForPhaseOnePartOne();
 
-        public static IReadOnlyList<string> AvailableAnalysisKindForPhaseTwo { get; } =
+        public static IReadOnlyList<PhaseOnePartTwoAnalysisKind> AvailableAnalysisKindForPhaseTwo { get; } =
             AnalysisHelper.GetAvailableAnalysisKindForPhaseOnePartTwo();
 
-        public static IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; } =
+        public static IReadOnlyList<AlgorithmType> AvailableAlgorithms =>
             AnalysisHelper.GetAvailableAlgorithms();
     }
 }

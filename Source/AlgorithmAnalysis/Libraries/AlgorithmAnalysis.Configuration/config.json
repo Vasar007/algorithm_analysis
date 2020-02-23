@@ -4,8 +4,9 @@
       "0": "Pallottino's algorithm",
       "1": "Insertion sort"
     },
-    "DefaultAnalysisProgramName": "algorithm_analysis.exe",
-    "DefaultOutputFilenamePattern": "tests_average_"
+    "AnalysisProgramName": "algorithm_analysis.exe",
+    "OutputFilenamePattern": "tests_average_",
+    "CommonAnalysisFilenameSuffix": "series"
   },
 
   "ExcelOptions": {

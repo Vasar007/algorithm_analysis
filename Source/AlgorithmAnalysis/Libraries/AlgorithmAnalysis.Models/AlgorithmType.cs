@@ -1,26 +1,21 @@
 ﻿using System;
-using Acolyte.Assertions;
+using System.Text;
 
 namespace AlgorithmAnalysis.Models
 {
-    public sealed class AlgorithmType : IEquatable<AlgorithmType>
+    public sealed class AlgorithmType : DescriptiveBase, IEquatable<DescriptiveBase>,
+        IEquatable<AlgorithmType>, ILoggable
     {
-        public string Description { get; }
-
-        public int Value { get; }
-
-
         public AlgorithmType(string description, int value)
+            : base(description, value)
         {
-            Description = description.ThrowIfNullOrWhiteSpace(nameof(description));
-            Value = value.ThrowIfValueIsOutOfRange(nameof(value), 0, int.MaxValue);
         }
 
         #region Object Overridden Methods
 
         public override string ToString()
         {
-            return Description;
+            return base.ToString();
         }
 
         public override bool Equals(object? obj)
@@ -30,7 +25,7 @@ namespace AlgorithmAnalysis.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Description, Value);
+            return base.GetHashCode();
         }
 
         #endregion
@@ -43,8 +38,31 @@ namespace AlgorithmAnalysis.Models
 
             if (ReferenceEquals(this, other)) return true;
 
-            return StringComparer.InvariantCulture.Equals(Description, other.Description) &&
-                   Value.Equals(other.Value);
+            return base.IsEqual(other);
+        }
+
+        #endregion
+
+        public static bool operator ==(AlgorithmType? left, AlgorithmType? right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(AlgorithmType? left, AlgorithmType? right)
+        {
+            return !(left == right);
+        }
+
+        #region ILoggable Implementation
+
+        public override string ToLogString()
+        {
+            var sb = new StringBuilder()
+                .AppendLine($"[{nameof(AlgorithmType)}]")
+                .AppendLine($"Description: {Description.ToString()}")
+                .AppendLine($"Value: '{Value.ToString()}'");
+
+            return sb.ToString();
         }
 
         #endregion
