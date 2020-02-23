@@ -35,10 +35,11 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 17, ExcelStrings.CheckTestFucntion);
 
             string lastValueRowIndex = _args.LaunchesNumber.SkipHeader().ToString();
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 10, $"MIN($B$2:$B${lastValueRowIndex})");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 11, $"MAX($B$2:$B${lastValueRowIndex})");
+            string normalizedValueRange = $"$B$2:$B${lastValueRowIndex}";
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 10, $"MIN({normalizedValueRange})");
+            sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 11, $"MAX({normalizedValueRange})");
 
-            string scottFormula = $"(3.5 * STDEV($B$2:$B${lastValueRowIndex})) / (J6^(1/3))"; // STDEV == STDEV.S
+            string scottFormula = $"(3.5 * STDEV({normalizedValueRange})) / (J6^(1/3))"; // STDEV == STDEV.S
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 12, scottFormula);
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 13, "ROUNDUP(($J$11 - $J$10) / $J$12, 0)");
 
@@ -46,7 +47,11 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             int histogramSegmentsNumberInt = Convert.ToInt32(histogramSegmentsNumber.NumericValue);
             string histogramSegmentsNumberIndex = histogramSegmentsNumberInt.UseOneBasedIndexing().SkipHeader().ToString();
 
-            CreateIntervalData(sheet, histogramSegmentsNumberInt, histogramSegmentsNumberIndex);
+            CreateIntervalData(
+                sheet,
+                histogramSegmentsNumberInt, histogramSegmentsNumberIndex,
+                normalizedValueRange
+            );
 
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 14, $"SUM($H$2:$H${histogramSegmentsNumberIndex}) * $J$6");
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 15, "$J$13 - 1 - 2");
@@ -55,7 +60,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             string testFormula = $"CHITEST($F$2:$F${histogramSegmentsNumberIndex}, $G$2:$G${histogramSegmentsNumberIndex})"; // CHITEST == CHISQ.TEST
             sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 17, testFormula);
 
-            //sheet.EvaluateAll();
+            sheet.EvaluateAll();
 
             sheet.AutoSizeColumn(ExcelColumnIndex.D);
             sheet.AutoSizeColumn(ExcelColumnIndex.E);
@@ -77,11 +82,10 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
         #endregion
 
         private void CreateIntervalData(IExcelSheet sheet, int histogramSegmentsNumber,
-            string histogramSegmentsNumberIndex)
+            string histogramSegmentsNumberIndex, string normalizedValueRange)
         {
             histogramSegmentsNumber.ThrowIfValueIsOutOfRange(nameof(histogramSegmentsNumber), 1, int.MaxValue);
 
-            string lastValueRowIndex = _args.LaunchesNumber.SkipHeader().ToString();
             for (int i = 0; i <= histogramSegmentsNumber; ++i)
             {
                 int currentRow = i.UseOneBasedIndexing().SkipHeader();
@@ -91,27 +95,32 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
                 string pocketFormula = $"$J$10 + ($J$12 * {i.ToString()})";
                 sheet.SetCenterizedCellFormula(ExcelColumnIndex.D, currentRow, pocketFormula);
 
-                // TODO: use COUNTIFS instead of FREQUENCY function.
-                //string frequencyFormula = $"COUNTIFS($B$2:$B${lastValueRowIndex}, \" <= \" & $D{currentRowStr})";
-                //sheet.SetCenterizedCellFormula(ExcelColumnIndex.E, currentRow, frequencyFormula);
-
                 string empiricalFrequencyFormula = $"$E{currentRowStr} / $J$6";
                 sheet.SetCenterizedCellFormula(ExcelColumnIndex.F, currentRow, empiricalFrequencyFormula);
 
+                // TODO: implement proper excel formula provider.
                 if (i == 0)
                 {
+                    string frequencyFormula = $"COUNTIFS({normalizedValueRange}, \"<\" & $D{currentRowStr})";
+                    sheet.SetCenterizedCellFormula(ExcelColumnIndex.E, currentRow, frequencyFormula);
+
                     string theoreticalFrequencyFormula = $"BETADIST($D{currentRowStr}, $M$11, $M$12)"; // BETADIST == BETA.DIST
                     //string theoreticalFrequencyFormula = $"BETA.DIST($D{currentRowStr}, $M$11, $M$12, TRUE,)"; // BETADIST == BETA.DIST
                     sheet.SetCenterizedCellFormula(ExcelColumnIndex.G, currentRow, theoreticalFrequencyFormula);
                 }
                 else if (i == histogramSegmentsNumber)
                 {
+                    string frequencyFormula = $"COUNTIFS({normalizedValueRange}, \">=\" & $D{previousRowStr})";
+                    sheet.SetCenterizedCellFormula(ExcelColumnIndex.E, currentRow, frequencyFormula);
+
                     string theoreticalFrequencyFormula = $"1 - BETADIST($D{previousRowStr}, $M$11, $M$12)"; // BETADIST == BETA.DIST
                     //string theoreticalFrequencyFormula = $"1 - BETA.DIST($D{previousRowStr}, $M$11, $M$12, TRUE,)"; // BETADIST == BETA.DIST
                     sheet.SetCenterizedCellFormula(ExcelColumnIndex.G, currentRow, theoreticalFrequencyFormula);
                 }
                 else
                 {
+                    string frequencyFormula = $"COUNTIFS({normalizedValueRange}, \">=\" & $D{previousRowStr}, {normalizedValueRange}, \"<\" & $D{currentRowStr})";
+                    sheet.SetCenterizedCellFormula(ExcelColumnIndex.E, currentRow, frequencyFormula);
 
                     string theoreticalFrequencyFormula = $"BETADIST($D{currentRowStr}, $M$11, $M$12) - BETADIST($D{previousRowStr}, $M$11, $M$12)"; // BETADIST == BETA.DIST
                     //string theoreticalFrequencyFormula = $"BETA.DIST($D{currentRowStr}, $M$11, $M$12, TRUE,) - BETA.DIST($D{previousRowStr}, $M$11, $M$12, TRUE,)"; // BETADIST == BETA.DIST
@@ -123,8 +132,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
                 sheet.SetCenterizedCellFormula(ExcelColumnIndex.H, currentRow, chi2Formula);
             }
 
-            string arrayFormula = $"FREQUENCY($B$2:$B${lastValueRowIndex}, $D$2:$D${histogramSegmentsNumberIndex})";
-            sheet.SetArrayFormula(arrayFormula, ExcelColumnIndex.E, 2, ExcelColumnIndex.E, histogramSegmentsNumber.UseOneBasedIndexing().SkipHeader());
+            //string arrayFormula = $"FREQUENCY({normalizedValueRange}, $D$2:$D${histogramSegmentsNumberIndex})";
+            //sheet.SetArrayFormula(arrayFormula, ExcelColumnIndex.C, 2, ExcelColumnIndex.C, histogramSegmentsNumber.UseOneBasedIndexing().SkipHeader());
         }
     }
 }

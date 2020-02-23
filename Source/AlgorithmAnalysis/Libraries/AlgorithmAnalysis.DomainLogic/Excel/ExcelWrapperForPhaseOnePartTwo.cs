@@ -40,10 +40,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
             analysis.ApplyAnalysisToDataset(sheet);
 
-            bool isH0HypothesisProved = analysis.CheckH0Hypothesis(sheet);
             workbook.SaveToFile(_outputExcelFilename);
 
-            return isH0HypothesisProved;
+            return analysis.CheckH0Hypothesis(sheet);
         }
 
         private static void FillSheetHeader(IExcelSheet sheet, ParametersPack args)

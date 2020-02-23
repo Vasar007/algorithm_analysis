@@ -24,10 +24,9 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
             // Sanity check, will set excel VALUE error if min length is not met.
             ValidateArguments(arguments, ExpectedArgumentsNumber);
 
+            // Do the work.
             var actualRange = ArgToRangeInfo(arguments, 0).Select(cell => cell.Value).ToArray();
             var expectedRange = ArgToRangeInfo(arguments, 1).Select(cell => cell.Value).ToArray();
-
-            // Do the work.
             double result = ExcelApplication.Instance.WorksheetFunction.ChiSq_Test(
                 actualRange, expectedRange
             );

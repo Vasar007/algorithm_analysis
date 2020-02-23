@@ -99,7 +99,8 @@ namespace AlgorithmAnalysis.Excel.NPOI
             XSSFFormulaEvaluator.EvaluateAllFormulaCells(_sheet.Workbook);
         }
 
-        public override IExcelCellValueHolder EvaluateCell(ExcelColumnIndex columnIndex, int rowIndex)
+        public override IExcelCellValueHolder EvaluateCell(ExcelColumnIndex columnIndex,
+            int rowIndex)
         {
             IExcelCellHolder cellWithResult = GetOrCreateCenterizedCell(columnIndex, rowIndex);
             if (!(cellWithResult is NpoiExcelCellHolder cellHolder))

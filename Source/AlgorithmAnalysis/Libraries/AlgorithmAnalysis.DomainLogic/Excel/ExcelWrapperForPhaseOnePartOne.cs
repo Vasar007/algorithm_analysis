@@ -40,10 +40,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
             analysis.ApplyAnalysisToDataset(sheet);
 
-            int calculatedSampleSize = analysis.GetCalculatedSampleSize(sheet);
             workbook.SaveToFile(_outputExcelFilename);
 
-            return calculatedSampleSize;
+            return analysis.GetCalculatedSampleSize(sheet);
         }
 
         private static void FillSheetHeader(IExcelSheet sheet, ParametersPack args)

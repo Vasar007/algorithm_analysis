@@ -32,7 +32,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
             );
 
             // Return the result.
-            return CreateResult(result, DataType.LookupArray);
+            return CreateResult(result, DataType.Enumerable);
         }
 
         #endregion

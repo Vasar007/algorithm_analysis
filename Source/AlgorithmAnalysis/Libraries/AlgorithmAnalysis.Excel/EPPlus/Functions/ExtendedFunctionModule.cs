@@ -6,6 +6,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
     {
         public ExtendedFunctionModule()
         {
+            // TODO: implement proper excel formula provider.
             // CHIINV == CHISQ.INV.RT
             Functions.Add("CHISQ.INV.RT", new ChisqInvRtExcelFunction());
             Functions.Add("CHIINV", new ChisqInvRtExcelFunction());
