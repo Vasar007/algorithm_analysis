@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AlgorithmAnalysis.Excel.Interop;
 using OfficeOpenXml.FormulaParsing;
@@ -31,10 +32,31 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
                 dataArray, binsArray
             );
 
+            double[] convertedResult = ConvertResult(result);
+
             // Return the result.
-            return CreateResult(result, DataType.Enumerable);
+            return CreateResult(convertedResult, DataType.Enumerable);
         }
 
         #endregion
+
+        private double[] ConvertResult(object result)
+        {
+            // Excel returns two-dimensional array. However, it is a set of double arrays
+            // where every array has exactly one double value.
+
+            if (!(result is object[,] converted)) return Array.Empty<double>();
+
+            var numbers = new List<double>(converted.Length);
+            foreach (object item in converted)
+            {
+                if (item is double number)
+                {
+                    numbers.Add(number);
+                }
+            }
+
+            return numbers.ToArray();
+        }
     }
 }
