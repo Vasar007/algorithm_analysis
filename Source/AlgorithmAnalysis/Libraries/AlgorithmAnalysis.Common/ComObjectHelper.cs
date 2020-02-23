@@ -19,10 +19,6 @@ namespace AlgorithmAnalysis.Common
                 Debug.WriteLine(message);
                 Trace.WriteLine(message);
             }
-            finally
-            {
-                GC.Collect();
-            }
         }
     }
 }

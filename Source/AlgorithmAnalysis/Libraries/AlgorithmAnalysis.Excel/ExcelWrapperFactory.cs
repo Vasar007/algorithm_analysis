@@ -2,6 +2,7 @@
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Excel.EPPlus;
+using AlgorithmAnalysis.Excel.Formulas;
 using AlgorithmAnalysis.Excel.NPOI;
 using AlgorithmAnalysis.Models;
 
@@ -9,6 +10,8 @@ namespace AlgorithmAnalysis.Excel
 {
     public static class ExcelWrapperFactory
     {
+        #region Workbook
+
         public static IExcelWorkbook CreateWorkbook(string outputExcelFilename,
             ExcelOptions excelOptions)
         {
@@ -16,9 +19,6 @@ namespace AlgorithmAnalysis.Excel
 
             return excelOptions.LibraryProvider switch
             {
-                ExcelLibraryProvider.Default =>
-                    CreateDefaultWorkbook(outputExcelFilename, excelOptions),
-
                 ExcelLibraryProvider.NPOI =>
                     new NpoiExcelWorkbook(outputExcelFilename, excelOptions),
 
@@ -38,8 +38,6 @@ namespace AlgorithmAnalysis.Excel
 
             return excelOptions.LibraryProvider switch
             {
-                ExcelLibraryProvider.Default => CreateDefaultWorkbook(excelOptions),
-
                 ExcelLibraryProvider.NPOI => new NpoiExcelWorkbook(excelOptions),
 
                 ExcelLibraryProvider.EPPlus => new EpplusExcelWorkbook(excelOptions),
@@ -61,15 +59,32 @@ namespace AlgorithmAnalysis.Excel
             return CreateWorkbook(ConfigOptions.Excel);
         }
 
-        public static IExcelWorkbook CreateDefaultWorkbook(string outputExcelFilename,
-            ExcelOptions excelOptions)
+        #endregion
+
+        #region Formula provider
+
+        public static IExcelFormulaProvider CreateFormulaProvider(ExcelOptions excelOptions)
         {
-            return new NpoiExcelWorkbook(outputExcelFilename, excelOptions);
+            excelOptions.ThrowIfNull(nameof(excelOptions));
+
+            return excelOptions.Version switch
+            {
+                ExcelVersion.V2007 => new ExcelFormulaProvider(excelOptions.Version),
+
+                ExcelVersion.V2019 => new ExcelFormulaProvider(excelOptions.Version),
+
+                _ => throw new ArgumentOutOfRangeException(
+                         nameof(excelOptions), excelOptions.Version,
+                         $"Unknown Excel version: '{excelOptions.Version.ToString()}'."
+                     )
+            };
         }
 
-        public static IExcelWorkbook CreateDefaultWorkbook(ExcelOptions excelOptions)
+        public static IExcelFormulaProvider CreateFormulaProvider()
         {
-            return new NpoiExcelWorkbook(excelOptions);
+            return CreateFormulaProvider(ConfigOptions.Excel);
         }
+
+        #endregion
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Configuration;
+using AlgorithmAnalysis.Excel.Formulas;
 
 namespace AlgorithmAnalysis.Excel
 {
@@ -8,13 +9,16 @@ namespace AlgorithmAnalysis.Excel
     {
         protected readonly ExcelOptions _excelOptions;
 
+        public IExcelFormulaProvider FormulaProvider { get; }
+
         public IExcelCellHolder this[ExcelColumnIndex columnIndex, int rowIndex] =>
             ExcelWrapperHelper.GetCellHolder(this, columnIndex, rowIndex, _excelOptions);
 
 
-        internal BaseExcelSheet(ExcelOptions excelOptions)
+        protected BaseExcelSheet(ExcelOptions excelOptions, IExcelFormulaProvider provider)
         {
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
+            FormulaProvider = provider.ThrowIfNull(nameof(provider));
         }
 
         public abstract IExcelCellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex,

@@ -30,40 +30,40 @@ namespace AlgorithmAnalysis.Excel
         #endregion
 
 
-        public BaseExcelCellValueHolder()
+        protected BaseExcelCellValueHolder()
         {
             ActiveType = ActiveExcelCellType.Unknown;
         }
 
-        public BaseExcelCellValueHolder(double value)
+        protected BaseExcelCellValueHolder(double value)
             : this()
         {
             _numericValue = value;
             ActiveType = ActiveExcelCellType.Numeric;
         }
 
-        public BaseExcelCellValueHolder(bool value)
+        protected BaseExcelCellValueHolder(bool value)
             : this()
         {
             _booleanValue = value;
             ActiveType = ActiveExcelCellType.Boolean;
         }
 
-        public BaseExcelCellValueHolder(DateTime value)
+        protected BaseExcelCellValueHolder(DateTime value)
             : this()
         {
             _dateTimeValue = value;
             ActiveType = ActiveExcelCellType.DateTime;
         }
 
-        public BaseExcelCellValueHolder(byte error)
+        protected BaseExcelCellValueHolder(byte error)
             : this()
         {
             _errorValue = error;
             ActiveType = ActiveExcelCellType.Error;
         }
 
-        public BaseExcelCellValueHolder(string stringValue, bool isFormula)
+        protected BaseExcelCellValueHolder(string stringValue, bool isFormula)
             : this()
         {
             stringValue.ThrowIfNull(nameof(stringValue));

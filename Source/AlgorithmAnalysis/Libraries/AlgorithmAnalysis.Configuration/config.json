@@ -12,6 +12,7 @@
   "ExcelOptions": {
     "CellCreationMode": "Centerized",
     "LibraryProvider": "EPPlus",
+    "Version": "V2019",
     "OutputExcelFilename": "results.xlsx"
   },
 

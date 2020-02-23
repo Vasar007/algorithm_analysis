@@ -3,6 +3,7 @@ using Acolyte.Assertions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using AlgorithmAnalysis.Configuration;
+using AlgorithmAnalysis.Excel.Formulas;
 
 namespace AlgorithmAnalysis.Excel.NPOI
 {
@@ -13,23 +14,29 @@ namespace AlgorithmAnalysis.Excel.NPOI
 
         private readonly IWorkbook _workbook;
 
+        private readonly IExcelFormulaProvider _formulaProvider;
+        
         private readonly ExcelOptions _excelOptions;
 
 
         public NpoiExcelWorkbook(ExcelOptions excelOptions)
         {
-            _workbook = new XSSFWorkbook();
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
+            _workbook = new XSSFWorkbook();
+            _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
         }
 
         public NpoiExcelWorkbook(string pathToWorkbook, ExcelOptions excelOptions)
         {
             pathToWorkbook.ThrowIfNullOrWhiteSpace(nameof(pathToWorkbook));
 
-            using var file = new FileStream(pathToWorkbook, FileMode.Open, FileAccess.Read);
-            _workbook = new XSSFWorkbook(file);
-
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
+
+            using (var file = new FileStream(pathToWorkbook, FileMode.Open, FileAccess.Read))
+            {
+                _workbook = new XSSFWorkbook(file);
+            }
+            _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
         }
 
         #region IDisposable Implementation
@@ -53,7 +60,7 @@ namespace AlgorithmAnalysis.Excel.NPOI
                 sheet = _workbook.CreateSheet(sheetName);
             }
 
-            return new NpoiExcelSheet(sheet, _excelOptions);
+            return new NpoiExcelSheet(sheet, _excelOptions, _formulaProvider);
         }
 
         public void SaveToFile(string filename)

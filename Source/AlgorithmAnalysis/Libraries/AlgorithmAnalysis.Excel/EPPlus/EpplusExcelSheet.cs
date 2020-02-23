@@ -1,7 +1,8 @@
 ﻿using Acolyte.Assertions;
+using OfficeOpenXml;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Common;
-using OfficeOpenXml;
+using AlgorithmAnalysis.Excel.Formulas;
 
 namespace AlgorithmAnalysis.Excel.EPPlus
 {
@@ -12,8 +13,9 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 
         internal EpplusExcelSheet(
             ExcelWorksheet sheet,
-            ExcelOptions excelOptions)
-            : base(excelOptions)
+            ExcelOptions excelOptions,
+            IExcelFormulaProvider formulaProvider)
+            : base(excelOptions, formulaProvider)
         {
             _sheet = sheet.ThrowIfNull(nameof(sheet));
         }

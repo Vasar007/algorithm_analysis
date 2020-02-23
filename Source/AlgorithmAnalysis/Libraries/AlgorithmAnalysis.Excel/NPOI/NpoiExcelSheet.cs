@@ -1,10 +1,11 @@
 ﻿using System;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.Configuration;
-using AlgorithmAnalysis.Common;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
+using AlgorithmAnalysis.Configuration;
+using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Excel.Formulas;
 
 namespace AlgorithmAnalysis.Excel.NPOI
 {
@@ -25,8 +26,9 @@ namespace AlgorithmAnalysis.Excel.NPOI
 
         internal NpoiExcelSheet(
             ISheet sheet,
-            ExcelOptions excelOptions)
-            : base(excelOptions)
+            ExcelOptions excelOptions,
+            IExcelFormulaProvider formulaProvider)
+            : base(excelOptions, formulaProvider)
         {
             _sheet = sheet.ThrowIfNull(nameof(sheet));
         }

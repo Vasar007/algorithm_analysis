@@ -1,9 +1,10 @@
 ﻿using System.IO;
 using Acolyte.Assertions;
+using OfficeOpenXml;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Excel.EPPlus.Functions;
 using AlgorithmAnalysis.Excel.Interop;
-using OfficeOpenXml;
+using AlgorithmAnalysis.Excel.Formulas;
 
 namespace AlgorithmAnalysis.Excel.EPPlus
 {
@@ -13,17 +14,21 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 
         private readonly ExcelPackage _package;
 
+        private readonly IExcelFormulaProvider _formulaProvider;
+
         private readonly ExcelOptions _excelOptions;
 
         private bool _disposed;
+
 
 
         public EpplusExcelWorkbook(ExcelOptions excelOptions)
         {
             InitPackageLicence();
 
-            _package = new ExcelPackage();
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
+            _package = new ExcelPackage();
+            _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
 
             AttachLogger();
             RegisterFunctionModules();
@@ -35,8 +40,9 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 
             InitPackageLicence();
 
-            _package = new ExcelPackage(new FileInfo(pathToWorkbook));
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
+            _package = new ExcelPackage(new FileInfo(pathToWorkbook));
+            _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
 
             AttachLogger();
             RegisterFunctionModules();
@@ -70,7 +76,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
                 sheet = _package.Workbook.Worksheets.Add(sheetName);
             }
 
-            return new EpplusExcelSheet(sheet, _excelOptions);
+            return new EpplusExcelSheet(sheet, _excelOptions, _formulaProvider);
         }
 
         public void SaveToFile(string filename)

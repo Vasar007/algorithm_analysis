@@ -1,9 +1,12 @@
 ﻿using System;
+using AlgorithmAnalysis.Excel.Formulas;
 
 namespace AlgorithmAnalysis.Excel
 {
     public interface IExcelSheet
     {
+        IExcelFormulaProvider FormulaProvider { get; }
+
         IExcelCellHolder this[ExcelColumnIndex columnIndex, int rowIndex] { get; }
 
 
