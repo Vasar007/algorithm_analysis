@@ -25,41 +25,41 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             int currentRow)
         {
             string formula = $"($A{currentRow.ToString()} - $M$6) / ($M$7 - $M$6)";
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.B, currentRow, formula);
+            sheet[ExcelColumnIndex.B, currentRow].SetFormula(formula);
         }
 
         public void ApplyAnalysisToDataset(IExcelSheet sheet)
         {
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.B, 1, ExcelStrings.NormalizedColumnName);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 1, ExcelStrings.NormalDistributionSolutionColumnName);
+            sheet[ExcelColumnIndex.B, 1].SetValue(ExcelStrings.NormalizedColumnName);
+            sheet[ExcelColumnIndex.L, 1].SetValue(ExcelStrings.NormalDistributionSolutionColumnName);
             sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.M, 1);
 
             sheet.AddMergedRegion(ExcelColumnIndex.L, 1, ExcelColumnIndex.M, 1);
 
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 2, ExcelStrings.SampleMean);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 3, ExcelStrings.SampleVariance);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 4, ExcelStrings.SampleDeviation);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 5, ExcelStrings.VariationCoefficient);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 6, ExcelStrings.TheoreticalMin);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 7, ExcelStrings.TheoreticalMax);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 8, ExcelStrings.Span);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 9, ExcelStrings.NormalizedMean);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 10, ExcelStrings.NormalizedVarience);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 11, ExcelStrings.Alpha);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.L, 12, ExcelStrings.Beta);
+            sheet[ExcelColumnIndex.L, 2].SetValue(ExcelStrings.SampleMean);
+            sheet[ExcelColumnIndex.L, 3].SetValue(ExcelStrings.SampleVariance);
+            sheet[ExcelColumnIndex.L, 4].SetValue(ExcelStrings.SampleDeviation);
+            sheet[ExcelColumnIndex.L, 5].SetValue(ExcelStrings.VariationCoefficient);
+            sheet[ExcelColumnIndex.L, 6].SetValue(ExcelStrings.TheoreticalMin);
+            sheet[ExcelColumnIndex.L, 7].SetValue(ExcelStrings.TheoreticalMax);
+            sheet[ExcelColumnIndex.L, 8].SetValue(ExcelStrings.Span);
+            sheet[ExcelColumnIndex.L, 9].SetValue(ExcelStrings.NormalizedMean);
+            sheet[ExcelColumnIndex.L, 10].SetValue(ExcelStrings.NormalizedVarience);
+            sheet[ExcelColumnIndex.L, 11].SetValue(ExcelStrings.Alpha);
+            sheet[ExcelColumnIndex.L, 12].SetValue(ExcelStrings.Beta);
 
             string lastValueRowIndex = _args.LaunchesNumber.SkipHeader().ToString();
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 2, $"AVERAGE($A$2:$A${lastValueRowIndex})");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 3, $"VAR($A$2:$A${lastValueRowIndex})"); // VAR == VAR.S
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 4, $"STDEV($A$2:$A${lastValueRowIndex})"); // STDEV == STDEV.S
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 5, "$M$4 / $M$2");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 6, "$J$3");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 7, "$J$5");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 8, "$M$7 - $M$6");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 9, $"AVERAGE($B$2:$B${lastValueRowIndex})");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 10, $"VAR($B$2:$B${lastValueRowIndex})"); // VAR == VAR.S
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 11, "$M$9 * (($M$9 * (1 - $M$9) / $M$10) - 1)");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.M, 12, "(1 - $M$9) * (($M$9 * (1 - $M$9) / $M$10) - 1)");
+            sheet[ExcelColumnIndex.M, 2].SetFormula(sheet.FormulaProvider.Average($"$A$2:$A${lastValueRowIndex}"));
+            sheet[ExcelColumnIndex.M, 3].SetFormula(sheet.FormulaProvider.Var($"$A$2:$A${lastValueRowIndex}"));
+            sheet[ExcelColumnIndex.M, 4].SetFormula(sheet.FormulaProvider.StdDev($"$A$2:$A${lastValueRowIndex}"));
+            sheet[ExcelColumnIndex.M, 5].SetFormula("$M$4 / $M$2");
+            sheet[ExcelColumnIndex.M, 6].SetFormula("$J$3");
+            sheet[ExcelColumnIndex.M, 7].SetFormula("$J$5");
+            sheet[ExcelColumnIndex.M, 8].SetFormula("$M$7 - $M$6");
+            sheet[ExcelColumnIndex.M, 9].SetFormula(sheet.FormulaProvider.Average($"$B$2:$B${lastValueRowIndex}"));
+            sheet[ExcelColumnIndex.M, 10].SetFormula(sheet.FormulaProvider.Var($"$B$2:$B${lastValueRowIndex}"));
+            sheet[ExcelColumnIndex.M, 11].SetFormula("$M$9 * (($M$9 * (1 - $M$9) / $M$10) - 1)");
+            sheet[ExcelColumnIndex.M, 12].SetFormula("(1 - $M$9) * (($M$9 * (1 - $M$9) / $M$10) - 1)");
 
             sheet.AutoSizeColumn(ExcelColumnIndex.B);
             sheet.AutoSizeColumn(ExcelColumnIndex.L);

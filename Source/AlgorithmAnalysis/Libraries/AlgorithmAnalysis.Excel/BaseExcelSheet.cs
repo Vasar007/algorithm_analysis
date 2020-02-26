@@ -90,6 +90,13 @@ namespace AlgorithmAnalysis.Excel
             GetOrCreateCenterizedCell(columnIndex, rowIndex).SetFormula(formula);
         }
 
+        public abstract void EvaluateAll();
+
+        public IExcelCellValueHolder EvaluateCell(ExcelColumnIndex columnIndex, int rowIndex)
+        {
+            return this[columnIndex, rowIndex].Evaluate();
+        }
+
         public abstract void AddMergedRegion(
             ExcelColumnIndex firstColumnIndex,
             int firstRowIndex,
@@ -99,10 +106,6 @@ namespace AlgorithmAnalysis.Excel
         public abstract void AutoSizeColumn(ExcelColumnIndex columnIndex);
 
         public abstract void AutoSizeColumn(ExcelColumnIndex columnIndex, bool useMergedCells);
-
-        public abstract void EvaluateAll();
-
-        public abstract IExcelCellValueHolder EvaluateCell(ExcelColumnIndex columnIndex, int rowIndex);
 
         public abstract void SetArrayFormula(
             string arrayFormula,

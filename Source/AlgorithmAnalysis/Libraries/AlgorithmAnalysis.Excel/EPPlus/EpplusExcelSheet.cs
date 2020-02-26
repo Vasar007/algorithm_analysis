@@ -68,16 +68,6 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             _sheet.Calculate();
         }
 
-        public override IExcelCellValueHolder EvaluateCell(ExcelColumnIndex columnIndex,
-            int rowIndex)
-        {
-            string cellAddress = ExcelWrapperHelper.GetCellAddressFrom(columnIndex, rowIndex);
-            ExcelRange excelRange = _sheet.Cells[cellAddress];
-
-            excelRange.Calculate();
-            return EpplusExcelCellValueHolder.CreateFrom(excelRange);
-        }
-
         public override void SetArrayFormula(
             string arrayFormula,
             ExcelColumnIndex firstColumnIndex,

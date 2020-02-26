@@ -123,6 +123,12 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             ActiveType = ActiveExcelCellType.Formula;
         }
 
+        public IExcelCellValueHolder Evaluate()
+        {
+            _cell.Calculate();
+            return EpplusExcelCellValueHolder.CreateFrom(_cell);
+        }
+
         private void ResetActiveType()
         {
             ActiveType = ActiveExcelCellType.Unknown;

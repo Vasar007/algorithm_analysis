@@ -1,4 +1,5 @@
-﻿using Acolyte.Assertions;
+﻿using System;
+using Acolyte.Assertions;
 using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.Excel.Formulas
@@ -39,7 +40,19 @@ namespace AlgorithmAnalysis.Excel.Formulas
 
             // Original formula has 6 parameters but we do not use optional parameters.
             string formulaName = _mapper.GetFormulaName(_excelVersion);
-            return $"{formulaName}({x}, {alpha}, {beta}, {cumulativeStr},)";
+
+            string lastPart = _excelVersion switch
+            {
+                ExcelVersion.V2007 => string.Empty,
+
+                ExcelVersion.V2019 => $", {cumulativeStr},",
+
+                _ => throw new ArgumentOutOfRangeException(
+                         nameof(_excelVersion), _excelVersion,
+                         $"Unknown Excel version: '{_excelVersion.ToString()}'."
+                     )
+            };
+            return $"{formulaName}({x}, {alpha}, {beta}{lastPart})";
         }
 
         public string ChiInv(string probability, string degreeFreedom)

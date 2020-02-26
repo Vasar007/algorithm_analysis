@@ -30,5 +30,7 @@ namespace AlgorithmAnalysis.Excel
         void SetErrorValue(byte value);
 
         void SetFormula(string formula);
+
+        IExcelCellValueHolder Evaluate();
     }
 }

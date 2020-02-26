@@ -22,6 +22,26 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
         public override CompileResult Execute(IEnumerable<FunctionArgument> arguments,
             ParsingContext context)
         {
+            try
+            {
+                return ExecuteInternal(arguments, context);
+            }
+            catch (Exception ex)
+            {
+                if (context.Debug)
+                {
+                    context.Configuration.Logger.Log(context, ex);
+                }
+
+                throw;
+            }
+        }
+
+        #endregion
+
+        private CompileResult ExecuteInternal(IEnumerable<FunctionArgument> arguments,
+            ParsingContext context)
+        {
             // Sanity check, will set excel VALUE error if min length is not met.
             ValidateArguments(arguments, ExpectedArgumentsNumber);
 
@@ -35,12 +55,10 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
             double[] convertedResult = ConvertResult(result);
 
             // Return the result.
-            return CreateResult(convertedResult, DataType.Enumerable);
+            return CreateResult(convertedResult[0], DataType.Decimal);
         }
 
-        #endregion
-
-        private double[] ConvertResult(object result)
+        private static double[] ConvertResult(object result)
         {
             // Excel returns two-dimensional array. However, it is a set of double arrays
             // where every array has exactly one double value.

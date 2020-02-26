@@ -1,5 +1,4 @@
-﻿using System;
-using Acolyte.Assertions;
+﻿using Acolyte.Assertions;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
@@ -41,12 +40,7 @@ namespace AlgorithmAnalysis.Excel.NPOI
 
             // Because of using one-based indexing.
             int fixedRowIndex = rowIndex - 1;
-            IRow row = GetOrCreateRow(fixedRowIndex);
-
-            if (centrized)
-            {
-                row.Center();
-            }
+            IRow row = GetOrCreateRow(fixedRowIndex, centrized);
 
             int columIndexInt = columnIndex.AsInt32();
             ICell cell = row.GetCell(columIndexInt);
@@ -101,23 +95,6 @@ namespace AlgorithmAnalysis.Excel.NPOI
             XSSFFormulaEvaluator.EvaluateAllFormulaCells(_sheet.Workbook);
         }
 
-        public override IExcelCellValueHolder EvaluateCell(ExcelColumnIndex columnIndex,
-            int rowIndex)
-        {
-            IExcelCellHolder cellWithResult = GetOrCreateCenterizedCell(columnIndex, rowIndex);
-            if (!(cellWithResult is NpoiExcelCellHolder cellHolder))
-            {
-                throw new InvalidOperationException(
-                    "Failed to evaluate cell: sheet class uses inappropriate cell type."
-                );
-            }
-
-            IWorkbook workbook = cellHolder.Sheet.Workbook;
-
-            IFormulaEvaluator evaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
-            return NpoiExcelCellValueHolder.CreateFrom(evaluator.Evaluate(cellHolder.Cell));
-        }
-
         public override void SetArrayFormula(
             string arrayFormula,
             ExcelColumnIndex firstColumnIndex,
@@ -140,14 +117,18 @@ namespace AlgorithmAnalysis.Excel.NPOI
             _sheet.SetArrayFormula(arrayFormula, cra);
         }
 
-        private IRow GetOrCreateRow(int rowIndex)
+        private IRow GetOrCreateRow(int rowIndex, bool centrized)
         {
             rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 0, int.MaxValue);
 
             IRow row = _sheet.GetRow(rowIndex);
 
-            return row is null
+            row = row is null
                 ? _sheet.CreateRow(rowIndex)
+                : row;
+
+            return centrized
+                ? row.Center()
                 : row;
         }
     }

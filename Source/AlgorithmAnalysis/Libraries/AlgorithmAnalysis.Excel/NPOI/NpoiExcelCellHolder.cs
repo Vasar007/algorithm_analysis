@@ -76,11 +76,6 @@ namespace AlgorithmAnalysis.Excel.NPOI
             }
         }
 
-        internal ISheet Sheet => _cell.Sheet;
-
-        // This property is used only to evaluate cell value.
-        internal ICell Cell => _cell;
-
 
         public NpoiExcelCellHolder(ICell cell)
         {
@@ -126,6 +121,14 @@ namespace AlgorithmAnalysis.Excel.NPOI
 
             _cell.SetCellFormula(formula);
             ActiveType = ActiveExcelCellType.Formula;
+        }
+
+        public IExcelCellValueHolder Evaluate()
+        {
+            IWorkbook workbook = _cell.Sheet.Workbook;
+
+            IFormulaEvaluator evaluator = WorkbookFactory.CreateFormulaEvaluator(workbook);
+            return NpoiExcelCellValueHolder.CreateFrom(evaluator.Evaluate(_cell));
         }
 
         private void ResetActiveType()

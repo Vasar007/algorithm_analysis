@@ -25,25 +25,25 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
 
         public void ApplyAnalysisToDataset(IExcelSheet sheet)
         {
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 1, ExcelStrings.NormalDistributionSolutionColumnName);
+            sheet[ExcelColumnIndex.J, 1].SetValue(ExcelStrings.NormalDistributionSolutionColumnName);
             sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.K, 1);
 
             sheet.AddMergedRegion(ExcelColumnIndex.J, 1, ExcelColumnIndex.K, 1);
 
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 2, ExcelStrings.PreliminarySampleSize);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 3, ExcelStrings.SampleMean);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 4, ExcelStrings.SampleVariance);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 5, ExcelStrings.SampleDeviation);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 6, ExcelStrings.VariationCoefficient);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 7, ExcelStrings.CalculatedSampleSize);
+            sheet[ExcelColumnIndex.J, 2].SetValue(ExcelStrings.PreliminarySampleSize);
+            sheet[ExcelColumnIndex.J, 3].SetValue(ExcelStrings.SampleMean);
+            sheet[ExcelColumnIndex.J, 4].SetValue(ExcelStrings.SampleVariance);
+            sheet[ExcelColumnIndex.J, 5].SetValue(ExcelStrings.SampleDeviation);
+            sheet[ExcelColumnIndex.J, 6].SetValue(ExcelStrings.VariationCoefficient);
+            sheet[ExcelColumnIndex.J, 7].SetValue(ExcelStrings.CalculatedSampleSize);
 
             string lastValueRowIndex = _args.LaunchesNumber.SkipHeader().ToString();
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 2, "$F$6");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 3, $"AVERAGE($A$2:$A${lastValueRowIndex})");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 4, $"VAR($A$2:$A${lastValueRowIndex})"); // VAR == VAR.S
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 5, $"STDEV($A$2:$A${lastValueRowIndex})"); // STDEV == STDEV.S
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 6, "$K$5 / $K$3");
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.K, 7, "ROUNDUP(3.8416 * $K$6^2 / $F$9^2, 0)");
+            sheet[ExcelColumnIndex.K, 2].SetFormula("$F$6");
+            sheet[ExcelColumnIndex.K, 3].SetFormula(sheet.FormulaProvider.Average($"$A$2:$A${lastValueRowIndex}"));
+            sheet[ExcelColumnIndex.K, 4].SetFormula(sheet.FormulaProvider.Var($"$A$2:$A${lastValueRowIndex}"));
+            sheet[ExcelColumnIndex.K, 5].SetFormula(sheet.FormulaProvider.StdDev($"$A$2:$A${lastValueRowIndex}"));
+            sheet[ExcelColumnIndex.K, 6].SetFormula("$K$5 / $K$3");
+            sheet[ExcelColumnIndex.K, 7].SetFormula(sheet.FormulaProvider.RoundUp("3.8416 * $K$6^2 / $F$9^2", "0"));
 
             sheet.AutoSizeColumn(ExcelColumnIndex.J);
             sheet.AutoSizeColumn(ExcelColumnIndex.K, useMergedCells: true);

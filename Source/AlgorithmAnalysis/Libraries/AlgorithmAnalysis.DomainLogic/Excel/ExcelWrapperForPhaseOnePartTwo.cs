@@ -34,7 +34,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             {
                 int currentRow = rowCounter++;
 
-                sheet.SetCenterizedCellValue(ExcelColumnIndex.A, currentRow, item);
+                sheet[ExcelColumnIndex.A, currentRow].SetValue(item);
                 analysis.ApplyAnalysisToSingleLaunch(sheet, item, currentRow);
             }
 
@@ -47,39 +47,39 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         private static void FillSheetHeader(IExcelSheet sheet, ParametersPack args)
         {
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.A, 1, ExcelStrings.OperationColumnName);
+            sheet[ExcelColumnIndex.A, 1].SetValue(ExcelStrings.OperationColumnName);
 
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 1, ExcelStrings.AdditionalParametersColumnName);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 2, ExcelStrings.InputDataSize);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 3, ExcelStrings.MinFunc);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 4, ExcelStrings.AverageFunc);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 5, ExcelStrings.MaxFunc);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 6, ExcelStrings.ExperimentsNumber);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 7, ExcelStrings.ConfidenceFactor);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 8, ExcelStrings.SignificanceLevel);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 9, ExcelStrings.Epsilon);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 10, ExcelStrings.MinimumValue);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.I, 11, ExcelStrings.MaximumValue);
+            sheet[ExcelColumnIndex.I, 1].SetValue(ExcelStrings.AdditionalParametersColumnName);
+            sheet[ExcelColumnIndex.I, 2].SetValue(ExcelStrings.InputDataSize);
+            sheet[ExcelColumnIndex.I, 3].SetValue(ExcelStrings.MinFunc);
+            sheet[ExcelColumnIndex.I, 4].SetValue(ExcelStrings.AverageFunc);
+            sheet[ExcelColumnIndex.I, 5].SetValue(ExcelStrings.MaxFunc);
+            sheet[ExcelColumnIndex.I, 6].SetValue(ExcelStrings.ExperimentsNumber);
+            sheet[ExcelColumnIndex.I, 7].SetValue(ExcelStrings.ConfidenceFactor);
+            sheet[ExcelColumnIndex.I, 8].SetValue(ExcelStrings.SignificanceLevel);
+            sheet[ExcelColumnIndex.I, 9].SetValue(ExcelStrings.Epsilon);
+            sheet[ExcelColumnIndex.I, 10].SetValue(ExcelStrings.MinimumValue);
+            sheet[ExcelColumnIndex.I, 11].SetValue(ExcelStrings.MaximumValue);
 
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 1, ExcelStrings.AdditionalParametersValuesColumnName);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 2, args.StartValue);
+            sheet[ExcelColumnIndex.J, 1].SetValue(ExcelStrings.AdditionalParametersValuesColumnName);
+            sheet[ExcelColumnIndex.J, 2].SetValue(args.StartValue);
             string minFormula = AnalysisHelper.GetMinFormula(ExcelColumnIndex.J, 2);
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 3, minFormula);
+            sheet[ExcelColumnIndex.J, 3].SetFormula(minFormula);
 
             string averageFormula = AnalysisHelper.GetAverageFormula(ExcelColumnIndex.J, 2);
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 4, averageFormula);
+            sheet[ExcelColumnIndex.J, 4].SetFormula(averageFormula);
 
             string maxFormula = AnalysisHelper.GetMaxFormula(ExcelColumnIndex.J, 2);
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 5, maxFormula);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 6, args.LaunchesNumber);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 7, double.Parse(ExcelStrings.ConfidenceFactorValue));
+            sheet[ExcelColumnIndex.J, 5].SetFormula(maxFormula);
+            sheet[ExcelColumnIndex.J, 6].SetValue(args.LaunchesNumber);
+            sheet[ExcelColumnIndex.J, 7].SetValue(double.Parse(ExcelStrings.ConfidenceFactorValue));
 
             string formulaJ8 = string.Format(
                  ExcelStrings.SignificanceLevelFormula,
                  ExcelColumnIndex.J.ToString(), "7"
              );
-            sheet.SetCenterizedCellFormula(ExcelColumnIndex.J, 8, formulaJ8);
-            sheet.SetCenterizedCellValue(ExcelColumnIndex.J, 9, double.Parse(ExcelStrings.EpsilonValue));
+            sheet[ExcelColumnIndex.J, 8].SetFormula(formulaJ8);
+            sheet[ExcelColumnIndex.J, 9].SetValue(double.Parse(ExcelStrings.EpsilonValue));
 
             sheet.AutoSizeColumn(ExcelColumnIndex.A);
             sheet.AutoSizeColumn(ExcelColumnIndex.I);
