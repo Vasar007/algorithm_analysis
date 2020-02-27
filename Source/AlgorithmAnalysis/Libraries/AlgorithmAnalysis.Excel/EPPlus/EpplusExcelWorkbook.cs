@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Acolyte.Assertions;
 using OfficeOpenXml;
 using AlgorithmAnalysis.Configuration;
@@ -10,7 +11,8 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 {
     internal sealed class EpplusExcelWorkbook : IExcelWorkbook
     {
-        private const string EpplusLibLogFilename = "epplus.log";
+        private static readonly string EpplusLibLogFilename =
+            $"epplus-{DateTime.Now.ToString("yyyy-MM-dd")}.log";
 
         private readonly ExcelPackage _package;
 

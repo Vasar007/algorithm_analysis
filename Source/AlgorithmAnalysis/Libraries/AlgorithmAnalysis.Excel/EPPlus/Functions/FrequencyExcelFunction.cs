@@ -55,7 +55,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
             double[] convertedResult = ConvertResult(result);
 
             // Return the result.
-            return CreateResult(convertedResult[0], DataType.Decimal);
+            return CreateResult(convertedResult, DataType.Enumerable);
         }
 
         private static double[] ConvertResult(object result)
