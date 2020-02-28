@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.DomainLogic.Files;
+using AlgorithmAnalysis.DomainLogic.Processes;
 using AlgorithmAnalysis.Excel;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel
@@ -44,19 +45,51 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
             var fileHolder = new FileHolder(finalOutputFilenames);
 
-            AnalysisHelper.RunAnalysisProgram(
-                args.AnalysisProgramName,
-                args.PackAsInputArgumentsForPhaseOne(),
-                showAnalysisWindow
-            );
+            using (var analysisRunner = AnalysisRunner.RunAnalysisProgram(
+                       args.AnalysisProgramName,
+                       args.PackAsInputArgumentsForPhaseOne(),
+                       showAnalysisWindow
+                   ))
+            {
+                analysisRunner.Wait();
+            }
 
+            // The first data file is iteration result, the last is common analysis data file.
+            // We don't need to read/use the last one.
             string finalOutputFilename = finalOutputFilenames.First();
 
-            DataObject<OutputFileData> data = fileWorker.ReadDataFile(
-                finalOutputFilename, args
-            );
+            DataObject<OutputFileData> data = fileWorker.ReadDataFile(finalOutputFilename);
 
             return new FileObject(fileHolder, data);
+        }
+
+        public static FileObject PerformFullAnalysisForPhaseTwo(ParametersPack args,
+            bool showAnalysisWindow, LocalFileWorker fileWorker)
+        {
+            args.ThrowIfNull(nameof(args));
+            fileWorker.ThrowIfNull(nameof(fileWorker));
+
+            // Contract: output files are located in the same directory as our app.
+            IReadOnlyList<string> finalOutputFilenames = args.GetOutputFilenames(phaseNumber: 2);
+
+            var fileHolder = new FileHolder(finalOutputFilenames);
+
+            using (var analysisRunner = AnalysisRunner.RunAnalysisProgram(
+                       args.AnalysisProgramName,
+                       args.PackAsInputArgumentsForPhaseTwo(),
+                       showAnalysisWindow
+                   ))
+            {
+                analysisRunner.Wait();
+
+                // TODO: process text files as soon as analysis module produces result of each
+                // iteration.
+                string finalOutputFilename = finalOutputFilenames.First();
+
+                DataObject<OutputFileData> data = fileWorker.ReadDataFile(finalOutputFilename);
+
+                return new FileObject(fileHolder, data);
+            }
         }
 
         private static void CheckExpectedFilenamesNumber(int expectedFilenamessNumber,
@@ -68,7 +101,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             if (actualOutputFilenames.Count != expectedFilenamessNumber)
             {
                 string message =
-                    "Phase 1 of analysis failed. Should be only " +
+                    "Failed to perform analysis. Should be only " +
                     $"{expectedFilenamessNumber.ToString()} output filenames but was " +
                     $"{actualOutputFilenames.Count.ToString()}.";
 

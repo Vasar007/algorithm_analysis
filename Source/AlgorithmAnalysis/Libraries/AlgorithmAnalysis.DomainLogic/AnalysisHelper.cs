@@ -37,20 +37,6 @@ namespace AlgorithmAnalysis.DomainLogic
             return ConfigOptions.Analysis.GetAlgorithmTypes();
         }
 
-        internal static void RunAnalysisProgram(string analysisProgramName, string args,
-            bool showWindow)
-        {
-            analysisProgramName.ThrowIfNullOrWhiteSpace(nameof(analysisProgramName));
-            args.ThrowIfNullOrWhiteSpace(nameof(args));
-
-            using var processHolder = ProcessHolder.Start(
-                analysisProgramName, args, showWindow
-            );
-
-            processHolder.CheckExecutionStatus();
-            processHolder.WaitForExit();
-        }
-
         internal static IAnalysisPhaseOnePartOne CreateAnalysisPhaseOnePartOne(
             PhaseOnePartOneAnalysisKind phaseOnePartOne, ParametersPack args)
         {

@@ -1,11 +1,15 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DesktopApp.Domain
 {
     public static class TaskExtension
     {
+        private static readonly ILogger _logger =
+            LoggerFactory.CreateLoggerFor(typeof(TaskExtension));
+
+
         public static async void FireAndForgetSafeAsync(this Task task,
             IErrorHandler? handler = null)
         {
@@ -17,7 +21,7 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exception occured during async execution: {ex}.");
+                _logger.Error(ex, $"Exception occured during async execution.");
                 handler.HandleError(ex);
             }
         }

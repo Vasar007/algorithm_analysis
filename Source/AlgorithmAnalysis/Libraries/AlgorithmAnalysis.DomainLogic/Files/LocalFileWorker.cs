@@ -11,10 +11,9 @@ namespace AlgorithmAnalysis.DomainLogic.Files
         {
         }
 
-        public DataObject<OutputFileData> ReadDataFile(string dataFilename, ParametersPack args)
+        public DataObject<OutputFileData> ReadDataFile(string dataFilename)
         {
             dataFilename.ThrowIfNullOrWhiteSpace(nameof(dataFilename));
-            args.ThrowIfNull(nameof(args));
 
             if (!File.Exists(dataFilename))
             {

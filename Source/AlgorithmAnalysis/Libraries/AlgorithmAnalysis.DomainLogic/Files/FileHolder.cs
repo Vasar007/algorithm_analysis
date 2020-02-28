@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DomainLogic.Files
 {
     internal sealed class FileHolder : IDisposable
     {
+        private static readonly ILogger _logger = LoggerFactory.CreateLoggerFor<FileHolder>();
+
         private readonly IEnumerable<string> _dataFilenames;
 
         private bool _disposed;
@@ -45,7 +47,7 @@ namespace AlgorithmAnalysis.DomainLogic.Files
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exception occurred: {ex}");
+                _logger.Error(ex, $"Failed to delete output data files.");
             }
         }
     }

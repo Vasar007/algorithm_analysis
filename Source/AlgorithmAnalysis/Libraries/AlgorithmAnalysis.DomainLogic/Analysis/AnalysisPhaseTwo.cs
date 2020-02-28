@@ -24,22 +24,5 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         }
 
         #endregion
-
-        private void Template(AnalysisContext context)
-        {
-            ParametersPack args = context.Args;
-
-            // Contract: output files are located in the same directory as our app.
-            IReadOnlyList<string> finalOutputFilenames = args.GetOutputFilenames(PhaseNumber);
-            using var fileHolder = new FileHolder(finalOutputFilenames);
-
-            AnalysisHelper.RunAnalysisProgram(
-                args.AnalysisProgramName,
-                args.PackAsInputArgumentsForPhaseTwo(),
-                context.ShowAnalysisWindow
-            );
-
-            // TODO: implement phase two.
-        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
@@ -7,6 +6,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Unity;
 using AlgorithmAnalysis.DesktopApp.Views;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DesktopApp
 {
@@ -15,6 +15,9 @@ namespace AlgorithmAnalysis.DesktopApp
     /// </summary>
     public partial class App : PrismApplication
     {
+        private static readonly ILogger _logger = LoggerFactory.CreateLoggerFor<App>();
+
+
         public App()
         {
             // Set current culture for app globally.
@@ -27,8 +30,7 @@ namespace AlgorithmAnalysis.DesktopApp
                 )
             );
 
-            // TODO: replace next line with logger call.
-            Debug.WriteLine("Desktop client application started.");
+            _logger.PrintHeader("Desktop client application started.");
         }
 
         protected override Window CreateShell()
@@ -48,8 +50,7 @@ namespace AlgorithmAnalysis.DesktopApp
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            // TODO: replace next line with logger call.
-            Debug.WriteLine("Desktop client application stopped.");
+            _logger.PrintFooter("Desktop client application stopped.");
         }
     }
 }

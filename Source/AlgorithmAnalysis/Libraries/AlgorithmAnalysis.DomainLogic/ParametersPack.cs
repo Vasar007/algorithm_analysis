@@ -123,6 +123,7 @@ namespace AlgorithmAnalysis.DomainLogic
             return Enumerable.Range(0, iterations + 1)
                 .Select(i => StartValue + i * Step)
                 .Select(actualQuantity => $"{OutputFilenamePattern}{actualQuantity.ToString()}.txt")
+                // Analysis module produces common analysis data file.
                 .Append($"{OutputFilenamePattern}{CommonAnalysisFilenameSuffix}.txt")
                 .ToList();
         }
