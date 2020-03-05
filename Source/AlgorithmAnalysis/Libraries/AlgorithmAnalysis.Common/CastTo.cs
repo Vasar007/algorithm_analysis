@@ -7,6 +7,9 @@ namespace AlgorithmAnalysis.Common
     /// Class to cast to type <typeparamref name="TTarget"/>.
     /// </summary>
     /// <typeparam name="TTarget">Target type.</typeparam>
+    /// <remarks>
+    /// Original source: <see href="https://stackoverflow.com/a/23391746/8581036" />
+    /// </remarks>
     public static class CastTo<TTarget>
     {
         private static class Cache<TSourceInternal>
