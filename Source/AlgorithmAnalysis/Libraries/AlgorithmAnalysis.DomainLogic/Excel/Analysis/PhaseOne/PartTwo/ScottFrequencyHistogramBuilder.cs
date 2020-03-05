@@ -51,7 +51,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
             CreateIntervalData(
                 sheet,
-                histogramSegmentsNumberInt, histogramSegmentsNumberIndex,
+                histogramSegmentsNumberInt,
                 normalizedValueRange
             );
 
@@ -89,7 +89,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
         #endregion
 
         private void CreateIntervalData(IExcelSheet sheet, int histogramSegmentsNumber,
-            string histogramSegmentsNumberIndex, string normalizedValueRange)
+            string normalizedValueRange)
         {
             histogramSegmentsNumber.ThrowIfValueIsOutOfRange(nameof(histogramSegmentsNumber), 1, int.MaxValue);
 
@@ -123,15 +123,6 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
                 string chi2Formula = $"($F{currentRowStr} - $G{currentRowStr})^2 / $G{currentRowStr}";
                 sheet[ExcelColumnIndex.H, currentRow].SetFormula(chi2Formula);
             }
-
-            //string arrayFormula = sheet.FormulaProvider.Frequency(
-            //    $"{normalizedValueRange}", $"$D$2:$D${histogramSegmentsNumberIndex}"
-            //);
-            //sheet.SetArrayFormula(
-            //    arrayFormula,
-            //    ExcelColumnIndex.C, 2,
-            //    ExcelColumnIndex.C, histogramSegmentsNumber.UseOneBasedIndexing().SkipHeader()
-            //);
         }
 
         private static void CreateFirstValueInInterval(IExcelSheet sheet, int currentRow,

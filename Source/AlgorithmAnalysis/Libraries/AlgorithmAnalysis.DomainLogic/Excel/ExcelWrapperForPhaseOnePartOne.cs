@@ -47,8 +47,20 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         private static void FillSheetHeader(IExcelSheet sheet, ParametersPack args)
         {
-            sheet[ExcelColumnIndex.A, 1].SetValue(ExcelStringsPhaseOnePartOne.OperationColumnName);
+            FillOperationColumn(sheet, args);
+            FillAdditionalParametersColumns(sheet, args);
+        }
 
+        private static void FillOperationColumn(IExcelSheet sheet, ParametersPack args)
+        {
+            sheet[ExcelColumnIndex.A, 1].SetValue(ExcelStringsPhaseOnePartTwo.OperationColumnName);
+
+            sheet.AutoSizeColumn(ExcelColumnIndex.A);
+        }
+
+        private static void FillAdditionalParametersColumns(IExcelSheet sheet, ParametersPack args)
+        {
+            // Descriptive cells.
             sheet[ExcelColumnIndex.E, 1].SetValue(ExcelStringsPhaseOnePartOne.AdditionalParametersColumnName);
             sheet[ExcelColumnIndex.E, 2].SetValue(ExcelStringsPhaseOnePartOne.InputDataSize);
             sheet[ExcelColumnIndex.E, 3].SetValue(ExcelStringsPhaseOnePartOne.MinFunc);
@@ -59,6 +71,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             sheet[ExcelColumnIndex.E, 8].SetValue(ExcelStringsPhaseOnePartOne.SignificanceLevel);
             sheet[ExcelColumnIndex.E, 9].SetValue(ExcelStringsPhaseOnePartOne.Epsilon);
 
+            sheet.AutoSizeColumn(ExcelColumnIndex.E);
+
+            // Value cells.
             sheet[ExcelColumnIndex.F, 1].SetValue(ExcelStringsPhaseOnePartOne.AdditionalParametersValuesColumnName);
             sheet[ExcelColumnIndex.F, 2].SetValue(args.StartValue);
 
@@ -75,13 +90,11 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
             string formulaF8 = string.Format(
                 ExcelStringsPhaseOnePartOne.SignificanceLevelFormula,
-                ExcelColumnIndex.F.ToString(), "7"
+                sheet[ExcelColumnIndex.F, 7].FullAddress
             );
             sheet[ExcelColumnIndex.F, 8].SetFormula(formulaF8);
             sheet[ExcelColumnIndex.F, 9].SetValue(double.Parse(ExcelStringsPhaseOnePartOne.EpsilonValue));
 
-            sheet.AutoSizeColumn(ExcelColumnIndex.A);
-            sheet.AutoSizeColumn(ExcelColumnIndex.E);
             sheet.AutoSizeColumn(ExcelColumnIndex.F);
         }
     }

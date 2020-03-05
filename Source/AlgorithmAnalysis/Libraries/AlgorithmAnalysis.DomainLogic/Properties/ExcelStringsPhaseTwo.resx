@@ -117,152 +117,80 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdditionalParametersColumnName" xml:space="preserve">
-    <value>Дополнительные параметры</value>
-    <comment>Column name (E1).</comment>
-  </data>
-  <data name="AdditionalParametersValuesColumnName" xml:space="preserve">
-    <value>Значения</value>
-    <comment>Column name (F1).</comment>
+  <data name="AdditionalData" xml:space="preserve">
+    <value>Дополнительные данные</value>
+    <comment>Column name (%_i).</comment>
   </data>
   <data name="Alpha" xml:space="preserve">
     <value>Альфа</value>
-    <comment>Descriptive cell (H10).</comment>
+    <comment>Column name ([% + 9]_1).</comment>
   </data>
-  <data name="AverageFunc" xml:space="preserve">
-    <value>average f(n)</value>
-    <comment>Descriptive cell (E4).</comment>
+  <data name="AlphaN" xml:space="preserve">
+    <value>α(n)</value>
+    <comment>Column name ([%% + 1]_1).</comment>
   </data>
   <data name="Beta" xml:space="preserve">
     <value>Бета</value>
-    <comment>Descriptive cell (H11, L11).</comment>
+    <comment>Column name ([% + 10]_1).</comment>
   </data>
-  <data name="BetaDistributionSolutionColumnName" xml:space="preserve">
-    <value>Решение на основе бета распределения</value>
-    <comment>Column name (H1 + I1).</comment>
+  <data name="BetaN" xml:space="preserve">
+    <value>β(n)</value>
+    <comment>Column name ([%% + 2]_1).</comment>
   </data>
-  <data name="CalculatedSampleSize" xml:space="preserve">
-    <value>Рассчитанный объём выборки</value>
-    <comment>Descriptive cell (H16, J7).</comment>
+  <data name="Comparison" xml:space="preserve">
+    <value>Сравнение</value>
+    <comment>Column name ([%% + 5]_1).</comment>
   </data>
-  <data name="ConfidenceFactor" xml:space="preserve">
-    <value>Коэффициент доверия</value>
-    <comment>Descriptive cell (E7).</comment>
+  <data name="ComplexityFunction" xml:space="preserve">
+    <value>fγ(n)</value>
+    <comment>Column name ([%% + 4]_1).</comment>
   </data>
   <data name="ConfidenceFactorValue" xml:space="preserve">
     <value>0.95</value>
-    <comment>Value cell (F7).</comment>
+    <comment>Value cell (%_[i + 3]).</comment>
   </data>
-  <data name="DeltaForEpsilon" xml:space="preserve">
-    <value>Дельта для eps=0,001</value>
-    <comment>Descriptive cell (H12).</comment>
+  <data name="LeftYQuantile" xml:space="preserve">
+    <value>Xγ(n)</value>
+    <comment>Column name ([%% + 3]_1).</comment>
   </data>
-  <data name="Epsilon" xml:space="preserve">
-    <value>Eps</value>
-    <comment>Descriptive cell (E9).</comment>
-  </data>
-  <data name="EpsilonValue" xml:space="preserve">
-    <value>0.001</value>
-    <comment>Value cell (F9).</comment>
-  </data>
-  <data name="ExperimentsNumber" xml:space="preserve">
-    <value>Кол-во экспериментов</value>
-    <comment>Descriptive cell (E6).</comment>
-  </data>
-  <data name="InputDataSize" xml:space="preserve">
-    <value>Размер входа</value>
-    <comment>Descriptive cell (E2).</comment>
-  </data>
-  <data name="LowerIntegrationBound" xml:space="preserve">
-    <value>Нижний предел интегрирования</value>
-    <comment>Descriptive cell (H14).</comment>
-  </data>
-  <data name="MaxFunc" xml:space="preserve">
-    <value>max f(n)</value>
-    <comment>Descriptive cell (E5).</comment>
-  </data>
-  <data name="MinFunc" xml:space="preserve">
-    <value>min f(n)</value>
-    <comment>Descriptive cell (E3).</comment>
-  </data>
-  <data name="NormalDistributionSolutionColumnName" xml:space="preserve">
-    <value>Решение на основе нормального распределения</value>
-    <comment>Column name (J1 + K1).</comment>
-  </data>
-  <data name="NormalizedColumnName" xml:space="preserve">
-    <value>Нормированные значения</value>
-    <comment>Column name (B1).</comment>
-  </data>
-  <data name="NormalizedDelta" xml:space="preserve">
-    <value>Нормированное дельта</value>
-    <comment>Descriptive cell (H13).</comment>
+  <data name="NColumnName" xml:space="preserve">
+    <value>n</value>
+    <comment>Column name (%%_1).</comment>
   </data>
   <data name="NormalizedMean" xml:space="preserve">
     <value>Нормированное среднее</value>
-    <comment>Descriptive cell (H8).</comment>
+    <comment>Column name ([% + 7]_1).</comment>
   </data>
   <data name="NormalizedVarience" xml:space="preserve">
     <value>Нормированная дисперсия</value>
-    <comment>Descriptive cell (H9).</comment>
-  </data>
-  <data name="OperationColumnName" xml:space="preserve">
-    <value>Кол-во операций</value>
-    <comment>Column name (A1).</comment>
-  </data>
-  <data name="PFunc" xml:space="preserve">
-    <value>Значение P(n)</value>
-    <comment>Descriptive cell (H18).</comment>
-  </data>
-  <data name="PreliminarySampleSize" xml:space="preserve">
-    <value>Предварительный объём выборки</value>
-    <comment>Descriptive cell (H2, J2).</comment>
+    <comment>Column name ([% + 8]_1).</comment>
   </data>
   <data name="SampleDeviation" xml:space="preserve">
     <value>Выборочное отклонение</value>
-    <comment>Descriptive cell (J5).</comment>
+    <comment>Column name ([% + 4]_1).</comment>
   </data>
   <data name="SampleMean" xml:space="preserve">
     <value>Выборочное среднее</value>
-    <comment>Descriptive cell (H3, J3).</comment>
+    <comment>Column name ([% + 2]_1).</comment>
+  </data>
+  <data name="SampleSize" xml:space="preserve">
+    <value>Объём выборки, n</value>
+    <comment>Column name ([% + 1]_1).</comment>
   </data>
   <data name="SampleVariance" xml:space="preserve">
     <value>Выборочная дисперсия</value>
-    <comment>Descriptive cell (H4, J4).</comment>
-  </data>
-  <data name="SignificanceLevel" xml:space="preserve">
-    <value>Уровень значимости</value>
-    <comment>Descriptive cell (E8).</comment>
+    <comment>Column name ([% + 3]_1).</comment>
   </data>
   <data name="SignificanceLevelFormula" xml:space="preserve">
     <value>1 - {0}</value>
-    <comment>Formula cell (F8).</comment>
-  </data>
-  <data name="Span" xml:space="preserve">
-    <value>Размах</value>
-    <comment>Descriptive cell (H7).</comment>
+    <comment>Value cell (%_[i + 4]).</comment>
   </data>
   <data name="TheoreticalMax" xml:space="preserve">
     <value>Теоретический максимум</value>
-    <comment>Descriptive cell (H6).</comment>
+    <comment>Column name ([% + 6]_1).</comment>
   </data>
   <data name="TheoreticalMin" xml:space="preserve">
     <value>Теоретический минимум</value>
-    <comment>Descriptive cell (H5).</comment>
-  </data>
-  <data name="UFunc" xml:space="preserve">
-    <value>u(n)</value>
-    <comment>Descriptive cell (H16).</comment>
-  </data>
-  <data name="UpperIntegrationBound" xml:space="preserve">
-    <value>Верхний предел интегрирования</value>
-    <comment>Descriptive cell (H15).</comment>
-  </data>
-  <data name="VariationCoefficient" xml:space="preserve">
-    <value>Коэффициент вариации</value>
-    <comment>Descriptive cell (J6).</comment>
-  </data>
-  <data name="VFunc" xml:space="preserve">
-    <value>v(n)</value>
-    <comment>Descriptive cell (H17).</comment>
+    <comment>Column name ([% + 5]_1).</comment>
   </data>
 </root>

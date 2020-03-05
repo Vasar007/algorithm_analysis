@@ -102,25 +102,28 @@ namespace AlgorithmAnalysis.DomainLogic
 
         #endregion
 
-        internal IReadOnlyList<string> GetOutputFilenames(int phaseNumber)
+        internal int GetIterationsNumber(int phaseNumber)
         {
-            phaseNumber.ThrowIfValueIsOutOfRange(nameof(phaseNumber), 1, int.MaxValue);
-
-            int iterations = phaseNumber switch
+            return phaseNumber switch
             {
-                1 => 0,
+                1 => 1,
 
-                2 => (EndValue - StartValue) / Step,
+                2 => ((EndValue - StartValue) / Step) + 1,
 
                 _ => throw new ArgumentOutOfRangeException(
                          nameof(phaseNumber), phaseNumber,
                          $"Unsupported phase number: '{phaseNumber.ToString()}'."
                      )
             };
+        }
+
+        internal IReadOnlyList<string> GetOutputFilenames(int phaseNumber)
+        {
+            int iterationsNumber = GetIterationsNumber(phaseNumber);
 
             // Contract: final output filenames should be constructed as in the line
             // with "actualQuantity".
-            return Enumerable.Range(0, iterations + 1)
+            return Enumerable.Range(0, iterationsNumber)
                 .Select(i => StartValue + i * Step)
                 .Select(actualQuantity => $"{OutputFilenamePattern}{actualQuantity.ToString()}.txt")
                 // Analysis module produces common analysis data file.

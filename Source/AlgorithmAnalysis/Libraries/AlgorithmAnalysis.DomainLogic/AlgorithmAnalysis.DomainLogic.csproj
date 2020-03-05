@@ -39,6 +39,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ExcelStringsPhaseOnePartTwo.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\ExcelStringsPhaseTwo.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExcelStringsPhaseTwo.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +54,10 @@
     <EmbeddedResource Update="Properties\ExcelStringsPhaseOnePartTwo.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ExcelStringsPhaseOnePartTwo.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\ExcelStringsPhaseTwo.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExcelStringsPhaseTwo.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

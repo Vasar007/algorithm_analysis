@@ -11,6 +11,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 {
     internal static class ExcelHelper
     {
+        public const string SheetNamePrefix = "Sheet";
+
         public static IExcelWorkbook GetOrCreateWorkbook(string outputExcelFilename)
         {
             outputExcelFilename.ThrowIfNullOrWhiteSpace(nameof(outputExcelFilename));
@@ -23,14 +25,19 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             return ExcelWrapperFactory.CreateWorkbook();
         }
 
-        public static string CreateSheetName(int phaseNumber, int iterationNumber)
+        public static string CreateSheetName(string sheetNamePrefix, int phaseNumber,
+            int iterationNumber)
         {
+            sheetNamePrefix.ThrowIfNull(nameof(sheetNamePrefix));
             phaseNumber.ThrowIfValueIsOutOfRange(nameof(phaseNumber), 1, int.MaxValue);
             iterationNumber.ThrowIfValueIsOutOfRange(nameof(iterationNumber), 1, int.MaxValue);
 
-            const string sheetNamePrefix = "Sheet";
-
             return $"{sheetNamePrefix}{phaseNumber.ToString()}-{iterationNumber.ToString()}";
+        }
+
+        public static string CreateSheetName(int phaseNumber, int iterationNumber)
+        {
+            return CreateSheetName(SheetNamePrefix, phaseNumber, iterationNumber);
         }
 
         public static FileObject PerformOneIterationOfPhaseOne(ParametersPack args,

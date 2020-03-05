@@ -266,7 +266,7 @@
     <comment>Descriptive cell (I8).</comment>
   </data>
   <data name="SignificanceLevelFormula" xml:space="preserve">
-    <value>1 - ${0}${1}</value>
+    <value>1 - {0}</value>
     <comment>Formula cell (F8).</comment>
   </data>
   <data name="Span" xml:space="preserve">

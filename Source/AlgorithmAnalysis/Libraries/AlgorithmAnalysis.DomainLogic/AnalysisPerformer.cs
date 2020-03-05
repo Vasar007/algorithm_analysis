@@ -27,7 +27,7 @@ namespace AlgorithmAnalysis.DomainLogic
             _logger.Info($"Parameters: {context.ToLogString()}");
 
             // TODO: remove when implement algorithm min/average/max formulas.
-            if (context.Args.AlgorithmType.Value > 0)
+            if (context.Args.AlgorithmType.Value != 0)
             {
                 throw new NotImplementedException("Library can work with only one algorithm type.");
             }
