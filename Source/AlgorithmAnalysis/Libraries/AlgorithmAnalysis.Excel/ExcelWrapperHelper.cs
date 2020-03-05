@@ -7,8 +7,8 @@ namespace AlgorithmAnalysis.Excel
 {
     internal static class ExcelWrapperHelper
     {
-        public static IExcelCellHolder GetCellHolder(IExcelSheet sheet, ExcelColumnIndex columnIndex,
-            int rowIndex, ExcelOptions excelOptions)
+        public static IExcelCellHolder GetCellHolder(IExcelSheet sheet,
+            ExcelColumnIndex columnIndex, int rowIndex, ExcelOptions excelOptions)
         {
             sheet.ThrowIfNull(nameof(sheet));
             excelOptions.ThrowIfNull(nameof(excelOptions));
@@ -34,6 +34,16 @@ namespace AlgorithmAnalysis.Excel
             rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
 
             return $"{columnIndex.ToString()}{rowIndex.ToString()}";
+        }
+
+        public static string GetRangeCellAddressFrom(
+            ExcelColumnIndex firstColumnIndex, int firstRowIndex,
+            ExcelColumnIndex lastColumnIndex, int lastRowIndex)
+        {
+            string firstCellAddress = GetCellAddressFrom(firstColumnIndex, firstRowIndex);
+            string lastCellAddress = GetCellAddressFrom(lastColumnIndex, lastRowIndex);
+
+            return $"{firstCellAddress}:{lastCellAddress}";
         }
     }
 }

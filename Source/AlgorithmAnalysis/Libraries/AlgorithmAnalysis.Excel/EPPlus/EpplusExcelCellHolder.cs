@@ -76,6 +76,8 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             }
         }
 
+        public string FullAddress => _cell.FullAddress;
+
 
         public EpplusExcelCellHolder(ExcelRange cell)
         {

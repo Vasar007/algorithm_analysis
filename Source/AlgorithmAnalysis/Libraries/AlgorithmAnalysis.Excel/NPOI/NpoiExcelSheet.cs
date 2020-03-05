@@ -35,14 +35,14 @@ namespace AlgorithmAnalysis.Excel.NPOI
         public override IExcelCellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex,
             bool centrized)
         {
-            columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
             rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
+            int columIndexInt = columnIndex.AsInt32();
+            columIndexInt.ThrowIfValueIsOutOfRange(nameof(columnIndex), 0, int.MaxValue);
 
             // Because of using one-based indexing.
             int fixedRowIndex = rowIndex - 1;
             IRow row = GetOrCreateRow(fixedRowIndex, centrized);
 
-            int columIndexInt = columnIndex.AsInt32();
             ICell cell = row.GetCell(columIndexInt);
 
             ICell result = cell is null
@@ -62,32 +62,37 @@ namespace AlgorithmAnalysis.Excel.NPOI
             ExcelColumnIndex lastColumnIndex,
             int lastRowIndex)
         {
-            firstColumnIndex.ThrowIfEnumValueIsUndefined(nameof(firstColumnIndex));
+            int firstColumIndexInt = firstColumnIndex.AsInt32();
+            firstColumIndexInt.ThrowIfValueIsOutOfRange(nameof(firstColumnIndex), 0, int.MaxValue);
             firstRowIndex.ThrowIfValueIsOutOfRange(nameof(firstRowIndex), 1, int.MaxValue);
-            lastColumnIndex.ThrowIfEnumValueIsUndefined(nameof(lastColumnIndex));
+
+            int lastColumIndexInt = lastColumnIndex.AsInt32();
+            lastColumIndexInt.ThrowIfValueIsOutOfRange(nameof(lastColumnIndex), 0, int.MaxValue);
             lastRowIndex.ThrowIfValueIsOutOfRange(nameof(lastRowIndex), 1, int.MaxValue);
 
             var cra = new CellRangeAddress(
                 firstRow: firstRowIndex - 1, // Because of using one-based indexing.
                 lastRow: lastRowIndex - 1, // Because of using one-based indexing.
-                firstCol: firstColumnIndex.AsInt32(),
-                lastCol: lastColumnIndex.AsInt32()
+                firstCol: firstColumIndexInt,
+                lastCol: lastColumIndexInt
             );
             _sheet.AddMergedRegion(cra);
         }
 
         public override void AutoSizeColumn(ExcelColumnIndex columnIndex)
         {
-            columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
+            int columnIndexInt = columnIndex.AsInt32();
+            columnIndexInt.ThrowIfValueIsOutOfRange(nameof(columnIndex), 1, int.MaxValue);
 
-            _sheet.AutoSizeColumn(columnIndex.AsInt32());
+            _sheet.AutoSizeColumn(columnIndexInt);
         }
 
         public override void AutoSizeColumn(ExcelColumnIndex columnIndex, bool useMergedCells)
         {
-            columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
+            int columnIndexInt = columnIndex.AsInt32();
+            columnIndexInt.ThrowIfValueIsOutOfRange(nameof(columnIndex), 1, int.MaxValue);
 
-            _sheet.AutoSizeColumn(columnIndex.AsInt32(), useMergedCells);
+            _sheet.AutoSizeColumn(columnIndexInt, useMergedCells);
         }
 
         public override void EvaluateAll()
@@ -102,17 +107,19 @@ namespace AlgorithmAnalysis.Excel.NPOI
             ExcelColumnIndex lastColumnIndex,
             int lastRowIndex)
         {
-            arrayFormula.ThrowIfNullOrWhiteSpace(nameof(arrayFormula));
-            firstColumnIndex.ThrowIfEnumValueIsUndefined(nameof(firstColumnIndex));
+            int firstColumIndexInt = firstColumnIndex.AsInt32();
+            firstColumIndexInt.ThrowIfValueIsOutOfRange(nameof(firstColumnIndex), 0, int.MaxValue);
             firstRowIndex.ThrowIfValueIsOutOfRange(nameof(firstRowIndex), 1, int.MaxValue);
-            lastColumnIndex.ThrowIfEnumValueIsUndefined(nameof(lastColumnIndex));
+
+            int lastColumIndexInt = lastColumnIndex.AsInt32();
+            lastColumIndexInt.ThrowIfValueIsOutOfRange(nameof(lastColumnIndex), 0, int.MaxValue);
             lastRowIndex.ThrowIfValueIsOutOfRange(nameof(lastRowIndex), 1, int.MaxValue);
 
             var cra = new CellRangeAddress(
                 firstRow: firstRowIndex - 1, // Because of using one-based indexing.
                 lastRow: lastRowIndex - 1, // Because of using one-based indexing.
-                firstCol: firstColumnIndex.AsInt32(),
-                lastCol: lastColumnIndex.AsInt32()
+                firstCol: firstColumIndexInt,
+                lastCol: lastColumIndexInt
             );
             _sheet.SetArrayFormula(arrayFormula, cra);
         }

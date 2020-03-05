@@ -1,5 +1,6 @@
 ﻿using System;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Common;
 using NPOI.SS.UserModel;
 
 namespace AlgorithmAnalysis.Excel.NPOI
@@ -75,6 +76,12 @@ namespace AlgorithmAnalysis.Excel.NPOI
                 SetValue(value);
             }
         }
+
+        // Can return invalid addresses if ExcelColumnIndex does not contain value for
+        // _cell.ColumnIndex.
+        public string FullAddress =>
+            $"{_cell.ColumnIndex.AsEnum<ExcelColumnIndex>().ToString()}" +
+            $"{(_cell.RowIndex + 1).ToString()}";
 
 
         public NpoiExcelCellHolder(ICell cell)

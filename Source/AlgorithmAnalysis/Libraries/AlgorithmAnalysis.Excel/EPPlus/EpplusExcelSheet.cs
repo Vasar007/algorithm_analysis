@@ -8,6 +8,8 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 {
     internal sealed class EpplusExcelSheet : BaseExcelSheet, IExcelSheet
     {
+        // EPPlus library uses one-based indexing and support almost all required features.
+
         private readonly ExcelWorksheet _sheet;
 
 
@@ -23,8 +25,11 @@ namespace AlgorithmAnalysis.Excel.EPPlus
         public override IExcelCellHolder GetOrCreateCell(ExcelColumnIndex columnIndex, int rowIndex,
             bool centrized)
         {
-            string cellAddress = ExcelWrapperHelper.GetCellAddressFrom(columnIndex, rowIndex);
-            ExcelRange excelRange = _sheet.Cells[cellAddress];
+            int columnIndexInt = columnIndex.AsInt32().UseOneBasedIndexing();
+            columnIndexInt.ThrowIfValueIsOutOfRange(nameof(columnIndex), 1, int.MaxValue);
+            rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
+
+            ExcelRange excelRange = _sheet.Cells[rowIndex, columnIndexInt];
 
             excelRange = centrized
                 ? excelRange.Center()
@@ -39,28 +44,35 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             ExcelColumnIndex lastColumnIndex,
             int lastRowIndex)
         {
-            string firstCellAddress =
-                ExcelWrapperHelper.GetCellAddressFrom(firstColumnIndex, firstRowIndex);
+            int firstColumnIndexInt = firstColumnIndex.AsInt32().UseOneBasedIndexing();
+            firstColumnIndexInt.ThrowIfValueIsOutOfRange(nameof(firstRowIndex), 1, int.MaxValue);
+            firstRowIndex.ThrowIfValueIsOutOfRange(nameof(firstRowIndex), 1, int.MaxValue);
 
-            string lastCellAddress =
-                ExcelWrapperHelper.GetCellAddressFrom(lastColumnIndex, lastRowIndex);
+            int lastColumnIndexInt = lastColumnIndex.AsInt32().UseOneBasedIndexing();
+            lastColumnIndexInt.ThrowIfValueIsOutOfRange(nameof(lastRowIndex), 1, int.MaxValue);
+            lastRowIndex.ThrowIfValueIsOutOfRange(nameof(lastRowIndex), 1, int.MaxValue);
 
-            _sheet.Cells[$"{firstCellAddress}:{lastCellAddress}"].Merge = true;
+            _sheet.Cells[
+                firstRowIndex, firstColumnIndexInt,
+                lastRowIndex, lastColumnIndexInt
+            ].Merge = true;
         }
 
         public override void AutoSizeColumn(ExcelColumnIndex columnIndex)
         {
-            columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
+            int columnIndexInt = columnIndex.AsInt32().UseOneBasedIndexing();
+            columnIndexInt.ThrowIfValueIsOutOfRange(nameof(columnIndex), 1, int.MaxValue);
 
-            _sheet.Column(columnIndex.AsInt32().UseOneBasedIndexing()).AutoFit();
+            _sheet.Column(columnIndexInt).AutoFit();
         }
 
         public override void AutoSizeColumn(ExcelColumnIndex columnIndex, bool useMergedCells)
         {
-            columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
+            int columnIndexInt = columnIndex.AsInt32().UseOneBasedIndexing();
+            columnIndexInt.ThrowIfValueIsOutOfRange(nameof(columnIndex), 1, int.MaxValue);
 
             // TODO: find a way to enable auto size for merged cells.
-            _sheet.Column(columnIndex.AsInt32().UseOneBasedIndexing()).AutoFit();
+            _sheet.Column(columnIndexInt).AutoFit();
         }
 
         public override void EvaluateAll()
@@ -77,13 +89,18 @@ namespace AlgorithmAnalysis.Excel.EPPlus
         {
             arrayFormula.ThrowIfNullOrWhiteSpace(nameof(arrayFormula));
 
-            string firstCellAddress =
-                ExcelWrapperHelper.GetCellAddressFrom(firstColumnIndex, firstRowIndex);
+            int firstColumnIndexInt = firstColumnIndex.AsInt32().UseOneBasedIndexing();
+            firstColumnIndexInt.ThrowIfValueIsOutOfRange(nameof(firstRowIndex), 1, int.MaxValue);
+            firstRowIndex.ThrowIfValueIsOutOfRange(nameof(firstRowIndex), 1, int.MaxValue);
 
-            string lastCellAddress =
-                ExcelWrapperHelper.GetCellAddressFrom(lastColumnIndex, lastRowIndex);
+            int lastColumnIndexInt = lastColumnIndex.AsInt32().UseOneBasedIndexing();
+            lastColumnIndexInt.ThrowIfValueIsOutOfRange(nameof(lastRowIndex), 1, int.MaxValue);
+            lastRowIndex.ThrowIfValueIsOutOfRange(nameof(lastRowIndex), 1, int.MaxValue);
 
-            _sheet.Cells[$"{firstCellAddress}:{lastCellAddress}"].CreateArrayFormula(arrayFormula);
+            _sheet.Cells[
+                 firstRowIndex, firstColumnIndexInt,
+                lastRowIndex, lastColumnIndexInt
+            ].CreateArrayFormula(arrayFormula);
         }
     }
 }
