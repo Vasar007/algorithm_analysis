@@ -17,7 +17,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
         }
 
         public int ApplyAnalysisAndSaveData(IEnumerable<int> data,
-            ExcelContextForPhaseOne excelContext)
+            ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne> excelContext)
         {
             data.ThrowIfNullOrEmpty(nameof(data));
             excelContext.ThrowIfNull(nameof(excelContext));
@@ -27,7 +27,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             IExcelSheet sheet = workbook.GetOrCreateSheet(excelContext.SheetName);
             FillSheetHeader(sheet, excelContext.Args);
 
-            IAnalysisPhaseOnePartOne analysis = excelContext.CreatePartOne();
+            IAnalysisPhaseOnePartOne analysis = excelContext.CreatePartNAnalysis();
 
             int rowCounter = 2;
             foreach (int item in data)
@@ -47,19 +47,19 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         private static void FillSheetHeader(IExcelSheet sheet, ParametersPack args)
         {
-            sheet[ExcelColumnIndex.A, 1].SetValue(ExcelStrings.OperationColumnName);
+            sheet[ExcelColumnIndex.A, 1].SetValue(ExcelStringsPhaseOnePartOne.OperationColumnName);
 
-            sheet[ExcelColumnIndex.E, 1].SetValue(ExcelStrings.AdditionalParametersColumnName);
-            sheet[ExcelColumnIndex.E, 2].SetValue(ExcelStrings.InputDataSize);
-            sheet[ExcelColumnIndex.E, 3].SetValue(ExcelStrings.MinFunc);
-            sheet[ExcelColumnIndex.E, 4].SetValue(ExcelStrings.AverageFunc);
-            sheet[ExcelColumnIndex.E, 5].SetValue(ExcelStrings.MaxFunc);
-            sheet[ExcelColumnIndex.E, 6].SetValue(ExcelStrings.ExperimentsNumber);
-            sheet[ExcelColumnIndex.E, 7].SetValue(ExcelStrings.ConfidenceFactor);
-            sheet[ExcelColumnIndex.E, 8].SetValue(ExcelStrings.SignificanceLevel);
-            sheet[ExcelColumnIndex.E, 9].SetValue(ExcelStrings.Epsilon);
+            sheet[ExcelColumnIndex.E, 1].SetValue(ExcelStringsPhaseOnePartOne.AdditionalParametersColumnName);
+            sheet[ExcelColumnIndex.E, 2].SetValue(ExcelStringsPhaseOnePartOne.InputDataSize);
+            sheet[ExcelColumnIndex.E, 3].SetValue(ExcelStringsPhaseOnePartOne.MinFunc);
+            sheet[ExcelColumnIndex.E, 4].SetValue(ExcelStringsPhaseOnePartOne.AverageFunc);
+            sheet[ExcelColumnIndex.E, 5].SetValue(ExcelStringsPhaseOnePartOne.MaxFunc);
+            sheet[ExcelColumnIndex.E, 6].SetValue(ExcelStringsPhaseOnePartOne.ExperimentsNumber);
+            sheet[ExcelColumnIndex.E, 7].SetValue(ExcelStringsPhaseOnePartOne.ConfidenceFactor);
+            sheet[ExcelColumnIndex.E, 8].SetValue(ExcelStringsPhaseOnePartOne.SignificanceLevel);
+            sheet[ExcelColumnIndex.E, 9].SetValue(ExcelStringsPhaseOnePartOne.Epsilon);
 
-            sheet[ExcelColumnIndex.F, 1].SetValue(ExcelStrings.AdditionalParametersValuesColumnName);
+            sheet[ExcelColumnIndex.F, 1].SetValue(ExcelStringsPhaseOnePartOne.AdditionalParametersValuesColumnName);
             sheet[ExcelColumnIndex.F, 2].SetValue(args.StartValue);
 
             string minFormula = AnalysisHelper.GetMinFormula(ExcelColumnIndex.F, 2);
@@ -71,14 +71,14 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             string maxFormula = AnalysisHelper.GetMaxFormula(ExcelColumnIndex.F, 2);
             sheet[ExcelColumnIndex.F, 5].SetFormula(maxFormula);
             sheet[ExcelColumnIndex.F, 6].SetValue(args.LaunchesNumber);
-            sheet[ExcelColumnIndex.F, 7].SetValue(double.Parse(ExcelStrings.ConfidenceFactorValue));
+            sheet[ExcelColumnIndex.F, 7].SetValue(double.Parse(ExcelStringsPhaseOnePartOne.ConfidenceFactorValue));
 
             string formulaF8 = string.Format(
-                ExcelStrings.SignificanceLevelFormula,
+                ExcelStringsPhaseOnePartOne.SignificanceLevelFormula,
                 ExcelColumnIndex.F.ToString(), "7"
             );
             sheet[ExcelColumnIndex.F, 8].SetFormula(formulaF8);
-            sheet[ExcelColumnIndex.F, 9].SetValue(double.Parse(ExcelStrings.EpsilonValue));
+            sheet[ExcelColumnIndex.F, 9].SetValue(double.Parse(ExcelStringsPhaseOnePartOne.EpsilonValue));
 
             sheet.AutoSizeColumn(ExcelColumnIndex.A);
             sheet.AutoSizeColumn(ExcelColumnIndex.E);

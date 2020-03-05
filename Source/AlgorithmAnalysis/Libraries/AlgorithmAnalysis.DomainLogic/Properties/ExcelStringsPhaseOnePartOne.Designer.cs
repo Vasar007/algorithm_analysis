@@ -22,14 +22,14 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ExcelStrings {
+    internal class ExcelStringsPhaseOnePartOne {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ExcelStrings() {
+        internal ExcelStringsPhaseOnePartOne() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlgorithmAnalysis.DomainLogic.Properties.ExcelStrings", typeof(ExcelStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlgorithmAnalysis.DomainLogic.Properties.ExcelStringsPhaseOnePartOne", typeof(ExcelStringsPhaseOnePartOne).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -124,42 +124,6 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Проверка гитотезы функцией ТЕСТ.
-        /// </summary>
-        internal static string CheckTestFucntion {
-            get {
-                return ResourceManager.GetString("CheckTestFucntion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Критическое значение χ2.
-        /// </summary>
-        internal static string Chi2Critical {
-            get {
-                return ResourceManager.GetString("Chi2Critical", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to χ2 наблюдаемое.
-        /// </summary>
-        internal static string Chi2Observable {
-            get {
-                return ResourceManager.GetString("Chi2Observable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Значение для χ2.
-        /// </summary>
-        internal static string Chi2ValueColumnName {
-            get {
-                return ResourceManager.GetString("Chi2ValueColumnName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Коэффициент доверия.
         /// </summary>
         internal static string ConfidenceFactor {
@@ -183,15 +147,6 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         internal static string DeltaForEpsilon {
             get {
                 return ResourceManager.GetString("DeltaForEpsilon", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Эмперические частоты.
-        /// </summary>
-        internal static string EmpiricalFrequencyColumnName {
-            get {
-                return ResourceManager.GetString("EmpiricalFrequencyColumnName", resourceCulture);
             }
         }
         
@@ -223,47 +178,11 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Кол-во степеней свободы.
-        /// </summary>
-        internal static string FreedomDegreesNumber {
-            get {
-                return ResourceManager.GetString("FreedomDegreesNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Частота.
-        /// </summary>
-        internal static string FrequencyColumnName {
-            get {
-                return ResourceManager.GetString("FrequencyColumnName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Число полусегментов для гистограммы.
-        /// </summary>
-        internal static string HistogramSemisegmentsNumber {
-            get {
-                return ResourceManager.GetString("HistogramSemisegmentsNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Размер входа.
         /// </summary>
         internal static string InputDataSize {
             get {
                 return ResourceManager.GetString("InputDataSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Длина интервала.
-        /// </summary>
-        internal static string IntervalLength {
-            get {
-                return ResourceManager.GetString("IntervalLength", resourceCulture);
             }
         }
         
@@ -286,29 +205,11 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Максимальное значение выборки.
-        /// </summary>
-        internal static string MaximumValue {
-            get {
-                return ResourceManager.GetString("MaximumValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to min f(n).
         /// </summary>
         internal static string MinFunc {
             get {
                 return ResourceManager.GetString("MinFunc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Минимальное значение выборки.
-        /// </summary>
-        internal static string MinimumValue {
-            get {
-                return ResourceManager.GetString("MinimumValue", resourceCulture);
             }
         }
         
@@ -367,29 +268,11 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ещё.
-        /// </summary>
-        internal static string Other {
-            get {
-                return ResourceManager.GetString("Other", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Значение P(n).
         /// </summary>
         internal static string PFunc {
             get {
                 return ResourceManager.GetString("PFunc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Карман.
-        /// </summary>
-        internal static string PocketColumnName {
-            get {
-                return ResourceManager.GetString("PocketColumnName", resourceCulture);
             }
         }
         
@@ -453,24 +336,6 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         internal static string Span {
             get {
                 return ResourceManager.GetString("Span", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Сумма.
-        /// </summary>
-        internal static string Sum {
-            get {
-                return ResourceManager.GetString("Sum", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Теоретические частоты.
-        /// </summary>
-        internal static string TheoreticalFrequencyColumnName {
-            get {
-                return ResourceManager.GetString("TheoreticalFrequencyColumnName", resourceCulture);
             }
         }
         

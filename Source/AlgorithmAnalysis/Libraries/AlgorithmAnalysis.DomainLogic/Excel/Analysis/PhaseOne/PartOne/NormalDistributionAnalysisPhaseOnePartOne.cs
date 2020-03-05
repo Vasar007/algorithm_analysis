@@ -25,17 +25,17 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
 
         public void ApplyAnalysisToDataset(IExcelSheet sheet)
         {
-            sheet[ExcelColumnIndex.J, 1].SetValue(ExcelStrings.NormalDistributionSolutionColumnName);
+            sheet[ExcelColumnIndex.J, 1].SetValue(ExcelStringsPhaseOnePartOne.NormalDistributionSolutionColumnName);
             sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.K, 1);
 
             sheet.AddMergedRegion(ExcelColumnIndex.J, 1, ExcelColumnIndex.K, 1);
 
-            sheet[ExcelColumnIndex.J, 2].SetValue(ExcelStrings.PreliminarySampleSize);
-            sheet[ExcelColumnIndex.J, 3].SetValue(ExcelStrings.SampleMean);
-            sheet[ExcelColumnIndex.J, 4].SetValue(ExcelStrings.SampleVariance);
-            sheet[ExcelColumnIndex.J, 5].SetValue(ExcelStrings.SampleDeviation);
-            sheet[ExcelColumnIndex.J, 6].SetValue(ExcelStrings.VariationCoefficient);
-            sheet[ExcelColumnIndex.J, 7].SetValue(ExcelStrings.CalculatedSampleSize);
+            sheet[ExcelColumnIndex.J, 2].SetValue(ExcelStringsPhaseOnePartOne.PreliminarySampleSize);
+            sheet[ExcelColumnIndex.J, 3].SetValue(ExcelStringsPhaseOnePartOne.SampleMean);
+            sheet[ExcelColumnIndex.J, 4].SetValue(ExcelStringsPhaseOnePartOne.SampleVariance);
+            sheet[ExcelColumnIndex.J, 5].SetValue(ExcelStringsPhaseOnePartOne.SampleDeviation);
+            sheet[ExcelColumnIndex.J, 6].SetValue(ExcelStringsPhaseOnePartOne.VariationCoefficient);
+            sheet[ExcelColumnIndex.J, 7].SetValue(ExcelStringsPhaseOnePartOne.CalculatedSampleSize);
 
             string lastValueRowIndex = _args.LaunchesNumber.SkipHeader().ToString();
             sheet[ExcelColumnIndex.K, 2].SetFormula("$F$6");

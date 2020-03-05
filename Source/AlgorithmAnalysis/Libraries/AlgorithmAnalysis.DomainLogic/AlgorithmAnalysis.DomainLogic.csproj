@@ -24,22 +24,32 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\ExcelStrings.Designer.cs">
+    <Compile Update="Properties\ExcelStrings - Copy.Designer.cs">
+      <DependentUpon>ExcelStringsPhaseOnePartTwo.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>ExcelStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\ExcelStringsPhaseOnePartOne.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExcelStringsPhaseOnePartOne.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\ExcelStringsPhaseOnePartTwo.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExcelStringsPhaseOnePartTwo.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Properties\ExcelStrings.resx">
+    <EmbeddedResource Update="Properties\ExcelStringsPhaseOnePartOne.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ExcelStrings.Designer.cs</LastGenOutput>
+      <LastGenOutput>ExcelStringsPhaseOnePartOne.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Excel\Analysis\PhaseTwo\" />
+    <EmbeddedResource Update="Properties\ExcelStringsPhaseOnePartTwo.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExcelStringsPhaseOnePartTwo.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

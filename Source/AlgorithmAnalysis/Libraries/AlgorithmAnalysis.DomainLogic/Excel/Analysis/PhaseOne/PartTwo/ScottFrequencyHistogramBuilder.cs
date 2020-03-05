@@ -19,20 +19,20 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
         public void CreateHistogramData(IExcelSheet sheet)
         {
-            sheet[ExcelColumnIndex.D, 1].SetValue(ExcelStrings.PocketColumnName);
-            sheet[ExcelColumnIndex.E, 1].SetValue(ExcelStrings.FrequencyColumnName);
-            sheet[ExcelColumnIndex.F, 1].SetValue(ExcelStrings.EmpiricalFrequencyColumnName);
-            sheet[ExcelColumnIndex.G, 1].SetValue(ExcelStrings.TheoreticalFrequencyColumnName);
-            sheet[ExcelColumnIndex.H, 1].SetValue(ExcelStrings.Chi2ValueColumnName);
+            sheet[ExcelColumnIndex.D, 1].SetValue(ExcelStringsPhaseOnePartTwo.PocketColumnName);
+            sheet[ExcelColumnIndex.E, 1].SetValue(ExcelStringsPhaseOnePartTwo.FrequencyColumnName);
+            sheet[ExcelColumnIndex.F, 1].SetValue(ExcelStringsPhaseOnePartTwo.EmpiricalFrequencyColumnName);
+            sheet[ExcelColumnIndex.G, 1].SetValue(ExcelStringsPhaseOnePartTwo.TheoreticalFrequencyColumnName);
+            sheet[ExcelColumnIndex.H, 1].SetValue(ExcelStringsPhaseOnePartTwo.Chi2ValueColumnName);
 
-            sheet[ExcelColumnIndex.I, 10].SetValue(ExcelStrings.MinimumValue);
-            sheet[ExcelColumnIndex.I, 11].SetValue(ExcelStrings.MaximumValue);
-            sheet[ExcelColumnIndex.I, 12].SetValue(ExcelStrings.IntervalLength);
-            sheet[ExcelColumnIndex.I, 13].SetValue(ExcelStrings.HistogramSemisegmentsNumber);
-            sheet[ExcelColumnIndex.I, 14].SetValue(ExcelStrings.Chi2Observable);
-            sheet[ExcelColumnIndex.I, 15].SetValue(ExcelStrings.FreedomDegreesNumber);
-            sheet[ExcelColumnIndex.I, 16].SetValue(ExcelStrings.Chi2Critical);
-            sheet[ExcelColumnIndex.I, 17].SetValue(ExcelStrings.CheckTestFucntion);
+            sheet[ExcelColumnIndex.I, 10].SetValue(ExcelStringsPhaseOnePartTwo.MinimumValue);
+            sheet[ExcelColumnIndex.I, 11].SetValue(ExcelStringsPhaseOnePartTwo.MaximumValue);
+            sheet[ExcelColumnIndex.I, 12].SetValue(ExcelStringsPhaseOnePartTwo.IntervalLength);
+            sheet[ExcelColumnIndex.I, 13].SetValue(ExcelStringsPhaseOnePartTwo.HistogramSemisegmentsNumber);
+            sheet[ExcelColumnIndex.I, 14].SetValue(ExcelStringsPhaseOnePartTwo.Chi2Observable);
+            sheet[ExcelColumnIndex.I, 15].SetValue(ExcelStringsPhaseOnePartTwo.FreedomDegreesNumber);
+            sheet[ExcelColumnIndex.I, 16].SetValue(ExcelStringsPhaseOnePartTwo.Chi2Critical);
+            sheet[ExcelColumnIndex.I, 17].SetValue(ExcelStringsPhaseOnePartTwo.CheckTestFucntion);
 
             string lastValueRowIndex = _args.LaunchesNumber.SkipHeader().ToString();
             string normalizedValueRange = $"$B$2:$B${lastValueRowIndex}";

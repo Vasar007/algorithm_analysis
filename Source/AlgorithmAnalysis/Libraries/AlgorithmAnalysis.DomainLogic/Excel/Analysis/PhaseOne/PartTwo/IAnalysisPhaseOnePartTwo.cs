@@ -2,7 +2,7 @@
 
 namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 {
-    internal interface IAnalysisPhaseOnePartTwo
+    internal interface IAnalysisPhaseOnePartTwo : IAnalysisPhaseOne
     {
         // Contract: operationNumber and currentRow are greater than or equal to zero.
         void ApplyAnalysisToSingleLaunch(IExcelSheet sheet, int operationNumber, int currentRow);

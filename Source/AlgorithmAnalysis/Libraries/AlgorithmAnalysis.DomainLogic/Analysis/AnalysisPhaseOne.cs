@@ -1,5 +1,7 @@
 ﻿using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Files;
+using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
+using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
@@ -48,11 +50,11 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             {
                 previousCalculatedSampleSize = calculatedSampleSize;
 
-                var excelContext = ExcelContextForPhaseOne.CreateForPartOne(
+                var excelContext = ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne>.CreateFor(
                     args: context.Args.CreateWith(calculatedSampleSize),
                     showAnalysisWindow: context.ShowAnalysisWindow,
                     sheetName: ExcelHelper.CreateSheetName(PhaseNumber, iterationNumber),
-                    partOneFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartOne(context.PhaseOnePartOne, args)
+                    analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartOne(context.PhaseOnePartOne, args)
                 );
                 calculatedSampleSize = PerformOneIterationOfPartOne(excelContext);
 
@@ -63,7 +65,8 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             return new AnalysisPhaseOneResult(calculatedSampleSize, iterationNumber);
         }
 
-        private int PerformOneIterationOfPartOne(ExcelContextForPhaseOne excelContext)
+        private int PerformOneIterationOfPartOne(
+            ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne> excelContext)
         {
             using FileObject fileObject = ExcelHelper.PerformOneIterationOfPhaseOne(
                 excelContext.Args, excelContext.ShowAnalysisWindow, _fileWorker
@@ -77,11 +80,11 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         private bool PerfromPartTwo(AnalysisContext context, AnalysisPhaseOneResult partOneResult)
         {
             // Perform the final iteration to get actual data using calculated sample size.
-            var excelContext = ExcelContextForPhaseOne.CreateForPartTwo(
+            var excelContext = ExcelContextForPhaseOne<IAnalysisPhaseOnePartTwo>.CreateFor(
                 args: context.Args.CreateWith(partOneResult.CalculatedSampleSize),
                 showAnalysisWindow: context.ShowAnalysisWindow,
                 sheetName: ExcelHelper.CreateSheetName(PhaseNumber, partOneResult.TotalIterationNumber),
-                partTwoFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args)
+                analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args)
             );
 
             using FileObject fileObject = ExcelHelper.PerformOneIterationOfPhaseOne(

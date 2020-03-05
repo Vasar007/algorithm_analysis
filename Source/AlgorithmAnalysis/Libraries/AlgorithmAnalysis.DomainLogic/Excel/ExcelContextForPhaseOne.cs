@@ -1,17 +1,14 @@
 ﻿using Acolyte.Assertions;
-using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
-using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
+using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel
 {
-    internal sealed class ExcelContextForPhaseOne
+    internal sealed class ExcelContextForPhaseOne<TAnalysisPhaseOne>
+        where TAnalysisPhaseOne : IAnalysisPhaseOne
     {
-        public delegate IAnalysisPhaseOnePartOne AnalysisPartOneCreation(ParametersPack args);
-        public delegate IAnalysisPhaseOnePartTwo AnalysisPartTwoCreation(ParametersPack args);
+        public delegate TAnalysisPhaseOne AnalysisCreation(ParametersPack args);
 
-        private readonly AnalysisPartOneCreation _partOneFactory;
-
-        private readonly AnalysisPartTwoCreation _partTwoFactory;
+        private readonly AnalysisCreation _partOneFactory;
 
         public ParametersPack Args { get; }
 
@@ -20,72 +17,35 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
         public string SheetName { get; }
 
 
-        public ExcelContextForPhaseOne(
+        private ExcelContextForPhaseOne(
             ParametersPack args,
             bool showAnalysisWindow,
             string sheetName,
-            AnalysisPartOneCreation partOneFactory,
-            AnalysisPartTwoCreation partTwoFactory)
+            AnalysisCreation analysisFactory)
         {
             Args = args.ThrowIfNull(nameof(args));
             ShowAnalysisWindow = showAnalysisWindow;
-            _partOneFactory = partOneFactory.ThrowIfNull(nameof(partOneFactory));
-            _partTwoFactory = partTwoFactory.ThrowIfNull(nameof(partTwoFactory));
+            _partOneFactory = analysisFactory.ThrowIfNull(nameof(analysisFactory));
             SheetName = sheetName.ThrowIfNullOrEmpty(nameof(sheetName));
         }
 
-        public static ExcelContextForPhaseOne CreateWithoutFactories(
-            ParametersPack args,
-            bool showAnalysisWindow,
-            string sheetName)
-        {
-            return new ExcelContextForPhaseOne(
-                args: args,
-                showAnalysisWindow: showAnalysisWindow,
-                sheetName: sheetName,
-                partOneFactory: args => DummyAnalysisPhaseOnePartOne.Create(),
-                partTwoFactory: args => DummyAnalysisPhaseOnePartTwo.Create()
-            );
-        }
-
-        public static ExcelContextForPhaseOne CreateForPartOne(
+        public static ExcelContextForPhaseOne<TAnalysisPhaseOne> CreateFor(
             ParametersPack args,
             bool showAnalysisWindow,
             string sheetName,
-            AnalysisPartOneCreation partOneFactory)
+            AnalysisCreation analysisFactory)
         {
-            return new ExcelContextForPhaseOne(
+            return new ExcelContextForPhaseOne<TAnalysisPhaseOne>(
                 args: args,
                 showAnalysisWindow: showAnalysisWindow,
                 sheetName: sheetName,
-                partOneFactory: partOneFactory,
-                partTwoFactory: args => DummyAnalysisPhaseOnePartTwo.Create()
+                analysisFactory: analysisFactory
             );
         }
 
-        public static ExcelContextForPhaseOne CreateForPartTwo(
-            ParametersPack args,
-            bool showAnalysisWindow,
-            string sheetName,
-            AnalysisPartTwoCreation partTwoFactory)
-        {
-            return new ExcelContextForPhaseOne(
-                args: args,
-                showAnalysisWindow: showAnalysisWindow,
-                sheetName: sheetName,
-                partOneFactory: args => DummyAnalysisPhaseOnePartOne.Create(),
-                partTwoFactory: partTwoFactory
-            );
-        }
-
-        public IAnalysisPhaseOnePartOne CreatePartOne()
+        public TAnalysisPhaseOne CreatePartNAnalysis()
         {
             return _partOneFactory(Args);
-        }
-
-        public IAnalysisPhaseOnePartTwo CreatePartTwo()
-        {
-            return _partTwoFactory(Args);
         }
     }
 }

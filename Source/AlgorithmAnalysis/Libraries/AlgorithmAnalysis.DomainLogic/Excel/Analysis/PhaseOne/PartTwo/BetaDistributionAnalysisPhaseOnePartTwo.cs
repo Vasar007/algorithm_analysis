@@ -30,23 +30,23 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
         public void ApplyAnalysisToDataset(IExcelSheet sheet)
         {
-            sheet[ExcelColumnIndex.B, 1].SetValue(ExcelStrings.NormalizedColumnName);
-            sheet[ExcelColumnIndex.L, 1].SetValue(ExcelStrings.NormalDistributionSolutionColumnName);
+            sheet[ExcelColumnIndex.B, 1].SetValue(ExcelStringsPhaseOnePartTwo.NormalizedColumnName);
+            sheet[ExcelColumnIndex.L, 1].SetValue(ExcelStringsPhaseOnePartTwo.NormalDistributionSolutionColumnName);
             sheet.GetOrCreateCenterizedCell(ExcelColumnIndex.M, 1);
 
             sheet.AddMergedRegion(ExcelColumnIndex.L, 1, ExcelColumnIndex.M, 1);
 
-            sheet[ExcelColumnIndex.L, 2].SetValue(ExcelStrings.SampleMean);
-            sheet[ExcelColumnIndex.L, 3].SetValue(ExcelStrings.SampleVariance);
-            sheet[ExcelColumnIndex.L, 4].SetValue(ExcelStrings.SampleDeviation);
-            sheet[ExcelColumnIndex.L, 5].SetValue(ExcelStrings.VariationCoefficient);
-            sheet[ExcelColumnIndex.L, 6].SetValue(ExcelStrings.TheoreticalMin);
-            sheet[ExcelColumnIndex.L, 7].SetValue(ExcelStrings.TheoreticalMax);
-            sheet[ExcelColumnIndex.L, 8].SetValue(ExcelStrings.Span);
-            sheet[ExcelColumnIndex.L, 9].SetValue(ExcelStrings.NormalizedMean);
-            sheet[ExcelColumnIndex.L, 10].SetValue(ExcelStrings.NormalizedVarience);
-            sheet[ExcelColumnIndex.L, 11].SetValue(ExcelStrings.Alpha);
-            sheet[ExcelColumnIndex.L, 12].SetValue(ExcelStrings.Beta);
+            sheet[ExcelColumnIndex.L, 2].SetValue(ExcelStringsPhaseOnePartTwo.SampleMean);
+            sheet[ExcelColumnIndex.L, 3].SetValue(ExcelStringsPhaseOnePartTwo.SampleVariance);
+            sheet[ExcelColumnIndex.L, 4].SetValue(ExcelStringsPhaseOnePartTwo.SampleDeviation);
+            sheet[ExcelColumnIndex.L, 5].SetValue(ExcelStringsPhaseOnePartTwo.VariationCoefficient);
+            sheet[ExcelColumnIndex.L, 6].SetValue(ExcelStringsPhaseOnePartTwo.TheoreticalMin);
+            sheet[ExcelColumnIndex.L, 7].SetValue(ExcelStringsPhaseOnePartTwo.TheoreticalMax);
+            sheet[ExcelColumnIndex.L, 8].SetValue(ExcelStringsPhaseOnePartTwo.Span);
+            sheet[ExcelColumnIndex.L, 9].SetValue(ExcelStringsPhaseOnePartTwo.NormalizedMean);
+            sheet[ExcelColumnIndex.L, 10].SetValue(ExcelStringsPhaseOnePartTwo.NormalizedVarience);
+            sheet[ExcelColumnIndex.L, 11].SetValue(ExcelStringsPhaseOnePartTwo.Alpha);
+            sheet[ExcelColumnIndex.L, 12].SetValue(ExcelStringsPhaseOnePartTwo.Beta);
 
             string lastValueRowIndex = _args.LaunchesNumber.SkipHeader().ToString();
             sheet[ExcelColumnIndex.M, 2].SetFormula(sheet.FormulaProvider.Average($"$A$2:$A${lastValueRowIndex}"));

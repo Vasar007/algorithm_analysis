@@ -119,7 +119,7 @@
   </resheader>
   <data name="AdditionalParametersColumnName" xml:space="preserve">
     <value>Дополнительные параметры</value>
-    <comment>Column name (E1, I1).</comment>
+    <comment>Column name (E1).</comment>
   </data>
   <data name="AdditionalParametersValuesColumnName" xml:space="preserve">
     <value>Значения</value>
@@ -127,11 +127,11 @@
   </data>
   <data name="Alpha" xml:space="preserve">
     <value>Альфа</value>
-    <comment>Descriptive cell (H10, L10).</comment>
+    <comment>Descriptive cell (H10).</comment>
   </data>
   <data name="AverageFunc" xml:space="preserve">
     <value>average f(n)</value>
-    <comment>Descriptive cell (E4, I4).</comment>
+    <comment>Descriptive cell (E4).</comment>
   </data>
   <data name="Beta" xml:space="preserve">
     <value>Бета</value>
@@ -139,31 +139,15 @@
   </data>
   <data name="BetaDistributionSolutionColumnName" xml:space="preserve">
     <value>Решение на основе бета распределения</value>
-    <comment>Column name (H1 + I1, L1 + M1).</comment>
+    <comment>Column name (H1 + I1).</comment>
   </data>
   <data name="CalculatedSampleSize" xml:space="preserve">
     <value>Рассчитанный объём выборки</value>
-    <comment>Descriptive cell (J7).</comment>
-  </data>
-  <data name="CheckTestFucntion" xml:space="preserve">
-    <value>Проверка гитотезы функцией ТЕСТ</value>
-    <comment>Descriptive cell (I17).</comment>
-  </data>
-  <data name="Chi2Critical" xml:space="preserve">
-    <value>Критическое значение χ2</value>
-    <comment>Descriptive cell (I16).</comment>
-  </data>
-  <data name="Chi2Observable" xml:space="preserve">
-    <value>χ2 наблюдаемое</value>
-    <comment>Descriptive cell (I14).</comment>
-  </data>
-  <data name="Chi2ValueColumnName" xml:space="preserve">
-    <value>Значение для χ2</value>
-    <comment>Column name (H1).</comment>
+    <comment>Descriptive cell (H16, J7).</comment>
   </data>
   <data name="ConfidenceFactor" xml:space="preserve">
     <value>Коэффициент доверия</value>
-    <comment>Descriptive cell (E7, I7).</comment>
+    <comment>Descriptive cell (E7).</comment>
   </data>
   <data name="ConfidenceFactorValue" xml:space="preserve">
     <value>0.95</value>
@@ -173,13 +157,9 @@
     <value>Дельта для eps=0,001</value>
     <comment>Descriptive cell (H12).</comment>
   </data>
-  <data name="EmpiricalFrequencyColumnName" xml:space="preserve">
-    <value>Эмперические частоты</value>
-    <comment>Column name (F1).</comment>
-  </data>
   <data name="Epsilon" xml:space="preserve">
     <value>Eps</value>
-    <comment>Descriptive cell (E9, I9).</comment>
+    <comment>Descriptive cell (E9).</comment>
   </data>
   <data name="EpsilonValue" xml:space="preserve">
     <value>0.001</value>
@@ -187,27 +167,11 @@
   </data>
   <data name="ExperimentsNumber" xml:space="preserve">
     <value>Кол-во экспериментов</value>
-    <comment>Descriptive cell (E6, I6).</comment>
-  </data>
-  <data name="FreedomDegreesNumber" xml:space="preserve">
-    <value>Кол-во степеней свободы</value>
-    <comment>Descriptive cell (I15).</comment>
-  </data>
-  <data name="FrequencyColumnName" xml:space="preserve">
-    <value>Частота</value>
-    <comment>Column name (E1).</comment>
-  </data>
-  <data name="HistogramSemisegmentsNumber" xml:space="preserve">
-    <value>Число полусегментов для гистограммы</value>
-    <comment>Descriptive cell (I13).</comment>
+    <comment>Descriptive cell (E6).</comment>
   </data>
   <data name="InputDataSize" xml:space="preserve">
     <value>Размер входа</value>
-    <comment>Descriptive cell (E2, I2).</comment>
-  </data>
-  <data name="IntervalLength" xml:space="preserve">
-    <value>Длина интервала</value>
-    <comment>Descriptive cell (I12).</comment>
+    <comment>Descriptive cell (E2).</comment>
   </data>
   <data name="LowerIntegrationBound" xml:space="preserve">
     <value>Нижний предел интегрирования</value>
@@ -215,19 +179,11 @@
   </data>
   <data name="MaxFunc" xml:space="preserve">
     <value>max f(n)</value>
-    <comment>Descriptive cell (E5, I5).</comment>
-  </data>
-  <data name="MaximumValue" xml:space="preserve">
-    <value>Максимальное значение выборки</value>
-    <comment>Descriptive cell (I11).</comment>
+    <comment>Descriptive cell (E5).</comment>
   </data>
   <data name="MinFunc" xml:space="preserve">
     <value>min f(n)</value>
-    <comment>Descriptive cell (E3, I3).</comment>
-  </data>
-  <data name="MinimumValue" xml:space="preserve">
-    <value>Минимальное значение выборки</value>
-    <comment>Descriptive cell (I10).</comment>
+    <comment>Descriptive cell (E3).</comment>
   </data>
   <data name="NormalDistributionSolutionColumnName" xml:space="preserve">
     <value>Решение на основе нормального распределения</value>
@@ -243,31 +199,23 @@
   </data>
   <data name="NormalizedMean" xml:space="preserve">
     <value>Нормированное среднее</value>
-    <comment>Descriptive cell (H8, L8).</comment>
+    <comment>Descriptive cell (H8).</comment>
   </data>
   <data name="NormalizedVarience" xml:space="preserve">
     <value>Нормированная дисперсия</value>
-    <comment>Descriptive cell (H9, L9).</comment>
+    <comment>Descriptive cell (H9).</comment>
   </data>
   <data name="OperationColumnName" xml:space="preserve">
     <value>Кол-во операций</value>
     <comment>Column name (A1).</comment>
   </data>
-  <data name="Other" xml:space="preserve">
-    <value>Ещё</value>
-    <comment>Descriptive cell (D_i).</comment>
-  </data>
   <data name="PFunc" xml:space="preserve">
     <value>Значение P(n)</value>
     <comment>Descriptive cell (H18).</comment>
   </data>
-  <data name="PocketColumnName" xml:space="preserve">
-    <value>Карман</value>
-    <comment>Column name (D1).</comment>
-  </data>
   <data name="PreliminarySampleSize" xml:space="preserve">
     <value>Предварительный объём выборки</value>
-    <comment>Descriptive cell (H2, J2, L2).</comment>
+    <comment>Descriptive cell (H2, J2).</comment>
   </data>
   <data name="SampleDeviation" xml:space="preserve">
     <value>Выборочное отклонение</value>
@@ -275,15 +223,15 @@
   </data>
   <data name="SampleMean" xml:space="preserve">
     <value>Выборочное среднее</value>
-    <comment>Descriptive cell (H3, J3, L3).</comment>
+    <comment>Descriptive cell (H3, J3).</comment>
   </data>
   <data name="SampleVariance" xml:space="preserve">
     <value>Выборочная дисперсия</value>
-    <comment>Descriptive cell (H4, J4, L4).</comment>
+    <comment>Descriptive cell (H4, J4).</comment>
   </data>
   <data name="SignificanceLevel" xml:space="preserve">
     <value>Уровень значимости</value>
-    <comment>Descriptive cell (E8, I8).</comment>
+    <comment>Descriptive cell (E8).</comment>
   </data>
   <data name="SignificanceLevelFormula" xml:space="preserve">
     <value>1 - ${0}${1}</value>
@@ -291,23 +239,15 @@
   </data>
   <data name="Span" xml:space="preserve">
     <value>Размах</value>
-    <comment>Descriptive cell (H7, L7).</comment>
-  </data>
-  <data name="Sum" xml:space="preserve">
-    <value>Сумма</value>
-    <comment>Descriptive cell (D_[i+2]).</comment>
-  </data>
-  <data name="TheoreticalFrequencyColumnName" xml:space="preserve">
-    <value>Теоретические частоты</value>
-    <comment>Column name (G1).</comment>
+    <comment>Descriptive cell (H7).</comment>
   </data>
   <data name="TheoreticalMax" xml:space="preserve">
     <value>Теоретический максимум</value>
-    <comment>Descriptive cell (H6, L6).</comment>
+    <comment>Descriptive cell (H6).</comment>
   </data>
   <data name="TheoreticalMin" xml:space="preserve">
     <value>Теоретический минимум</value>
-    <comment>Descriptive cell (H5, L5).</comment>
+    <comment>Descriptive cell (H5).</comment>
   </data>
   <data name="UFunc" xml:space="preserve">
     <value>u(n)</value>
