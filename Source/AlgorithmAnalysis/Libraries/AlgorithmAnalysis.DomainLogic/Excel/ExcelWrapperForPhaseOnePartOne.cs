@@ -90,7 +90,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
             string formulaF8 = string.Format(
                 ExcelStringsPhaseOnePartOne.SignificanceLevelFormula,
-                sheet[ExcelColumnIndex.F, 7].FullAddress
+                sheet[ExcelColumnIndex.F, 7].Address
             );
             sheet[ExcelColumnIndex.F, 8].SetFormula(formulaF8);
             sheet[ExcelColumnIndex.F, 9].SetValue(double.Parse(ExcelStringsPhaseOnePartOne.EpsilonValue));

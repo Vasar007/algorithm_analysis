@@ -115,7 +115,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
             string significanceLevelFormula = string.Format(
                  ExcelStringsPhaseTwo.SignificanceLevelFormula,
-                 sheet[additionalDataColumnIndex, 4].FullAddress
+                 sheet[additionalDataColumnIndex, 4].Address
              );
             sheet[additionalDataColumnIndex, 5].SetFormula(significanceLevelFormula);
 

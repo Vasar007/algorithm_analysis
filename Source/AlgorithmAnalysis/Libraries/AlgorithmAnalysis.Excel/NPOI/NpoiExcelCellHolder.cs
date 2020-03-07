@@ -77,9 +77,11 @@ namespace AlgorithmAnalysis.Excel.NPOI
             }
         }
 
+        public string FullAddress => Address;
+
         // Can return invalid addresses if ExcelColumnIndex does not contain value for
         // _cell.ColumnIndex.
-        public string FullAddress =>
+        public string Address =>
             $"{_cell.ColumnIndex.AsEnum<ExcelColumnIndex>().ToString()}" +
             $"{(_cell.RowIndex + 1).ToString()}";
 

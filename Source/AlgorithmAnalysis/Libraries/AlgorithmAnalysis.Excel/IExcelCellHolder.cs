@@ -20,6 +20,8 @@ namespace AlgorithmAnalysis.Excel
 
         string FullAddress { get; }
 
+        string Address { get; }
+
 
         void SetValue(string value);
 
