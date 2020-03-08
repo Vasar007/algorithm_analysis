@@ -8,8 +8,6 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 {
     internal sealed class ExcelWrapperForPhaseTwo
     {
-        private const int PhaseNumber = 2;
-
         private readonly string _outputExcelFilename;
 
 

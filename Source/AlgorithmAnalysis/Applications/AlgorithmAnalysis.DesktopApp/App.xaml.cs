@@ -7,6 +7,8 @@ using Prism.Modularity;
 using Prism.Unity;
 using AlgorithmAnalysis.DesktopApp.Views;
 using AlgorithmAnalysis.Logging;
+using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Configuration;
 
 namespace AlgorithmAnalysis.DesktopApp
 {
@@ -16,6 +18,9 @@ namespace AlgorithmAnalysis.DesktopApp
     public partial class App : PrismApplication
     {
         private static readonly ILogger _logger = LoggerFactory.CreateLoggerFor<App>();
+
+        private static readonly string TraceLogFilename =
+            $"trace-{Utils.GetLocalShortDate()}.log";
 
 
         public App()
@@ -29,6 +34,10 @@ namespace AlgorithmAnalysis.DesktopApp
                     XmlLanguage.GetLanguage(CultureInfo.InvariantCulture.Name)
                 )
             );
+
+            string logFolderPath = ConfigOptions.Logger.RelativeLogFolderPath;
+            string logFilePath = Utils.GetLogFilePath(logFolderPath, TraceLogFilename);
+            TraceHelper.SetTraceListener(logFilePath, "TextLogTraceListener");
 
             _logger.PrintHeader("Desktop client application started.");
         }

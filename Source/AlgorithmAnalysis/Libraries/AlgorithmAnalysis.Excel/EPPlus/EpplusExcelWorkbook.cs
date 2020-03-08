@@ -1,18 +1,18 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Acolyte.Assertions;
 using OfficeOpenXml;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Excel.EPPlus.Functions;
 using AlgorithmAnalysis.Excel.Interop;
 using AlgorithmAnalysis.Excel.Formulas;
+using AlgorithmAnalysis.Common;
 
 namespace AlgorithmAnalysis.Excel.EPPlus
 {
     internal sealed class EpplusExcelWorkbook : IExcelWorkbook
     {
         private static readonly string EpplusLibLogFilename =
-            $"epplus-{DateTime.Now.ToString("yyyy-MM-dd")}.log";
+            $"epplus-{Utils.GetLocalShortDate()}.log";
 
         private readonly ExcelPackage _package;
 
@@ -101,12 +101,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
         private void AttachLogger()
         {
             string logFolderPath = ConfigOptions.Logger.RelativeLogFolderPath;
-            if (!Directory.Exists(logFolderPath))
-            {
-                Directory.CreateDirectory(logFolderPath);
-            }
-
-            string logFilePath = Path.Combine(logFolderPath, EpplusLibLogFilename);
+            string logFilePath = Utils.GetLogFilePath(logFolderPath, EpplusLibLogFilename);
 
             var logfile = new FileInfo(logFilePath);
             _package.Workbook.FormulaParserManager.AttachLogger(logfile);
