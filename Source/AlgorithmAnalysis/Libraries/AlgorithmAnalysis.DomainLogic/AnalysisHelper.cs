@@ -4,7 +4,7 @@ using Acolyte.Assertions;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
-using AlgorithmAnalysis.DomainLogic.Processes;
+using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
 using AlgorithmAnalysis.Excel;
 using AlgorithmAnalysis.Models;
 
@@ -32,6 +32,16 @@ namespace AlgorithmAnalysis.DomainLogic
             };
         }
 
+        public static IReadOnlyList<PhaseTwoAnalysisKind>
+            GetAvailableAnalysisKindForPhaseTwo()
+        {
+            return new List<PhaseTwoAnalysisKind>
+            {
+                PhaseTwoAnalysisKind.NormalDistribution,
+                PhaseTwoAnalysisKind.BetaDistribution
+            };
+        }
+
         public static IReadOnlyList<AlgorithmType> GetAvailableAlgorithms()
         {
             return ConfigOptions.Analysis.GetAlgorithmTypes();
@@ -50,7 +60,7 @@ namespace AlgorithmAnalysis.DomainLogic
             {
                 // TODO: add formulas for solution based on beta distribution.
                 throw new NotImplementedException(
-                    "Beta distribution analysis for phase one part one is not implemented."
+                    "Beta distribution analysis for phase 1 part 1 is not implemented."
                 );
             }
 
@@ -75,13 +85,36 @@ namespace AlgorithmAnalysis.DomainLogic
             {
                 // TODO: add formulas for solution based on Sturges's formula.
                 throw new NotImplementedException(
-                    "Sturges's analysis for phase one part two is not implemented."
+                    "Sturges's analysis for phase 1 part 2 is not implemented."
                 );
             }
 
             throw new ArgumentOutOfRangeException(
                 nameof(phaseOnePartTwo), phaseOnePartTwo,
                 $"Unknown analysis kind for phase 1 part 2 value: {phaseOnePartTwo.ToLogString()}."
+            );
+        }
+
+        internal static IAnalysisPhaseTwo CreateAnalysisPhaseTwo(
+            PhaseTwoAnalysisKind phaseTwo, ParametersPack args)
+        {
+            phaseTwo.ThrowIfNull(nameof(phaseTwo));
+
+            if (PhaseTwoAnalysisKind.NormalDistribution.Equals(phaseTwo))
+            {
+                // TODO: add formulas for solution based on Sturges's formula.
+                throw new NotImplementedException(
+                    "Normal distribution analysis for phase 2 is not implemented."
+                );
+            }
+            if (PhaseTwoAnalysisKind.BetaDistribution.Equals(phaseTwo))
+            {
+                return new BetaDistributionAnalysisPhaseTwo(args);
+            }
+
+            throw new ArgumentOutOfRangeException(
+                nameof(phaseTwo), phaseTwo,
+                $"Unknown analysis kind for phase 2 value: {phaseTwo.ToLogString()}."
             );
         }
 

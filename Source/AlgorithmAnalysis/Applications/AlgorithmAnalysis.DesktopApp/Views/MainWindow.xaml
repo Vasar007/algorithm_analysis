@@ -91,6 +91,22 @@
                     </ComboBox.ItemsPanel>
                 </ComboBox>
 
+                <TextBlock Text="Analysis kind for phase two"
+                           HorizontalAlignment="Center"
+                           Margin="0 7 0 3" />
+                <!-- TODO: reset selected index when implement normal distribution. -->
+                <ComboBox HorizontalAlignment="Center"
+                          MinWidth="350"
+                          SelectedIndex="1"
+                          ItemsSource="{Binding Path=AvailableAnalysisKindForPhaseTwo}"
+                          SelectedItem="{Binding Path=Parameters.SelectedPhaseTwo}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
                 <TextBlock Text="Algorithm"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />

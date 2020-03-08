@@ -1,6 +1,6 @@
-﻿using Acolyte.Assertions;
-using AlgorithmAnalysis.DomainLogic.Properties;
+﻿using AlgorithmAnalysis.DomainLogic.Properties;
 using AlgorithmAnalysis.Excel;
+using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 {

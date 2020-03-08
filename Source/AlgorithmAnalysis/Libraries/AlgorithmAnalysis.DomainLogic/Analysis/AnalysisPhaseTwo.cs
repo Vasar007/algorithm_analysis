@@ -1,4 +1,5 @@
 ﻿using AlgorithmAnalysis.DomainLogic.Excel;
+using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
@@ -31,7 +32,13 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
         private void PerformPartTwo(AnalysisContext context)
         {
-            var excelContext = new ExcelContextForPhaseTwo(context.Args);
+            var excelContext = ExcelContextForPhaseTwo<IAnalysisPhaseTwo>.CreateFor(
+                args: context.Args,
+                showAnalysisWindow: context.ShowAnalysisWindow,
+                sheetName: ExcelHelper.CreateSheetName(PhaseNumber),
+                analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseTwo(context.PhaseTwo, args)
+
+            );
             _excelWrapperForPhaseTwo.ApplyAnalysisAndSaveData(excelContext);
         }
     }

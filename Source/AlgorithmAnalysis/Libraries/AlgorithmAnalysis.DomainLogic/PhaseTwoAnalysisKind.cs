@@ -4,17 +4,17 @@ using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DomainLogic
 {
-    public sealed class PhaseOnePartOneAnalysisKind : DescriptiveBase, IEquatable<DescriptiveBase>,
-        IEquatable<PhaseOnePartOneAnalysisKind>, ILoggable
+    public sealed class PhaseTwoAnalysisKind : DescriptiveBase, IEquatable<DescriptiveBase>,
+        IEquatable<PhaseTwoAnalysisKind>, ILoggable
     {
-        public static PhaseOnePartOneAnalysisKind NormalDistribution { get; } = 
-            new PhaseOnePartOneAnalysisKind("Normal distribution", 1);
+        public static PhaseTwoAnalysisKind NormalDistribution { get; } = 
+            new PhaseTwoAnalysisKind("Normal distribution", 1);
 
-        public static PhaseOnePartOneAnalysisKind BetaDistribution { get; } =
-            new PhaseOnePartOneAnalysisKind("Beta distribution", 2);
+        public static PhaseTwoAnalysisKind BetaDistribution { get; } =
+            new PhaseTwoAnalysisKind("Beta distribution", 2);
 
 
-        private PhaseOnePartOneAnalysisKind(string description, int value)
+        private PhaseTwoAnalysisKind(string description, int value)
             : base(description, value)
         {
         }
@@ -28,7 +28,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public override bool Equals(object? obj)
         {
-            return Equals(obj as PhaseOnePartOneAnalysisKind);
+            return Equals(obj as PhaseTwoAnalysisKind);
         }
 
         public override int GetHashCode()
@@ -38,9 +38,9 @@ namespace AlgorithmAnalysis.DomainLogic
 
         #endregion
 
-        #region IEquatable<PhaseOnePartOneAnalysisKind> Implementation
+        #region IEquatable<PhaseTwoAnalysisKind> Implementation
 
-        public bool Equals(PhaseOnePartOneAnalysisKind? other)
+        public bool Equals(PhaseTwoAnalysisKind? other)
         {
             if (other is null) return false;
 
@@ -51,14 +51,14 @@ namespace AlgorithmAnalysis.DomainLogic
 
         #endregion
 
-        public static bool operator ==(PhaseOnePartOneAnalysisKind? left,
-            PhaseOnePartOneAnalysisKind? right)
+        public static bool operator ==(PhaseTwoAnalysisKind? left,
+            PhaseTwoAnalysisKind? right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(PhaseOnePartOneAnalysisKind? left,
-            PhaseOnePartOneAnalysisKind? right)
+        public static bool operator !=(PhaseTwoAnalysisKind? left,
+            PhaseTwoAnalysisKind? right)
         {
             return !(left == right);
         }
@@ -68,7 +68,7 @@ namespace AlgorithmAnalysis.DomainLogic
         public override string ToLogString()
         {
             var sb = new StringBuilder()
-                .AppendLine($"[{nameof(PhaseOnePartOneAnalysisKind)}]")
+                .AppendLine($"[{nameof(PhaseTwoAnalysisKind)}]")
                 .AppendLine($"Description: {Description.ToString()}")
                 .AppendLine($"Value: '{Value.ToString()}'");
 

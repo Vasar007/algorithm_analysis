@@ -51,12 +51,14 @@ namespace AlgorithmAnalysis.DomainLogic
 
         #endregion
 
-        public static bool operator ==(PhaseOnePartTwoAnalysisKind? left, PhaseOnePartTwoAnalysisKind? right)
+        public static bool operator ==(PhaseOnePartTwoAnalysisKind? left,
+            PhaseOnePartTwoAnalysisKind? right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(PhaseOnePartTwoAnalysisKind? left, PhaseOnePartTwoAnalysisKind? right)
+        public static bool operator !=(PhaseOnePartTwoAnalysisKind? left,
+            PhaseOnePartTwoAnalysisKind? right)
         {
             return !(left == right);
         }

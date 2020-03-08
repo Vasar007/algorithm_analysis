@@ -26,6 +26,14 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         }
 
         // Initializes through Reset method in ctor.
+        private PhaseTwoAnalysisKind _selectedPhaseTwo = default!;
+        public PhaseTwoAnalysisKind SelectedPhaseTwo
+        {
+            get => _selectedPhaseTwo;
+            set => SetProperty(ref _selectedPhaseTwo, value.ThrowIfNull(nameof(value)));
+        }
+
+        // Initializes through Reset method in ctor.
         private AlgorithmType _selectedAlgorithmType = default!;
         public AlgorithmType SelectedAlgorithmType
         {
@@ -88,8 +96,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void Reset()
         {
-            SelectedPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOne[0];
-            SelectedPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseTwo[0];
+            SelectedPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOnePartOne[0];
+            SelectedPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseOnePartTwo[0];
             SelectedAlgorithmType = DesktopOptions.AvailableAlgorithms[0];
             StartValue = "80";
             EndValue = "320";
@@ -105,7 +113,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
                 args: ConvertArgs(),
                 showAnalysisWindow: ShowAnalysisWindow,
                 phaseOnePartOne: SelectedPhaseOnePartOne,
-                phaseOnePartTwo: SelectedPhaseOnePartTwo
+                phaseOnePartTwo: SelectedPhaseOnePartTwo,
+                phaseTwo: SelectedPhaseTwo
             );
         }
 

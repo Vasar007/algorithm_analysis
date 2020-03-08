@@ -1,5 +1,6 @@
 ﻿using Acolyte.Assertions;
 using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
 using AlgorithmAnalysis.DomainLogic.Properties;
 using AlgorithmAnalysis.Excel;
 
@@ -18,80 +19,52 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
         }
 
         // TODO: implement phase two.
-        public void ApplyAnalysisAndSaveData(ExcelContextForPhaseTwo excelContext)
+        public void ApplyAnalysisAndSaveData(ExcelContextForPhaseTwo<IAnalysisPhaseTwo> excelContext)
         {
             using IExcelWorkbook workbook = ExcelHelper.GetOrCreateWorkbook(_outputExcelFilename);
 
-            string sheetName = ExcelHelper.CreateSheetName(PhaseNumber);
-            IExcelSheet sheet = workbook.GetOrCreateSheet(sheetName);
-            FillSheetHeader(sheet, excelContext.Args);
+            IExcelSheet sheet = workbook.GetOrCreateSheet(excelContext.SheetName);
+            int currentColumnIndex = FillSheetHeader(sheet, excelContext.Args);
+
+            IAnalysisPhaseTwo analysis = excelContext.CreateAnalysis();
+            analysis.ApplyAnalysisToDataset(sheet, currentColumnIndex);
 
             workbook.SaveToFile(_outputExcelFilename);
         }
 
-        private static void FillSheetHeader(IExcelSheet sheet, ParametersPack args)
+
+        public static int GetFirstDataRowIndex()
         {
+            return 1.SkipHeader();
+        }
+
+        public static int GetLastDataRowIndex(ParametersPack args)
+        {
+            return args.LaunchesNumber.SkipHeader();
+        }
+
+        public static int GetFirstNormalizedDataRowIndex(ParametersPack args)
+        {
+            // +2 because remain blank row.
+            return args.LaunchesNumber.SkipHeader() + 2;
+        }
+
+        public static int GetLastNormalizedDataRowIndex(ParametersPack args)
+        {
+            return args.LaunchesNumber.SkipHeader() * 2;
+        }
+
+        private static int FillSheetHeader(IExcelSheet sheet, ParametersPack args)
+        {
+            // Columnm index starts with zero because we use doule-conversion trick
+            // (int -> enum -> int).
             int currentColumnIndex = 0;
 
             FillLaunchesHeader(sheet, args, ref currentColumnIndex);
             FillAdditionalDataColumn(sheet, args, ref currentColumnIndex);
             FillBasicColumns(sheet, args, ref currentColumnIndex);
 
-            var sampleMeanColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[sampleMeanColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.SampleMean);
-            sheet.AutoSizeColumn(sampleMeanColumnIndex);
-
-            var sampleVarianceColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[sampleVarianceColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.SampleVariance);
-            sheet.AutoSizeColumn(sampleVarianceColumnIndex);
-
-            var sampleDeviationColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[sampleDeviationColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.SampleDeviation);
-            sheet.AutoSizeColumn(sampleDeviationColumnIndex);
-
-            var normalizedMeanColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[normalizedMeanColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.NormalizedMean);
-            sheet.AutoSizeColumn(normalizedMeanColumnIndex);
-
-            var normalizedVarienceColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[normalizedVarienceColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.NormalizedVarience);
-            sheet.AutoSizeColumn(normalizedVarienceColumnIndex);
-
-            var alphaColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[alphaColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.Alpha);
-            sheet.AutoSizeColumn(alphaColumnIndex);
-
-            var betaColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[betaColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.Beta);
-            sheet.AutoSizeColumn(betaColumnIndex);
-
-            ++currentColumnIndex;
-
-            var nColumnNameColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[nColumnNameColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.NColumnName);
-            sheet.AutoSizeColumn(nColumnNameColumnIndex);
-
-            var alphaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[alphaNColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.AlphaN);
-            sheet.AutoSizeColumn(alphaNColumnIndex);
-
-            var betaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[betaNColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.BetaN);
-            sheet.AutoSizeColumn(betaNColumnIndex);
-
-            ++currentColumnIndex;
-
-            var leftYQuantileColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[leftYQuantileColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.LeftYQuantile);
-            sheet.AutoSizeColumn(leftYQuantileColumnIndex);
-
-            var complexityFunctionColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[complexityFunctionColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.ComplexityFunction);
-            sheet.AutoSizeColumn(complexityFunctionColumnIndex);
-
-            var comparisonColumnIndex = currentColumnIndex.AsEnum<ExcelColumnIndex>();
-            sheet[comparisonColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.Comparison);
-            sheet.AutoSizeColumn(comparisonColumnIndex);
+            return currentColumnIndex;
         }
 
         private static void FillLaunchesHeader(IExcelSheet sheet, ParametersPack args,
@@ -121,11 +94,13 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
              );
             sheet[additionalDataColumnIndex, 5].SetFormula(significanceLevelFormula);
 
-            string operationsRange = $"2:{(args.LaunchesNumber + 1).ToString()}";
+            // Provide help information to see which columns contain data.
+            string operationsRange = $"{GetFirstDataRowIndex().ToString()}:" +
+                                     $"{GetLastDataRowIndex(args).ToString()}";
             sheet[additionalDataColumnIndex, 6].SetValue(operationsRange);
 
-            string normalizedRange = $"{(args.LaunchesNumber + 3).ToString()}:" +
-                                     $"{(args.LaunchesNumber * 2 + 2).ToString()}";
+            string normalizedRange = $"{GetFirstNormalizedDataRowIndex(args).ToString()}:" +
+                                     $"{GetLastNormalizedDataRowIndex(args).ToString()}";
             sheet[additionalDataColumnIndex, 7].SetValue(normalizedRange);
 
             sheet.AutoSizeColumn(additionalDataColumnIndex);
@@ -146,7 +121,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             sheet[theoreticalAverageColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.TheoreticalAverage);
 
             var theoreticalMaxColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[theoreticalMaxColumnIndex, rowIndex++].SetValue(ExcelStringsPhaseTwo.TheoreticalMax);
+            sheet[theoreticalMaxColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.TheoreticalMax);
+
+            ++rowIndex;
 
             for (int launchesNumber = args.StartValue; launchesNumber <= args.ExtrapolationSegmentValue;
                  launchesNumber += args.Step)
@@ -160,7 +137,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
                 sheet[theoreticalAverageColumnIndex, rowIndex].SetFormula(averageFormula);
 
                 string maxFormula = AnalysisHelper.GetMaxFormula(sheet, sampleSizeColumnIndex, rowIndex);
-                sheet[theoreticalMaxColumnIndex, rowIndex++].SetFormula(maxFormula);
+                sheet[theoreticalMaxColumnIndex, rowIndex].SetFormula(maxFormula);
+
+                ++rowIndex;
             }
 
             sheet.AutoSizeColumn(sampleSizeColumnIndex);

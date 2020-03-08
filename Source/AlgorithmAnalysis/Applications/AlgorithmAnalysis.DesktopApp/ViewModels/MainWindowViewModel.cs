@@ -27,6 +27,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public IReadOnlyList<PhaseOnePartTwoAnalysisKind> AvailableAnalysisKindForPhaseOnePartTwo { get; }
 
+        public IReadOnlyList<PhaseTwoAnalysisKind> AvailableAnalysisKindForPhaseTwo { get; }
+
         public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
 
         public RawParametersPack Parameters { get; }
@@ -49,8 +51,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             _performer = new AnalysisPerformer(_outputExcelFilename);
 
             Title = DesktopOptions.Title;
-            AvailableAnalysisKindForPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOne;
-            AvailableAnalysisKindForPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseTwo;
+            AvailableAnalysisKindForPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOnePartOne;
+            AvailableAnalysisKindForPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseOnePartTwo;
+            AvailableAnalysisKindForPhaseTwo = DesktopOptions.AvailableAnalysisKindForPhaseTwo;
             AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
             Parameters = new RawParametersPack();
             CanExecuteAnalysis = true;
