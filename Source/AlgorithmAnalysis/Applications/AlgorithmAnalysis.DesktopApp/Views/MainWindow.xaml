@@ -9,8 +9,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
         Title="{Binding Path=Title, Mode=OneWay}"
-        Height="512"
-        Width="512"
+        SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Background="Black"
@@ -49,6 +48,7 @@
 
     <Grid VerticalAlignment="Stretch"
           HorizontalAlignment="Stretch"
+          Margin="20"
           IsEnabled="{Binding Path=CanExecuteAnalysis}">
 
         <StackPanel VerticalAlignment="Center"
@@ -106,7 +106,7 @@
                     </ComboBox.ItemsPanel>
                 </ComboBox>
 
-                <TextBlock Text="First value of segment"
+                <TextBlock Text="First value of segment to analyze"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />
                 <TextBox Style="{StaticResource ResourceKey=TextBoxInError}">
@@ -121,12 +121,27 @@
                     </TextBox.Text>
                 </TextBox>
 
-                <TextBlock Text="Last value of segment"
+                <TextBlock Text="Last value of segment to analyze"
                            HorizontalAlignment="Center"
                            Margin="0 7 0 3" />
                 <TextBox Style="{StaticResource ResourceKey=TextBoxInError}">
                     <TextBox.Text>
                         <Binding Path="Parameters.EndValue"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 Mode="TwoWay">
+                            <Binding.ValidationRules>
+                                <domain:NumberValidation ValidationStep="UpdatedValue" />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
+                <TextBlock Text="Last value of extrapolation segment"
+                           HorizontalAlignment="Center"
+                           Margin="0 7 0 3" />
+                <TextBox Style="{StaticResource ResourceKey=TextBoxInError}">
+                    <TextBox.Text>
+                        <Binding Path="Parameters.ExtrapolationSegmentValue"
                                  UpdateSourceTrigger="PropertyChanged"
                                  Mode="TwoWay">
                             <Binding.ValidationRules>

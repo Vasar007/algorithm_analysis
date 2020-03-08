@@ -25,14 +25,35 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             return ExcelWrapperFactory.CreateWorkbook();
         }
 
+        public static string CreateSheetName(string sheetNamePrefix, string phaseNumber,
+            string? iterationNumber)
+        {
+            sheetNamePrefix.ThrowIfNull(nameof(sheetNamePrefix));
+            phaseNumber.ThrowIfNullOrEmpty(nameof(phaseNumber));
+
+            return iterationNumber is null
+                    ? $"{sheetNamePrefix}{phaseNumber.ToString()}"
+                    : $"{sheetNamePrefix}{phaseNumber.ToString()}-{iterationNumber.ToString()}";
+        }
+
         public static string CreateSheetName(string sheetNamePrefix, int phaseNumber,
             int iterationNumber)
         {
-            sheetNamePrefix.ThrowIfNull(nameof(sheetNamePrefix));
-            phaseNumber.ThrowIfValueIsOutOfRange(nameof(phaseNumber), 1, int.MaxValue);
-            iterationNumber.ThrowIfValueIsOutOfRange(nameof(iterationNumber), 1, int.MaxValue);
+            return CreateSheetName(
+                sheetNamePrefix, phaseNumber.ToString(), iterationNumber.ToString()
+            );
+        }
 
-            return $"{sheetNamePrefix}{phaseNumber.ToString()}-{iterationNumber.ToString()}";
+        public static string CreateSheetName(int phaseNumber)
+        {
+            return CreateSheetName(SheetNamePrefix, phaseNumber);
+        }
+
+        public static string CreateSheetName(string sheetNamePrefix, int phaseNumber)
+        {
+            return CreateSheetName(
+                sheetNamePrefix, phaseNumber.ToString(), iterationNumber: null
+            );
         }
 
         public static string CreateSheetName(int phaseNumber, int iterationNumber)

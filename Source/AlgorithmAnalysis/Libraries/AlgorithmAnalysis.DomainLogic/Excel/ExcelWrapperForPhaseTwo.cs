@@ -22,7 +22,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
         {
             using IExcelWorkbook workbook = ExcelHelper.GetOrCreateWorkbook(_outputExcelFilename);
 
-            string sheetName = ExcelHelper.CreateSheetName(PhaseNumber, excelContext.Args.LaunchesNumber);
+            string sheetName = ExcelHelper.CreateSheetName(PhaseNumber);
             IExcelSheet sheet = workbook.GetOrCreateSheet(sheetName);
             FillSheetHeader(sheet, excelContext.Args);
 
@@ -33,6 +33,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
         {
             int iterationsNumber = args.GetIterationsNumber(PhaseNumber);
 
+            FillLaunchesHeader(sheet, args, currentColumnIndex: 0);
             FillAdditionalDataColumn(sheet, args, iterationsNumber);
 
             var sampleSizeColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
@@ -119,7 +120,26 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
              );
             sheet[additionalDataColumnIndex, 5].SetFormula(significanceLevelFormula);
 
+            string operationsRange = $"2:{(args.LaunchesNumber + 1).ToString()}";
+            sheet[additionalDataColumnIndex, 6].SetValue(operationsRange);
+
+            string normalizedRange = $"{(args.LaunchesNumber + 3).ToString()}:" +
+                                     $"{(args.LaunchesNumber * 2 + 2).ToString()}";
+            sheet[additionalDataColumnIndex, 7].SetValue(normalizedRange);
+
             sheet.AutoSizeColumn(additionalDataColumnIndex);
+        }
+
+        private static void FillLaunchesHeader(IExcelSheet sheet, ParametersPack args,
+            int currentColumnIndex)
+        {
+            for (int launchesNumber = args.StartValue; launchesNumber <= args.EndValue;
+                 launchesNumber += args.Step)
+            {
+                var launchesColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+                sheet[launchesColumnIndex, 1].SetValue(launchesNumber);
+                sheet.AutoSizeColumn(launchesColumnIndex);
+            }
         }
     }
 }

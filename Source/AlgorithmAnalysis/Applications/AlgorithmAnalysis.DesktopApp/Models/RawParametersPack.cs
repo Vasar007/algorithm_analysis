@@ -50,6 +50,14 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         }
 
         // Initializes through Reset method in ctor.
+        private string _extrapolationSegmentValue = default!;
+        public string ExtrapolationSegmentValue
+        {
+            get => _extrapolationSegmentValue;
+            set => SetProperty(ref _extrapolationSegmentValue, value.ThrowIfNull(nameof(value)));
+        }
+
+        // Initializes through Reset method in ctor.
         private string _launchesNumber = default!;
         public string LaunchesNumber
         {
@@ -85,6 +93,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             SelectedAlgorithmType = DesktopOptions.AvailableAlgorithms[0];
             StartValue = "80";
             EndValue = "320";
+            ExtrapolationSegmentValue = "2560";
             LaunchesNumber = "200";
             Step = "10";
             ShowAnalysisWindow = false;
@@ -107,6 +116,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
                 algorithmType: SelectedAlgorithmType,
                 startValue: int.Parse(StartValue),
                 endValue: int.Parse(EndValue),
+                extrapolationSegmentValue: int.Parse(ExtrapolationSegmentValue),
                 launchesNumber: int.Parse(LaunchesNumber),
                 step: int.Parse(Step)
             );

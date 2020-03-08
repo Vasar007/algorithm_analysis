@@ -20,6 +20,8 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public int LaunchesNumber { get; }
 
+        public int ExtrapolationSegmentValue { get; }
+
         public int Step { get; }
 
         public string OutputFilenamePattern { get; }
@@ -32,6 +34,7 @@ namespace AlgorithmAnalysis.DomainLogic
             AlgorithmType algorithmType,
             int startValue,
             int endValue,
+            int extrapolationSegmentValue,
             int launchesNumber,
             int step,
             string outputFilenamePattern,
@@ -40,7 +43,8 @@ namespace AlgorithmAnalysis.DomainLogic
             AnalysisProgramName = analysisProgramName.ThrowIfNullOrWhiteSpace(nameof(analysisProgramName));
             AlgorithmType = algorithmType.ThrowIfNull(nameof(algorithmType));
             StartValue = startValue.ThrowIfValueIsOutOfRange(nameof(startValue), 1, int.MaxValue);
-            EndValue = endValue.ThrowIfValueIsOutOfRange(nameof(endValue), StartValue, int.MaxValue);
+            EndValue = endValue.ThrowIfValueIsOutOfRange(nameof(endValue), startValue, int.MaxValue);
+            ExtrapolationSegmentValue = extrapolationSegmentValue.ThrowIfValueIsOutOfRange(nameof(extrapolationSegmentValue), launchesNumber, int.MaxValue);
             LaunchesNumber = launchesNumber.ThrowIfValueIsOutOfRange(nameof(launchesNumber), 1, int.MaxValue);
             Step = step.ThrowIfValueIsOutOfRange(nameof(step), 1, int.MaxValue);
             OutputFilenamePattern = outputFilenamePattern.ThrowIfNullOrWhiteSpace(nameof(outputFilenamePattern));
@@ -52,6 +56,7 @@ namespace AlgorithmAnalysis.DomainLogic
             AlgorithmType algorithmType,
             int startValue,
             int endValue,
+            int extrapolationSegmentValue,
             int launchesNumber,
             int step)
         {
@@ -62,6 +67,7 @@ namespace AlgorithmAnalysis.DomainLogic
                 algorithmType: algorithmType,
                 startValue: startValue,
                 endValue: endValue,
+                extrapolationSegmentValue: extrapolationSegmentValue,
                 launchesNumber: launchesNumber,
                 step: step,
                 outputFilenamePattern: analysisOptions.OutputFilenamePattern,
@@ -76,6 +82,7 @@ namespace AlgorithmAnalysis.DomainLogic
                 algorithmType: AlgorithmType,
                 startValue: StartValue,
                 endValue: EndValue,
+                extrapolationSegmentValue: ExtrapolationSegmentValue,
                 launchesNumber: newLaunchesNumber,
                 step: Step,
                 outputFilenamePattern: OutputFilenamePattern,
