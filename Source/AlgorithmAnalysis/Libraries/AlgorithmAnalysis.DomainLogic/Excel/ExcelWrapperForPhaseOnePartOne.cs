@@ -47,11 +47,11 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         private static void FillSheetHeader(IExcelSheet sheet, ParametersPack args)
         {
-            FillOperationColumn(sheet, args);
+            FillOperationColumn(sheet);
             FillAdditionalParametersColumns(sheet, args);
         }
 
-        private static void FillOperationColumn(IExcelSheet sheet, ParametersPack args)
+        private static void FillOperationColumn(IExcelSheet sheet)
         {
             sheet[ExcelColumnIndex.A, 1].SetValue(ExcelStringsPhaseOnePartTwo.OperationColumnName);
 
@@ -77,13 +77,13 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             sheet[ExcelColumnIndex.F, 1].SetValue(ExcelStringsPhaseOnePartOne.AdditionalParametersValuesColumnName);
             sheet[ExcelColumnIndex.F, 2].SetValue(args.StartValue);
 
-            string minFormula = AnalysisHelper.GetMinFormula(ExcelColumnIndex.F, 2);
+            string minFormula = AnalysisHelper.GetMinFormula(sheet, ExcelColumnIndex.F, 2);
             sheet[ExcelColumnIndex.F, 3].SetFormula(minFormula);
 
-            string averageFormula = AnalysisHelper.GetAverageFormula(ExcelColumnIndex.F, 2);
+            string averageFormula = AnalysisHelper.GetAverageFormula(sheet, ExcelColumnIndex.F, 2);
             sheet[ExcelColumnIndex.F, 4].SetFormula(averageFormula);
 
-            string maxFormula = AnalysisHelper.GetMaxFormula(ExcelColumnIndex.F, 2);
+            string maxFormula = AnalysisHelper.GetMaxFormula(sheet, ExcelColumnIndex.F, 2);
             sheet[ExcelColumnIndex.F, 5].SetFormula(maxFormula);
             sheet[ExcelColumnIndex.F, 6].SetValue(args.LaunchesNumber);
             sheet[ExcelColumnIndex.F, 7].SetValue(double.Parse(ExcelStringsPhaseOnePartOne.ConfidenceFactorValue));

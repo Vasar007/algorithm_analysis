@@ -86,32 +86,35 @@ namespace AlgorithmAnalysis.DomainLogic
         }
 
         // TODO: use interface instead of this method.
-        internal static string GetMinFormula(ExcelColumnIndex columnIndex, int rowIndex)
+        internal static string GetMinFormula(IExcelSheet sheet, ExcelColumnIndex columnIndex,
+            int rowIndex)
         {
-            columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
+            sheet.ThrowIfNull(nameof(sheet));
             rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
 
-            string cell = $"${columnIndex.ToString()}${rowIndex.ToString()}";
+            string cell = sheet[columnIndex, rowIndex].Address;
             return cell;
         }
 
         // TODO: use interface instead of this method.
-        internal static string GetAverageFormula(ExcelColumnIndex columnIndex, int rowIndex)
+        internal static string GetAverageFormula(IExcelSheet sheet, ExcelColumnIndex columnIndex,
+            int rowIndex)
         {
-            columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
+            sheet.ThrowIfNull(nameof(sheet));
             rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
 
-            string cell = $"${columnIndex.ToString()}${rowIndex.ToString()}";
+            string cell = sheet[columnIndex, rowIndex].Address;
             return $"{cell} * {cell} * ({cell} - 1) / 2";
         }
 
         // TODO: use interface instead of this method.
-        internal static string GetMaxFormula(ExcelColumnIndex columnIndex, int rowIndex)
+        internal static string GetMaxFormula(IExcelSheet sheet, ExcelColumnIndex columnIndex,
+            int rowIndex)
         {
-            columnIndex.ThrowIfEnumValueIsUndefined(nameof(columnIndex));
+            sheet.ThrowIfNull(nameof(sheet));
             rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
 
-            string cell = $"${columnIndex.ToString()}${rowIndex.ToString()}";
+            string cell = sheet[columnIndex, rowIndex].Address;
             return $"{cell} * {cell} * {cell} * ({cell} - 1) / 2";
         }
     }

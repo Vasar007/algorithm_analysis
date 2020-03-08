@@ -107,11 +107,15 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
                 if (i == 0)
                 {
-                    CreateFirstValueInInterval(sheet, currentRow, currentRowStr, normalizedValueRange);
+                    CreateFirstValueInInterval(
+                        sheet, currentRow, currentRowStr, normalizedValueRange
+                    );
                 }
                 else if (i == histogramSegmentsNumber)
                 {
-                    CreateLastValueInInterval(sheet, currentRow, previousRowStr, normalizedValueRange);
+                    CreateLastValueInInterval(
+                        sheet, currentRow, previousRowStr, normalizedValueRange
+                    );
                 }
                 else
                 {

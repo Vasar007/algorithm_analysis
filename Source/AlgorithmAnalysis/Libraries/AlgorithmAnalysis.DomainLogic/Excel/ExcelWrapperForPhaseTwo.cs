@@ -31,82 +31,83 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         private static void FillSheetHeader(IExcelSheet sheet, ParametersPack args)
         {
-            int iterationsNumber = args.GetIterationsNumber(PhaseNumber);
+            int currentColumnIndex = 0;
 
-            FillLaunchesHeader(sheet, args, currentColumnIndex: 0);
-            FillAdditionalDataColumn(sheet, args, iterationsNumber);
+            FillLaunchesHeader(sheet, args, ref currentColumnIndex);
+            FillAdditionalDataColumn(sheet, args, ref currentColumnIndex);
+            FillBasicColumns(sheet, args, ref currentColumnIndex);
 
-            var sampleSizeColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
-            sheet[sampleSizeColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.SampleSize);
-            sheet.AutoSizeColumn(sampleSizeColumnIndex);
-
-            var sampleMeanColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var sampleMeanColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[sampleMeanColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.SampleMean);
             sheet.AutoSizeColumn(sampleMeanColumnIndex);
 
-            var sampleVarianceColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var sampleVarianceColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[sampleVarianceColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.SampleVariance);
             sheet.AutoSizeColumn(sampleVarianceColumnIndex);
 
-            var sampleDeviationColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var sampleDeviationColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[sampleDeviationColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.SampleDeviation);
             sheet.AutoSizeColumn(sampleDeviationColumnIndex);
 
-            var theoreticalMinColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
-            sheet[theoreticalMinColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.TheoreticalMin);
-            sheet.AutoSizeColumn(theoreticalMinColumnIndex);
-
-            var theoreticalMaxColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
-            sheet[theoreticalMaxColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.TheoreticalMax);
-            sheet.AutoSizeColumn(theoreticalMaxColumnIndex);
-
-            var normalizedMeanColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var normalizedMeanColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[normalizedMeanColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.NormalizedMean);
             sheet.AutoSizeColumn(normalizedMeanColumnIndex);
 
-            var normalizedVarienceColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var normalizedVarienceColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[normalizedVarienceColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.NormalizedVarience);
             sheet.AutoSizeColumn(normalizedVarienceColumnIndex);
 
-            var alphaColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var alphaColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[alphaColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.Alpha);
             sheet.AutoSizeColumn(alphaColumnIndex);
 
-            var betaColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var betaColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[betaColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.Beta);
             sheet.AutoSizeColumn(betaColumnIndex);
 
-            ++iterationsNumber;
+            ++currentColumnIndex;
 
-            var nColumnNameColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var nColumnNameColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[nColumnNameColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.NColumnName);
             sheet.AutoSizeColumn(nColumnNameColumnIndex);
 
-            var alphaNColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var alphaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[alphaNColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.AlphaN);
             sheet.AutoSizeColumn(alphaNColumnIndex);
 
-            var betaNColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var betaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[betaNColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.BetaN);
             sheet.AutoSizeColumn(betaNColumnIndex);
 
-            ++iterationsNumber;
+            ++currentColumnIndex;
 
-            var leftYQuantileColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var leftYQuantileColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[leftYQuantileColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.LeftYQuantile);
             sheet.AutoSizeColumn(leftYQuantileColumnIndex);
 
-            var complexityFunctionColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var complexityFunctionColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[complexityFunctionColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.ComplexityFunction);
             sheet.AutoSizeColumn(complexityFunctionColumnIndex);
 
-            var comparisonColumnIndex = iterationsNumber++.AsEnum<ExcelColumnIndex>();
+            var comparisonColumnIndex = currentColumnIndex.AsEnum<ExcelColumnIndex>();
             sheet[comparisonColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.Comparison);
             sheet.AutoSizeColumn(comparisonColumnIndex);
         }
 
+        private static void FillLaunchesHeader(IExcelSheet sheet, ParametersPack args,
+            ref int currentColumnIndex)
+        {
+            for (int launchesNumber = args.StartValue; launchesNumber <= args.EndValue;
+                 launchesNumber += args.Step)
+            {
+                var launchesColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+                sheet[launchesColumnIndex, 1].SetValue(launchesNumber);
+                sheet.AutoSizeColumn(launchesColumnIndex);
+            }
+        }
+
         private static void FillAdditionalDataColumn(IExcelSheet sheet, ParametersPack args,
-            int currentColumnIndex)
+            ref int currentColumnIndex)
         {
             var additionalDataColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[additionalDataColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.AdditionalData);
@@ -130,16 +131,42 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             sheet.AutoSizeColumn(additionalDataColumnIndex);
         }
 
-        private static void FillLaunchesHeader(IExcelSheet sheet, ParametersPack args,
-            int currentColumnIndex)
+        private static void FillBasicColumns(IExcelSheet sheet, ParametersPack args,
+            ref int currentColumnIndex)
         {
-            for (int launchesNumber = args.StartValue; launchesNumber <= args.EndValue;
+            int rowIndex = 1;
+
+            var sampleSizeColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[sampleSizeColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.SampleSize);
+
+            var theoreticalMinColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[theoreticalMinColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.TheoreticalMin);
+
+            var theoreticalAverageColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[theoreticalAverageColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.TheoreticalAverage);
+
+            var theoreticalMaxColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[theoreticalMaxColumnIndex, rowIndex++].SetValue(ExcelStringsPhaseTwo.TheoreticalMax);
+
+            for (int launchesNumber = args.StartValue; launchesNumber <= args.ExtrapolationSegmentValue;
                  launchesNumber += args.Step)
             {
-                var launchesColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-                sheet[launchesColumnIndex, 1].SetValue(launchesNumber);
-                sheet.AutoSizeColumn(launchesColumnIndex);
+                sheet[sampleSizeColumnIndex, rowIndex].SetValue(launchesNumber);
+
+                string minFormula = AnalysisHelper.GetMinFormula(sheet, sampleSizeColumnIndex, rowIndex);
+                sheet[theoreticalMinColumnIndex, rowIndex].SetFormula(minFormula);
+
+                string averageFormula = AnalysisHelper.GetAverageFormula(sheet, sampleSizeColumnIndex, rowIndex);
+                sheet[theoreticalAverageColumnIndex, rowIndex].SetFormula(averageFormula);
+
+                string maxFormula = AnalysisHelper.GetMaxFormula(sheet, sampleSizeColumnIndex, rowIndex);
+                sheet[theoreticalMaxColumnIndex, rowIndex++].SetFormula(maxFormula);
             }
+
+            sheet.AutoSizeColumn(sampleSizeColumnIndex);
+            sheet.AutoSizeColumn(theoreticalMinColumnIndex);
+            sheet.AutoSizeColumn(theoreticalAverageColumnIndex);
+            sheet.AutoSizeColumn(theoreticalMaxColumnIndex);
         }
     }
 }

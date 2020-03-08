@@ -214,6 +214,15 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Теоретическое значение в среднем.
+        /// </summary>
+        internal static string TheoreticalAverage {
+            get {
+                return ResourceManager.GetString("TheoreticalAverage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Теоретический максимум.
         /// </summary>
         internal static string TheoreticalMax {

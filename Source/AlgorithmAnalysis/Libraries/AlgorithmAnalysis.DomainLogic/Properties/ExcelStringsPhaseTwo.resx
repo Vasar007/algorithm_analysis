@@ -123,7 +123,7 @@
   </data>
   <data name="Alpha" xml:space="preserve">
     <value>Альфа</value>
-    <comment>Column name ([% + 9]_1).</comment>
+    <comment>Column name ([% + 10]_1).</comment>
   </data>
   <data name="AlphaN" xml:space="preserve">
     <value>α(n)</value>
@@ -131,7 +131,7 @@
   </data>
   <data name="Beta" xml:space="preserve">
     <value>Бета</value>
-    <comment>Column name ([% + 10]_1).</comment>
+    <comment>Column name ([% + 11]_1).</comment>
   </data>
   <data name="BetaN" xml:space="preserve">
     <value>β(n)</value>
@@ -159,19 +159,19 @@
   </data>
   <data name="NormalizedMean" xml:space="preserve">
     <value>Нормированное среднее</value>
-    <comment>Column name ([% + 7]_1).</comment>
+    <comment>Column name ([% + 8]_1).</comment>
   </data>
   <data name="NormalizedVarience" xml:space="preserve">
     <value>Нормированная дисперсия</value>
-    <comment>Column name ([% + 8]_1).</comment>
+    <comment>Column name ([% + 9]_1).</comment>
   </data>
   <data name="SampleDeviation" xml:space="preserve">
     <value>Выборочное отклонение</value>
-    <comment>Column name ([% + 4]_1).</comment>
+    <comment>Column name ([% + 7]_1).</comment>
   </data>
   <data name="SampleMean" xml:space="preserve">
     <value>Выборочное среднее</value>
-    <comment>Column name ([% + 2]_1).</comment>
+    <comment>Column name ([% + 5]_1).</comment>
   </data>
   <data name="SampleSize" xml:space="preserve">
     <value>Объём выборки, n</value>
@@ -179,18 +179,22 @@
   </data>
   <data name="SampleVariance" xml:space="preserve">
     <value>Выборочная дисперсия</value>
-    <comment>Column name ([% + 3]_1).</comment>
+    <comment>Column name ([% + 6]_1).</comment>
   </data>
   <data name="SignificanceLevelFormula" xml:space="preserve">
     <value>1 - {0}</value>
     <comment>Value cell (%_[i + 4]).</comment>
   </data>
+  <data name="TheoreticalAverage" xml:space="preserve">
+    <value>Теоретическое значение в среднем</value>
+    <comment>Column name ([% + 4]_1).</comment>
+  </data>
   <data name="TheoreticalMax" xml:space="preserve">
     <value>Теоретический максимум</value>
-    <comment>Column name ([% + 6]_1).</comment>
+    <comment>Column name ([% + 3]_1).</comment>
   </data>
   <data name="TheoreticalMin" xml:space="preserve">
     <value>Теоретический минимум</value>
-    <comment>Column name ([% + 5]_1).</comment>
+    <comment>Column name ([% + 2]_1).</comment>
   </data>
 </root>
