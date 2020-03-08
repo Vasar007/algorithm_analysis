@@ -68,7 +68,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         private int PerformOneIterationOfPartOne(
             ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne> excelContext)
         {
-            using FileObject fileObject = ExcelHelper.PerformOneIterationOfPhaseOne(
+            using FileObject fileObject = AnalysisRunner.PerformOneIterationOfPhaseOne(
                 excelContext.Args, excelContext.ShowAnalysisWindow, _fileWorker
             );
 
@@ -87,7 +87,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args)
             );
 
-            using FileObject fileObject = ExcelHelper.PerformOneIterationOfPhaseOne(
+            using FileObject fileObject = AnalysisRunner.PerformOneIterationOfPhaseOne(
                  excelContext.Args, excelContext.ShowAnalysisWindow, _fileWorker
              );
 
