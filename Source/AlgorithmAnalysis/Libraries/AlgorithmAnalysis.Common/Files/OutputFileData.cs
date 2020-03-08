@@ -1,6 +1,6 @@
 ﻿using FileHelpers;
 
-namespace AlgorithmAnalysis.DomainLogic.Files
+namespace AlgorithmAnalysis.Common.Files
 {
     // TODO: refactor FieldOrderAttribute and allow to work with propertis and immutable models.
     /// <summary>
@@ -10,7 +10,7 @@ namespace AlgorithmAnalysis.DomainLogic.Files
     /// FileHelper doesn't support properties. That's why this data class contains public field.
     /// </remarks>
     [DelimitedRecord("|"), IgnoreEmptyLines(true), IgnoreFirst(1)]
-    internal sealed class OutputFileData
+    public sealed class OutputFileData
     {
         /// <summary>
         /// Output file contains single integer value which means operation number of algorithm

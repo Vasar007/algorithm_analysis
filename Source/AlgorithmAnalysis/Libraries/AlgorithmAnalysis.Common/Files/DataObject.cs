@@ -4,9 +4,9 @@ using System.Linq;
 using Acolyte.Assertions;
 using FileHelpers;
 
-namespace AlgorithmAnalysis.DomainLogic.Files
+namespace AlgorithmAnalysis.Common.Files
 {
-    internal sealed class DataObject<TSource> : IDisposable
+    public sealed class DataObject<TSource> : IDisposable
         where TSource : class
     {
         private readonly FileHelperAsyncEngine<TSource> _engine;

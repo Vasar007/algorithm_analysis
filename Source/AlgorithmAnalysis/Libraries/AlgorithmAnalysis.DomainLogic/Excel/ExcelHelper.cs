@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.DomainLogic.Files;
-using AlgorithmAnalysis.DomainLogic.Processes;
+using AlgorithmAnalysis.Common.Files;
+using AlgorithmAnalysis.Common.Processes;
 using AlgorithmAnalysis.Excel;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel
@@ -73,7 +73,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
             var fileHolder = new FileHolder(finalOutputFilenames);
 
-            using (var analysisRunner = AnalysisRunner.RunAnalysisProgram(
+            using (var analysisRunner = ProgramRunner.RunProgram(
                        args.AnalysisProgramName,
                        args.PackAsInputArgumentsForPhaseOne(),
                        showAnalysisWindow
@@ -102,7 +102,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
             var fileHolder = new FileHolder(finalOutputFilenames);
 
-            using (var analysisRunner = AnalysisRunner.RunAnalysisProgram(
+            using (var analysisRunner = ProgramRunner.RunProgram(
                        args.AnalysisProgramName,
                        args.PackAsInputArgumentsForPhaseTwo(),
                        showAnalysisWindow

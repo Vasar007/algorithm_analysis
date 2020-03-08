@@ -13,10 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FileHelpers" Version="3.4.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AlgorithmAnalysis.Configuration\AlgorithmAnalysis.Configuration.csproj" />
     <ProjectReference Include="..\AlgorithmAnalysis.Excel\AlgorithmAnalysis.Excel.csproj" />
     <ProjectReference Include="..\AlgorithmAnalysis.Logging\AlgorithmAnalysis.Logging.csproj" />

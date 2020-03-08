@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.Logging;
 
-namespace AlgorithmAnalysis.DomainLogic.Files
+namespace AlgorithmAnalysis.Common.Files
 {
-    internal sealed class FileHolder : IDisposable
+    public sealed class FileHolder : IDisposable
     {
-        private static readonly ILogger _logger = LoggerFactory.CreateLoggerFor<FileHolder>();
-
         private readonly IEnumerable<string> _dataFilenames;
 
         private bool _disposed;
@@ -35,19 +33,29 @@ namespace AlgorithmAnalysis.DomainLogic.Files
 
         private void TryDeleteOutputDataFiles()
         {
+            foreach (string dataFilename in _dataFilenames)
+            {
+                TryDeleteDataFile(dataFilename);
+            }
+        }
+
+        private static void TryDeleteDataFile(string dataFilename)
+        {
             try
             {
-                foreach (string dataFilename in _dataFilenames)
+                if (File.Exists(dataFilename))
                 {
-                    if (File.Exists(dataFilename))
-                    {
-                        File.Delete(dataFilename);
-                    }
+                    File.Delete(dataFilename);
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, $"Failed to delete output data files.");
+                string message =
+                    $"Failed to delete output data file '{dataFilename}':" +
+                    $"{Environment.NewLine}{ex}";
+
+                Debug.WriteLine(message);
+                Trace.WriteLine(message);
             }
         }
     }

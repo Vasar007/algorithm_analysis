@@ -1,9 +1,9 @@
 ﻿using System;
 using Acolyte.Assertions;
 
-namespace AlgorithmAnalysis.DomainLogic.Files
+namespace AlgorithmAnalysis.Common.Files
 {
-    internal sealed class FileObject : IDisposable
+    public sealed class FileObject : IDisposable
     {
         private readonly FileHolder _fileHolder;
 

@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using Acolyte.Assertions;
 
-namespace AlgorithmAnalysis.DomainLogic.Processes
+namespace AlgorithmAnalysis.Common.Processes
 {
-    internal sealed class ProcessHolder : IDisposable
+    public sealed class ProcessHolder : IDisposable
     {
         private readonly Process _process;
 

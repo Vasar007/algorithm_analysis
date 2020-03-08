@@ -3,9 +3,9 @@ using System.IO;
 using Acolyte.Assertions;
 using FileHelpers;
 
-namespace AlgorithmAnalysis.DomainLogic.Files
+namespace AlgorithmAnalysis.Common.Files
 {
-    internal sealed class LocalFileWorker
+    public sealed class LocalFileWorker
     {
         public LocalFileWorker()
         {

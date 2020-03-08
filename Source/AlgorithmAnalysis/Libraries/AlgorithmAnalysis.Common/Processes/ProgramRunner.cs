@@ -1,31 +1,31 @@
 ﻿using System;
 using Acolyte.Assertions;
 
-namespace AlgorithmAnalysis.DomainLogic.Processes
+namespace AlgorithmAnalysis.Common.Processes
 {
-    internal sealed class AnalysisRunner : IDisposable
+    public sealed class ProgramRunner : IDisposable
     {
         private readonly ProcessHolder _processHolder;
 
         private bool _disposed;
 
 
-        public AnalysisRunner(ProcessHolder processHolder)
+        public ProgramRunner(ProcessHolder processHolder)
         {
             _processHolder = processHolder.ThrowIfNull(nameof(processHolder));
         }
 
-        public static AnalysisRunner RunAnalysisProgram(string analysisProgramName, string args,
+        public static ProgramRunner RunProgram(string programName, string args,
             bool showWindow)
         {
-            analysisProgramName.ThrowIfNullOrWhiteSpace(nameof(analysisProgramName));
+            programName.ThrowIfNullOrWhiteSpace(nameof(programName));
             args.ThrowIfNullOrWhiteSpace(nameof(args));
 
             var processHolder = ProcessHolder.Start(
-                analysisProgramName, args, showWindow
+                programName, args, showWindow
             );
 
-            return new AnalysisRunner(processHolder);
+            return new ProgramRunner(processHolder);
         }
 
         public void Wait()

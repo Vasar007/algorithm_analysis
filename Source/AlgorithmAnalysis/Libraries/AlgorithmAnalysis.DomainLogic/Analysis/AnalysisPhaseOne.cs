@@ -1,5 +1,5 @@
-﻿using AlgorithmAnalysis.DomainLogic.Excel;
-using AlgorithmAnalysis.DomainLogic.Files;
+﻿using AlgorithmAnalysis.Common.Files;
+using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
 
