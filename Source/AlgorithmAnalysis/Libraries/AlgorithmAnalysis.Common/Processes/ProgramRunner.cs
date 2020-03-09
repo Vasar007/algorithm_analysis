@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
 
@@ -17,12 +16,9 @@ namespace AlgorithmAnalysis.Common.Processes
             _processHolder = processHolder.ThrowIfNull(nameof(processHolder));
         }
 
-        public static ProgramRunner RunProgram(FileInfo programName, string args,
-            bool showWindow)
+        public static ProgramRunner RunProgram(ProcessLaunchContext launchContext)
         {
-            var processHolder = ProcessHolder.Start(
-                programName, args, showWindow
-            );
+            var processHolder = ProcessHolder.Start(launchContext);
 
             return new ProgramRunner(processHolder);
         }
@@ -33,10 +29,22 @@ namespace AlgorithmAnalysis.Common.Processes
             _processHolder.WaitForExit();
         }
 
+        public void Wait(TimeSpan delay)
+        {
+            _processHolder.CheckExecutionStatus();
+            _processHolder.WaitForExit(delay);
+        }
+
         public Task WaitAsync()
         {
             _processHolder.CheckExecutionStatus();
             return _processHolder.WaitForExitAsync();
+        }
+
+        public Task WaitAsync(TimeSpan delay)
+        {
+            _processHolder.CheckExecutionStatus();
+            return _processHolder.WaitForExitAsync(delay);
         }
 
         #region IDisposable Impelementation

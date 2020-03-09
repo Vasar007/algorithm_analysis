@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Acolyte.Assertions;
@@ -19,12 +18,11 @@ namespace AlgorithmAnalysis.Common.Processes
             _process = process.ThrowIfNull(nameof(process));
         }
 
-        public static ProcessHolder Start(FileInfo file, string args, bool showWindow)
+        public static ProcessHolder Start(ProcessLaunchContext launchContext)
         {
-            file.ThrowIfNull(nameof(file));
-            args.ThrowIfNullOrEmpty(nameof(args));
+            launchContext.ThrowIfNull(nameof(launchContext));
 
-            return new ProcessHolder(StartProgram(file, args, showWindow));
+            return new ProcessHolder(StartProgram(launchContext));
         }
 
         #region IDisposable Implementation
@@ -91,6 +89,8 @@ namespace AlgorithmAnalysis.Common.Processes
 
         public void CheckExecutionStatus()
         {
+            if (!_process.StartInfo.RedirectStandardError) return;
+
             const int exitSuccess = (int) ExitCode.EXIT_SUCCESS;
 
             string error = _process.StandardError.ReadToEnd();
@@ -100,33 +100,11 @@ namespace AlgorithmAnalysis.Common.Processes
             }
         }
 
-        private static Process StartProgram(FileInfo file, string args, bool showWindow)
+        private static Process StartProgram(ProcessLaunchContext launchContext)
         {
-            // Contract: the analysis program is located in the same directory as our app.
-            ProcessStartInfo starterInfo = CreateStartInfo(file, args, showWindow);
+            ProcessStartInfo starterInfo = launchContext.CreateStartInfo();
 
             return Process.Start(starterInfo);
-        }
-
-        private static ProcessStartInfo CreateStartInfo(FileInfo file, string args, bool showWindow)
-        {
-            var starterInfo = new ProcessStartInfo(file.FullName, args)
-            {
-                WorkingDirectory = file.Directory.FullName,
-                RedirectStandardError = true,
-                UseShellExecute = false
-            };
-
-            if (showWindow)
-            {
-                starterInfo.WindowStyle = ProcessWindowStyle.Normal;
-                starterInfo.CreateNoWindow = false;
-                return starterInfo;
-            }
-
-            starterInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            starterInfo.CreateNoWindow = true;
-            return starterInfo;
         }
     }
 }

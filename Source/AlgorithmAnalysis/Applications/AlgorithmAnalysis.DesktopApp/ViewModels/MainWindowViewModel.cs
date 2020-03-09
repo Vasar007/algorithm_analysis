@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Commands;
+using AlgorithmAnalysis.Common.Processes;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.Commands;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.DomainLogic.Analysis;
-using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
@@ -23,17 +22,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public string Title { get; }
 
-        public int MinDegreeOfParallerism { get; }
-
-        public int MaxDegreeOfParallerism { get; }
-
-        public IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne { get; }
-
-        public IReadOnlyList<PhaseOnePartTwoAnalysisKind> AvailableAnalysisKindForPhaseOnePartTwo { get; }
-
-        public IReadOnlyList<PhaseTwoAnalysisKind> AvailableAnalysisKindForPhaseTwo { get; }
-
-        public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
+        public AnalysisSpecificModel AnalysisModel { get; }
 
         public RawParametersPack Parameters { get; }
 
@@ -55,13 +44,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             _performer = new AnalysisPerformer();
 
             Title = DesktopOptions.Title;
-            MinDegreeOfParallerism = DesktopOptions.MinDegreeOfParallerism;
-            MaxDegreeOfParallerism = DesktopOptions.MaxDegreeOfParallerism;
 
-            AvailableAnalysisKindForPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOnePartOne;
-            AvailableAnalysisKindForPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseOnePartTwo;
-            AvailableAnalysisKindForPhaseTwo = DesktopOptions.AvailableAnalysisKindForPhaseTwo;
-            AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
+            AnalysisModel = new AnalysisSpecificModel();
             Parameters = new RawParametersPack();
             CanExecuteAnalysis = true;
 
@@ -83,7 +67,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 AnalysisContext context = Parameters.CreateContext(_outputExcelFile);
 
                 CheckOutputFile();
-                
+
                 // TODO: add cancellation button to interupt analysis.
                 AnalysisResult result = await _performer.PerformAnalysisAsync(context)
                     .ConfigureAwait(false);
@@ -102,6 +86,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         private void ResetFields()
         {
+            AnalysisModel.Reset();
             Parameters.Reset();
         }
 
@@ -121,15 +106,24 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             File.Delete(_outputExcelFile.FullName);
         }
 
-        private static void ProcessResult(AnalysisResult result)
+        private void ProcessResult(AnalysisResult result)
         {
             if (result.Success)
             {
                 MessageBoxProvider.ShowInfo(result.Message);
+                OpenResults();
             }
             else
             {
                 MessageBoxProvider.ShowError(result.Message);
+            }
+        }
+
+        private void OpenResults()
+        {
+            if (AnalysisModel.OpenAnalysisResults)
+            {
+                _ = ProcessManager.OpenFileWithAssociatedAppAsync(_outputExcelFile);
             }
         }
     }

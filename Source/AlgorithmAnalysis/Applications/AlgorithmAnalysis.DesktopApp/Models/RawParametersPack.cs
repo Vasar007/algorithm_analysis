@@ -1,14 +1,14 @@
-﻿using Acolyte.Assertions;
+﻿using System.IO;
+using Acolyte.Assertions;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.Models;
-using System.IO;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class RawParametersPack : BindableBase
+    internal sealed class RawParametersPack : BindableBase, IResetable
     {
         // Initializes through Reset method in ctor.
         private PhaseOnePartOneAnalysisKind _selectedPhaseOnePartOne = default!;
@@ -102,6 +102,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Reset();
         }
 
+        #region IResetable Implementation
+
         public void Reset()
         {
             SelectedPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOnePartOne[0];
@@ -115,6 +117,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             ShowAnalysisWindow = false;
             MaxDegreeOfParallelism = 1;
         }
+
+        #endregion
 
         public AnalysisContext CreateContext(FileInfo outputExcelFile)
         {

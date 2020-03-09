@@ -67,7 +67,7 @@
                 <ComboBox HorizontalAlignment="Center"
                           MinWidth="350"
                           SelectedIndex="0"
-                          ItemsSource="{Binding Path=AvailableAnalysisKindForPhaseOnePartOne}"
+                          ItemsSource="{Binding Path=AnalysisModel.AvailableAnalysisKindForPhaseOnePartOne}"
                           SelectedItem="{Binding Path=Parameters.SelectedPhaseOnePartOne}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -82,7 +82,7 @@
                 <ComboBox HorizontalAlignment="Center"
                           MinWidth="350"
                           SelectedIndex="0"
-                          ItemsSource="{Binding Path=AvailableAnalysisKindForPhaseOnePartTwo}"
+                          ItemsSource="{Binding Path=AnalysisModel.AvailableAnalysisKindForPhaseOnePartTwo}"
                           SelectedItem="{Binding Path=Parameters.SelectedPhaseOnePartTwo}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -98,7 +98,7 @@
                 <ComboBox HorizontalAlignment="Center"
                           MinWidth="350"
                           SelectedIndex="1"
-                          ItemsSource="{Binding Path=AvailableAnalysisKindForPhaseTwo}"
+                          ItemsSource="{Binding Path=AnalysisModel.AvailableAnalysisKindForPhaseTwo}"
                           SelectedItem="{Binding Path=Parameters.SelectedPhaseTwo}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -113,7 +113,7 @@
                 <ComboBox HorizontalAlignment="Center"
                           MinWidth="350"
                           SelectedIndex="0"
-                          ItemsSource="{Binding Path=AvailableAlgorithms}"
+                          ItemsSource="{Binding Path=AnalysisModel.AvailableAlgorithms}"
                           SelectedItem="{Binding Path=Parameters.SelectedAlgorithmType}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -202,8 +202,8 @@
                            Margin="0 7 0 3" />
                 <Slider TickPlacement="BottomRight"
                         IsSnapToTickEnabled="True"
-                        Minimum="{Binding Path=MinDegreeOfParallerism}"
-                        Maximum="{Binding Path=MaxDegreeOfParallerism}"
+                        Minimum="{Binding Path=AnalysisModel.MinDegreeOfParallerism}"
+                        Maximum="{Binding Path=AnalysisModel.MaxDegreeOfParallerism}"
                         Value="{Binding Path=Parameters.MaxDegreeOfParallelism}"
                         />
 
@@ -211,6 +211,12 @@
                           HorizontalAlignment="Center"
                           Margin="0 14 0 6"
                           IsChecked="{Binding Path=Parameters.ShowAnalysisWindow}"
+                          Foreground="White" />
+
+                <CheckBox Content="Open analysis results"
+                          HorizontalAlignment="Center"
+                          Margin="0 14 0 6"
+                          IsChecked="{Binding Path=AnalysisModel.OpenAnalysisResults}"
                           Foreground="White" />
             </StackPanel>
 

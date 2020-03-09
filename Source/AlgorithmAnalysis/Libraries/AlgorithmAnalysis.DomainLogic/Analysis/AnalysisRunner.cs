@@ -26,11 +26,14 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
             var fileDeleter = new FileDeleter(finalOutputFiles);
 
-            using (var analysisRunner = ProgramRunner.RunProgram(
-                       args.AnalysisProgramName,
-                       args.PackAsInputArgumentsForPhaseOne(),
-                       launchContext.ShowAnalysisWindow
-                   ))
+            // Contract: the analysis program is located in the same directory as our app.
+            var processLaunchContext = ProcessLaunchContext.Create(
+                file: args.AnalysisProgramName,
+                args: args.PackAsInputArgumentsForPhaseOne(),
+                showWindow: launchContext.ShowAnalysisWindow
+            );
+
+            using (var analysisRunner = ProgramRunner.RunProgram(processLaunchContext))
             {
                 analysisRunner.Wait();
             }
@@ -111,11 +114,14 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
             var fileDeleter = new FileDeleter(iterationContext.FinalOutputFile);
 
-            using (var analysisRunner = ProgramRunner.RunProgram(
-                       iterationContext.Args.AnalysisProgramName,
-                       iterationContext.AnalysisInputArgs,
-                       iterationContext.LaunchContext.ShowAnalysisWindow
-                   ))
+            // Contract: the analysis program is located in the same directory as our app.
+            var processLaunchContext = ProcessLaunchContext.Create(
+                file: iterationContext.Args.AnalysisProgramName,
+                args: iterationContext.AnalysisInputArgs,
+                showWindow: iterationContext.LaunchContext.ShowAnalysisWindow
+            );
+
+            using (var analysisRunner = ProgramRunner.RunProgram(processLaunchContext))
             {
                 await analysisRunner.WaitAsync();
             }
