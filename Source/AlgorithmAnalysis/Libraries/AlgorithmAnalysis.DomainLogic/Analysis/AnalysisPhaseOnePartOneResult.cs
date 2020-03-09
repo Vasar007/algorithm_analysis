@@ -2,14 +2,14 @@
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
-    internal sealed class AnalysisPhaseOneResult
+    internal sealed class AnalysisPhaseOnePartOneResult
     {
         public int CalculatedSampleSize { get; }
 
         public int TotalIterationNumber { get; }
 
 
-        public AnalysisPhaseOneResult(
+        public AnalysisPhaseOnePartOneResult(
             int calculatedSampleSize,
             int totalIterationNumber)
         {

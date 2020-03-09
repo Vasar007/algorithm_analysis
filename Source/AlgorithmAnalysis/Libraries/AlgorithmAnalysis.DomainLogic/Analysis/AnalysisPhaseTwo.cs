@@ -30,7 +30,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
         #endregion
 
-        private void PerformPartTwo(AnalysisContext context)
+        private AnalysisPhaseTwoResult PerformPartTwo(AnalysisContext context)
         {
             var excelContext = ExcelContextForPhaseTwo<IAnalysisPhaseTwo>.CreateFor(
                 analysisContext: context,
@@ -39,6 +39,8 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
             );
             _excelWrapperForPhaseTwo.ApplyAnalysisAndSaveData(excelContext);
+
+            return new AnalysisPhaseTwoResult();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using AlgorithmAnalysis.Common.Files;
+﻿using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
@@ -29,19 +28,19 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         public AnalysisResult Analyze(AnalysisContext context)
         {
             // Find appropriate launches number iteratively (part 1 of phase 1).
-            AnalysisPhaseOneResult partOneResult = PerformPartOne(context);
+            AnalysisPhaseOnePartOneResult partOneResult = PerformPartOne(context);
 
             // Check H0 hypothesis on calculated launches number (part 2 of phase 1).
-            bool isH0HypothesisProved = PerfromPartTwo(context, partOneResult);
+            AnalysisPhaseOnePartTwoResult partTwoResult = PerfromPartTwo(context, partOneResult);
 
-            return isH0HypothesisProved
+            return partTwoResult.IsH0HypothesisProved
                 ? AnalysisResult.CreateSuccess("H0 hypothesis for the algorithm was proved.")
-                : AnalysisResult.CreateSuccess("H0 hypothesis for the algorithm was not proved."); // CreateFailure // TODO: remove this statement when finish debugging.
+                : AnalysisResult.CreateFailure("H0 hypothesis for the algorithm was not proved.");
         }
 
         #endregion
 
-        private AnalysisPhaseOneResult PerformPartOne(AnalysisContext context)
+        private AnalysisPhaseOnePartOneResult PerformPartOne(AnalysisContext context)
         {
             int iterationNumber = 1;
             int calculatedSampleSize = context.Args.LaunchesNumber;
@@ -61,11 +60,10 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 calculatedSampleSize = PerformOneIterationOfPartOne(excelContext);
 
                 ++iterationNumber;
-                break; // TODO: remove this statement when finish debugging.
             }
 
             // TODO: set bold on text with final calculated sample size.
-            return new AnalysisPhaseOneResult(calculatedSampleSize, iterationNumber);
+            return new AnalysisPhaseOnePartOneResult(calculatedSampleSize, iterationNumber);
         }
 
         private int PerformOneIterationOfPartOne(
@@ -80,11 +78,12 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             );
         }
 
-        private bool PerfromPartTwo(AnalysisContext context, AnalysisPhaseOneResult partOneResult)
+        private AnalysisPhaseOnePartTwoResult PerfromPartTwo(AnalysisContext context,
+            AnalysisPhaseOnePartOneResult partOneResult)
         {
             // Perform the final iteration to get actual data using calculated sample size.
             var excelContext = ExcelContextForPhaseOne<IAnalysisPhaseOnePartTwo>.CreateFor(
-                args: context.Args.CreateWith(1000), // partOneResult.CalculatedSampleSize // TODO: remove this statement when finish debugging.
+                args: context.Args.CreateWith(partOneResult.CalculatedSampleSize),
                 showAnalysisWindow: context.ShowAnalysisWindow,
                 outputExcelFile: context.OutputExcelFile,
                 sheetName: ExcelHelper.CreateSheetName(PhaseNumber, partOneResult.TotalIterationNumber),
@@ -95,9 +94,11 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                  excelContext.Args, excelContext.ShowAnalysisWindow, _fileWorker
              );
 
-            return _excelWrapperPartTwo.ApplyAnalysisAndSaveData(
+            bool isH0HypothesisProved = _excelWrapperPartTwo.ApplyAnalysisAndSaveData(
                 fileObject.Data.GetData(item => item.operationNumber), excelContext
             );
+
+            return new AnalysisPhaseOnePartTwoResult(partOneResult, isH0HypothesisProved);
         }
     }
 }
