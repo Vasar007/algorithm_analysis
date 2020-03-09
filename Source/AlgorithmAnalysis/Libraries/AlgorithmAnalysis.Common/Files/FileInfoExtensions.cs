@@ -23,7 +23,7 @@ namespace AlgorithmAnalysis.Common.Files
                 // - being processed by another thread;
                 // - does not exist (has already been processed).
 
-                string message = $"File is unavailable:{Environment.NewLine}{ex}";
+                string message = $"File '{file}' is unavailable:{Environment.NewLine}{ex}";
 
                 Debug.WriteLine(message);
                 Trace.WriteLine(message);

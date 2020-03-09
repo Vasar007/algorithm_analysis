@@ -13,7 +13,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         public ParametersPack Args { get; }
 
-        public bool ShowAnalysisWindow { get; }
+        public AnalysisLaunchContext LaunchContext { get; }
 
         public FileInfo OutputExcelFile { get; }
 
@@ -22,13 +22,13 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         private ExcelContextForPhaseOne(
             ParametersPack args,
-            bool showAnalysisWindow,
+            AnalysisLaunchContext launchContext,
             FileInfo outputExcelFile,
             string sheetName,
             AnalysisCreation analysisFactory)
         {
             Args = args.ThrowIfNull(nameof(args));
-            ShowAnalysisWindow = showAnalysisWindow;
+            LaunchContext = launchContext.ThrowIfNull(nameof(launchContext));
             OutputExcelFile = outputExcelFile.ThrowIfNull(nameof(outputExcelFile));
             SheetName = sheetName.ThrowIfNullOrEmpty(nameof(sheetName));
             _partOneFactory = analysisFactory.ThrowIfNull(nameof(analysisFactory));
@@ -36,14 +36,14 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
         public static ExcelContextForPhaseOne<TAnalysisPhaseOne> CreateFor(
              ParametersPack args,
-            bool showAnalysisWindow,
+            AnalysisLaunchContext launchContext,
             FileInfo outputExcelFile,
             string sheetName,
             AnalysisCreation analysisFactory)
         {
             return new ExcelContextForPhaseOne<TAnalysisPhaseOne>(
                 args: args,
-                showAnalysisWindow: showAnalysisWindow,
+                launchContext: launchContext,
                 outputExcelFile: outputExcelFile,
                 sheetName: sheetName,
                 analysisFactory: analysisFactory

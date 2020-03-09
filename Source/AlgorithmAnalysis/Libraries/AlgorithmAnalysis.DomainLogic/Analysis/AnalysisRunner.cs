@@ -11,9 +11,10 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
     internal static class AnalysisRunner
     {
         public static FileObject PerformOneIterationOfPhaseOne(ParametersPack args,
-            bool showAnalysisWindow, LocalFileWorker fileWorker)
+            AnalysisLaunchContext launchContext, LocalFileWorker fileWorker)
         {
             args.ThrowIfNull(nameof(args));
+            launchContext.ThrowIfNull(nameof(launchContext));
             fileWorker.ThrowIfNull(nameof(fileWorker));
 
             // Contract: output files are located in the same directory as our app.
@@ -25,7 +26,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             using (var analysisRunner = ProgramRunner.RunProgram(
                        args.AnalysisProgramName,
                        args.PackAsInputArgumentsForPhaseOne(),
-                       showAnalysisWindow
+                       launchContext.ShowAnalysisWindow
                    ))
             {
                 analysisRunner.Wait();
@@ -41,9 +42,10 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         }
 
         public static FileObject PerformFullAnalysisForPhaseTwo(ParametersPack args,
-            bool showAnalysisWindow, LocalFileWorker fileWorker)
+            AnalysisLaunchContext launchContext, LocalFileWorker fileWorker)
         {
             args.ThrowIfNull(nameof(args));
+            launchContext.ThrowIfNull(nameof(launchContext));
             fileWorker.ThrowIfNull(nameof(fileWorker));
 
             // Contract: output files are located in the same directory as our app.
@@ -54,7 +56,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             using (var analysisRunner = ProgramRunner.RunProgram(
                        args.AnalysisProgramName,
                        args.PackAsInputArgumentsForPhaseTwo(),
-                       showAnalysisWindow
+                       launchContext.ShowAnalysisWindow
                    ))
             {
                 analysisRunner.Wait();

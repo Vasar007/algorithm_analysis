@@ -17,11 +17,15 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
     internal sealed class MainWindowViewModel : BindableBase
     {
-        private readonly AnalysisPerformer _performer;
-
         private readonly FileInfo _outputExcelFile;
 
+        private readonly AnalysisPerformer _performer;
+
         public string Title { get; }
+
+        public int MinDegreeOfParallerism { get; }
+
+        public int MaxDegreeOfParallerism { get; }
 
         public IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne { get; }
 
@@ -51,6 +55,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             _performer = new AnalysisPerformer();
 
             Title = DesktopOptions.Title;
+            MinDegreeOfParallerism = DesktopOptions.MinDegreeOfParallerism;
+            MaxDegreeOfParallerism = DesktopOptions.MaxDegreeOfParallerism;
+
             AvailableAnalysisKindForPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOnePartOne;
             AvailableAnalysisKindForPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseOnePartTwo;
             AvailableAnalysisKindForPhaseTwo = DesktopOptions.AvailableAnalysisKindForPhaseTwo;

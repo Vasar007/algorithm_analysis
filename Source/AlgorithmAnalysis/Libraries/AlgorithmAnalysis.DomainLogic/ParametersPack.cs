@@ -160,5 +160,23 @@ namespace AlgorithmAnalysis.DomainLogic
                    $"{Step.ToString()} " +
                    $"{OutputFilenamePattern}";
         }
+
+        internal IReadOnlyList<string> CollectionPackAsInputArgumentsForPhaseTwo()
+        {
+            string formatArgs =
+                $"{AlgorithmType.Value.ToString()} " +
+                "{0} " +
+                "{0} " +
+                $"{LaunchesNumber.ToString()} " +
+                $"{Step.ToString()} " +
+                $"{OutputFilenamePattern}";
+
+            int iterationsNumber = GetIterationsNumber(phaseNumber: 2);
+
+            return Enumerable.Range(0, iterationsNumber)
+                 .Select(i => StartValue + i * Step)
+                 .Select(actualQuantity => string.Format(formatArgs, actualQuantity))
+                 .ToList();
+        }
     }
 }

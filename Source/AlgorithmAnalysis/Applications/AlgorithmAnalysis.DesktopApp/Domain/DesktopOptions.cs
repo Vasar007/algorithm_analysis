@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.Models;
 
@@ -7,6 +8,10 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
     internal static class DesktopOptions
     {
         public static string Title { get; } = "Algorithm analysis";
+
+        public static int MinDegreeOfParallerism { get; } = 1;
+
+        public static int MaxDegreeOfParallerism { get; } = Environment.ProcessorCount;
 
         public static IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne { get; } =
             AnalysisHelper.GetAvailableAnalysisKindForPhaseOnePartOne();

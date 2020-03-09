@@ -196,7 +196,17 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                
+
+                <TextBlock Text="Max degree of parallerism"
+                           HorizontalAlignment="Center"
+                           Margin="0 7 0 3" />
+                <Slider TickPlacement="BottomRight"
+                        IsSnapToTickEnabled="True"
+                        Minimum="{Binding Path=MinDegreeOfParallerism}"
+                        Maximum="{Binding Path=MaxDegreeOfParallerism}"
+                        Value="{Binding Path=Parameters.MaxDegreeOfParallelism}"
+                        />
+
                 <CheckBox Content="Show analysis window"
                           HorizontalAlignment="Center"
                           Margin="0 14 0 6"

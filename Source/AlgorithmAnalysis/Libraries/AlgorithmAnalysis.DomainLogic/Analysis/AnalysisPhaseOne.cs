@@ -52,7 +52,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
                 var excelContext = ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne>.CreateFor(
                     args: context.Args.CreateWith(calculatedSampleSize),
-                    showAnalysisWindow: context.ShowAnalysisWindow,
+                    launchContext: context.LaunchContext,
                     outputExcelFile: context.OutputExcelFile,
                     sheetName: ExcelHelper.CreateSheetName(PhaseNumber, iterationNumber),
                     analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartOne(context.PhaseOnePartOne, args)
@@ -70,7 +70,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne> excelContext)
         {
             using FileObject fileObject = AnalysisRunner.PerformOneIterationOfPhaseOne(
-                excelContext.Args, excelContext.ShowAnalysisWindow, _fileWorker
+                excelContext.Args, excelContext.LaunchContext, _fileWorker
             );
 
             return _excelWrapperPartOne.ApplyAnalysisAndSaveData(
@@ -84,14 +84,14 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             // Perform the final iteration to get actual data using calculated sample size.
             var excelContext = ExcelContextForPhaseOne<IAnalysisPhaseOnePartTwo>.CreateFor(
                 args: context.Args.CreateWith(partOneResult.CalculatedSampleSize),
-                showAnalysisWindow: context.ShowAnalysisWindow,
+                launchContext: context.LaunchContext,
                 outputExcelFile: context.OutputExcelFile,
                 sheetName: ExcelHelper.CreateSheetName(PhaseNumber, partOneResult.TotalIterationNumber),
                 analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args)
             );
 
             using FileObject fileObject = AnalysisRunner.PerformOneIterationOfPhaseOne(
-                 excelContext.Args, excelContext.ShowAnalysisWindow, _fileWorker
+                 excelContext.Args, excelContext.LaunchContext, _fileWorker
              );
 
             bool isH0HypothesisProved = _excelWrapperPartTwo.ApplyAnalysisAndSaveData(

@@ -9,7 +9,7 @@ namespace AlgorithmAnalysis.DomainLogic
     {
         public ParametersPack Args { get; }
 
-        public bool ShowAnalysisWindow { get; }
+        public AnalysisLaunchContext LaunchContext { get; }
 
         public FileInfo OutputExcelFile { get; }
 
@@ -22,14 +22,14 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public AnalysisContext(
             ParametersPack args,
-            bool showAnalysisWindow,
+            AnalysisLaunchContext launchContext,
             FileInfo outputExcelFile,
             PhaseOnePartOneAnalysisKind phaseOnePartOne,
             PhaseOnePartTwoAnalysisKind phaseOnePartTwo,
             PhaseTwoAnalysisKind phaseTwo)
         {
             Args = args.ThrowIfNull(nameof(args));
-            ShowAnalysisWindow = showAnalysisWindow;
+            LaunchContext = launchContext.ThrowIfNull(nameof(launchContext));
             OutputExcelFile = outputExcelFile.ThrowIfNull(nameof(outputExcelFile));
             PhaseOnePartOne = phaseOnePartOne.ThrowIfNull(nameof(phaseOnePartOne));
             PhaseOnePartTwo = phaseOnePartTwo.ThrowIfNull(nameof(phaseOnePartTwo));
@@ -43,7 +43,7 @@ namespace AlgorithmAnalysis.DomainLogic
             var sb = new StringBuilder()
                 .AppendLine($"[{nameof(AnalysisContext)}]")
                 .AppendLine($"Args: {Args.ToLogString()}")
-                .AppendLine($"ShowAnalysisWindow: '{ShowAnalysisWindow.ToString()}'")
+                .AppendLine($"LaunchContext: {LaunchContext.ToLogString()}")
                 .AppendLine($"OutputExcelFile: '{OutputExcelFile}'")
                 .AppendLine($"PhaseOnePartOne: {PhaseOnePartOne.ToLogString()}")
                 .AppendLine($"PhaseOnePartTwo: {PhaseOnePartTwo.ToLogString()}")

@@ -89,6 +89,13 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _showAnalysisWindow, value);
         }
 
+        private int _maxDegreeOfParallelism;
+        public int MaxDegreeOfParallelism
+        {
+            get => _maxDegreeOfParallelism;
+            set => SetProperty(ref _maxDegreeOfParallelism, value);
+        }
+
 
         public RawParametersPack()
         {
@@ -112,7 +119,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         {
             return new AnalysisContext(
                 args: ConvertArgs(),
-                showAnalysisWindow: ShowAnalysisWindow,
+                launchContext: CreateLaunchContext(),
                 outputExcelFile: outputExcelFile,
                 phaseOnePartOne: SelectedPhaseOnePartOne,
                 phaseOnePartTwo: SelectedPhaseOnePartTwo,
@@ -130,6 +137,14 @@ namespace AlgorithmAnalysis.DesktopApp.Models
                 extrapolationSegmentValue: int.Parse(ExtrapolationSegmentValue),
                 launchesNumber: int.Parse(LaunchesNumber),
                 step: int.Parse(Step)
+            );
+        }
+
+        private AnalysisLaunchContext CreateLaunchContext()
+        {
+            return new AnalysisLaunchContext(
+                showAnalysisWindow: ShowAnalysisWindow,
+                maxDegreeOfParallelism: MaxDegreeOfParallelism
             );
         }
     }
