@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Excel.EPPlus;
@@ -12,7 +13,7 @@ namespace AlgorithmAnalysis.Excel
     {
         #region Workbook
 
-        public static IExcelWorkbook CreateWorkbook(string outputExcelFilename,
+        public static IExcelWorkbook CreateWorkbook(FileInfo outputExcelFile,
             ExcelOptions excelOptions)
         {
             excelOptions.ThrowIfNull(nameof(excelOptions));
@@ -20,10 +21,10 @@ namespace AlgorithmAnalysis.Excel
             return excelOptions.LibraryProvider switch
             {
                 ExcelLibraryProvider.NPOI =>
-                    new NpoiExcelWorkbook(outputExcelFilename, excelOptions),
+                    new NpoiExcelWorkbook(outputExcelFile, excelOptions),
 
                 ExcelLibraryProvider.EPPlus =>
-                    new EpplusExcelWorkbook(outputExcelFilename, excelOptions),
+                    new EpplusExcelWorkbook(outputExcelFile, excelOptions),
 
                 _ => throw new ArgumentOutOfRangeException(
                          nameof(excelOptions), excelOptions.LibraryProvider,
@@ -49,9 +50,9 @@ namespace AlgorithmAnalysis.Excel
             };
         }
 
-        public static IExcelWorkbook CreateWorkbook(string outputExcelFilename)
+        public static IExcelWorkbook CreateWorkbook(FileInfo outputExcelFile)
         {
-            return CreateWorkbook(outputExcelFilename, ConfigOptions.Excel);
+            return CreateWorkbook(outputExcelFile, ConfigOptions.Excel);
         }
 
         public static IExcelWorkbook CreateWorkbook()

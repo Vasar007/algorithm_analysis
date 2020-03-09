@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Common.Files;
@@ -16,10 +17,10 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             fileWorker.ThrowIfNull(nameof(fileWorker));
 
             // Contract: output files are located in the same directory as our app.
-            IReadOnlyList<string> finalOutputFilenames = args.GetOutputFilenames(phaseNumber: 1);
-            CheckExpectedFilenamesNumber(expectedFilenamessNumber: 2, finalOutputFilenames);
+            IReadOnlyList<FileInfo> finalOutputFiles = args.GetOutputFilenames(phaseNumber: 1);
+            CheckExpectedFilenamesNumber(expectedFilesNumber: 2, finalOutputFiles);
 
-            var fileHolder = new FileHolder(finalOutputFilenames);
+            var fileDeleter = new FileDeleter(finalOutputFiles);
 
             using (var analysisRunner = ProgramRunner.RunProgram(
                        args.AnalysisProgramName,
@@ -32,11 +33,11 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
             // The first data file is iteration result, the last is common analysis data file.
             // We don't need to read/use the last one.
-            string finalOutputFilename = finalOutputFilenames.First();
+            FileInfo finalOutputFile = finalOutputFiles.First();
 
-            DataObject<OutputFileData> data = fileWorker.ReadDataFile(finalOutputFilename);
+            DataObject<OutputFileData> data = fileWorker.ReadDataFile(finalOutputFile);
 
-            return new FileObject(fileHolder, data);
+            return new FileObject(fileDeleter, data);
         }
 
         public static FileObject PerformFullAnalysisForPhaseTwo(ParametersPack args,
@@ -46,9 +47,9 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             fileWorker.ThrowIfNull(nameof(fileWorker));
 
             // Contract: output files are located in the same directory as our app.
-            IReadOnlyList<string> finalOutputFilenames = args.GetOutputFilenames(phaseNumber: 2);
+            IReadOnlyList<FileInfo> finalOutputFiles = args.GetOutputFilenames(phaseNumber: 2);
 
-            var fileHolder = new FileHolder(finalOutputFilenames);
+            var fileDeleter = new FileDeleter(finalOutputFiles);
 
             using (var analysisRunner = ProgramRunner.RunProgram(
                        args.AnalysisProgramName,
@@ -60,26 +61,26 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
                 // TODO: process text files as soon as analysis module produces result of each
                 // iteration.
-                string finalOutputFilename = finalOutputFilenames.First();
+                FileInfo finalOutputFile = finalOutputFiles.First();
 
-                DataObject<OutputFileData> data = fileWorker.ReadDataFile(finalOutputFilename);
+                DataObject<OutputFileData> data = fileWorker.ReadDataFile(finalOutputFile);
 
-                return new FileObject(fileHolder, data);
+                return new FileObject(fileDeleter, data);
             }
         }
 
-        private static void CheckExpectedFilenamesNumber(int expectedFilenamessNumber,
-            IReadOnlyList<string> actualOutputFilenames)
+        private static void CheckExpectedFilenamesNumber(int expectedFilesNumber,
+            IReadOnlyList<FileInfo> actualOutputFiles)
         {
-            expectedFilenamessNumber.ThrowIfValueIsOutOfRange(nameof(expectedFilenamessNumber), 1, int.MaxValue);
-            actualOutputFilenames.ThrowIfNullOrEmpty(nameof(actualOutputFilenames));
+            expectedFilesNumber.ThrowIfValueIsOutOfRange(nameof(expectedFilesNumber), 1, int.MaxValue);
+            actualOutputFiles.ThrowIfNullOrEmpty(nameof(actualOutputFiles));
 
-            if (actualOutputFilenames.Count != expectedFilenamessNumber)
+            if (actualOutputFiles.Count != expectedFilesNumber)
             {
                 string message =
                     "Failed to perform analysis. Should be only " +
-                    $"{expectedFilenamessNumber.ToString()} output filenames but was " +
-                    $"{actualOutputFilenames.Count.ToString()}.";
+                    $"{expectedFilesNumber.ToString()} output files but was " +
+                    $"{actualOutputFiles.Count.ToString()}.";
 
                 throw new InvalidOperationException(message);
             }

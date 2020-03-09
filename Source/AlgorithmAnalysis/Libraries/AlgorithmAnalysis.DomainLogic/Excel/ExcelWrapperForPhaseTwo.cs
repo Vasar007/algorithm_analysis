@@ -1,5 +1,6 @@
-﻿using Acolyte.Assertions;
+﻿using System.IO;
 using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.DomainLogic.Excel.Analysis;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
 using AlgorithmAnalysis.DomainLogic.Properties;
 using AlgorithmAnalysis.Excel;
@@ -8,28 +9,26 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 {
     internal sealed class ExcelWrapperForPhaseTwo
     {
-        private readonly string _outputExcelFilename;
-
-
-        public ExcelWrapperForPhaseTwo(string outputExcelFilename)
+        public ExcelWrapperForPhaseTwo()
         {
-            _outputExcelFilename = outputExcelFilename.ThrowIfNullOrWhiteSpace(nameof(outputExcelFilename));
         }
 
         // TODO: implement phase two.
-        public void ApplyAnalysisAndSaveData(ExcelContextForPhaseTwo<IAnalysisPhaseTwo> excelContext)
+        public void ApplyAnalysisAndSaveData(
+            ExcelContextForPhaseTwo<IAnalysisPhaseTwo> excelContext)
         {
-            using IExcelWorkbook workbook = ExcelHelper.GetOrCreateWorkbook(_outputExcelFilename);
+            using IExcelWorkbook workbook = ExcelHelper.GetOrCreateWorkbook(excelContext.OutputExcelFile);
 
             IExcelSheet sheet = workbook.GetOrCreateSheet(excelContext.SheetName);
+
             int currentColumnIndex = FillSheetHeader(sheet, excelContext.Args);
 
             IAnalysisPhaseTwo analysis = excelContext.CreateAnalysis();
             analysis.ApplyAnalysisToDataset(sheet, currentColumnIndex);
 
-            workbook.SaveToFile(_outputExcelFilename);
+            workbook.SaveToFile(excelContext.OutputExcelFile);
+            excelContext.OutputExcelFile.Refresh();
         }
-
 
         public static int GetFirstDataRowIndex()
         {
@@ -128,13 +127,13 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             {
                 sheet[sampleSizeColumnIndex, rowIndex].SetValue(launchesNumber);
 
-                string minFormula = AnalysisHelper.GetMinFormula(sheet, sampleSizeColumnIndex, rowIndex);
+                string minFormula = ManualFormulaProvider.Min(sheet, sampleSizeColumnIndex, rowIndex);
                 sheet[theoreticalMinColumnIndex, rowIndex].SetFormula(minFormula);
 
-                string averageFormula = AnalysisHelper.GetAverageFormula(sheet, sampleSizeColumnIndex, rowIndex);
+                string averageFormula = ManualFormulaProvider.Average(sheet, sampleSizeColumnIndex, rowIndex);
                 sheet[theoreticalAverageColumnIndex, rowIndex].SetFormula(averageFormula);
 
-                string maxFormula = AnalysisHelper.GetMaxFormula(sheet, sampleSizeColumnIndex, rowIndex);
+                string maxFormula = ManualFormulaProvider.Max(sheet, sampleSizeColumnIndex, rowIndex);
                 sheet[theoreticalMaxColumnIndex, rowIndex].SetFormula(maxFormula);
 
                 ++rowIndex;

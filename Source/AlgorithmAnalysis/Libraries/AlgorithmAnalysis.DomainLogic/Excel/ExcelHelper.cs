@@ -8,13 +8,14 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
     {
         public const string SheetNamePrefix = "Sheet";
 
-        public static IExcelWorkbook GetOrCreateWorkbook(string outputExcelFilename)
+        public static IExcelWorkbook GetOrCreateWorkbook(FileInfo outputExcelFile)
         {
-            outputExcelFilename.ThrowIfNullOrWhiteSpace(nameof(outputExcelFilename));
+            outputExcelFile.ThrowIfNull(nameof(outputExcelFile));
 
-            if (File.Exists(outputExcelFilename))
+            // Use static File method because FileInfo can have out-of-date state.
+            if (File.Exists(outputExcelFile.FullName))
             {
-                return ExcelWrapperFactory.CreateWorkbook(outputExcelFilename);
+                return ExcelWrapperFactory.CreateWorkbook(outputExcelFile);
             }
 
             return ExcelWrapperFactory.CreateWorkbook();

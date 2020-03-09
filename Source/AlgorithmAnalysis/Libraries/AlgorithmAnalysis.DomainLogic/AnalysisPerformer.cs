@@ -14,9 +14,9 @@ namespace AlgorithmAnalysis.DomainLogic
         private readonly IReadOnlyList<IAnalysis> _analyses;
 
 
-        public AnalysisPerformer(string outputExcelFilename)
+        public AnalysisPerformer()
         {
-            _analyses = ConstructAnalysis(outputExcelFilename);
+            _analyses = ConstructAnalysis();
         }
 
         public AnalysisResult PerformAnalysis(AnalysisContext context)
@@ -50,12 +50,12 @@ namespace AlgorithmAnalysis.DomainLogic
             }
         }
 
-        private static IReadOnlyList<IAnalysis> ConstructAnalysis(string outputExcelFilename)
+        private static IReadOnlyList<IAnalysis> ConstructAnalysis()
         {
             return new List<IAnalysis>
             {
-                new AnalysisPhaseOne(outputExcelFilename),
-                new AnalysisPhaseTwo(outputExcelFilename)
+                new AnalysisPhaseOne(),
+                new AnalysisPhaseTwo()
             };
         }
 

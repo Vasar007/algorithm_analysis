@@ -36,14 +36,14 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             RegisterFunctionModules();
         }
 
-        public EpplusExcelWorkbook(string pathToWorkbook, ExcelOptions excelOptions)
+        public EpplusExcelWorkbook(FileInfo pathToWorkbook, ExcelOptions excelOptions)
         {
-            pathToWorkbook.ThrowIfNullOrWhiteSpace(nameof(pathToWorkbook));
+            pathToWorkbook.ThrowIfNull(nameof(pathToWorkbook));
 
             InitPackageLicence();
 
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
-            _package = new ExcelPackage(new FileInfo(pathToWorkbook));
+            _package = new ExcelPackage(pathToWorkbook);
             _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
 
             AttachLogger();
@@ -70,7 +70,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 
         public IExcelSheet GetOrCreateSheet(string sheetName)
         {
-            sheetName.ThrowIfNullOrEmpty(sheetName);
+            sheetName.ThrowIfNullOrEmpty(nameof(sheetName));
 
             ExcelWorksheet sheet = _package.Workbook.Worksheets[sheetName];
             if (sheet is null)
@@ -81,9 +81,11 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             return new EpplusExcelSheet(sheet, _excelOptions, _formulaProvider);
         }
 
-        public void SaveToFile(string filename)
+        public void SaveToFile(FileInfo filename)
         {
-            _package.SaveAs(new FileInfo(filename));
+            filename.ThrowIfNull(nameof(filename));
+
+            _package.SaveAs(filename);
         }
 
         #endregion

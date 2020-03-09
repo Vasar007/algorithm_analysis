@@ -42,7 +42,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
             sheet[ExcelColumnIndex.K, 3].SetFormula(sheet.FormulaProvider.Average($"$A$2:$A${lastValueRowIndex}"));
             sheet[ExcelColumnIndex.K, 4].SetFormula(sheet.FormulaProvider.Var($"$A$2:$A${lastValueRowIndex}"));
             sheet[ExcelColumnIndex.K, 5].SetFormula(sheet.FormulaProvider.StdDev($"$A$2:$A${lastValueRowIndex}"));
-            sheet[ExcelColumnIndex.K, 6].SetFormula("$K$5 / $K$3");
+            sheet[ExcelColumnIndex.K, 6].SetFormula(ManualFormulaProvider.VariationCoefficient("$K$3", "$K$5"));
             sheet[ExcelColumnIndex.K, 7].SetFormula(sheet.FormulaProvider.RoundUp("3.8416 * $K$6^2 / $F$9^2", "0"));
 
             sheet.AutoSizeColumn(ExcelColumnIndex.J);

@@ -4,6 +4,7 @@ using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.Models;
+using System.IO;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
@@ -107,11 +108,12 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             ShowAnalysisWindow = false;
         }
 
-        public AnalysisContext CreateContext()
+        public AnalysisContext CreateContext(FileInfo outputExcelFile)
         {
             return new AnalysisContext(
                 args: ConvertArgs(),
                 showAnalysisWindow: ShowAnalysisWindow,
+                outputExcelFile: outputExcelFile,
                 phaseOnePartOne: SelectedPhaseOnePartOne,
                 phaseOnePartTwo: SelectedPhaseOnePartTwo,
                 phaseTwo: SelectedPhaseTwo

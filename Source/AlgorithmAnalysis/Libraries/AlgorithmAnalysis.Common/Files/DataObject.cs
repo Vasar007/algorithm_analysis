@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Acolyte.Assertions;
 using FileHelpers;
@@ -11,15 +12,15 @@ namespace AlgorithmAnalysis.Common.Files
     {
         private readonly FileHelperAsyncEngine<TSource> _engine;
 
-        private readonly string _dataFilename;
+        private readonly FileInfo _dataFile;
 
         private bool _disposed;
 
 
-        public DataObject(FileHelperAsyncEngine<TSource> engine, string dataFilename)
+        public DataObject(FileHelperAsyncEngine<TSource> engine, FileInfo dataFile)
         {
             _engine = engine.ThrowIfNull(nameof(engine));
-            _dataFilename = dataFilename.ThrowIfNull(nameof(dataFilename));
+            _dataFile = dataFile.ThrowIfNull(nameof(dataFile));
         }
 
         #region IDisposable Implementation
@@ -40,7 +41,7 @@ namespace AlgorithmAnalysis.Common.Files
 
         public IEnumerable<TSource> GetData()
         {
-            using (_engine.BeginReadFile(_dataFilename))
+            using (_engine.BeginReadFile(_dataFile.FullName))
             {
                 // The engine is IEnumerable.
                 foreach (TSource item in _engine)
@@ -54,7 +55,7 @@ namespace AlgorithmAnalysis.Common.Files
         {
             selector.ThrowIfNull(nameof(selector));
 
-            using (_engine.BeginReadFile(_dataFilename))
+            using (_engine.BeginReadFile(_dataFile.FullName))
             {
                 // The engine is IEnumerable.
                 foreach (TResult item in _engine.Select(selector))
@@ -68,10 +69,10 @@ namespace AlgorithmAnalysis.Common.Files
     internal static class DataObject
     {
         public static DataObject<TSource> Create<TSource>(
-            this FileHelperAsyncEngine<TSource> engine, string dataFilename)
-        where TSource : class
+            this FileHelperAsyncEngine<TSource> engine, FileInfo dataFile)
+            where TSource : class
         {
-            return new DataObject<TSource>(engine, dataFilename);
+            return new DataObject<TSource>(engine, dataFile);
         }
     }
 }

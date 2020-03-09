@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Common.Processes
@@ -15,12 +16,9 @@ namespace AlgorithmAnalysis.Common.Processes
             _processHolder = processHolder.ThrowIfNull(nameof(processHolder));
         }
 
-        public static ProgramRunner RunProgram(string programName, string args,
+        public static ProgramRunner RunProgram(FileInfo programName, string args,
             bool showWindow)
         {
-            programName.ThrowIfNullOrWhiteSpace(nameof(programName));
-            args.ThrowIfNullOrWhiteSpace(nameof(args));
-
             var processHolder = ProcessHolder.Start(
                 programName, args, showWindow
             );

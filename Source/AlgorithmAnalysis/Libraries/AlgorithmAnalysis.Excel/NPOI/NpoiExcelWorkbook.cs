@@ -26,13 +26,13 @@ namespace AlgorithmAnalysis.Excel.NPOI
             _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
         }
 
-        public NpoiExcelWorkbook(string pathToWorkbook, ExcelOptions excelOptions)
+        public NpoiExcelWorkbook(FileInfo pathToWorkbook, ExcelOptions excelOptions)
         {
-            pathToWorkbook.ThrowIfNullOrWhiteSpace(nameof(pathToWorkbook));
+            pathToWorkbook.ThrowIfNull(nameof(pathToWorkbook));
 
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
 
-            using (var file = new FileStream(pathToWorkbook, FileMode.Open, FileAccess.Read))
+            using (var file = new FileStream(pathToWorkbook.FullName, FileMode.Open, FileAccess.Read))
             {
                 _workbook = new XSSFWorkbook(file);
             }
@@ -63,14 +63,14 @@ namespace AlgorithmAnalysis.Excel.NPOI
             return new NpoiExcelSheet(sheet, _excelOptions, _formulaProvider);
         }
 
-        public void SaveToFile(string filename)
+        public void SaveToFile(FileInfo filename)
         {
-            filename.ThrowIfNullOrWhiteSpace(nameof(filename));
+            filename.ThrowIfNull(nameof(filename));
 
             XSSFFormulaEvaluator.EvaluateAllFormulaCells(_workbook);
 
             // Write the stream data of workbook to the root directory.
-            using FileStream file = new FileStream(filename, FileMode.OpenOrCreate);
+            using FileStream file = new FileStream(filename.FullName, FileMode.OpenOrCreate);
             _workbook.Write(file);
         }
 

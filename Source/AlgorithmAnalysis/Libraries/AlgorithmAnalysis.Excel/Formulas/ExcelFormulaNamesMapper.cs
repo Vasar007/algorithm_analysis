@@ -7,7 +7,7 @@ namespace AlgorithmAnalysis.Excel.Formulas
 {
     internal sealed class ExcelFormulaNamesMapper
     {
-        private readonly IReadOnlyDictionary<(ExcelVersion ExcelVersion, string MethodName), string> _storage;
+        private readonly IReadOnlyDictionary<(ExcelVersion excelVersion, string methodName), string> _storage;
 
         public ExcelFormulaNamesMapper()
         {
@@ -31,12 +31,12 @@ namespace AlgorithmAnalysis.Excel.Formulas
             throw new KeyNotFoundException(message);
         }
 
-        private static IReadOnlyDictionary<(ExcelVersion ExcelVersion, string MethodName), string>
+        private static IReadOnlyDictionary<(ExcelVersion excelVersion, string methodName), string>
             CreateFormulaNamesMapping()
         {
             // Dictionary items format:
             // { (Excel version, name of method), EXCEL_FUNCTION }
-            return new Dictionary<(ExcelVersion ExcelVersion, string MethodName), string>
+            return new Dictionary<(ExcelVersion excelVersion, string methodName), string>
             {
                 { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.Average)), "AVERAGE" },
                 { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.Average)), "AVERAGE" },

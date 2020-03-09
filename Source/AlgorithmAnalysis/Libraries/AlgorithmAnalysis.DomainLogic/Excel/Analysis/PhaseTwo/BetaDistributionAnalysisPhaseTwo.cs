@@ -119,9 +119,14 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
                 string normalizedVarienceFormula = sheet.FormulaProvider.Var(normalizedDataRange);
                 sheet[normalizedVarienceColumnIndex, rowIndex].SetFormula(normalizedVarienceFormula);
 
-                sheet[alphaColumnIndex, rowIndex].SetFormula(normalizedVarienceFormula);
+                string normalizedMeanAddress = sheet[normalizedMeanColumnIndex, rowIndex].Address;
+                string normalizedVarienceAddress = sheet[normalizedVarienceColumnIndex, rowIndex].Address;
 
-                sheet[betaColumnIndex, rowIndex].SetFormula(normalizedVarienceFormula);
+                string alphaFormula = ManualFormulaProvider.Alpha(normalizedMeanAddress, normalizedVarienceAddress);
+                sheet[alphaColumnIndex, rowIndex].SetFormula(alphaFormula);
+
+                string betaFormula = ManualFormulaProvider.Beta(normalizedMeanAddress, normalizedVarienceAddress);
+                sheet[betaColumnIndex, rowIndex].SetFormula(betaFormula);
 
                 ++rowIndex;
             }

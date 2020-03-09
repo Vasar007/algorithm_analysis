@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Models;
 
@@ -10,6 +11,8 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public bool ShowAnalysisWindow { get; }
 
+        public FileInfo OutputExcelFile { get; }
+
         public PhaseOnePartOneAnalysisKind PhaseOnePartOne { get; }
 
         public PhaseOnePartTwoAnalysisKind PhaseOnePartTwo { get; }
@@ -17,16 +20,17 @@ namespace AlgorithmAnalysis.DomainLogic
         public PhaseTwoAnalysisKind PhaseTwo { get; }
 
 
-
         public AnalysisContext(
             ParametersPack args,
             bool showAnalysisWindow,
+            FileInfo outputExcelFile,
             PhaseOnePartOneAnalysisKind phaseOnePartOne,
             PhaseOnePartTwoAnalysisKind phaseOnePartTwo,
             PhaseTwoAnalysisKind phaseTwo)
         {
             Args = args.ThrowIfNull(nameof(args));
             ShowAnalysisWindow = showAnalysisWindow;
+            OutputExcelFile = outputExcelFile.ThrowIfNull(nameof(outputExcelFile));
             PhaseOnePartOne = phaseOnePartOne.ThrowIfNull(nameof(phaseOnePartOne));
             PhaseOnePartTwo = phaseOnePartTwo.ThrowIfNull(nameof(phaseOnePartTwo));
             PhaseTwo = phaseTwo.ThrowIfNull(nameof(phaseTwo));
@@ -40,6 +44,7 @@ namespace AlgorithmAnalysis.DomainLogic
                 .AppendLine($"[{nameof(AnalysisContext)}]")
                 .AppendLine($"Args: {Args.ToLogString()}")
                 .AppendLine($"ShowAnalysisWindow: '{ShowAnalysisWindow.ToString()}'")
+                .AppendLine($"OutputExcelFile: '{OutputExcelFile}'")
                 .AppendLine($"PhaseOnePartOne: {PhaseOnePartOne.ToLogString()}")
                 .AppendLine($"PhaseOnePartTwo: {PhaseOnePartTwo.ToLogString()}")
                 .AppendLine($"PhaseOnePartTwo: {PhaseTwo.ToLogString()}");

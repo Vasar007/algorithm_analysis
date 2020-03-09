@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Common.Processes
@@ -16,12 +17,12 @@ namespace AlgorithmAnalysis.Common.Processes
             _process = process.ThrowIfNull(nameof(process));
         }
 
-        public static ProcessHolder Start(string filename, string args, bool showWindow)
+        public static ProcessHolder Start(FileInfo file, string args, bool showWindow)
         {
-            filename.ThrowIfNullOrWhiteSpace(nameof(filename));
+            file.ThrowIfNull(nameof(file));
             args.ThrowIfNullOrEmpty(nameof(args));
 
-            return new ProcessHolder(StartProgram(filename, args, showWindow));
+            return new ProcessHolder(StartProgram(file, args, showWindow));
         }
 
         #region IDisposable Implementation
@@ -71,20 +72,19 @@ namespace AlgorithmAnalysis.Common.Processes
             }
         }
 
-        private static Process StartProgram(string filename, string args, bool showWindow)
+        private static Process StartProgram(FileInfo file, string args, bool showWindow)
         {
             // Contract: the analysis program is located in the same directory as our app.
-            ProcessStartInfo starterInfo = CreateStartInfo(filename, args, showWindow);
+            ProcessStartInfo starterInfo = CreateStartInfo(file, args, showWindow);
 
             return Process.Start(starterInfo);
         }
 
-        private static ProcessStartInfo CreateStartInfo(string filename, string args,
-            bool showWindow)
+        private static ProcessStartInfo CreateStartInfo(FileInfo file, string args, bool showWindow)
         {
-            var starterInfo = new ProcessStartInfo(filename, args)
+            var starterInfo = new ProcessStartInfo(file.FullName, args)
             {
-                WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory,
+                WorkingDirectory = file.Directory.FullName,
                 RedirectStandardError = true,
                 UseShellExecute = false
             };

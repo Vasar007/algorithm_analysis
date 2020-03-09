@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.DomainLogic.Excel.Analysis;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Properties;
 using AlgorithmAnalysis.Excel;
@@ -8,12 +9,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 {
     internal sealed class ExcelWrapperForPhaseOnePartOne
     {
-        private readonly string _outputExcelFilename;
-
-
-        public ExcelWrapperForPhaseOnePartOne(string outputExcelFilename)
+        public ExcelWrapperForPhaseOnePartOne()
         {
-            _outputExcelFilename = outputExcelFilename.ThrowIfNullOrWhiteSpace(nameof(outputExcelFilename));
         }
 
         public int ApplyAnalysisAndSaveData(IEnumerable<int> data,
@@ -22,7 +19,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             data.ThrowIfNullOrEmpty(nameof(data));
             excelContext.ThrowIfNull(nameof(excelContext));
 
-            using IExcelWorkbook workbook = ExcelHelper.GetOrCreateWorkbook(_outputExcelFilename);
+            using IExcelWorkbook workbook = ExcelHelper.GetOrCreateWorkbook(excelContext.OutputExcelFile);
 
             IExcelSheet sheet = workbook.GetOrCreateSheet(excelContext.SheetName);
             FillSheetHeader(sheet, excelContext.Args);
@@ -40,7 +37,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
 
             analysis.ApplyAnalysisToDataset(sheet);
 
-            workbook.SaveToFile(_outputExcelFilename);
+            workbook.SaveToFile(excelContext.OutputExcelFile);
+            excelContext.OutputExcelFile.Refresh();
 
             return analysis.GetCalculatedSampleSize(sheet);
         }
@@ -77,13 +75,13 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             sheet[ExcelColumnIndex.F, 1].SetValue(ExcelStringsPhaseOnePartOne.AdditionalParametersValuesColumnName);
             sheet[ExcelColumnIndex.F, 2].SetValue(args.StartValue);
 
-            string minFormula = AnalysisHelper.GetMinFormula(sheet, ExcelColumnIndex.F, 2);
+            string minFormula = ManualFormulaProvider.Min(sheet, ExcelColumnIndex.F, 2);
             sheet[ExcelColumnIndex.F, 3].SetFormula(minFormula);
 
-            string averageFormula = AnalysisHelper.GetAverageFormula(sheet, ExcelColumnIndex.F, 2);
+            string averageFormula = ManualFormulaProvider.Average(sheet, ExcelColumnIndex.F, 2);
             sheet[ExcelColumnIndex.F, 4].SetFormula(averageFormula);
 
-            string maxFormula = AnalysisHelper.GetMaxFormula(sheet, ExcelColumnIndex.F, 2);
+            string maxFormula = ManualFormulaProvider.Max(sheet, ExcelColumnIndex.F, 2);
             sheet[ExcelColumnIndex.F, 5].SetFormula(maxFormula);
             sheet[ExcelColumnIndex.F, 6].SetValue(args.LaunchesNumber);
             sheet[ExcelColumnIndex.F, 7].SetValue(double.Parse(ExcelStringsPhaseOnePartOne.ConfidenceFactorValue));

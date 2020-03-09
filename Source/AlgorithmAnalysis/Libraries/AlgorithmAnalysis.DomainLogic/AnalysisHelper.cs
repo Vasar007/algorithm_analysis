@@ -117,38 +117,5 @@ namespace AlgorithmAnalysis.DomainLogic
                 $"Unknown analysis kind for phase 2 value: {phaseTwo.ToLogString()}."
             );
         }
-
-        // TODO: use interface instead of this method.
-        internal static string GetMinFormula(IExcelSheet sheet, ExcelColumnIndex columnIndex,
-            int rowIndex)
-        {
-            sheet.ThrowIfNull(nameof(sheet));
-            rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
-
-            string cell = sheet[columnIndex, rowIndex].Address;
-            return cell;
-        }
-
-        // TODO: use interface instead of this method.
-        internal static string GetAverageFormula(IExcelSheet sheet, ExcelColumnIndex columnIndex,
-            int rowIndex)
-        {
-            sheet.ThrowIfNull(nameof(sheet));
-            rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
-
-            string cell = sheet[columnIndex, rowIndex].Address;
-            return $"{cell} * {cell} * ({cell} - 1) / 2";
-        }
-
-        // TODO: use interface instead of this method.
-        internal static string GetMaxFormula(IExcelSheet sheet, ExcelColumnIndex columnIndex,
-            int rowIndex)
-        {
-            sheet.ThrowIfNull(nameof(sheet));
-            rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
-
-            string cell = sheet[columnIndex, rowIndex].Address;
-            return $"{cell} * {cell} * {cell} * ({cell} - 1) / 2";
-        }
     }
 }

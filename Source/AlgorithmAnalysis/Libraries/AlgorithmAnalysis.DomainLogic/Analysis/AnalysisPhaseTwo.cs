@@ -10,9 +10,9 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         private readonly ExcelWrapperForPhaseTwo _excelWrapperForPhaseTwo;
 
 
-        public AnalysisPhaseTwo(string outputExcelFilename)
+        public AnalysisPhaseTwo()
         {
-            _excelWrapperForPhaseTwo = new ExcelWrapperForPhaseTwo(outputExcelFilename);
+            _excelWrapperForPhaseTwo = new ExcelWrapperForPhaseTwo();
         }
 
         #region IAnalysis Implementation
@@ -33,8 +33,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         private void PerformPartTwo(AnalysisContext context)
         {
             var excelContext = ExcelContextForPhaseTwo<IAnalysisPhaseTwo>.CreateFor(
-                args: context.Args,
-                showAnalysisWindow: context.ShowAnalysisWindow,
+                analysisContext: context,
                 sheetName: ExcelHelper.CreateSheetName(PhaseNumber),
                 analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseTwo(context.PhaseTwo, args)
 

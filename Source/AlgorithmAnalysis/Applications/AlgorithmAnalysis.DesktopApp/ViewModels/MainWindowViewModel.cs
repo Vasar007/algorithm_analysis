@@ -19,7 +19,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
     {
         private readonly AnalysisPerformer _performer;
 
-        private readonly string _outputExcelFilename;
+        private readonly FileInfo _outputExcelFile;
 
         public string Title { get; }
 
@@ -47,8 +47,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public MainWindowViewModel()
         {
-            _outputExcelFilename = ConfigOptions.Excel.OutputExcelFilename;
-            _performer = new AnalysisPerformer(_outputExcelFilename);
+            _outputExcelFile = new FileInfo(ConfigOptions.Excel.OutputExcelFilename);
+            _performer = new AnalysisPerformer();
 
             Title = DesktopOptions.Title;
             AvailableAnalysisKindForPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOnePartOne;
@@ -73,7 +73,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
                 // TODO: display waiting message (and progress bar, if it's possible).
 
-                AnalysisContext context = Parameters.CreateContext();
+                AnalysisContext context = Parameters.CreateContext(_outputExcelFile);
 
                 CheckOutputFile();
                 
@@ -101,17 +101,18 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         private void CheckOutputFile()
         {
-            if (!File.Exists(_outputExcelFilename)) return;
+            // Use static File methods because FileInfo can have out-of-date state.
+            if (!File.Exists(_outputExcelFile.FullName)) return;
 
             // TODO: check final excel file and ASK user to delete file or change output name.
             string message =
                 "There are file with the same name as output analysis file " +
-                $"('{_outputExcelFilename}'). " +
+                $"('{_outputExcelFile}'). " +
                 "This file will be removed.";
 
             MessageBoxProvider.ShowInfo(message);
 
-            File.Delete(_outputExcelFilename);
+            File.Delete(_outputExcelFile.FullName);
         }
 
         private static void ProcessResult(AnalysisResult result)

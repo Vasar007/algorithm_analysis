@@ -1,4 +1,5 @@
-﻿using AlgorithmAnalysis.Common.Files;
+﻿using System.IO;
+using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
@@ -16,11 +17,11 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         private readonly ExcelWrapperForPhaseOnePartTwo _excelWrapperPartTwo;
 
 
-        public AnalysisPhaseOne(string outputExcelFilename)
+        public AnalysisPhaseOne()
         {
             _fileWorker = new LocalFileWorker();
-            _excelWrapperPartOne = new ExcelWrapperForPhaseOnePartOne(outputExcelFilename);
-            _excelWrapperPartTwo = new ExcelWrapperForPhaseOnePartTwo(outputExcelFilename);
+            _excelWrapperPartOne = new ExcelWrapperForPhaseOnePartOne();
+            _excelWrapperPartTwo = new ExcelWrapperForPhaseOnePartTwo();
         }
 
         #region IAnalysis Implementation
@@ -35,7 +36,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
             return isH0HypothesisProved
                 ? AnalysisResult.CreateSuccess("H0 hypothesis for the algorithm was proved.")
-                : AnalysisResult.CreateFailure("H0 hypothesis for the algorithm was not proved.");
+                : AnalysisResult.CreateSuccess("H0 hypothesis for the algorithm was not proved."); // CreateFailure // TODO: remove this statement when finish debugging.
         }
 
         #endregion
@@ -53,12 +54,14 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 var excelContext = ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne>.CreateFor(
                     args: context.Args.CreateWith(calculatedSampleSize),
                     showAnalysisWindow: context.ShowAnalysisWindow,
+                    outputExcelFile: context.OutputExcelFile,
                     sheetName: ExcelHelper.CreateSheetName(PhaseNumber, iterationNumber),
                     analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartOne(context.PhaseOnePartOne, args)
                 );
                 calculatedSampleSize = PerformOneIterationOfPartOne(excelContext);
 
                 ++iterationNumber;
+                break; // TODO: remove this statement when finish debugging.
             }
 
             // TODO: set bold on text with final calculated sample size.
@@ -81,8 +84,9 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         {
             // Perform the final iteration to get actual data using calculated sample size.
             var excelContext = ExcelContextForPhaseOne<IAnalysisPhaseOnePartTwo>.CreateFor(
-                args: context.Args.CreateWith(partOneResult.CalculatedSampleSize),
+                args: context.Args.CreateWith(1000), // partOneResult.CalculatedSampleSize // TODO: remove this statement when finish debugging.
                 showAnalysisWindow: context.ShowAnalysisWindow,
+                outputExcelFile: context.OutputExcelFile,
                 sheetName: ExcelHelper.CreateSheetName(PhaseNumber, partOneResult.TotalIterationNumber),
                 analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args)
             );

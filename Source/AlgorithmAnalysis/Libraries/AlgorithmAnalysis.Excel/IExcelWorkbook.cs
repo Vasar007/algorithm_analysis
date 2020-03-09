@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace AlgorithmAnalysis.Excel
 {
@@ -6,6 +7,6 @@ namespace AlgorithmAnalysis.Excel
     {
         IExcelSheet GetOrCreateSheet(string sheetName);
 
-        void SaveToFile(string filename);
+        void SaveToFile(FileInfo filename);
     }
 }

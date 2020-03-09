@@ -52,14 +52,14 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             sheet[ExcelColumnIndex.M, 2].SetFormula(sheet.FormulaProvider.Average($"$A$2:$A${lastValueRowIndex}"));
             sheet[ExcelColumnIndex.M, 3].SetFormula(sheet.FormulaProvider.Var($"$A$2:$A${lastValueRowIndex}"));
             sheet[ExcelColumnIndex.M, 4].SetFormula(sheet.FormulaProvider.StdDev($"$A$2:$A${lastValueRowIndex}"));
-            sheet[ExcelColumnIndex.M, 5].SetFormula("$M$4 / $M$2");
+            sheet[ExcelColumnIndex.M, 5].SetFormula(ManualFormulaProvider.VariationCoefficient("$M$2", "$M$4"));
             sheet[ExcelColumnIndex.M, 6].SetFormula("$J$3");
             sheet[ExcelColumnIndex.M, 7].SetFormula("$J$5");
-            sheet[ExcelColumnIndex.M, 8].SetFormula("$M$7 - $M$6");
+            sheet[ExcelColumnIndex.M, 8].SetFormula(ManualFormulaProvider.Span("$M$6", "$M$7"));
             sheet[ExcelColumnIndex.M, 9].SetFormula(sheet.FormulaProvider.Average($"$B$2:$B${lastValueRowIndex}"));
             sheet[ExcelColumnIndex.M, 10].SetFormula(sheet.FormulaProvider.Var($"$B$2:$B${lastValueRowIndex}"));
-            sheet[ExcelColumnIndex.M, 11].SetFormula("$M$9 * (($M$9 * (1 - $M$9) / $M$10) - 1)");
-            sheet[ExcelColumnIndex.M, 12].SetFormula("(1 - $M$9) * (($M$9 * (1 - $M$9) / $M$10) - 1)");
+            sheet[ExcelColumnIndex.M, 11].SetFormula(ManualFormulaProvider.Alpha("$M$9", "$M$10"));
+            sheet[ExcelColumnIndex.M, 12].SetFormula(ManualFormulaProvider.Beta("$M$9", "$M$10"));
 
             sheet.AutoSizeColumn(ExcelColumnIndex.B);
             sheet.AutoSizeColumn(ExcelColumnIndex.L);

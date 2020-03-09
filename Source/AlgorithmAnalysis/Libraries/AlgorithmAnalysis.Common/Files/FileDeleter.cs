@@ -6,16 +6,16 @@ using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Common.Files
 {
-    public sealed class FileHolder : IDisposable
+    public sealed class FileDeleter : IDisposable
     {
-        private readonly IEnumerable<string> _dataFilenames;
+        private readonly IEnumerable<FileInfo> _dataFiles;
 
         private bool _disposed;
 
 
-        public FileHolder(IEnumerable<string> dataFilenames)
+        public FileDeleter(IEnumerable<FileInfo> dataFiles)
         {
-            _dataFilenames = dataFilenames.ThrowIfNull(nameof(dataFilenames));
+            _dataFiles = dataFiles.ThrowIfNull(nameof(dataFiles));
         }
 
         #region Implementation of IDisposable
@@ -33,25 +33,26 @@ namespace AlgorithmAnalysis.Common.Files
 
         private void TryDeleteOutputDataFiles()
         {
-            foreach (string dataFilename in _dataFilenames)
+            foreach (FileInfo dataFile in _dataFiles)
             {
-                TryDeleteDataFile(dataFilename);
+                TryDeleteDataFile(dataFile);
             }
         }
 
-        private static void TryDeleteDataFile(string dataFilename)
+        private static void TryDeleteDataFile(FileInfo dataFile)
         {
             try
             {
-                if (File.Exists(dataFilename))
+                // Use static File methods because FileInfo can have out-of-date state.
+                if (File.Exists(dataFile.FullName))
                 {
-                    File.Delete(dataFilename);
+                    File.Delete(dataFile.FullName);
                 }
             }
             catch (Exception ex)
             {
                 string message =
-                    $"Failed to delete output data file '{dataFilename}':" +
+                    $"Failed to delete output data file '{dataFile}':" +
                     $"{Environment.NewLine}{ex}";
 
                 Debug.WriteLine(message);

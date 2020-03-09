@@ -11,20 +11,20 @@ namespace AlgorithmAnalysis.Common.Files
         {
         }
 
-        public DataObject<OutputFileData> ReadDataFile(string dataFilename)
+        public DataObject<OutputFileData> ReadDataFile(FileInfo dataFile)
         {
-            dataFilename.ThrowIfNullOrWhiteSpace(nameof(dataFilename));
+            dataFile.ThrowIfNull(nameof(dataFile));
 
-            if (!File.Exists(dataFilename))
+            if (!File.Exists(dataFile.FullName))
             {
                 throw new ArgumentException(
-                    $"File '{dataFilename}' does not exist.", nameof(dataFilename)
+                    $"File '{dataFile}' does not exist.", nameof(dataFile)
                 );
             }
 
             // Output data file contains exactly "LaunchesNumber" values.
             var engine = new FileHelperAsyncEngine<OutputFileData>();
-            return DataObject.Create(engine, dataFilename);
+            return DataObject.Create(engine, dataFile);
         }
     }
 }

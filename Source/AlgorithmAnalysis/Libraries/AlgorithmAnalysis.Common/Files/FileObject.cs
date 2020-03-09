@@ -5,16 +5,16 @@ namespace AlgorithmAnalysis.Common.Files
 {
     public sealed class FileObject : IDisposable
     {
-        private readonly FileHolder _fileHolder;
+        private readonly FileDeleter _fileDeleter;
 
         private bool _disposed;
 
         public DataObject<OutputFileData> Data { get; }
 
 
-        public FileObject(FileHolder fileHolder, DataObject<OutputFileData> dataObject)
+        public FileObject(FileDeleter fileDeleter, DataObject<OutputFileData> dataObject)
         {
-            _fileHolder = fileHolder.ThrowIfNull(nameof(fileHolder));
+            _fileDeleter = fileDeleter.ThrowIfNull(nameof(fileDeleter));
             Data = dataObject.ThrowIfNull(nameof(dataObject));
         }
 
@@ -22,7 +22,7 @@ namespace AlgorithmAnalysis.Common.Files
         {
             if (_disposed) return;
 
-            _fileHolder.Dispose();
+            _fileDeleter.Dispose();
             Data.Dispose();
 
             _disposed = true;

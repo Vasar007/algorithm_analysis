@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Acolyte.Assertions;
@@ -10,7 +11,7 @@ namespace AlgorithmAnalysis.DomainLogic
 {
     public sealed class ParametersPack : ILoggable
     {
-        public string AnalysisProgramName { get; }
+        public FileInfo AnalysisProgramName { get; }
 
         public AlgorithmType AlgorithmType { get; }
 
@@ -30,7 +31,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
 
         public ParametersPack(
-            string analysisProgramName,
+            FileInfo analysisProgramName,
             AlgorithmType algorithmType,
             int startValue,
             int endValue,
@@ -40,7 +41,7 @@ namespace AlgorithmAnalysis.DomainLogic
             string outputFilenamePattern,
             string commonAnalysisFilenameSuffix)
         {
-            AnalysisProgramName = analysisProgramName.ThrowIfNullOrWhiteSpace(nameof(analysisProgramName));
+            AnalysisProgramName = analysisProgramName.ThrowIfNull(nameof(analysisProgramName));
             AlgorithmType = algorithmType.ThrowIfNull(nameof(algorithmType));
             StartValue = startValue.ThrowIfValueIsOutOfRange(nameof(startValue), 1, int.MaxValue);
             EndValue = endValue.ThrowIfValueIsOutOfRange(nameof(endValue), startValue, int.MaxValue);
@@ -63,7 +64,7 @@ namespace AlgorithmAnalysis.DomainLogic
             analysisOptions.ThrowIfNull(nameof(analysisOptions));
 
             return new ParametersPack(
-                analysisProgramName: analysisOptions.AnalysisProgramName,
+                analysisProgramName: new FileInfo(analysisOptions.AnalysisProgramName),
                 algorithmType: algorithmType,
                 startValue: startValue,
                 endValue: endValue,
@@ -96,13 +97,14 @@ namespace AlgorithmAnalysis.DomainLogic
         {
             var sb = new StringBuilder()
                 .AppendLine($"[{nameof(ParametersPack)}]")
-                .AppendLine($"AnalysisProgramName: '{AnalysisProgramName.ToString()}'")
+                .AppendLine($"AnalysisProgramName: '{AnalysisProgramName}'")
                 .AppendLine($"AlgorithmType: {AlgorithmType.ToLogString()}")
                 .AppendLine($"StartValue: '{StartValue.ToString()}'")
                 .AppendLine($"EndValue: '{EndValue.ToString()}'")
                 .AppendLine($"LaunchesNumber: '{LaunchesNumber.ToString()}'")
                 .AppendLine($"Step: '{Step.ToString()}'")
-                .AppendLine($"OutputFilenamePattern: '{OutputFilenamePattern.ToString()}'");
+                .AppendLine($"OutputFilenamePattern: '{OutputFilenamePattern}'")
+                .AppendLine($"CommonAnalysisFilenameSuffix: '{CommonAnalysisFilenameSuffix}'");
 
             return sb.ToString();
         }
@@ -124,7 +126,7 @@ namespace AlgorithmAnalysis.DomainLogic
             };
         }
 
-        internal IReadOnlyList<string> GetOutputFilenames(int phaseNumber)
+        internal IReadOnlyList<FileInfo> GetOutputFilenames(int phaseNumber)
         {
             int iterationsNumber = GetIterationsNumber(phaseNumber);
 
@@ -135,6 +137,7 @@ namespace AlgorithmAnalysis.DomainLogic
                 .Select(actualQuantity => $"{OutputFilenamePattern}{actualQuantity.ToString()}.txt")
                 // Analysis module produces common analysis data file.
                 .Append($"{OutputFilenamePattern}{CommonAnalysisFilenameSuffix}.txt")
+                .Select(filenames => new FileInfo(filenames))
                 .ToList();
         }
 
