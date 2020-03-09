@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
+using Acolyte.Collections;
 
 namespace Acolyte.Common
 {
@@ -12,7 +13,7 @@ namespace Acolyte.Common
         {
             return EnumHelper.GetValues<TEnum>()
                 .Select(enumValue => enumValue.GetDescription())
-                .ToList();
+                .ToReadOnlyList();
         }
 
         public static TEnum GetEnumValueByDescription<TEnum>(string enumDescription)

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Common.Processes
@@ -47,11 +49,37 @@ namespace AlgorithmAnalysis.Common.Processes
             _process.WaitForExit();
         }
 
-        public bool WaitForExit(int milliseconds)
+        public bool WaitForExit(TimeSpan delay)
         {
             if (_process.HasExited) return true;
 
-            return _process.WaitForExit(milliseconds);
+            var miliseconds = (int) delay.TotalMilliseconds;
+            return _process.WaitForExit(miliseconds);
+        }
+
+        public Task WaitForExitAsync()
+        {
+            if (_process.HasExited) return Task.CompletedTask;
+
+            return _process.WaitForExitAsync();
+        }
+
+        public async Task<bool> WaitForExitAsync(TimeSpan delay)
+        {
+            if (_process.HasExited) return true;
+
+            try
+            {
+                CancellationTokenSource cts = new CancellationTokenSource(delay);
+                Task waitingTask = _process.WaitForExitAsync(cts.Token);
+
+                await waitingTask;
+                return waitingTask.IsCompletedSuccessfully;
+            }
+            catch (TaskCanceledException)
+            {
+                return false;
+            }
         }
 
         public void Kill()

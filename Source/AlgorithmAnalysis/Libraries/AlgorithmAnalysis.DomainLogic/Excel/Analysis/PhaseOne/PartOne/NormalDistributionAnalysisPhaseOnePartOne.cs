@@ -17,8 +17,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne
 
         #region IPhaseOnePartOneAnalysis Implementation
 
-        public void ApplyAnalysisToSingleLaunch(IExcelSheet sheet, int operationNumber,
-            int currentRow)
+        public void ApplyAnalysisToSingleLaunch(IExcelSheet sheet, int currentRow,
+            int operationNumber)
         {
             // Do nothing.
         }

@@ -16,6 +16,10 @@ namespace AlgorithmAnalysis.Common.Files
 
         private bool _disposed;
 
+        public string FullName => _dataFile.FullName;
+
+        public string Name => _dataFile.Name;
+
 
         public DataObject(FileHelperAsyncEngine<TSource> engine, FileInfo dataFile)
         {

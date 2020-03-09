@@ -1,7 +1,9 @@
-﻿namespace AlgorithmAnalysis.DomainLogic.Analysis
+﻿using System.Threading.Tasks;
+
+namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
     internal interface IAnalysis
     {
-        AnalysisResult Analyze(AnalysisContext context);
+        Task<AnalysisResult> AnalyzeAsync(AnalysisContext context);
     }
 }

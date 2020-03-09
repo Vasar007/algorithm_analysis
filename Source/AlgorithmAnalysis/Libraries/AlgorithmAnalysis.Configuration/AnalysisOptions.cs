@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Acolyte.Collections;
 using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.Configuration
@@ -25,7 +26,7 @@ namespace AlgorithmAnalysis.Configuration
         {
             return AvailableAlgorithms
                 .Select(rawValue => new AlgorithmType(rawValue.Value, int.Parse(rawValue.Key)))
-                .ToList();
+                .ToReadOnlyList();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using AlgorithmAnalysis.Common.Files;
+﻿using System.Threading.Tasks;
+using Acolyte.Assertions;
+using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
@@ -16,16 +18,17 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         private readonly ExcelWrapperForPhaseOnePartTwo _excelWrapperPartTwo;
 
 
-        public AnalysisPhaseOne()
+        public AnalysisPhaseOne(LocalFileWorker fileWorker)
         {
-            _fileWorker = new LocalFileWorker();
+            _fileWorker = fileWorker.ThrowIfNull(nameof(fileWorker));
+
             _excelWrapperPartOne = new ExcelWrapperForPhaseOnePartOne();
             _excelWrapperPartTwo = new ExcelWrapperForPhaseOnePartTwo();
         }
 
         #region IAnalysis Implementation
 
-        public AnalysisResult Analyze(AnalysisContext context)
+        public Task<AnalysisResult> AnalyzeAsync(AnalysisContext context)
         {
             // Find appropriate launches number iteratively (part 1 of phase 1).
             AnalysisPhaseOnePartOneResult partOneResult = PerformPartOne(context);
@@ -33,9 +36,11 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             // Check H0 hypothesis on calculated launches number (part 2 of phase 1).
             AnalysisPhaseOnePartTwoResult partTwoResult = PerfromPartTwo(context, partOneResult);
 
-            return partTwoResult.IsH0HypothesisProved
+            var analysisResult = partTwoResult.IsH0HypothesisProved
                 ? AnalysisResult.CreateSuccess("H0 hypothesis for the algorithm was proved.")
                 : AnalysisResult.CreateFailure("H0 hypothesis for the algorithm was not proved.");
+
+            return Task.FromResult(analysisResult);
         }
 
         #endregion

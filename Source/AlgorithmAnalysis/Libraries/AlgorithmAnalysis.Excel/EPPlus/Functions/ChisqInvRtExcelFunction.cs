@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using Acolyte.Collections;
 using AlgorithmAnalysis.Excel.Interop;
 using OfficeOpenXml;
 using OfficeOpenXml.FormulaParsing;
@@ -26,7 +26,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
             ValidateArguments(arguments, ExpectedArgumentsNumber);
 
             IReadOnlyList<ExcelDoubleCellValue> numbers = ArgsToDoubleEnumerable(arguments, context)
-                .ToList();
+                .ToReadOnlyList();
 
             if (numbers.Count != ExpectedArgumentsNumber)
             {

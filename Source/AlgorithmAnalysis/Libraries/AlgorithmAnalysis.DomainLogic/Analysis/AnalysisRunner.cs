@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Threading.Tasks.Schedulers;
 using Acolyte.Assertions;
+using Acolyte.Threading;
 using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.Common.Processes;
 
@@ -41,34 +44,47 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             return new FileObject(fileDeleter, data);
         }
 
-        public static FileObject PerformFullAnalysisForPhaseTwo(ParametersPack args,
-            AnalysisLaunchContext launchContext, LocalFileWorker fileWorker)
+        public async static Task PerformFullAnalysisForPhaseTwoAsync(ParametersPack args,
+            AnalysisLaunchContext launchContext, LocalFileWorker fileWorker,
+            Action<FileObject> callback)
         {
             args.ThrowIfNull(nameof(args));
             launchContext.ThrowIfNull(nameof(launchContext));
             fileWorker.ThrowIfNull(nameof(fileWorker));
+            callback.ThrowIfNull(nameof(callback));
 
             // Contract: output files are located in the same directory as our app.
             IReadOnlyList<FileInfo> finalOutputFiles = args.GetOutputFilenames(phaseNumber: 2);
+            using var fileDeleter = new FileDeleter(finalOutputFiles);
 
-            var fileDeleter = new FileDeleter(finalOutputFiles);
+            IReadOnlyList<string> analysisInputArgsCollection =
+                args.CollectionPackAsInputArgumentsForPhaseTwo();
 
-            using (var analysisRunner = ProgramRunner.RunProgram(
-                       args.AnalysisProgramName,
-                       args.PackAsInputArgumentsForPhaseTwo(),
-                       launchContext.ShowAnalysisWindow
-                   ))
+            var limitedScheduler =
+                new LimitedConcurrencyLevelTaskScheduler(launchContext.MaxDegreeOfParallelism);
+
+            var processingTasks = new List<Task<FileObject>>(analysisInputArgsCollection.Count);
+
+            // The last is common analysis data file.
+            // We don't need to read/use the last one.
+            for (int index = 0; index < analysisInputArgsCollection.Count; ++index)
             {
-                analysisRunner.Wait();
+                var iterationContext = new AnalysisIterationContextPhaseTwo(
+                    args: args,
+                    launchContext: launchContext,
+                    fileWorker: fileWorker,
+                    analysisInputArgs: analysisInputArgsCollection[index],
+                    finalOutputFile: finalOutputFiles[index]
+                );
 
-                // TODO: process text files as soon as analysis module produces result of each
-                // iteration.
-                FileInfo finalOutputFile = finalOutputFiles.First();
-
-                DataObject<OutputFileData> data = fileWorker.ReadDataFile(finalOutputFile);
-
-                return new FileObject(fileDeleter, data);
+                Task<FileObject> processingTask = TaskHelper.StartNew(
+                    () => PerformOneIterationOfPhaseTwoAsync(iterationContext),
+                    limitedScheduler
+                );
+                processingTasks.Add(processingTask);
             }
+
+            await Task.WhenAll(processingTasks.Select(task => AwaitAndProcessAsync(task, callback)));
         }
 
         private static void CheckExpectedFilenamesNumber(int expectedFilesNumber,
@@ -86,6 +102,38 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
                 throw new InvalidOperationException(message);
             }
+        }
+
+        private static async Task<FileObject> PerformOneIterationOfPhaseTwoAsync(
+            AnalysisIterationContextPhaseTwo iterationContext)
+        {
+            iterationContext.ThrowIfNull(nameof(iterationContext));
+
+            var fileDeleter = new FileDeleter(iterationContext.FinalOutputFile);
+
+            using (var analysisRunner = ProgramRunner.RunProgram(
+                       iterationContext.Args.AnalysisProgramName,
+                       iterationContext.AnalysisInputArgs,
+                       iterationContext.LaunchContext.ShowAnalysisWindow
+                   ))
+            {
+                await analysisRunner.WaitAsync();
+            }
+
+            DataObject<OutputFileData> data =
+                iterationContext.FileWorker.ReadDataFile(iterationContext.FinalOutputFile);
+
+            return new FileObject(fileDeleter, data);
+        }
+
+        private static async Task AwaitAndProcessAsync(Task<FileObject> task,
+            Action<FileObject> callback)
+        {
+            _ = task.ThrowIfNull(nameof(task));
+            callback.ThrowIfNull(nameof(callback));
+
+            using FileObject fileObject = await task;
+            callback(fileObject);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using Acolyte.Assertions;
 using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
@@ -13,11 +15,49 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
         {
         }
 
-        // TODO: implement phase two.
+        public void ApplyAnalysisAndSaveDataOneIteration(IEnumerable<int> data,
+            ExcelContextForPhaseTwo<IAnalysisPhaseTwo> excelContext, string dataFilename)
+        {
+            data.ThrowIfNullOrEmpty(nameof(data));
+            excelContext.ThrowIfNull(nameof(excelContext));
+            dataFilename.ThrowIfNullOrWhiteSpace(nameof(dataFilename));
+
+            using IExcelWorkbook workbook =
+                ExcelHelper.GetOrCreateWorkbook(excelContext.OutputExcelFile);
+
+            IExcelSheet sheet = workbook.GetOrCreateSheet(excelContext.SheetName);
+
+            IAnalysisPhaseTwo analysis = excelContext.CreateAnalysis();
+
+            int iterationNumber = excelContext.Args.GetNumberOfIterationByFilename(dataFilename);
+
+            var currentColumn = iterationNumber.AsEnum<ExcelColumnIndex>();
+            int rowCounter = GetFirstDataRowIndex();
+            foreach (int item in data)
+            {
+                int currentRow = rowCounter++;
+
+                sheet[currentColumn, currentRow].SetValue(item);
+                analysis.ApplyAnalysisToSingleLaunch(sheet, currentColumn, currentRow, item);
+            }
+
+            if (rowCounter - 1 != GetLastDataRowIndex(excelContext.Args))
+            {
+                string message = "Too much data. Exceeded predefined place.";
+                throw new ArgumentException(message, nameof(data));
+            }
+
+            workbook.SaveToFile(excelContext.OutputExcelFile);
+            excelContext.OutputExcelFile.Refresh();
+        }
+
         public void ApplyAnalysisAndSaveData(
             ExcelContextForPhaseTwo<IAnalysisPhaseTwo> excelContext)
         {
-            using IExcelWorkbook workbook = ExcelHelper.GetOrCreateWorkbook(excelContext.OutputExcelFile);
+            excelContext.ThrowIfNull(nameof(excelContext));
+
+            using IExcelWorkbook workbook =
+                ExcelHelper.GetOrCreateWorkbook(excelContext.OutputExcelFile);
 
             IExcelSheet sheet = workbook.GetOrCreateSheet(excelContext.SheetName);
 
@@ -40,15 +80,21 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             return args.LaunchesNumber.SkipHeader();
         }
 
+        public static int GetNormalizedDataRowIndex(ParametersPack args, int dataRowIndex)
+        {
+            return args.LaunchesNumber.SkipHeader() + dataRowIndex;
+        }
+
         public static int GetFirstNormalizedDataRowIndex(ParametersPack args)
         {
-            // +2 because remain blank row.
-            return args.LaunchesNumber.SkipHeader() + 2;
+            int firstDataRowIndex = GetFirstDataRowIndex();
+            return GetNormalizedDataRowIndex(args, firstDataRowIndex);
         }
 
         public static int GetLastNormalizedDataRowIndex(ParametersPack args)
         {
-            return args.LaunchesNumber.SkipHeader() * 2;
+            int lastDataRowIndex = GetLastDataRowIndex(args);
+            return GetNormalizedDataRowIndex(args, lastDataRowIndex);
         }
 
         private static int FillSheetHeader(IExcelSheet sheet, ParametersPack args)

@@ -1,4 +1,7 @@
-﻿using AlgorithmAnalysis.DomainLogic.Excel;
+﻿using System.Threading.Tasks;
+using Acolyte.Assertions;
+using AlgorithmAnalysis.Common.Files;
+using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
@@ -7,19 +10,23 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
     {
         private const int PhaseNumber = 2;
 
+        private readonly LocalFileWorker _fileWorker;
+
         private readonly ExcelWrapperForPhaseTwo _excelWrapperForPhaseTwo;
 
 
-        public AnalysisPhaseTwo()
+        public AnalysisPhaseTwo(LocalFileWorker fileWorker)
         {
+            _fileWorker = fileWorker.ThrowIfNull(nameof(fileWorker));
+
             _excelWrapperForPhaseTwo = new ExcelWrapperForPhaseTwo();
         }
 
         #region IAnalysis Implementation
 
-        public AnalysisResult Analyze(AnalysisContext context)
+        public async Task<AnalysisResult> AnalyzeAsync(AnalysisContext context)
         {
-            PerformPartTwo(context);
+            AnalysisPhaseTwoResult _ = await PerformPartTwoAsync(context);
 
             // TODO: launch analysis several times in segment [StartValue, EndValue] with step=Step.
             // TODO: find output files with data and parse them.
@@ -30,7 +37,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
         #endregion
 
-        private AnalysisPhaseTwoResult PerformPartTwo(AnalysisContext context)
+        private async Task<AnalysisPhaseTwoResult> PerformPartTwoAsync(AnalysisContext context)
         {
             var excelContext = ExcelContextForPhaseTwo<IAnalysisPhaseTwo>.CreateFor(
                 analysisContext: context,
@@ -38,9 +45,27 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseTwo(context.PhaseTwo, args)
 
             );
+
+            await AnalysisRunner.PerformFullAnalysisForPhaseTwoAsync(
+                context.Args,
+                context.LaunchContext,
+                _fileWorker,
+                fileObject => PerformOneIteration(excelContext, fileObject)
+            );
+
             _excelWrapperForPhaseTwo.ApplyAnalysisAndSaveData(excelContext);
 
             return new AnalysisPhaseTwoResult();
+        }
+
+        private void PerformOneIteration(ExcelContextForPhaseTwo<IAnalysisPhaseTwo> excelContext,
+            FileObject fileObject)
+        {
+            _excelWrapperForPhaseTwo.ApplyAnalysisAndSaveDataOneIteration(
+                fileObject.Data.GetData(item => item.operationNumber),
+                excelContext,
+                fileObject.Data.Name
+            );
         }
     }
 }

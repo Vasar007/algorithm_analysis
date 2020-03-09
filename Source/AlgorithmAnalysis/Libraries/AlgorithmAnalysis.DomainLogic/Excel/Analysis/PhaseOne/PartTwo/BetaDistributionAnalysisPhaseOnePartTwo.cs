@@ -21,11 +21,13 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
         #region IPhaseOnePartOneAnalysis Implementation
 
-        public void ApplyAnalysisToSingleLaunch(IExcelSheet sheet, int operationNumber,
-            int currentRow)
+        public void ApplyAnalysisToSingleLaunch(IExcelSheet sheet, int currentRow,
+            int operationNumber)
         {
-            string formula = $"($A{currentRow.ToString()} - $M$6) / ($M$7 - $M$6)";
-            sheet[ExcelColumnIndex.B, currentRow].SetFormula(formula);
+            string normalizedFormula = ManualFormulaProvider.Normalize(
+                $"$A{currentRow.ToString()}", "$M$6", "$M$7"
+            );
+            sheet[ExcelColumnIndex.B, currentRow].SetFormula(normalizedFormula);
         }
 
         public void ApplyAnalysisToDataset(IExcelSheet sheet)

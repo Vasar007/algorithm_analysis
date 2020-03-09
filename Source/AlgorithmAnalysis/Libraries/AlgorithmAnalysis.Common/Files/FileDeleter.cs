@@ -18,6 +18,11 @@ namespace AlgorithmAnalysis.Common.Files
             _dataFiles = dataFiles.ThrowIfNull(nameof(dataFiles));
         }
 
+        public FileDeleter(FileInfo dataFile)
+            : this(new[] { dataFile })
+        {
+        }
+
         #region Implementation of IDisposable
 
         public void Dispose()

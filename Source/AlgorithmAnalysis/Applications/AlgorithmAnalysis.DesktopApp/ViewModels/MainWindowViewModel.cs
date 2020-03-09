@@ -85,8 +85,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 CheckOutputFile();
                 
                 // TODO: add cancellation button to interupt analysis.
-                AnalysisResult result = await Task
-                    .Run(() => _performer.PerformAnalysis(context))
+                AnalysisResult result = await _performer.PerformAnalysisAsync(context)
                     .ConfigureAwait(false);
 
                 ProcessResult(result);

@@ -19,7 +19,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             data.ThrowIfNullOrEmpty(nameof(data));
             excelContext.ThrowIfNull(nameof(excelContext));
 
-            using IExcelWorkbook workbook = ExcelHelper.GetOrCreateWorkbook(excelContext.OutputExcelFile);
+            using IExcelWorkbook workbook =
+                ExcelHelper.GetOrCreateWorkbook(excelContext.OutputExcelFile);
 
             IExcelSheet sheet = workbook.GetOrCreateSheet(excelContext.SheetName);
             FillSheetHeader(sheet, excelContext.Args);
@@ -32,7 +33,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
                 int currentRow = rowCounter++;
 
                 sheet[ExcelColumnIndex.A, currentRow].SetValue(item);
-                analysis.ApplyAnalysisToSingleLaunch(sheet, item, currentRow);
+                analysis.ApplyAnalysisToSingleLaunch(sheet, currentRow, item);
             }
 
             analysis.ApplyAnalysisToDataset(sheet);

@@ -113,6 +113,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             LaunchesNumber = "200";
             Step = "10";
             ShowAnalysisWindow = false;
+            MaxDegreeOfParallelism = 1;
         }
 
         public AnalysisContext CreateContext(FileInfo outputExcelFile)

@@ -9,13 +9,42 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
     {
         private readonly ParametersPack _args;
 
+        private readonly int _iterationsNumber;
+
+        private readonly ExcelColumnIndex _theoreticalMinColumn;
+
+        private readonly ExcelColumnIndex _theoreticalMaxColumn;
+
 
         public BetaDistributionAnalysisPhaseTwo(ParametersPack args)
         {
             _args = args.ThrowIfNull(nameof(args));
+
+            _iterationsNumber = args.GetIterationsNumber(phaseNumber: 2);
+            _theoreticalMinColumn = GetTheoreticalMinColumn();
+            _theoreticalMaxColumn = GetTheoreticalMaxColumn();
         }
 
         #region IAnalysisPhaseTwo Implementation
+
+        public void ApplyAnalysisToSingleLaunch(IExcelSheet sheet, ExcelColumnIndex currentColumn,
+            int currentRow, int operationNumber)
+        {
+            string dataAddress = sheet[currentColumn, currentRow].Address;
+
+            int theoreticalDataRow = currentColumn.AsInt32().UseOneBasedIndexing().SkipHeader();
+            string theoreticalMinAddress = sheet[_theoreticalMinColumn, theoreticalDataRow].Address;
+            string theoreticalMaxAddress = sheet[_theoreticalMaxColumn, theoreticalDataRow].Address;
+
+            string normalizedFormula = ManualFormulaProvider.Normalize(
+                dataAddress, theoreticalMinAddress, theoreticalMaxAddress
+            );
+
+            int normalizedDataRowIndex = ExcelWrapperForPhaseTwo.GetNormalizedDataRowIndex(
+                _args, currentRow
+            );
+            sheet[currentColumn, normalizedDataRowIndex].SetFormula(normalizedFormula);
+        }
 
         public void ApplyAnalysisToDataset(IExcelSheet sheet, int currentColumnIndex)
         {
@@ -23,6 +52,20 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
         }
 
         #endregion
+
+        private ExcelColumnIndex GetTheoreticalMinColumn()
+        {
+            const int columnsBetweenDataAndTheoreticalMin = 2;
+
+            int columnIndex = _iterationsNumber + columnsBetweenDataAndTheoreticalMin;
+            return columnIndex.AsEnum<ExcelColumnIndex>();
+        }
+
+        private ExcelColumnIndex GetTheoreticalMaxColumn()
+        {
+            int minColumn = GetTheoreticalMinColumn().AsInt32();
+            return minColumn.AsEnum<ExcelColumnIndex>(offset: 2);
+        }
 
         private void FillData(IExcelSheet sheet, ref int currentColumnIndex)
         {

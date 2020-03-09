@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Acolyte.Assertions;
+using Acolyte.Collections;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Models;
 
@@ -138,7 +139,7 @@ namespace AlgorithmAnalysis.DomainLogic
                 // Analysis module produces common analysis data file.
                 .Append($"{OutputFilenamePattern}{CommonAnalysisFilenameSuffix}.txt")
                 .Select(filenames => new FileInfo(filenames))
-                .ToList();
+                .ToReadOnlyList();
         }
 
         internal string PackAsInputArgumentsForPhaseOne()
@@ -174,9 +175,24 @@ namespace AlgorithmAnalysis.DomainLogic
             int iterationsNumber = GetIterationsNumber(phaseNumber: 2);
 
             return Enumerable.Range(0, iterationsNumber)
-                 .Select(i => StartValue + i * Step)
-                 .Select(actualQuantity => string.Format(formatArgs, actualQuantity))
-                 .ToList();
+                .Select(i => StartValue + i * Step)
+                .Select(actualQuantity => string.Format(formatArgs, actualQuantity))
+                .ToReadOnlyList();
+        }
+
+        internal int GetNumberOfIterationByFilename(string filename)
+        {
+            int iterationsNumber = GetIterationsNumber(phaseNumber: 2);
+
+            char[] filenameIterationNumberArray = filename
+                .Skip(OutputFilenamePattern.Length)
+                .TakeWhile(ch => char.IsDigit(ch))
+                .ToArray();
+
+            int filenameIterationNumber = int.Parse(filenameIterationNumberArray);
+
+            return Enumerable.Range(0, iterationsNumber)
+                .First(i => (StartValue + i * Step) == filenameIterationNumber);
         }
     }
 }

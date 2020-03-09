@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.DomainLogic.Analysis;
 using AlgorithmAnalysis.Logging;
 
@@ -16,10 +18,10 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public AnalysisPerformer()
         {
-            _analyses = ConstructAnalysis();
+            _analyses = ConstructAnalysis(new LocalFileWorker());
         }
 
-        public AnalysisResult PerformAnalysis(AnalysisContext context)
+        public async Task<AnalysisResult> PerformAnalysisAsync(AnalysisContext context)
         {
             context.ThrowIfNull(nameof(context));
 
@@ -34,7 +36,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
             try
             {
-                AnalysisResult result = PerformInternal(context);
+                AnalysisResult result = await PerformInternalAsync(context);
                 _logger.Info(
                     "Analysis finished. " +
                     $"Success: {result.Success.ToString()}, message: {result.Message}"
@@ -50,20 +52,20 @@ namespace AlgorithmAnalysis.DomainLogic
             }
         }
 
-        private static IReadOnlyList<IAnalysis> ConstructAnalysis()
+        private static IReadOnlyList<IAnalysis> ConstructAnalysis(LocalFileWorker fileWorker)
         {
             return new List<IAnalysis>
             {
-                new AnalysisPhaseOne(),
-                new AnalysisPhaseTwo()
+                new AnalysisPhaseOne(fileWorker),
+                new AnalysisPhaseTwo(fileWorker)
             };
         }
 
-        private AnalysisResult PerformInternal(AnalysisContext context)
+        private async Task<AnalysisResult> PerformInternalAsync(AnalysisContext context)
         {
             foreach (IAnalysis analysis in _analyses)
             {
-                AnalysisResult result = analysis.Analyze(context);
+                AnalysisResult result = await analysis.AnalyzeAsync(context);
 
                 // TODO: return progress statuses with messages.
                 if (!result.Success) return result;

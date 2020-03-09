@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Common.Processes
@@ -30,6 +31,12 @@ namespace AlgorithmAnalysis.Common.Processes
         {
             _processHolder.CheckExecutionStatus();
             _processHolder.WaitForExit();
+        }
+
+        public Task WaitAsync()
+        {
+            _processHolder.CheckExecutionStatus();
+            return _processHolder.WaitForExitAsync();
         }
 
         #region IDisposable Impelementation
