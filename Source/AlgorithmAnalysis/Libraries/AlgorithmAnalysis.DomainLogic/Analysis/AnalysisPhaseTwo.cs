@@ -3,12 +3,15 @@ using Acolyte.Assertions;
 using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
     internal sealed class AnalysisPhaseTwo : IAnalysis
     {
         private const int PhaseNumber = 2;
+
+        private static readonly ILogger _logger = LoggerFactory.CreateLoggerFor<AnalysisPhaseTwo>();
 
         private readonly LocalFileWorker _fileWorker;
 
@@ -26,6 +29,8 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
         public async Task<AnalysisResult> AnalyzeAsync(AnalysisContext context)
         {
+            _logger.Info("Starting analysis phase 2.");
+
             AnalysisPhaseTwoResult _ = await PerformPartTwoAsync(context);
 
             // TODO: process data and perform statisitical analysis.

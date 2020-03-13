@@ -4,12 +4,15 @@ using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
     internal sealed class AnalysisPhaseOne : IAnalysis
     {
         private const int PhaseNumber = 1;
+
+        private static readonly ILogger _logger = LoggerFactory.CreateLoggerFor<AnalysisPhaseOne>();
 
         private readonly LocalFileWorker _fileWorker;
 
@@ -28,24 +31,26 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
         #region IAnalysis Implementation
 
-        public Task<AnalysisResult> AnalyzeAsync(AnalysisContext context)
+        public async Task<AnalysisResult> AnalyzeAsync(AnalysisContext context)
         {
+            _logger.Info("Starting analysis phase 1.");
+
             // Find appropriate launches number iteratively (part 1 of phase 1).
-            AnalysisPhaseOnePartOneResult partOneResult = PerformPartOne(context);
+            AnalysisPhaseOnePartOneResult partOneResult =
+                await PerformPartOneAsync(context);
 
             // Check H0 hypothesis on calculated launches number (part 2 of phase 1).
-            AnalysisPhaseOnePartTwoResult partTwoResult = PerfromPartTwo(context, partOneResult);
+            AnalysisPhaseOnePartTwoResult partTwoResult =
+                await PerfromPartTwoAsync(context, partOneResult);
 
-            var analysisResult = partTwoResult.IsH0HypothesisProved
+            return partTwoResult.IsH0HypothesisProved
                 ? AnalysisResult.CreateSuccess("H0 hypothesis for the algorithm was proved.")
                 : AnalysisResult.CreateFailure("H0 hypothesis for the algorithm was not proved.");
-
-            return Task.FromResult(analysisResult);
         }
 
         #endregion
 
-        private AnalysisPhaseOnePartOneResult PerformPartOne(AnalysisContext context)
+        private async Task<AnalysisPhaseOnePartOneResult> PerformPartOneAsync(AnalysisContext context)
         {
             int iterationNumber = 1;
             int calculatedSampleSize = context.Args.LaunchesNumber;
@@ -62,7 +67,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                     sheetName: ExcelHelper.CreateSheetName(PhaseNumber, iterationNumber),
                     analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartOne(context.PhaseOnePartOne, args)
                 );
-                calculatedSampleSize = PerformOneIterationOfPartOne(excelContext);
+                calculatedSampleSize = await PerformOneIterationOfPartOneAsync(excelContext);
 
                 ++iterationNumber;
             }
@@ -71,10 +76,10 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             return new AnalysisPhaseOnePartOneResult(calculatedSampleSize, iterationNumber);
         }
 
-        private int PerformOneIterationOfPartOne(
+        private async Task<int> PerformOneIterationOfPartOneAsync(
             ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne> excelContext)
         {
-            using FileObject fileObject = AnalysisRunner.PerformOneIterationOfPhaseOne(
+            using FileObject fileObject = await AnalysisRunner.PerformOneIterationOfPhaseOneAsync(
                 excelContext.Args, excelContext.LaunchContext, _fileWorker
             );
 
@@ -83,7 +88,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             );
         }
 
-        private AnalysisPhaseOnePartTwoResult PerfromPartTwo(AnalysisContext context,
+        private async Task<AnalysisPhaseOnePartTwoResult> PerfromPartTwoAsync(AnalysisContext context,
             AnalysisPhaseOnePartOneResult partOneResult)
         {
             // Perform the final iteration to get actual data using calculated sample size.
@@ -95,7 +100,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args)
             );
 
-            using FileObject fileObject = AnalysisRunner.PerformOneIterationOfPhaseOne(
+            using FileObject fileObject = await AnalysisRunner.PerformOneIterationOfPhaseOneAsync(
                  excelContext.Args, excelContext.LaunchContext, _fileWorker
              );
 

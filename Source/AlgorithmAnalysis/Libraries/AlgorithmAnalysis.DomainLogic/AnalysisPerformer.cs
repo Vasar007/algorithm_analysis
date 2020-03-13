@@ -37,10 +37,7 @@ namespace AlgorithmAnalysis.DomainLogic
             try
             {
                 AnalysisResult result = await PerformInternalAsync(context);
-                _logger.Info(
-                    "Analysis finished. " +
-                    $"Success: {result.Success.ToString()}, message: {result.Message}"
-                );
+                _logger.Info($"Analysis completely finished. Final result: {result.ToLogString()}");
                 return result;
             }
             catch (Exception ex)
@@ -63,14 +60,22 @@ namespace AlgorithmAnalysis.DomainLogic
 
         private async Task<AnalysisResult> PerformInternalAsync(AnalysisContext context)
         {
+            _logger.Info("Performing all analysis sequentially.");
+
             foreach (IAnalysis analysis in _analyses)
             {
                 AnalysisResult result = await analysis.AnalyzeAsync(context);
+                _logger.Info($"Analysis result: {result.ToLogString()}");
 
-                // TODO: return progress statuses with messages.
-                if (!result.Success) return result;
+                // TODO: return all progress statuses with messages.
+                if (!result.Success)
+                {
+                    _logger.Warn($"Analysis failed. Stopping analysis and return last result.");
+                    return result;
+                }
             }
 
+            _logger.Info($"All analysis completed successfully.");
             return AnalysisResult.CreateSuccess("Analysis finished successfully.");
         }
     }

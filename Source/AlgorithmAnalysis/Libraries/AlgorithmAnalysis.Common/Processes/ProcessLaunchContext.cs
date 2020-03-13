@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.Text;
 using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Common.Processes
@@ -75,6 +76,18 @@ namespace AlgorithmAnalysis.Common.Processes
             starterInfo.WindowStyle = ProcessWindowStyle.Hidden;
             starterInfo.CreateNoWindow = true;
             return starterInfo;
+        }
+
+        public string ToLogString()
+        {
+            var sb = new StringBuilder()
+                .AppendLine($"[{nameof(ProcessLaunchContext)}]")
+                .AppendLine($"File: '{File}'")
+                .AppendLine($"Args: {Args ?? "NULL"}")
+                .AppendLine($"ShowWindow: '{ShowWindow.ToString()}'")
+                .AppendLine($"UseShellExecute: '{UseShellExecute.ToString()}'");
+
+            return sb.ToString();
         }
     }
 }

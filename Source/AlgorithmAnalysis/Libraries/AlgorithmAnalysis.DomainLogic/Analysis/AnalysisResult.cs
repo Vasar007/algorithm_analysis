@@ -1,8 +1,10 @@
-﻿using Acolyte.Assertions;
+﻿using System.Text;
+using Acolyte.Assertions;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
-    public sealed class AnalysisResult
+    public sealed class AnalysisResult : ILoggable
     {
         public bool Success { get; }
 
@@ -26,5 +28,19 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         {
             return new AnalysisResult(success: false, message);
         }
+
+        #region ILoggable Implementation
+
+        public string ToLogString()
+        {
+            var sb = new StringBuilder()
+                .AppendLine($"[{nameof(AnalysisResult)}]")
+                .AppendLine($"Success: '{Success.ToString()}'")
+                .AppendLine($"Message: '{Message}'");
+
+            return sb.ToString();
+        }
+
+        #endregion
     }
 }

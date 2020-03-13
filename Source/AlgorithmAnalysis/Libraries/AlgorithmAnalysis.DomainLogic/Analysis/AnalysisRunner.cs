@@ -8,17 +8,24 @@ using Acolyte.Assertions;
 using Acolyte.Threading;
 using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.Common.Processes;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
     internal static class AnalysisRunner
     {
-        public static FileObject PerformOneIterationOfPhaseOne(ParametersPack args,
+        private static readonly ILogger _logger =
+            LoggerFactory.CreateLoggerFor(typeof(AnalysisRunner));
+
+
+        public static async Task<FileObject> PerformOneIterationOfPhaseOneAsync(ParametersPack args,
             AnalysisLaunchContext launchContext, LocalFileWorker fileWorker)
         {
             args.ThrowIfNull(nameof(args));
             launchContext.ThrowIfNull(nameof(launchContext));
             fileWorker.ThrowIfNull(nameof(fileWorker));
+
+            _logger.Info("Preparing to run one iteration of phase one.");
 
             // Contract: output files are located in the same directory as our app.
             IReadOnlyList<FileInfo> finalOutputFiles = args.GetOutputFilenames(phaseNumber: 1);
@@ -33,9 +40,13 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 showWindow: launchContext.ShowAnalysisWindow
             );
 
+            _logger.Info(
+                $"Starting analysis program. Launch context: {processLaunchContext.ToLogString()}"
+            );
             using (var analysisRunner = ProgramRunner.RunProgram(processLaunchContext))
             {
-                analysisRunner.Wait();
+                _logger.Info("Waiting to finish one iteration of phase one.");
+                await analysisRunner.WaitAsync();
             }
 
             // The first data file is iteration result, the last is common analysis data file.
@@ -44,6 +55,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
             DataObject<OutputFileData> data = fileWorker.ReadDataFile(finalOutputFile);
 
+            _logger.Info("One iteration of phase one finished.");
             return new FileObject(fileDeleter, data);
         }
 
@@ -55,6 +67,8 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             launchContext.ThrowIfNull(nameof(launchContext));
             fileWorker.ThrowIfNull(nameof(fileWorker));
             callback.ThrowIfNull(nameof(callback));
+
+            _logger.Info("Preparing to run full analysis for phase two.");
 
             // Contract: output files are located in the same directory as our app.
             IReadOnlyList<FileInfo> finalOutputFiles = args.GetOutputFilenames(phaseNumber: 2);
@@ -112,6 +126,8 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         {
             iterationContext.ThrowIfNull(nameof(iterationContext));
 
+            _logger.Info("Preparing to run one iteration of phase two.");
+
             var fileDeleter = new FileDeleter(iterationContext.FinalOutputFile);
 
             // Contract: the analysis program is located in the same directory as our app.
@@ -121,14 +137,19 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 showWindow: iterationContext.LaunchContext.ShowAnalysisWindow
             );
 
+            _logger.Info(
+                $"Starting analysis program. Launch context: {processLaunchContext.ToLogString()}"
+            );
             using (var analysisRunner = ProgramRunner.RunProgram(processLaunchContext))
             {
+                _logger.Info("Waiting to finish one iteration of phase two.");
                 await analysisRunner.WaitAsync();
             }
 
             DataObject<OutputFileData> data =
                 iterationContext.FileWorker.ReadDataFile(iterationContext.FinalOutputFile);
 
+            _logger.Info("One iteration of phase two finished.");
             return new FileObject(fileDeleter, data);
         }
 
