@@ -20,7 +20,7 @@ namespace AlgorithmAnalysis.Common.Files
         }
 
         public FileDeleter(FileInfo dataFile)
-            : this(dataFile.AsEnumerable())
+            : this(dataFile.ToEnumerable())
         {
         }
 

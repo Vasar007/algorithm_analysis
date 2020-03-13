@@ -11,9 +11,9 @@ namespace Acolyte.Common
         public static IReadOnlyList<string> GetAllEnumDescriptionValues<TEnum>()
             where TEnum : struct, Enum
         {
-            return EnumHelper.GetValues<TEnum>()
+            return EnumerableExtensions.ToReadOnlyList(EnumHelper.GetValues<TEnum>()
                 .Select(enumValue => enumValue.GetDescription())
-                .ToReadOnlyList();
+);
         }
 
         public static TEnum GetEnumValueByDescription<TEnum>(string enumDescription)
