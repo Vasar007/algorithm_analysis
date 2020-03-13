@@ -29,16 +29,17 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
         public async Task<AnalysisResult> AnalyzeAsync(AnalysisContext context)
         {
-            _logger.Info("Starting analysis phase 2.");
+            _logger.Info("Starting analysis phase one.");
 
-            AnalysisPhaseTwoResult _ = await PerformPartTwoAsync(context);
+            AnalysisPhaseTwoResult _ = await PerformPhaseTwoAsync(context);
 
-            return AnalysisResult.CreateFailure("Phase 2 is not fully implemented.");
+            _logger.Info("Finished analysis phase two.");
+            return AnalysisResult.CreateSuccess("Analysis finished successfully.");
         }
 
         #endregion
 
-        private async Task<AnalysisPhaseTwoResult> PerformPartTwoAsync(AnalysisContext context)
+        private async Task<AnalysisPhaseTwoResult> PerformPhaseTwoAsync(AnalysisContext context)
         {
             var excelContext = ExcelContextForPhaseTwo<IAnalysisPhaseTwo>.CreateFor(
                 analysisContext: context,

@@ -46,7 +46,7 @@ namespace AlgorithmAnalysis.DomainLogic
             AlgorithmType = algorithmType.ThrowIfNull(nameof(algorithmType));
             StartValue = startValue.ThrowIfValueIsOutOfRange(nameof(startValue), 1, int.MaxValue);
             EndValue = endValue.ThrowIfValueIsOutOfRange(nameof(endValue), startValue, int.MaxValue);
-            ExtrapolationSegmentValue = extrapolationSegmentValue.ThrowIfValueIsOutOfRange(nameof(extrapolationSegmentValue), launchesNumber, int.MaxValue);
+            ExtrapolationSegmentValue = extrapolationSegmentValue.ThrowIfValueIsOutOfRange(nameof(extrapolationSegmentValue), endValue, int.MaxValue);
             LaunchesNumber = launchesNumber.ThrowIfValueIsOutOfRange(nameof(launchesNumber), 1, int.MaxValue);
             Step = step.ThrowIfValueIsOutOfRange(nameof(step), 1, int.MaxValue);
             OutputFilenamePattern = outputFilenamePattern.ThrowIfNullOrWhiteSpace(nameof(outputFilenamePattern));

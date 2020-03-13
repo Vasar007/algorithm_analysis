@@ -62,9 +62,10 @@ namespace AlgorithmAnalysis.DomainLogic
         {
             _logger.Info("Performing all analysis sequentially.");
 
+            AnalysisResult? result = null;
             foreach (IAnalysis analysis in _analyses)
             {
-                AnalysisResult result = await analysis.AnalyzeAsync(context);
+                result = await analysis.AnalyzeAsync(context);
                 _logger.Info($"Analysis result: {result.ToLogString()}");
 
                 // TODO: return all progress statuses with messages.
@@ -75,8 +76,13 @@ namespace AlgorithmAnalysis.DomainLogic
                 }
             }
 
+            if (result is null)
+            {
+                throw new InvalidOperationException("Failed to perform analysis.");
+            }
+
             _logger.Info($"All analysis completed successfully.");
-            return AnalysisResult.CreateSuccess("Analysis finished successfully.");
+            return result;
         }
     }
 }

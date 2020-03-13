@@ -55,7 +55,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
             DataObject<OutputFileData> data = fileWorker.ReadDataFile(finalOutputFile);
 
-            _logger.Info("One iteration of phase one finished.");
+            _logger.Info("Finished one iteration of phase one.");
             return new FileObject(fileDeleter, data);
         }
 
@@ -149,7 +149,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             DataObject<OutputFileData> data =
                 iterationContext.FileWorker.ReadDataFile(iterationContext.FinalOutputFile);
 
-            _logger.Info("One iteration of phase two finished.");
+            _logger.Info("Finished one iteration of phase two.");
             return new FileObject(fileDeleter, data);
         }
 
