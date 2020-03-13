@@ -5,7 +5,7 @@ using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
-using AlgorithmAnalysis.Excel;
+using AlgorithmAnalysis.Math;
 using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DomainLogic
@@ -109,7 +109,7 @@ namespace AlgorithmAnalysis.DomainLogic
             }
             if (PhaseTwoAnalysisKind.BetaDistribution.Equals(phaseTwo))
             {
-                return new BetaDistributionAnalysisPhaseTwo(args);
+                return new BetaDistributionAnalysisPhaseTwo(args, Regression.CreateDefault());
             }
 
             throw new ArgumentOutOfRangeException(

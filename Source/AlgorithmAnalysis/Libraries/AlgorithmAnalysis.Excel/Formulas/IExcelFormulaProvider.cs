@@ -2,6 +2,9 @@
 {
     public interface IExcelFormulaProvider
     {
+        string GetFormulaByName(string methodName);
+
+
         string Average(string range);
 
         string BetaDist(string x, string alpha, string beta, bool cumulative);
@@ -17,7 +20,13 @@
         string CountIfS(string criteriaRange1, string criteria1,
             string criteriaRange2, string criteria2);
 
+        string Exp(string number);
+
         string Frequency(string dataArray, string binsArray);
+
+        string Log(string number, string @base);
+
+        string Ln(string number);
 
         string Max(string range);
 

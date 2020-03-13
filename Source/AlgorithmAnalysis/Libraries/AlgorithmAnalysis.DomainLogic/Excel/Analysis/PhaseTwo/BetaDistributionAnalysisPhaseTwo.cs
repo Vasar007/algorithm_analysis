@@ -1,7 +1,10 @@
-﻿using AlgorithmAnalysis.Common;
+﻿using System.Collections.Generic;
+using Acolyte.Assertions;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.DomainLogic.Properties;
 using AlgorithmAnalysis.Excel;
-using Acolyte.Assertions;
+using AlgorithmAnalysis.Math;
+using AlgorithmAnalysis.Math.Functions;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
 {
@@ -9,23 +12,35 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
     {
         private readonly ParametersPack _args;
 
+        private readonly IRegression _regression;
+
         private readonly int _iterationsNumber;
 
         private readonly ExcelColumnIndex _additionalDataColumn;
+
+        private readonly ExcelColumnIndex _sampleSizeColumnIndex;
 
         private readonly ExcelColumnIndex _theoreticalMinColumn;
 
         private readonly ExcelColumnIndex _theoreticalMaxColumn;
 
+        private readonly ExcelColumnIndex _alphaColumn;
 
-        public BetaDistributionAnalysisPhaseTwo(ParametersPack args)
+        private readonly ExcelColumnIndex _betaColumn;
+
+
+        public BetaDistributionAnalysisPhaseTwo(ParametersPack args, IRegression regression)
         {
             _args = args.ThrowIfNull(nameof(args));
+            _regression = regression.ThrowIfNull(nameof(regression));
 
             _iterationsNumber = args.GetIterationsNumber(phaseNumber: 2);
-            _additionalDataColumn = GetAdditionalDataColumn();
-            _theoreticalMinColumn = GetTheoreticalMinColumn();
-            _theoreticalMaxColumn = GetTheoreticalMaxColumn();
+            _additionalDataColumn = ExcelWrapperForPhaseTwo.GetAdditionalDataColumn(_iterationsNumber);
+            _sampleSizeColumnIndex = ExcelWrapperForPhaseTwo.GetSampleSizeColumn(_iterationsNumber);
+            _theoreticalMinColumn = ExcelWrapperForPhaseTwo.GetTheoreticalMinColumn(_iterationsNumber);
+            _theoreticalMaxColumn = ExcelWrapperForPhaseTwo.GetTheoreticalMaxColumn(_iterationsNumber);
+            _alphaColumn = GetAlphaColumn();
+            _betaColumn = GetBetaColumn();
         }
 
         #region IAnalysisPhaseTwo Implementation
@@ -61,26 +76,20 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
 
         #endregion
 
-        private ExcelColumnIndex GetAdditionalDataColumn()
+        private ExcelColumnIndex GetAlphaColumn()
         {
-            const int columnsBetweenDataAndAdditionalData = 0;
+            const int columnsBetweenDataAndAlpha = 10;
 
-            int columnIndex = _iterationsNumber + columnsBetweenDataAndAdditionalData;
+            int columnIndex = _iterationsNumber + columnsBetweenDataAndAlpha;
             return columnIndex.AsEnum<ExcelColumnIndex>();
         }
 
-        private ExcelColumnIndex GetTheoreticalMinColumn()
+        private ExcelColumnIndex GetBetaColumn()
         {
-            const int columnsBetweenDataAndTheoreticalMin = 2;
+            const int columnsBetweenAlphaAndBeta = 0;
 
-            int columnIndex = _iterationsNumber + columnsBetweenDataAndTheoreticalMin;
-            return columnIndex.AsEnum<ExcelColumnIndex>();
-        }
-
-        private ExcelColumnIndex GetTheoreticalMaxColumn()
-        {
-            int minColumn = GetTheoreticalMinColumn().AsInt32();
-            return minColumn.AsEnum<ExcelColumnIndex>(offset: 2);
+            int alphaColumn = GetAlphaColumn().AsInt32().UseOneBasedIndexing();
+            return alphaColumn.AsEnum<ExcelColumnIndex>(columnsBetweenAlphaAndBeta);
         }
 
         private IExcelCellHolder GetConfidenceFactorCell(IExcelSheet sheet)
@@ -88,6 +97,25 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             const int confidenceFactorRowIndex = 4;
 
             return sheet[_additionalDataColumn, confidenceFactorRowIndex];
+        }
+
+        private IModelledFunction GetOptimalFunction(IExcelSheet sheet,
+            ExcelColumnIndex yColumnIndex)
+        {
+            var xValues = new List<double>(_iterationsNumber);
+            var yValues = new List<double>(_iterationsNumber);
+
+            int lastValueIndex = _iterationsNumber.SkipHeader();
+            for (int rowIndex = 1.SkipHeader(); rowIndex <= lastValueIndex; ++rowIndex)
+            {
+                IExcelCellHolder sampleSizeCell = sheet[_sampleSizeColumnIndex, rowIndex];
+                xValues.Add(sampleSizeCell.NumericValue);
+
+                IExcelCellValueHolder yValueCell = sheet.EvaluateCell(yColumnIndex, rowIndex);
+                yValues.Add(yValueCell.NumericValue);
+            }
+
+            return _regression.Fit(xValues, yValues);
         }
 
         private void FillStatisticalColumns(IExcelSheet sheet, ref int currentColumnIndex)
@@ -179,8 +207,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
         {
             int rowIndex = 1;
 
-            var nColumnNameColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[nColumnNameColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NColumnName);
+            var nColumnColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[nColumnColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NColumnName);
 
             var alphaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[alphaNColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.AlphaN);
@@ -202,18 +230,33 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
 
             IExcelCellHolder confidenceFactorCell = GetConfidenceFactorCell(sheet);
 
+            IModelledFunction alphaOptimalFunction = GetOptimalFunction(sheet, _alphaColumn);
+            string formulaForAlphaFunction = ManualFormulaProvider.GetFormulaForFunction(
+                sheet.FormulaProvider, alphaOptimalFunction.Type
+            );
+
+            IModelledFunction betaOptimalFunction = GetOptimalFunction(sheet, _betaColumn);
+            string formulaForBetaFunction = ManualFormulaProvider.GetFormulaForFunction(
+                sheet.FormulaProvider, betaOptimalFunction.Type
+            );
+
             ++rowIndex;
 
             for (int launchesNumber = _args.StartValue; launchesNumber <= _args.ExtrapolationSegmentValue;
                  launchesNumber += _args.Step)
             {
-                sheet[nColumnNameColumnIndex, rowIndex].SetValue(launchesNumber);
+                IExcelCellHolder nColumnCell = sheet[nColumnColumnIndex, rowIndex];
+                nColumnCell.SetValue(launchesNumber);
 
-                string alphaNFormula = rowIndex.ToString(); // TODO: add alpha(N) formula.
+                string alphaNFormula = alphaOptimalFunction.ToFormulaString(
+                    nColumnCell.Address, formulaForAlphaFunction
+                );
                 IExcelCellHolder alphaNCell = sheet[alphaNColumnIndex, rowIndex];
                 alphaNCell.SetFormula(alphaNFormula);
 
-                string betaNFormula = (rowIndex + currentColumnIndex).ToString(); // TODO: add beta(N) formula.
+                string betaNFormula = betaOptimalFunction.ToFormulaString(
+                    nColumnCell.Address, formulaForBetaFunction
+                );
                 IExcelCellHolder betaNCell = sheet[betaNColumnIndex, rowIndex];
                 betaNCell.SetFormula(betaNFormula);
 
@@ -238,7 +281,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
                 ++rowIndex;
             }
 
-            sheet.AutoSizeColumn(nColumnNameColumnIndex);
+            sheet.AutoSizeColumn(nColumnColumnIndex);
             sheet.AutoSizeColumn(alphaNColumnIndex);
             sheet.AutoSizeColumn(betaNColumnIndex);
             sheet.AutoSizeColumn(leftYQuantileColumnIndex);

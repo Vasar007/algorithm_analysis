@@ -20,6 +20,13 @@ namespace AlgorithmAnalysis.Excel.Formulas
 
         #region IFormulaProvider Implementation
 
+        public string GetFormulaByName(string methodName)
+        {
+            methodName.ThrowIfNullOrWhiteSpace(nameof(methodName));
+
+            return _mapper.GetFormulaName(_excelVersion, methodName);
+        }
+
         public string Average(string range)
         {
             range.ThrowIfNullOrWhiteSpace(nameof(range));
@@ -104,10 +111,35 @@ namespace AlgorithmAnalysis.Excel.Formulas
             return $"{formulaName}({criteriaRange1}, {criteria1}, {criteriaRange2}, {criteria2})";
         }
 
+        public string Exp(string number)
+        {
+            number.ThrowIfNullOrWhiteSpace(nameof(number));
+
+            string formulaName = _mapper.GetFormulaName(_excelVersion);
+            return $"{formulaName}({number})";
+        }
+
         public string Frequency(string dataArray, string binsArray)
         {
             string formulaName = _mapper.GetFormulaName(_excelVersion);
             return $"{formulaName}({dataArray}, {binsArray})";
+        }
+
+        public string Ln(string number)
+        {
+            number.ThrowIfNullOrWhiteSpace(nameof(number));
+
+            string formulaName = _mapper.GetFormulaName(_excelVersion);
+            return $"{formulaName}({number})";
+        }
+
+        public string Log(string number, string @base)
+        {
+            number.ThrowIfNullOrWhiteSpace(nameof(number));
+            @base.ThrowIfNullOrWhiteSpace(nameof(@base));
+
+            string formulaName = _mapper.GetFormulaName(_excelVersion);
+            return $"{formulaName}({number}, {@base})";
         }
 
         public string Max(string range)

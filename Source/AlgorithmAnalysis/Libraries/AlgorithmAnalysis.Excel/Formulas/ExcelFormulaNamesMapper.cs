@@ -60,8 +60,17 @@ namespace AlgorithmAnalysis.Excel.Formulas
                 { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.CountIfS)), "COUNTIFS" },
                 { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.CountIfS)), "COUNTIFS" },
 
+                { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.Exp)), "EXP" },
+                { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.Exp)), "EXP" },
+
                 { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.Frequency)), "FREQUENCY" },
                 { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.Frequency)), "FREQUENCY" },
+
+                { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.Ln)), "LN" },
+                { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.Ln)), "LN" },
+
+                { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.Log)), "LOG" },
+                { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.Log)), "LOG" },
 
                 { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.Max)), "MAX" },
                 { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.Max)), "MAX" },

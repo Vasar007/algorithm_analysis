@@ -97,6 +97,38 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             return GetNormalizedDataRowIndex(args, lastDataRowIndex);
         }
 
+        public static ExcelColumnIndex GetAdditionalDataColumn(int iterationsNumber)
+        {
+            const int columnsBetweenDataAndAdditionalData = 0;
+
+            int columnIndex = iterationsNumber + columnsBetweenDataAndAdditionalData;
+            return columnIndex.AsEnum<ExcelColumnIndex>();
+        }
+
+        public static ExcelColumnIndex GetSampleSizeColumn(int iterationsNumber)
+        {
+            const int columnsBetweenDataAndSampleSize = 1;
+
+            int columnIndex = iterationsNumber + columnsBetweenDataAndSampleSize;
+            return columnIndex.AsEnum<ExcelColumnIndex>();
+        }
+
+        public static ExcelColumnIndex GetTheoreticalMinColumn(int iterationsNumber)
+        {
+            const int columnsBetweenDataAndTheoreticalMin = 2;
+
+            int columnIndex = iterationsNumber + columnsBetweenDataAndTheoreticalMin;
+            return columnIndex.AsEnum<ExcelColumnIndex>();
+        }
+
+        public static ExcelColumnIndex GetTheoreticalMaxColumn(int iterationsNumber)
+        {
+            const int columnsBetweenTheoreticalMinAndTheoreticalMax = 1;
+
+            int minColumn = GetTheoreticalMinColumn(iterationsNumber).AsInt32().UseOneBasedIndexing();
+            return minColumn.AsEnum<ExcelColumnIndex>(columnsBetweenTheoreticalMinAndTheoreticalMax);
+        }
+
         private static int FillSheetHeader(IExcelSheet sheet, ParametersPack args)
         {
             // Columnm index starts with zero because we use doule-conversion trick

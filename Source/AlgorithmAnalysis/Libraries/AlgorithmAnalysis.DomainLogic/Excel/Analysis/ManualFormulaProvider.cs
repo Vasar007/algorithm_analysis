@@ -1,6 +1,9 @@
 ﻿
+using System;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Excel;
+using AlgorithmAnalysis.Excel.Formulas;
+using AlgorithmAnalysis.Math.Functions;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
 {
@@ -56,6 +59,30 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
             max.ThrowIfNullOrWhiteSpace(nameof(max));
 
             return $"{min} + {leftYQuantile} * ({max} - {min})";
+        }
+
+        public static string GetFormulaForFunction(IExcelFormulaProvider formulaProvider,
+            FunctionType functionType)
+        {
+            formulaProvider.ThrowIfNull(nameof(formulaProvider));
+
+            return functionType switch
+            {
+                FunctionType.Exponential => formulaProvider.GetFormulaByName(nameof(IExcelFormulaProvider.Exp)),
+
+                FunctionType.Line => string.Empty,
+
+                FunctionType.Logarithm => formulaProvider.GetFormulaByName(nameof(IExcelFormulaProvider.Ln)),
+
+                FunctionType.Polynomial => string.Empty,
+
+                FunctionType.Power => string.Empty,
+
+                _ => throw new ArgumentOutOfRangeException(
+                         nameof(functionType), functionType,
+                         $"Unknown function type: '{functionType.ToString()}'."
+                     )
+            };
         }
 
         // TODO: use interface instead of this method.

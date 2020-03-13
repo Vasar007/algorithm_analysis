@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Models", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Excel", "Libraries\AlgorithmAnalysis.Excel\AlgorithmAnalysis.Excel.csproj", "{8F7E7742-8751-41BE-A19F-5E2F9AA65585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmAnalysis.Logging", "Libraries\AlgorithmAnalysis.Logging\AlgorithmAnalysis.Logging.csproj", "{32D109ED-C543-4FA1-9C2C-26FF68FF5626}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Logging", "Libraries\AlgorithmAnalysis.Logging\AlgorithmAnalysis.Logging.csproj", "{32D109ED-C543-4FA1-9C2C-26FF68FF5626}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmAnalysis.Common", "Libraries\AlgorithmAnalysis.Common\AlgorithmAnalysis.Common.csproj", "{93DDFD75-E613-4EA4-A191-C79613228E5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Common", "Libraries\AlgorithmAnalysis.Common\AlgorithmAnalysis.Common.csproj", "{93DDFD75-E613-4EA4-A191-C79613228E5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmAnalysis.Math", "Libraries\AlgorithmAnalysis.Math\AlgorithmAnalysis.Math.csproj", "{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{93DDFD75-E613-4EA4-A191-C79613228E5E}.Debug|x64.Build.0 = Debug|x64
 		{93DDFD75-E613-4EA4-A191-C79613228E5E}.Release|x64.ActiveCfg = Release|x64
 		{93DDFD75-E613-4EA4-A191-C79613228E5E}.Release|x64.Build.0 = Release|x64
+		{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}.Debug|x64.ActiveCfg = Debug|x64
+		{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}.Debug|x64.Build.0 = Debug|x64
+		{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}.Release|x64.ActiveCfg = Release|x64
+		{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{8F7E7742-8751-41BE-A19F-5E2F9AA65585} = {221ADEF8-495F-4A11-B453-15153C636930}
 		{32D109ED-C543-4FA1-9C2C-26FF68FF5626} = {221ADEF8-495F-4A11-B453-15153C636930}
 		{93DDFD75-E613-4EA4-A191-C79613228E5E} = {221ADEF8-495F-4A11-B453-15153C636930}
+		{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5} = {221ADEF8-495F-4A11-B453-15153C636930}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {71599CFB-855E-4F42-B219-B17234CCB145}
