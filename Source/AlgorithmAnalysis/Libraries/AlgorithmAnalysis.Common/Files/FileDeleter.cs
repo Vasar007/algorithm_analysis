@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Acolyte.Assertions;
+using Acolyte.Common;
 
 namespace AlgorithmAnalysis.Common.Files
 {
@@ -19,7 +20,7 @@ namespace AlgorithmAnalysis.Common.Files
         }
 
         public FileDeleter(FileInfo dataFile)
-            : this(new[] { dataFile })
+            : this(dataFile.AsEnumerable())
         {
         }
 
