@@ -106,7 +106,7 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Сравнение.
+        ///   Looks up a localized string similar to Сравнение (max / fγ(n)).
         /// </summary>
         internal static string Comparison {
             get {

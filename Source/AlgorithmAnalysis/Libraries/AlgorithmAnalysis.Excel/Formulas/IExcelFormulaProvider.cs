@@ -6,6 +6,8 @@
 
         string BetaDist(string x, string alpha, string beta, bool cumulative);
 
+        string BetaInv(string probability, string alpha, string beta);
+
         string ChiInv(string probability, string degreeFreedom);
 
         string ChiTest(string actualRange, string expectedRange);

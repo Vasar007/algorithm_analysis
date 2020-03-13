@@ -49,6 +49,15 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
             return $"({data} - {min}) / ({max} - {min})";
         }
 
+        public static string ConfidenceComplexity(string leftYQuantile, string min, string max)
+        {
+            leftYQuantile.ThrowIfNullOrWhiteSpace(nameof(leftYQuantile));
+            min.ThrowIfNullOrWhiteSpace(nameof(min));
+            max.ThrowIfNullOrWhiteSpace(nameof(max));
+
+            return $"{min} + {leftYQuantile} * ({max} - {min})";
+        }
+
         // TODO: use interface instead of this method.
         internal static string Min(IExcelSheet sheet, ExcelColumnIndex columnIndex, int rowIndex)
         {

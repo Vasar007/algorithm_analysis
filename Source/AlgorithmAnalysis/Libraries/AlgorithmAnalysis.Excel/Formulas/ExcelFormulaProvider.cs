@@ -55,6 +55,16 @@ namespace AlgorithmAnalysis.Excel.Formulas
             return $"{formulaName}({x}, {alpha}, {beta}{lastPart})";
         }
 
+        public string BetaInv(string probability, string alpha, string beta)
+        {
+            probability.ThrowIfNullOrWhiteSpace(nameof(probability));
+            alpha.ThrowIfNullOrWhiteSpace(nameof(alpha));
+            beta.ThrowIfNullOrWhiteSpace(nameof(beta));
+
+            string formulaName = _mapper.GetFormulaName(_excelVersion);
+            return $"{formulaName}({probability}, {alpha}, {beta})";
+        }
+
         public string ChiInv(string probability, string degreeFreedom)
         {
             probability.ThrowIfNullOrWhiteSpace(nameof(probability));

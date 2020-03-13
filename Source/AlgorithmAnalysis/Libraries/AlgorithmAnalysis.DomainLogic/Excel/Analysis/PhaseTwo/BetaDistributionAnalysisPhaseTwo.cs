@@ -11,6 +11,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
 
         private readonly int _iterationsNumber;
 
+        private readonly ExcelColumnIndex _additionalDataColumn;
+
         private readonly ExcelColumnIndex _theoreticalMinColumn;
 
         private readonly ExcelColumnIndex _theoreticalMaxColumn;
@@ -21,6 +23,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             _args = args.ThrowIfNull(nameof(args));
 
             _iterationsNumber = args.GetIterationsNumber(phaseNumber: 2);
+            _additionalDataColumn = GetAdditionalDataColumn();
             _theoreticalMinColumn = GetTheoreticalMinColumn();
             _theoreticalMaxColumn = GetTheoreticalMaxColumn();
         }
@@ -48,10 +51,23 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
 
         public void ApplyAnalysisToDataset(IExcelSheet sheet, int currentColumnIndex)
         {
-            FillData(sheet, ref currentColumnIndex);
+            FillStatisticalColumns(sheet, ref currentColumnIndex);
+
+            // Remain blank column.
+            ++currentColumnIndex;
+
+            FillAnalysisColumns(sheet, ref currentColumnIndex);
         }
 
         #endregion
+
+        private ExcelColumnIndex GetAdditionalDataColumn()
+        {
+            const int columnsBetweenDataAndAdditionalData = 0;
+
+            int columnIndex = _iterationsNumber + columnsBetweenDataAndAdditionalData;
+            return columnIndex.AsEnum<ExcelColumnIndex>();
+        }
 
         private ExcelColumnIndex GetTheoreticalMinColumn()
         {
@@ -67,42 +83,14 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             return minColumn.AsEnum<ExcelColumnIndex>(offset: 2);
         }
 
-        private void FillData(IExcelSheet sheet, ref int currentColumnIndex)
+        private IExcelCellHolder GetConfidenceFactorCell(IExcelSheet sheet)
         {
-            FillAnalysisColumns(sheet, ref currentColumnIndex);
+            const int confidenceFactorRowIndex = 4;
 
-            // Remain blank column.
-            ++currentColumnIndex;
-
-            var nColumnNameColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[nColumnNameColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.NColumnName);
-            sheet.AutoSizeColumn(nColumnNameColumnIndex);
-
-            var alphaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[alphaNColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.AlphaN);
-            sheet.AutoSizeColumn(alphaNColumnIndex);
-
-            var betaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[betaNColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.BetaN);
-            sheet.AutoSizeColumn(betaNColumnIndex);
-
-            // Remain blank column.
-            ++currentColumnIndex;
-
-            var leftYQuantileColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[leftYQuantileColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.LeftYQuantile);
-            sheet.AutoSizeColumn(leftYQuantileColumnIndex);
-
-            var complexityFunctionColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[complexityFunctionColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.ComplexityFunction);
-            sheet.AutoSizeColumn(complexityFunctionColumnIndex);
-
-            var comparisonColumnIndex = currentColumnIndex.AsEnum<ExcelColumnIndex>();
-            sheet[comparisonColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.Comparison);
-            sheet.AutoSizeColumn(comparisonColumnIndex);
+            return sheet[_additionalDataColumn, confidenceFactorRowIndex];
         }
 
-        private void FillAnalysisColumns(IExcelSheet sheet, ref int currentColumnIndex)
+        private void FillStatisticalColumns(IExcelSheet sheet, ref int currentColumnIndex)
         {
             int rowIndex = 1;
 
@@ -165,10 +153,14 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
                 string normalizedMeanAddress = sheet[normalizedMeanColumnIndex, rowIndex].Address;
                 string normalizedVarienceAddress = sheet[normalizedVarienceColumnIndex, rowIndex].Address;
 
-                string alphaFormula = ManualFormulaProvider.Alpha(normalizedMeanAddress, normalizedVarienceAddress);
+                string alphaFormula = ManualFormulaProvider.Alpha(
+                    normalizedMeanAddress, normalizedVarienceAddress
+                );
                 sheet[alphaColumnIndex, rowIndex].SetFormula(alphaFormula);
 
-                string betaFormula = ManualFormulaProvider.Beta(normalizedMeanAddress, normalizedVarienceAddress);
+                string betaFormula = ManualFormulaProvider.Beta(
+                    normalizedMeanAddress, normalizedVarienceAddress
+                );
                 sheet[betaColumnIndex, rowIndex].SetFormula(betaFormula);
 
                 ++rowIndex;
@@ -181,6 +173,77 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             sheet.AutoSizeColumn(normalizedVarienceColumnIndex);
             sheet.AutoSizeColumn(alphaColumnIndex);
             sheet.AutoSizeColumn(betaColumnIndex);
+        }
+
+        private void FillAnalysisColumns(IExcelSheet sheet, ref int currentColumnIndex)
+        {
+            int rowIndex = 1;
+
+            var nColumnNameColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[nColumnNameColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NColumnName);
+
+            var alphaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[alphaNColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.AlphaN);
+
+            var betaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[betaNColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.BetaN);
+
+            // Remain blank column.
+            ++currentColumnIndex;
+
+            var leftYQuantileColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[leftYQuantileColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.LeftYQuantile);
+
+            var complexityFunctionColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[complexityFunctionColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.ComplexityFunction);
+
+            var comparisonColumnIndex = currentColumnIndex.AsEnum<ExcelColumnIndex>();
+            sheet[comparisonColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.Comparison);
+
+            IExcelCellHolder confidenceFactorCell = GetConfidenceFactorCell(sheet);
+
+            ++rowIndex;
+
+            for (int launchesNumber = _args.StartValue; launchesNumber <= _args.ExtrapolationSegmentValue;
+                 launchesNumber += _args.Step)
+            {
+                sheet[nColumnNameColumnIndex, rowIndex].SetValue(launchesNumber);
+
+                string alphaNFormula = rowIndex.ToString(); // TODO: add alpha(N) formula.
+                IExcelCellHolder alphaNCell = sheet[alphaNColumnIndex, rowIndex];
+                alphaNCell.SetFormula(alphaNFormula);
+
+                string betaNFormula = (rowIndex + currentColumnIndex).ToString(); // TODO: add beta(N) formula.
+                IExcelCellHolder betaNCell = sheet[betaNColumnIndex, rowIndex];
+                betaNCell.SetFormula(betaNFormula);
+
+                string leftYQuantileFormula = sheet.FormulaProvider.BetaInv(
+                    confidenceFactorCell.Address, alphaNCell.Address, betaNCell.Address
+                );
+                IExcelCellHolder leftYQuantileCell = sheet[leftYQuantileColumnIndex, rowIndex];
+                leftYQuantileCell.SetFormula(leftYQuantileFormula);
+
+                string theoreticalMinAddress = sheet[_theoreticalMinColumn, rowIndex].Address;
+                string theoreticalMaxAddress = sheet[_theoreticalMaxColumn, rowIndex].Address;
+
+                string complexityFunctionFormula = ManualFormulaProvider.ConfidenceComplexity(
+                    leftYQuantileCell.Address, theoreticalMinAddress, theoreticalMaxAddress
+                );
+                IExcelCellHolder complexityCell = sheet[complexityFunctionColumnIndex, rowIndex];
+                complexityCell.SetFormula(complexityFunctionFormula);
+
+                string comparisonFormula = $"{theoreticalMaxAddress} / {complexityCell.Address}";
+                sheet[comparisonColumnIndex, rowIndex].SetFormula(comparisonFormula);
+
+                ++rowIndex;
+            }
+
+            sheet.AutoSizeColumn(nColumnNameColumnIndex);
+            sheet.AutoSizeColumn(alphaNColumnIndex);
+            sheet.AutoSizeColumn(betaNColumnIndex);
+            sheet.AutoSizeColumn(leftYQuantileColumnIndex);
+            sheet.AutoSizeColumn(complexityFunctionColumnIndex);
+            sheet.AutoSizeColumn(comparisonColumnIndex);
         }
     }
 }

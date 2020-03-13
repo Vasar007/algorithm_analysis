@@ -28,10 +28,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         {
             AnalysisPhaseTwoResult _ = await PerformPartTwoAsync(context);
 
-            // TODO: launch analysis several times in segment [StartValue, EndValue] with step=Step.
-            // TODO: find output files with data and parse them.
-            // TODO: save output data to the Excel tables and apply formulas.
-            // TODO: delete output files with data.
+            // TODO: process data and perform statisitical analysis.
             return AnalysisResult.CreateFailure("Phase 2 is not fully implemented.");
         }
 

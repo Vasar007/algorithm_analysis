@@ -5,7 +5,7 @@ using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.Excel.Formulas
 {
-    internal sealed class ExcelFormulaNamesMapper
+    internal sealed class ExcelFormulaNamesMapper : IExcelFormulaMapper
     {
         private readonly IReadOnlyDictionary<(ExcelVersion excelVersion, string methodName), string> _storage;
 
@@ -13,6 +13,8 @@ namespace AlgorithmAnalysis.Excel.Formulas
         {
             _storage = CreateFormulaNamesMapping();
         }
+
+        #region IExcelFormulaMapper Implementation
 
         public string GetFormulaName(ExcelVersion excelVersion,
             [CallerMemberName] string methodName = "")
@@ -31,6 +33,8 @@ namespace AlgorithmAnalysis.Excel.Formulas
             throw new KeyNotFoundException(message);
         }
 
+        #endregion
+
         private static IReadOnlyDictionary<(ExcelVersion excelVersion, string methodName), string>
             CreateFormulaNamesMapping()
         {
@@ -43,6 +47,9 @@ namespace AlgorithmAnalysis.Excel.Formulas
 
                 { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.BetaDist)), "BETADIST" },
                 { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.BetaDist)), "BETA.DIST" },
+
+                { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.BetaInv)), "BETAINV" },
+                { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.BetaInv)), "BETA.INV" },
 
                 { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.ChiInv)), "CHIINV" },
                 { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.ChiInv)), "CHISQ.INV.RT" },

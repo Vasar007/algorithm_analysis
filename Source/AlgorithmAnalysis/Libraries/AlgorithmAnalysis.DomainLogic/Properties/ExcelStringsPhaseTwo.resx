@@ -138,7 +138,7 @@
     <comment>Column name ([%% + 2]_1).</comment>
   </data>
   <data name="Comparison" xml:space="preserve">
-    <value>Сравнение</value>
+    <value>Сравнение (max / fγ(n))</value>
     <comment>Column name ([%% + 5]_1).</comment>
   </data>
   <data name="ComplexityFunction" xml:space="preserve">

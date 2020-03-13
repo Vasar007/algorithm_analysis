@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Acolyte.Assertions;
 using OfficeOpenXml.FormulaParsing.Excel.Functions;
 using AlgorithmAnalysis.Excel.Formulas;
 using AlgorithmAnalysis.Models;
@@ -8,7 +9,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
     internal sealed class ExtendedFunctionModule : FunctionsModule
     {
         private static readonly IReadOnlyList<(string FormulaName, ExcelFunction ExcelFunction)> _cache =
-            PrepareCache();
+            PrepareCache(new ExcelFormulaNamesMapper());
 
 
         public ExtendedFunctionModule()
@@ -20,11 +21,11 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
         }
 
         private static IReadOnlyList<(string FormulaName, ExcelFunction ExcelFunction)>
-            PrepareCache()
+            PrepareCache(IExcelFormulaMapper mapper)
         {
-            var result = new List<(string FormulaName, ExcelFunction ExcelFunction)>();
+            mapper.ThrowIfNull(nameof(mapper));
 
-            var mapper = new ExcelFormulaNamesMapper();
+            var result = new List<(string FormulaName, ExcelFunction ExcelFunction)>();
 
             // CHIINV == CHISQ.INV.RT
             string chiInv2019 = mapper.GetFormulaName(ExcelVersion.V2019, nameof(IExcelFormulaProvider.ChiInv));
@@ -43,6 +44,12 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
             result.Add((betaDist2019, new BetaDistExcelFunction()));
             string betaDist2007 = mapper.GetFormulaName(ExcelVersion.V2007, nameof(IExcelFormulaProvider.BetaDist));
             result.Add((betaDist2007, new BetaDistExcel2007Function()));
+
+            // BETAINV == BETA.INV
+            string betaInv2019 = mapper.GetFormulaName(ExcelVersion.V2019, nameof(IExcelFormulaProvider.BetaInv));
+            result.Add((betaInv2019, new BetaInvExcelFunction()));
+            string betaInv2007 = mapper.GetFormulaName(ExcelVersion.V2007, nameof(IExcelFormulaProvider.BetaInv));
+            result.Add((betaInv2007, new BetaInvExcelFunction()));
 
             // FREQUENCY name does not change.
             string frequency = mapper.GetFormulaName(ExcelVersion.V2019, nameof(IExcelFormulaProvider.Frequency));

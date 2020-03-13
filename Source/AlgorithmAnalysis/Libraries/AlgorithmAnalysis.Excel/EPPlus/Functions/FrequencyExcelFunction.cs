@@ -24,7 +24,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
         {
             try
             {
-                return ExecuteInternal(arguments, context);
+                return ExecuteInternal(arguments);
             }
             catch (Exception ex)
             {
@@ -39,8 +39,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus.Functions
 
         #endregion
 
-        private CompileResult ExecuteInternal(IEnumerable<FunctionArgument> arguments,
-            ParsingContext context)
+        private CompileResult ExecuteInternal(IEnumerable<FunctionArgument> arguments)
         {
             // Sanity check, will set excel VALUE error if min length is not met.
             ValidateArguments(arguments, ExpectedArgumentsNumber);
