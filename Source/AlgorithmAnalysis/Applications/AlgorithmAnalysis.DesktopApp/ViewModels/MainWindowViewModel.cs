@@ -59,9 +59,6 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
             try
             {
-                // TODO: check that all text boxes has a valid content (now exception will be 
-                // thrown during ParametersPack validation in ctor).
-
                 // TODO: display waiting message (and progress bar, if it's possible).
 
                 AnalysisContext context = Parameters.CreateContext(_outputExcelFile);
