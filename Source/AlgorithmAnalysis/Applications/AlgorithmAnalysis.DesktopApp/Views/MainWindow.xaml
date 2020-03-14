@@ -205,7 +205,9 @@
                         Minimum="{Binding Path=AnalysisModel.MinDegreeOfParallerism}"
                         Maximum="{Binding Path=AnalysisModel.MaxDegreeOfParallerism}"
                         Value="{Binding Path=Parameters.MaxDegreeOfParallelism}"
-                        />
+                        SmallChange="1"
+                        AutoToolTipPlacement="BottomRight"
+                        AutoToolTipPrecision="0" />
 
                 <CheckBox Content="Show analysis window"
                           HorizontalAlignment="Center"
