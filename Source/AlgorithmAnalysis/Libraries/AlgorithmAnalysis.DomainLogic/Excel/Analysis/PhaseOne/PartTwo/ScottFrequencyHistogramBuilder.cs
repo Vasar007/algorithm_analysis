@@ -123,7 +123,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
                 sheet[ExcelColumnIndex.F, currentRow].SetFormula(relativeFrequencyFormula);
 
                 string chi2SingleFormula = ManualFormulaProvider.Chi2Single(
-                    $"($F{currentRowStr}", $"$G{currentRowStr}"
+                    $"$F{currentRowStr}", $"$G{currentRowStr}"
                 );
                 sheet[ExcelColumnIndex.H, currentRow].SetFormula(chi2SingleFormula);
             }
