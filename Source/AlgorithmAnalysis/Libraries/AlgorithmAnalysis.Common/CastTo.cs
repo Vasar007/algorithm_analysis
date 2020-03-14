@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Common
 {
@@ -36,6 +37,8 @@ namespace AlgorithmAnalysis.Common
         /// <returns>Casted value.</returns>
         public static TTarget From<TSource>(TSource source)
         {
+            source.ThrowIfNullValue(nameof(source), assertOnPureValueTypes: false);
+
             return Cache<TSource>.Caster(source);
         }
     }
