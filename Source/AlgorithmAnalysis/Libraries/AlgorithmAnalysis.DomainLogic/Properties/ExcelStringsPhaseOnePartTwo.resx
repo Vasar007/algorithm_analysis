@@ -167,7 +167,7 @@
   </data>
   <data name="EmpiricalFrequencyColumnName" xml:space="preserve">
     <value>Эмперические частоты</value>
-    <comment>Column name (F1).</comment>
+    <comment>Column name (E1).</comment>
   </data>
   <data name="Epsilon" xml:space="preserve">
     <value>Eps</value>
@@ -184,10 +184,6 @@
   <data name="FreedomDegreesNumber" xml:space="preserve">
     <value>Кол-во степеней свободы</value>
     <comment>Descriptive cell (I15).</comment>
-  </data>
-  <data name="FrequencyColumnName" xml:space="preserve">
-    <value>Частота</value>
-    <comment>Column name (E1).</comment>
   </data>
   <data name="HistogramSemisegmentsNumber" xml:space="preserve">
     <value>Число полусегментов для гистограммы</value>
@@ -248,6 +244,10 @@
   <data name="PreliminarySampleSize" xml:space="preserve">
     <value>Предварительный объём выборки</value>
     <comment>Descriptive cell (L2).</comment>
+  </data>
+  <data name="RelativeFrequencyColumnName" xml:space="preserve">
+    <value>Относительные частоты</value>
+    <comment>Column name (F1).</comment>
   </data>
   <data name="SampleDeviation" xml:space="preserve">
     <value>Выборочное отклонение</value>

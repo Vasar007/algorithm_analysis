@@ -111,15 +111,16 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             if (result.Success)
             {
                 MessageBoxProvider.ShowInfo(result.Message);
-                OpenResults();
             }
             else
             {
                 MessageBoxProvider.ShowError(result.Message);
             }
+
+            OpenResultsIfNeeded();
         }
 
-        private void OpenResults()
+        private void OpenResultsIfNeeded()
         {
             if (AnalysisModel.OpenAnalysisResults)
             {

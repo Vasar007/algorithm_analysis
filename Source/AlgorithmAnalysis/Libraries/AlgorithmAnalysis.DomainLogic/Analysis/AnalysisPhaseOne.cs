@@ -81,8 +81,6 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 ++iterationNumber;
             }
 
-            // TODO: set bold on text with final calculated sample size.
-
             _logger.Info("Finished analysis phase one part one.");
             _logger.Info(
                     $"Total iteration number: '{iterationNumber.ToString()}', " +

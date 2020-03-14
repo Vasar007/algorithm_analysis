@@ -31,6 +31,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         {
             _logger.Info("Starting analysis phase one.");
 
+            // Perform full analysis and calculate confidence complexity function.
             AnalysisPhaseTwoResult _ = await PerformPhaseTwoAsync(context);
 
             _logger.Info("Finished analysis phase two.");

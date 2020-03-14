@@ -20,8 +20,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
         public void CreateHistogramData(IExcelSheet sheet)
         {
             sheet[ExcelColumnIndex.D, 1].SetValue(ExcelStringsPhaseOnePartTwo.PocketColumnName);
-            sheet[ExcelColumnIndex.E, 1].SetValue(ExcelStringsPhaseOnePartTwo.FrequencyColumnName);
-            sheet[ExcelColumnIndex.F, 1].SetValue(ExcelStringsPhaseOnePartTwo.EmpiricalFrequencyColumnName);
+            sheet[ExcelColumnIndex.E, 1].SetValue(ExcelStringsPhaseOnePartTwo.EmpiricalFrequencyColumnName);
+            sheet[ExcelColumnIndex.F, 1].SetValue(ExcelStringsPhaseOnePartTwo.RelativeFrequencyColumnName);
             sheet[ExcelColumnIndex.G, 1].SetValue(ExcelStringsPhaseOnePartTwo.TheoreticalFrequencyColumnName);
             sheet[ExcelColumnIndex.H, 1].SetValue(ExcelStringsPhaseOnePartTwo.Chi2ValueColumnName);
 
@@ -39,7 +39,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             sheet[ExcelColumnIndex.J, 10].SetFormula(sheet.FormulaProvider.Min(normalizedValueRange));
             sheet[ExcelColumnIndex.J, 11].SetFormula(sheet.FormulaProvider.Max(normalizedValueRange));
 
-            string scottFormula = $"(3.5 * {sheet.FormulaProvider.StdDev(normalizedValueRange)}) / (J6^(1/3))";
+            string scottFormula = ManualFormulaProvider.ScottFormula(
+                sheet.FormulaProvider, normalizedValueRange, "$J$6"
+            );
             sheet[ExcelColumnIndex.J, 12].SetFormula(scottFormula);
             sheet[ExcelColumnIndex.J, 13].SetFormula(
                 sheet.FormulaProvider.RoundUp("($J$11 - $J$10) / $J$12", "0")
@@ -47,17 +49,15 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 
             IExcelCellValueHolder histogramSegmentsNumber = sheet.EvaluateCell(ExcelColumnIndex.J, 13);
             int histogramSegmentsNumberInt = Convert.ToInt32(histogramSegmentsNumber.NumericValue);
-            string histogramSegmentsNumberIndex = histogramSegmentsNumberInt.UseOneBasedIndexing().SkipHeader().ToString();
+            string histogramSegmentsNumberIndex =
+                histogramSegmentsNumberInt.UseOneBasedIndexing().SkipHeader().ToString();
 
-            CreateIntervalData(
-                sheet,
-                histogramSegmentsNumberInt,
-                normalizedValueRange
-            );
+            CreateIntervalData(sheet, histogramSegmentsNumberInt, normalizedValueRange);
 
-            sheet[ExcelColumnIndex.J, 14].SetFormula(
-                $"{sheet.FormulaProvider.Sum($"$H$2:$H${histogramSegmentsNumberIndex}")} * $J$6"
+            string chi2Formula = ManualFormulaProvider.Chi2(
+                sheet.FormulaProvider, $"$H$2:$H${histogramSegmentsNumberIndex}", "$J$6"
             );
+            sheet[ExcelColumnIndex.J, 14].SetFormula(chi2Formula);
             sheet[ExcelColumnIndex.J, 15].SetFormula("$J$13 - 1 - 2");
             sheet[ExcelColumnIndex.J, 16].SetFormula(sheet.FormulaProvider.ChiInv("$J$8", "$J$15"));
 
@@ -66,8 +66,6 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
                 $"$G$2:$G${histogramSegmentsNumberIndex}"
             );
             sheet[ExcelColumnIndex.J, 17].SetFormula(testFormula);
-
-            sheet.EvaluateAll();
 
             sheet.AutoSizeColumn(ExcelColumnIndex.D);
             sheet.AutoSizeColumn(ExcelColumnIndex.E);
@@ -102,9 +100,6 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
                 string pocketFormula = $"$J$10 + ($J$12 * {i.ToString()})";
                 sheet[ExcelColumnIndex.D, currentRow].SetFormula(pocketFormula);
 
-                string empiricalFrequencyFormula = $"$E{currentRowStr} / $J$6";
-                sheet[ExcelColumnIndex.F, currentRow].SetFormula(empiricalFrequencyFormula);
-
                 if (i == 0)
                 {
                     CreateFirstValueInInterval(
@@ -124,18 +119,40 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
                     );
                 }
 
-                string chi2Formula = $"($F{currentRowStr} - $G{currentRowStr})^2 / $G{currentRowStr}";
-                sheet[ExcelColumnIndex.H, currentRow].SetFormula(chi2Formula);
+                string relativeFrequencyFormula = $"$E{currentRowStr} / $J$6";
+                sheet[ExcelColumnIndex.F, currentRow].SetFormula(relativeFrequencyFormula);
+
+                string chi2SingleFormula = ManualFormulaProvider.Chi2Single(
+                    $"($F{currentRowStr}", $"$G{currentRowStr}"
+                );
+                sheet[ExcelColumnIndex.H, currentRow].SetFormula(chi2SingleFormula);
             }
+
+            string lastRowIndexStr = histogramSegmentsNumber.UseOneBasedIndexing().SkipHeader().ToString();
+            int checkSumRowIndex = (histogramSegmentsNumber + 2).UseOneBasedIndexing().SkipHeader();
+
+            sheet[ExcelColumnIndex.D, checkSumRowIndex].SetValue(ExcelStringsPhaseOnePartTwo.Sum);
+            sheet[ExcelColumnIndex.E, checkSumRowIndex].SetFormula(
+                sheet.FormulaProvider.Sum($"$E2:$E${lastRowIndexStr}")
+            );
+            sheet[ExcelColumnIndex.F, checkSumRowIndex].SetFormula(
+                sheet.FormulaProvider.Sum($"$F2:$F${lastRowIndexStr}")
+            );
+            sheet[ExcelColumnIndex.G, checkSumRowIndex].SetFormula(
+                sheet.FormulaProvider.Sum($"$G2:$G${lastRowIndexStr}")
+            );
+            sheet[ExcelColumnIndex.H, checkSumRowIndex].SetFormula(
+                sheet.FormulaProvider.Sum($"$H2:$H${lastRowIndexStr}")
+            );
         }
 
         private static void CreateFirstValueInInterval(IExcelSheet sheet, int currentRow,
             string currentRowStr, string normalizedValueRange)
         {
-            string frequencyFormula = sheet.FormulaProvider.CountIfS(
+            string empericalFrequencyFormula = sheet.FormulaProvider.CountIfS(
                 normalizedValueRange, $"\"<\" & $D{currentRowStr}"
             );
-            sheet[ExcelColumnIndex.E, currentRow].SetFormula(frequencyFormula);
+            sheet[ExcelColumnIndex.E, currentRow].SetFormula(empericalFrequencyFormula);
 
             string theoreticalFrequencyFormula = sheet.FormulaProvider.BetaDist(
                 $"$D{currentRowStr}", "$M$11", "$M$12", cumulative: true
@@ -146,10 +163,10 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
         private static void CreateLastValueInInterval(IExcelSheet sheet, int currentRow,
             string previousRowStr, string normalizedValueRange)
         {
-            string frequencyFormula = sheet.FormulaProvider.CountIfS(
+            string empericalFrequencyFormula = sheet.FormulaProvider.CountIfS(
                 normalizedValueRange, $"\">=\" & $D{previousRowStr}"
             );
-            sheet[ExcelColumnIndex.E, currentRow].SetFormula(frequencyFormula);
+            sheet[ExcelColumnIndex.E, currentRow].SetFormula(empericalFrequencyFormula);
 
             string betaDistFormula = sheet.FormulaProvider.BetaDist(
                 $"$D{previousRowStr}", "$M$11", "$M$12", cumulative: true
@@ -161,11 +178,11 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
         private static void CreateMediumValueInInterval(IExcelSheet sheet, int currentRow,
             string currentRowStr, string previousRowStr, string normalizedValueRange)
         {
-            string frequencyFormula = sheet.FormulaProvider.CountIfS(
+            string empericalFrequencyFormula = sheet.FormulaProvider.CountIfS(
                 normalizedValueRange, $"\">=\" & $D{previousRowStr}",
                 normalizedValueRange, $"\"<\" & $D{currentRowStr}"
             );
-            sheet[ExcelColumnIndex.E, currentRow].SetFormula(frequencyFormula);
+            sheet[ExcelColumnIndex.E, currentRow].SetFormula(empericalFrequencyFormula);
 
             string betaDistFormulaCurrent = sheet.FormulaProvider.BetaDist(
                 $"$D{currentRowStr}", "$M$11", "$M$12", cumulative: true

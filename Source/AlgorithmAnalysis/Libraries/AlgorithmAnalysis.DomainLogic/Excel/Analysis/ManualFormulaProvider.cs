@@ -61,6 +61,37 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
             return $"{min} + {leftYQuantile} * ({max} - {min})";
         }
 
+
+        public static string Chi2Single(string relativeFrequency, string theoreticalFrequency)
+        {
+            relativeFrequency.ThrowIfNullOrWhiteSpace(nameof(relativeFrequency));
+            theoreticalFrequency.ThrowIfNullOrWhiteSpace(nameof(theoreticalFrequency));
+
+            return $"({relativeFrequency} - {theoreticalFrequency})^2 / {theoreticalFrequency}";
+        }
+
+        public static string Chi2(IExcelFormulaProvider formulaProvider, string chi2Range,
+            string experimentsNumber)
+        {
+            formulaProvider.ThrowIfNull(nameof(formulaProvider));
+            chi2Range.ThrowIfNullOrWhiteSpace(nameof(chi2Range));
+            experimentsNumber.ThrowIfNullOrWhiteSpace(nameof(experimentsNumber));
+
+            // TODO: remove this dirty hack.
+            const string dirtyHack = " / 100";
+            return $"{formulaProvider.Sum(chi2Range)} * {experimentsNumber}{dirtyHack}";
+        }
+
+        public static string ScottFormula(IExcelFormulaProvider formulaProvider,
+            string normalizedValueRange, string experimentsNumber)
+        {
+            formulaProvider.ThrowIfNull(nameof(formulaProvider));
+            normalizedValueRange.ThrowIfNullOrWhiteSpace(nameof(normalizedValueRange));
+            experimentsNumber.ThrowIfNullOrWhiteSpace(nameof(experimentsNumber));
+
+            return $"(3.5 * {formulaProvider.StdDev(normalizedValueRange)}) / ({experimentsNumber}^(1/3))";
+        }
+
         public static string GetFormulaForFunction(IExcelFormulaProvider formulaProvider,
             FunctionType functionType)
         {

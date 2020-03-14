@@ -214,15 +214,6 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Частота.
-        /// </summary>
-        internal static string FrequencyColumnName {
-            get {
-                return ResourceManager.GetString("FrequencyColumnName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Число полусегментов для гистограммы.
         /// </summary>
         internal static string HistogramSemisegmentsNumber {
@@ -354,6 +345,15 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         internal static string PreliminarySampleSize {
             get {
                 return ResourceManager.GetString("PreliminarySampleSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Относительные частоты.
+        /// </summary>
+        internal static string RelativeFrequencyColumnName {
+            get {
+                return ResourceManager.GetString("RelativeFrequencyColumnName", resourceCulture);
             }
         }
         
