@@ -56,8 +56,9 @@
                                  VerticalAlignment="Stretch"
                                  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Vertical"
-                            HorizontalAlignment="Center">
-                    <TextBlock Margin="16 16 12 8"
+                            HorizontalAlignment="Center"
+                            x:Name="AlgorithmPanel">
+                    <TextBlock Margin="16 16 12 0"
                                FontSize="16">
                         Algorithm parameters
                     </TextBlock>
@@ -66,7 +67,6 @@
 
                     <ComboBox materialDesign:HintAssist.Hint="Algorithm"
                               HorizontalAlignment="Stretch"
-                              MinWidth="350"
                               Margin="16"
                               SelectedIndex="0"
                               ItemsSource="{Binding Path=SelectiveParameters.AvailableAlgorithms}"
@@ -79,29 +79,29 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
 
-                    <TextBox x:Name="FirstValueButton"
-                             materialDesign:HintAssist.Hint="The first value of function segment to analyze"
-                             Margin="16"
-                             FontSize="18"
-                             MinWidth="350"
-                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                    <TextBox x:Name="FirstValueTextBox"
+                            materialDesign:HintAssist.Hint="The first value of function segment to analyze"
+                            Margin="16"
+                            FontSize="18"
+                            MaxWidth="500"
+                            Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                         <TextBox.Text>
                             <Binding Path="RawParameters.StartValue"
-                                     UpdateSourceTrigger="PropertyChanged"
-                                     Mode="TwoWay">
+                                    UpdateSourceTrigger="PropertyChanged"
+                                    Mode="TwoWay">
                                 <Binding.ValidationRules>
                                     <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                     ValidatesOnTargetUpdated="True" />
+                                                                    ValidatesOnTargetUpdated="True" />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
 
-                    <TextBox x:Name="LastValueButton"
+                    <TextBox x:Name="LastValueTextBox"
                              materialDesign:HintAssist.Hint="The last value of function segment to analyze"
                              Margin="16"
                              FontSize="18"
-                             MinWidth="350"
+                             MaxWidth="500"
                              Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                         <TextBox.Text>
                             <Binding Path="RawParameters.EndValue"
@@ -115,11 +115,11 @@
                         </TextBox.Text>
                     </TextBox>
 
-                    <TextBox x:Name="LastExtrapolationValueButton"
+                    <TextBox x:Name="LastExtrapolationValueTextBox"
                              materialDesign:HintAssist.Hint="The last extrapolation value of function segment to analyze"
                              Margin="16"
                              FontSize="18"
-                             MinWidth="350"
+                             MaxWidth="500"
                              Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                         <TextBox.Text>
                             <Binding Path="RawParameters.ExtrapolationSegmentValue"
@@ -133,11 +133,11 @@
                         </TextBox.Text>
                     </TextBox>
 
-                    <TextBox x:Name="LaunchesNumberButton"
+                    <TextBox x:Name="LaunchesNumberTextBox"
                              materialDesign:HintAssist.Hint="The initial launches number"
                              Margin="16"
                              FontSize="18"
-                             MinWidth="350"
+                             MaxWidth="500"
                              Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                         <TextBox.Text>
                             <Binding Path="RawParameters.LaunchesNumber"
@@ -151,11 +151,11 @@
                         </TextBox.Text>
                     </TextBox>
 
-                    <TextBox x:Name="StepValueButton"
+                    <TextBox x:Name="StepValueTextBox"
                              materialDesign:HintAssist.Hint="The size of step for function segment"
                              Margin="16"
                              FontSize="18"
-                             MinWidth="350"
+                             MaxWidth="500"
                              Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                         <TextBox.Text>
                             <Binding Path="RawParameters.Step"
@@ -178,7 +178,7 @@
                                  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Vertical"
                             HorizontalAlignment="Center">
-                    <TextBlock Margin="16 16 12 8"
+                    <TextBlock Margin="16 16 12 0"
                                FontSize="16">
                         Analysis parameters
                     </TextBlock>
@@ -187,7 +187,6 @@
 
                     <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part one"
                               HorizontalAlignment="Stretch"
-                              MinWidth="350"
                               Margin="16"
                               SelectedIndex="0"
                               ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseOnePartOne}"
@@ -202,7 +201,6 @@
 
                     <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part two"
                               HorizontalAlignment="Stretch"
-                              MinWidth="350"
                               Margin="16"
                               SelectedIndex="0"
                               ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseOnePartTwo}"
@@ -218,7 +216,6 @@
                     <!-- TODO: reset selected index when implement normal distribution. -->
                     <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase two"
                               HorizontalAlignment="Stretch"
-                              MinWidth="350"
                               Margin="16"
                               SelectedIndex="1"
                               ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseTwo}"
@@ -233,7 +230,6 @@
 
                     <ComboBox materialDesign:HintAssist.Hint="Goodness of fit"
                               HorizontalAlignment="Stretch"
-                              MinWidth="350"
                               Margin="16"
                               SelectedIndex="0"
                               ItemsSource="{Binding Path=SelectiveParameters.AvailableGoodnessOfFitKinds}"
@@ -307,7 +303,7 @@
                                  HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Vertical"
                             HorizontalAlignment="Center">
-                    <TextBlock Margin="16 16 12 8"
+                    <TextBlock Margin="16 16 12 0"
                                FontSize="16">
                         Advanced parameters
                     </TextBlock>
@@ -327,7 +323,7 @@
             </materialDesign:Card>
         </StackPanel>
 
-        <StackPanel Width="280"
+        <StackPanel Width="300"
                     Orientation="Vertical">
             <UniformGrid Rows="1"
                          Columns="2">
@@ -339,15 +335,15 @@
                     <Button.IsEnabled>
                         <MultiBinding Converter="{StaticResource ResourceKey=InverseAndBooleansToBooleanConverter}"
                                       Mode="TwoWay">
-                            <Binding ElementName="FirstValueButton"
+                            <Binding ElementName="FirstValueTextBox"
                                      Path="(Validation.HasError)" />
-                            <Binding ElementName="LastValueButton"
+                            <Binding ElementName="LastValueTextBox"
                                      Path="(Validation.HasError)" />
-                            <Binding ElementName="LastExtrapolationValueButton"
+                            <Binding ElementName="LastExtrapolationValueTextBox"
                                      Path="(Validation.HasError)" />
-                            <Binding ElementName="LaunchesNumberButton"
+                            <Binding ElementName="LaunchesNumberTextBox"
                                      Path="(Validation.HasError)" />
-                            <Binding ElementName="StepValueButton"
+                            <Binding ElementName="StepValueTextBox"
                                      Path="(Validation.HasError)" />
                         </MultiBinding>
                     </Button.IsEnabled>

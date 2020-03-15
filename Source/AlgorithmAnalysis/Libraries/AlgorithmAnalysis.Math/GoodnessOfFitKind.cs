@@ -69,7 +69,7 @@ namespace AlgorithmAnalysis.Math
         {
             var sb = new StringBuilder()
                 .AppendLine($"[{nameof(GoodnessOfFitKind)}]")
-                .AppendLine($"Description: {Description.ToString()}")
+                .AppendLine($"Description: {Description}")
                 .AppendLine($"Value: '{Value.ToString()}'");
 
             return sb.ToString();

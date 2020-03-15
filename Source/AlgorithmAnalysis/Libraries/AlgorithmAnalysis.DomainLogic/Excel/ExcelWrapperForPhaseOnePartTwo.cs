@@ -76,13 +76,19 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             sheet[ExcelColumnIndex.J, 1].SetValue(ExcelStringsPhaseOnePartTwo.AdditionalParametersValuesColumnName);
             sheet[ExcelColumnIndex.J, 2].SetValue(args.StartValue);
 
-            string minFormula = ManualFormulaProvider.Min(sheet, ExcelColumnIndex.J, 2);
+            string minFormula = ManualFormulaProvider.Min(
+                 sheet, ExcelColumnIndex.J, 2, args.AlgorithmType
+            );
             sheet[ExcelColumnIndex.J, 3].SetFormula(minFormula);
 
-            string averageFormula = ManualFormulaProvider.Average(sheet, ExcelColumnIndex.J, 2);
+            string averageFormula = ManualFormulaProvider.Average(
+                 sheet, ExcelColumnIndex.J, 2, args.AlgorithmType
+            );
             sheet[ExcelColumnIndex.J, 4].SetFormula(averageFormula);
 
-            string maxFormula = ManualFormulaProvider.Max(sheet, ExcelColumnIndex.J, 2);
+            string maxFormula = ManualFormulaProvider.Max(
+                sheet, ExcelColumnIndex.J, 2, args.AlgorithmType
+            );
             sheet[ExcelColumnIndex.J, 5].SetFormula(maxFormula);
             sheet[ExcelColumnIndex.J, 6].SetValue(args.LaunchesNumber);
             sheet[ExcelColumnIndex.J, 7].SetValue(double.Parse(ExcelStringsPhaseOnePartTwo.ConfidenceFactorValue));

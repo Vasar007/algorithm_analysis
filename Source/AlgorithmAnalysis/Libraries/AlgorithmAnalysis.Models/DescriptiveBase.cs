@@ -65,7 +65,7 @@ namespace AlgorithmAnalysis.Models
         {
             var sb = new StringBuilder()
                 .AppendLine($"[{nameof(DescriptiveBase)}]")
-                .AppendLine($"Description: {Description.ToString()}")
+                .AppendLine($"Description: {Description}")
                 .AppendLine($"Value: '{Value.ToString()}'");
 
             return sb.ToString();

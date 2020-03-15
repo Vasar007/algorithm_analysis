@@ -1,9 +1,21 @@
 {
   "AnalysisOptions": {
-    "AvailableAlgorithms": {
-      "0": "Pallottino's algorithm",
-      "1": "Insertion sort"
-    },
+    "AvailableAlgorithms": [
+      {
+        "Description": "Pallottino's algorithm",
+        "Value": "0",
+        "MinFormula": "x",
+        "AverageFormula": "x * x * (x - 1) / 2",
+        "MaxFormula": "x * x * x * (x - 1) / 2"
+      },
+      {
+        "Description": "Insertion sort",
+        "Value": "1",
+        "MinFormula": "x",
+        "AverageFormula": "x^2",
+        "MaxFormula": "x^2"
+      }
+    ],
     "AnalysisProgramName": "algorithm_analysis.exe",
     "OutputFilenamePattern": "tests_average_",
     "CommonAnalysisFilenameSuffix": "series"

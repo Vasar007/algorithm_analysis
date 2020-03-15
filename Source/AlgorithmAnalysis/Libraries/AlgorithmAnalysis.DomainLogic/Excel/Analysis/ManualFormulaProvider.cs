@@ -3,6 +3,7 @@ using Acolyte.Assertions;
 using AlgorithmAnalysis.Excel;
 using AlgorithmAnalysis.Excel.Formulas;
 using AlgorithmAnalysis.Math.Functions;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
 {
@@ -114,35 +115,37 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
             };
         }
 
-        // TODO: use interface instead of this method.
-        internal static string Min(IExcelSheet sheet, ExcelColumnIndex columnIndex, int rowIndex)
+        public static string Min(IExcelSheet sheet, ExcelColumnIndex columnIndex, int rowIndex,
+            AlgorithmType algorithmType)
         {
             sheet.ThrowIfNull(nameof(sheet));
             rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
+            algorithmType.ThrowIfNull(nameof(algorithmType));
 
             string cell = sheet[columnIndex, rowIndex].Address;
-            return cell;
+            return string.Format(algorithmType.MinFormulaFormat, cell);
         }
 
-        // TODO: use interface instead of this method.
-        internal static string Average(IExcelSheet sheet, ExcelColumnIndex columnIndex,
-            int rowIndex)
+        public static string Average(IExcelSheet sheet, ExcelColumnIndex columnIndex,
+            int rowIndex, AlgorithmType algorithmType)
         {
             sheet.ThrowIfNull(nameof(sheet));
             rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
+            algorithmType.ThrowIfNull(nameof(algorithmType));
 
             string cell = sheet[columnIndex, rowIndex].Address;
-            return $"{cell} * {cell} * ({cell} - 1) / 2";
+            return string.Format(algorithmType.AverageFormulaFormat, cell);
         }
 
-        // TODO: use interface instead of this method.
-        internal static string Max(IExcelSheet sheet, ExcelColumnIndex columnIndex, int rowIndex)
+        public static string Max(IExcelSheet sheet, ExcelColumnIndex columnIndex, int rowIndex,
+            AlgorithmType algorithmType)
         {
             sheet.ThrowIfNull(nameof(sheet));
             rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
+            algorithmType.ThrowIfNull(nameof(algorithmType));
 
             string cell = sheet[columnIndex, rowIndex].Address;
-            return $"{cell} * {cell} * {cell} * ({cell} - 1) / 2";
+            return string.Format(algorithmType.MaxFormulaFormat, cell);
         }
     }
 }

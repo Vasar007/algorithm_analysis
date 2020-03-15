@@ -205,13 +205,19 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             {
                 sheet[sampleSizeColumnIndex, rowIndex].SetValue(launchesNumber);
 
-                string minFormula = ManualFormulaProvider.Min(sheet, sampleSizeColumnIndex, rowIndex);
+                string minFormula = ManualFormulaProvider.Min(
+                    sheet, sampleSizeColumnIndex, rowIndex, args.AlgorithmType
+                );
                 sheet[theoreticalMinColumnIndex, rowIndex].SetFormula(minFormula);
 
-                string averageFormula = ManualFormulaProvider.Average(sheet, sampleSizeColumnIndex, rowIndex);
+                string averageFormula = ManualFormulaProvider.Average(
+                    sheet, sampleSizeColumnIndex, rowIndex, args.AlgorithmType
+                );
                 sheet[theoreticalAverageColumnIndex, rowIndex].SetFormula(averageFormula);
 
-                string maxFormula = ManualFormulaProvider.Max(sheet, sampleSizeColumnIndex, rowIndex);
+                string maxFormula = ManualFormulaProvider.Max(
+                    sheet, sampleSizeColumnIndex, rowIndex, args.AlgorithmType
+                );
                 sheet[theoreticalMaxColumnIndex, rowIndex].SetFormula(maxFormula);
 
                 ++rowIndex;

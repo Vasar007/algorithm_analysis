@@ -1,14 +1,41 @@
 ﻿using System;
 using System.Text;
+using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Models
 {
     public sealed class AlgorithmType : DescriptiveBase, IEquatable<DescriptiveBase>,
         IEquatable<AlgorithmType>, ILoggable
     {
-        public AlgorithmType(string description, int value)
+        public string MinFormulaFormat { get; }
+
+        public string AverageFormulaFormat { get; }
+
+        public string MaxFormulaFormat { get; }
+
+
+        private AlgorithmType(
+            string description,
+            int value,
+            string minFormulaFormat,
+            string averageFormulaFormat,
+            string maxFormulaFormat)
             : base(description, value)
         {
+            MinFormulaFormat = minFormulaFormat.ThrowIfNullOrWhiteSpace(nameof(minFormulaFormat));
+            AverageFormulaFormat = averageFormulaFormat.ThrowIfNullOrWhiteSpace(nameof(averageFormulaFormat));
+            MaxFormulaFormat = maxFormulaFormat.ThrowIfNullOrWhiteSpace(nameof(maxFormulaFormat));
+        }
+
+        public static AlgorithmType Create(AlgorithmTypeValue algorithmValue)
+        {
+            return new AlgorithmType(
+                description: algorithmValue.Description,
+                value: algorithmValue.Value,
+                minFormulaFormat: TransformRawFormulaToFormulaFormat(algorithmValue.MinFormula),
+                averageFormulaFormat: TransformRawFormulaToFormulaFormat(algorithmValue.AverageFormula),
+                maxFormulaFormat: TransformRawFormulaToFormulaFormat(algorithmValue.MaxFormula)
+            );
         }
 
         #region Object Overridden Methods
@@ -59,12 +86,22 @@ namespace AlgorithmAnalysis.Models
         {
             var sb = new StringBuilder()
                 .AppendLine($"[{nameof(AlgorithmType)}]")
-                .AppendLine($"Description: {Description.ToString()}")
-                .AppendLine($"Value: '{Value.ToString()}'");
+                .AppendLine($"Description: {Description}")
+                .AppendLine($"Value: '{Value.ToString()}'")
+                .AppendLine($"MinFormulaFormat: '{MinFormulaFormat}'")
+                .AppendLine($"AverageFormulaFormat: '{AverageFormulaFormat}'")
+                .AppendLine($"MaxFormulaFormat: '{MaxFormulaFormat}'");
 
             return sb.ToString();
         }
 
         #endregion
+
+        private static string TransformRawFormulaToFormulaFormat(string rawFormula)
+        {
+            rawFormula.ThrowIfNullOrWhiteSpace(nameof(rawFormula));
+
+            return rawFormula.Replace("x", "{0}", StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }

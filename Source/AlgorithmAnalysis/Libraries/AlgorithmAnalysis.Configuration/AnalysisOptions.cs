@@ -7,8 +7,8 @@ namespace AlgorithmAnalysis.Configuration
 {
     public sealed class AnalysisOptions : IOptions
     {
-        public Dictionary<string, string> AvailableAlgorithms { get; set; } =
-            new Dictionary<string, string>();
+        public List<AlgorithmTypeValue> AvailableAlgorithms { get; set; } =
+            new List<AlgorithmTypeValue>();
 
         // Contract: the analysis program is located in the same directory as our app.
         public string AnalysisProgramName { get; set; } = "algorithm_analysis.exe";
@@ -25,7 +25,7 @@ namespace AlgorithmAnalysis.Configuration
         public IReadOnlyList<AlgorithmType> GetAlgorithmTypes()
         {
             return AvailableAlgorithms
-                .Select(rawValue => new AlgorithmType(rawValue.Value, int.Parse(rawValue.Key)))
+                .Select(AlgorithmType.Create)
                 .ToReadOnlyList();
         }
     }

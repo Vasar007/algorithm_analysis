@@ -69,7 +69,7 @@ namespace AlgorithmAnalysis.DomainLogic
         {
             var sb = new StringBuilder()
                 .AppendLine($"[{nameof(PhaseTwoAnalysisKind)}]")
-                .AppendLine($"Description: {Description.ToString()}")
+                .AppendLine($"Description: {Description}")
                 .AppendLine($"Value: '{Value.ToString()}'");
 
             return sb.ToString();
