@@ -61,7 +61,7 @@
                         Algorithm parameters
                     </TextBlock>
 
-                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                    <Separator Style="{StaticResource MaterialDesignSeparator}" />
 
                     <ComboBox materialDesign:HintAssist.Hint="Algorithm"
                               HorizontalAlignment="Stretch"
@@ -182,7 +182,7 @@
                         Analysis parameters
                     </TextBlock>
 
-                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                    <Separator Style="{StaticResource MaterialDesignSeparator}" />
 
                     <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part one"
                               HorizontalAlignment="Stretch"
@@ -272,7 +272,7 @@
                         Advanced parameters
                     </TextBlock>
 
-                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                    <Separator Style="{StaticResource MaterialDesignSeparator}" />
 
                     <CheckBox Content="Show analysis window"
                               HorizontalAlignment="Stretch"

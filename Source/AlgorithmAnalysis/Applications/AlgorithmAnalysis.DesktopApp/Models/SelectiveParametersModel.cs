@@ -79,7 +79,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             SelectedPhaseOnePartOne = AvailableAnalysisKindForPhaseOnePartOne[0];
             SelectedPhaseOnePartTwo = AvailableAnalysisKindForPhaseOnePartTwo[0];
             // TODO: reset selected index when implement normal distribution.
-            SelectedAlgorithmType = AvailableAlgorithms[1];
+            SelectedPhaseTwo = AvailableAnalysisKindForPhaseTwo[1];
+            SelectedAlgorithmType = AvailableAlgorithms[0];
             SelectedGoodnessOfFitKind = AvailableGoodnessOfFitKinds[0];
         }
 
