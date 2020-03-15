@@ -10,9 +10,9 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
     {
         public static string Title { get; } = "Algorithm analysis";
 
-        public static int MinDegreeOfParallerism { get; } = 1;
+        public static int MinDegreeOfParallelism { get; } = 1;
 
-        public static int MaxDegreeOfParallerism { get; } = Environment.ProcessorCount;
+        public static int MaxDegreeOfParallelism { get; } = Environment.ProcessorCount;
 
         public static IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne { get; } =
             AnalysisHelper.GetAvailableAnalysisKindForPhaseOnePartOne();

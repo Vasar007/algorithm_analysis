@@ -4,6 +4,7 @@ using Prism.Mvvm;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
+using System;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
@@ -56,24 +57,63 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _showAnalysisWindow, value);
         }
 
-        public int MinDegreeOfParallerism { get; }
+        public int MinDegreeOfParallelism { get; }
 
-        public int MaxDegreeOfParallerism { get; }
+        public int MaxDegreeOfParallelism { get; }
 
-        private int _maxDegreeOfParallelism;
-        public int MaxDegreeOfParallelism
+        public bool IsDegreeOfParallelismSelectable =>
+            MinDegreeOfParallelism != MaxDegreeOfParallelism;
+
+        /// <summary>
+        /// Show warning about restriction to select degree of parallelism when PC has only one CPU.
+        /// May be later we change minimum value of parallelism degree.
+        /// </summary>
+        public bool IsHintForDegreeOfParallelismVisible =>
+            !IsDegreeOfParallelismSelectable && MinDegreeOfParallelism == 1;
+
+        private int _selectedMaxDegreeOfParallelism;
+        public int SelectedMaxDegreeOfParallelism
         {
-            get => _maxDegreeOfParallelism;
-            set => SetProperty(ref _maxDegreeOfParallelism, value);
+            get => _selectedMaxDegreeOfParallelism;
+            set => SetProperty(ref _selectedMaxDegreeOfParallelism, value);
         }
 
 
         public RawParametersPack()
         {
-            MinDegreeOfParallerism = DesktopOptions.MinDegreeOfParallerism;
-            MaxDegreeOfParallerism = DesktopOptions.MaxDegreeOfParallerism;
+            MinDegreeOfParallelism = DesktopOptions.MinDegreeOfParallelism;
+            MaxDegreeOfParallelism = DesktopOptions.MaxDegreeOfParallelism;
 
             Reset();
+
+            VerifyParameters();
+        }
+
+        private void VerifyParameters()
+        {
+            if (MinDegreeOfParallelism <= 0)
+            {
+                string message =
+                    "Invalid min values for degree of parallelism: " +
+                    $"{MinDegreeOfParallelism.ToString()} <= 0.";
+                throw new ApplicationException(message);
+            }
+
+            if (MaxDegreeOfParallelism <= 0)
+            {
+                string message =
+                    "Invalid max values for degree of parallelism: " +
+                    $"{MaxDegreeOfParallelism.ToString()} <= 0.";
+                throw new ApplicationException(message);
+            }
+
+            if (MinDegreeOfParallelism > MaxDegreeOfParallelism)
+            {
+                string message =
+                    "Invalid min and max values for degree of parallelism: " +
+                    $"{MinDegreeOfParallelism.ToString()} > {MaxDegreeOfParallelism.ToString()}.";
+                throw new ApplicationException(message);
+            }
         }
 
         #region IResetable Implementation
@@ -86,7 +126,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             LaunchesNumber = "200";
             Step = "10";
             ShowAnalysisWindow = false;
-            MaxDegreeOfParallelism = 1;
+            SelectedMaxDegreeOfParallelism = MinDegreeOfParallelism;
         }
 
         #endregion
@@ -125,7 +165,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         {
             return new AnalysisLaunchContext(
                 showAnalysisWindow: ShowAnalysisWindow,
-                maxDegreeOfParallelism: MaxDegreeOfParallelism
+                maxDegreeOfParallelism: SelectedMaxDegreeOfParallelism
             );
         }
     }

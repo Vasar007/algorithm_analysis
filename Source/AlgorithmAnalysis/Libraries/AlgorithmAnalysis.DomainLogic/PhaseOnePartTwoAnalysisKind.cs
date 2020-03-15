@@ -11,7 +11,7 @@ namespace AlgorithmAnalysis.DomainLogic
             new PhaseOnePartTwoAnalysisKind("Beta distribution with Scott's segments formula", 1);
 
         public static PhaseOnePartTwoAnalysisKind BetaDistributionWithSturges { get; } =
-            new PhaseOnePartTwoAnalysisKind("Beta distribution with Sturges's segments formula", 2);
+            new PhaseOnePartTwoAnalysisKind("Beta distribution with Sturges' segments formula", 2);
 
 
         private PhaseOnePartTwoAnalysisKind(string description, int value)

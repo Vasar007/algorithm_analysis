@@ -11,7 +11,7 @@ namespace AlgorithmAnalysis.Math
             new GoodnessOfFitKind("Coefficient of determination", 1);
 
         public static GoodnessOfFitKind RSquaredValue { get; } =
-            new GoodnessOfFitKind("R^2 value (Pearson coefficient)", 2);
+            new GoodnessOfFitKind("R\u00B2 value (Pearson's coefficient)", 2);
 
 
         private GoodnessOfFitKind(string description, int value)

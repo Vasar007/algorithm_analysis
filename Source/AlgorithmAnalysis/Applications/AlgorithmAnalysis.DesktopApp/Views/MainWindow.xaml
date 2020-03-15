@@ -37,6 +37,7 @@
             </ResourceDictionary.MergedDictionaries>
         
             <converters:InverseAndBooleansToBooleanConverter x:Key="InverseAndBooleansToBooleanConverter" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
 
@@ -61,7 +62,7 @@
                         Algorithm parameters
                     </TextBlock>
 
-                    <Separator Style="{StaticResource MaterialDesignSeparator}" />
+                    <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
                     <ComboBox materialDesign:HintAssist.Hint="Algorithm"
                               HorizontalAlignment="Stretch"
@@ -182,7 +183,7 @@
                         Analysis parameters
                     </TextBlock>
 
-                    <Separator Style="{StaticResource MaterialDesignSeparator}" />
+                    <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
                     <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part one"
                               HorizontalAlignment="Stretch"
@@ -252,12 +253,51 @@
                             IsSnapToTickEnabled="True"
                             Margin="16 0"
                             HorizontalAlignment="Stretch"
-                            Minimum="{Binding Path=RawParameters.MinDegreeOfParallerism}"
-                            Maximum="{Binding Path=RawParameters.MaxDegreeOfParallerism}"
-                            Value="{Binding Path=RawParameters.MaxDegreeOfParallelism}"
+                            Minimum="{Binding Path=RawParameters.MinDegreeOfParallelism}"
+                            Maximum="{Binding Path=RawParameters.MaxDegreeOfParallelism}"
+                            Value="{Binding Path=RawParameters.SelectedMaxDegreeOfParallelism}"
                             SmallChange="1"
                             AutoToolTipPlacement="BottomRight"
-                            AutoToolTipPrecision="0" />
+                            AutoToolTipPrecision="0"
+                            IsEnabled="{Binding Path=RawParameters.IsDegreeOfParallelismSelectable}" />
+
+                    <DockPanel Margin="18 8"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Stretch">
+                        <TextBlock Text="{Binding Path=RawParameters.MinDegreeOfParallelism}"
+                                   DockPanel.Dock="Left"
+                                   HorizontalAlignment="Left"
+                                   Visibility="{Binding Path=RawParameters.IsDegreeOfParallelismSelectable,
+                                                Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="{Binding Path=RawParameters.MaxDegreeOfParallelism}"
+                                   DockPanel.Dock="Right"
+                                   HorizontalAlignment="Right" />
+
+                        <!--
+                        Show warning about restriction to select degree of parallelism when PC has
+                        only one CPU.
+                        
+                        May be later we change minimum value of parallelism. 
+                        -->
+                        <Border Background="GhostWhite"
+                                BorderBrush="Gainsboro"
+                                BorderThickness="1"
+                                Margin="8 16 8 8"
+                                Visibility="{Binding Path=RawParameters.IsHintForDegreeOfParallelismVisible,
+                                                Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="8">
+                                <materialDesign:PackIcon Kind="Exclamation"
+                                                         Foreground="Red" />
+
+                                <TextBlock Margin="8 0 0 0"
+                                           DockPanel.Dock="Bottom">
+                                Warning: you cannot specify degree of parallelism<LineBreak />
+                                because PC has insufficient number of resources.
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </DockPanel>
                 </StackPanel>
             </materialDesign:Card>
 
@@ -272,7 +312,7 @@
                         Advanced parameters
                     </TextBlock>
 
-                    <Separator Style="{StaticResource MaterialDesignSeparator}" />
+                    <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
                     <CheckBox Content="Show analysis window"
                               HorizontalAlignment="Stretch"
