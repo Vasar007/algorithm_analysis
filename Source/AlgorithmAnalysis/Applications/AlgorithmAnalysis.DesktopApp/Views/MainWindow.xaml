@@ -12,7 +12,7 @@
         d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
         Title="{Binding Path=Title, Mode=OneWay}"
         SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize"
+        ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -40,230 +40,289 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid VerticalAlignment="Stretch"
-          HorizontalAlignment="Stretch"
-          Margin="20"
-          IsEnabled="{Binding Path=CanExecuteAnalysis}">
+    <StackPanel VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Orientation="Vertical"
+                Margin="16"
+                IsEnabled="{Binding Path=CanExecuteAnalysis}">
 
         <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center">
-            <StackPanel Margin="10"
-                        HorizontalAlignment="Center"
-                        Orientation="Vertical">
-                <TextBlock Text="Analysis parameters:"
-                           Padding="0 10 0 10"
-                           HorizontalAlignment="Center"
-                           FontWeight="Bold" />
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+        
+            <materialDesign:Card Padding="8"
+                                 Margin="8"
+                                 VerticalAlignment="Stretch"
+                                 HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Vertical"
+                            HorizontalAlignment="Center">
+                    <TextBlock Margin="16 16 12 8"
+                               FontSize="16">
+                        Algorithm parameters
+                    </TextBlock>
 
-                <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part one"
-                          HorizontalAlignment="Center"
-                          MinWidth="350"
-                          Margin="16"
-                          SelectedIndex="0"
-                          ItemsSource="{Binding Path=AnalysisModel.AvailableAnalysisKindForPhaseOnePartOne}"
-                          SelectedItem="{Binding Path=Parameters.SelectedPhaseOnePartOne}"
-                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
 
-                <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part two"
-                          HorizontalAlignment="Center"
-                          MinWidth="350"
-                          Margin="16"
-                          SelectedIndex="0"
-                          ItemsSource="{Binding Path=AnalysisModel.AvailableAnalysisKindForPhaseOnePartTwo}"
-                          SelectedItem="{Binding Path=Parameters.SelectedPhaseOnePartTwo}"
-                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                    <ComboBox materialDesign:HintAssist.Hint="Algorithm"
+                              HorizontalAlignment="Stretch"
+                              MinWidth="350"
+                              Margin="16"
+                              SelectedIndex="0"
+                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAlgorithms}"
+                              SelectedItem="{Binding Path=SelectiveParameters.SelectedAlgorithmType}"
+                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
 
-                <!-- TODO: reset selected index when implement normal distribution. -->
-                <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase two"
-                          HorizontalAlignment="Center"
-                          MinWidth="350"
-                          Margin="16"
-                          SelectedIndex="1"
-                          ItemsSource="{Binding Path=AnalysisModel.AvailableAnalysisKindForPhaseTwo}"
-                          SelectedItem="{Binding Path=Parameters.SelectedPhaseTwo}"
-                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                    <TextBox x:Name="FirstValueButton"
+                             materialDesign:HintAssist.Hint="The first value of function segment to analyze"
+                             Margin="16"
+                             FontSize="18"
+                             MinWidth="350"
+                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="RawParameters.StartValue"
+                                     UpdateSourceTrigger="PropertyChanged"
+                                     Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                                     ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                <ComboBox materialDesign:HintAssist.Hint="Algorithm"
-                          HorizontalAlignment="Center"
-                          MinWidth="350"
-                          Margin="16"
-                          SelectedIndex="0"
-                          ItemsSource="{Binding Path=AnalysisModel.AvailableAlgorithms}"
-                          SelectedItem="{Binding Path=Parameters.SelectedAlgorithmType}"
-                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
-                </ComboBox>
+                    <TextBox x:Name="LastValueButton"
+                             materialDesign:HintAssist.Hint="The last value of function segment to analyze"
+                             Margin="16"
+                             FontSize="18"
+                             MinWidth="350"
+                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="RawParameters.EndValue"
+                                     UpdateSourceTrigger="PropertyChanged"
+                                     Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                                     ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                <TextBox x:Name="FirstValueButton"
-                         materialDesign:HintAssist.Hint="The first value of function segment to analyze"
-                         Margin="16"
-                         FontSize="18"
-                         MinWidth="350"
-                         Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
-                    <TextBox.Text>
-                        <Binding Path="Parameters.StartValue"
-                                 UpdateSourceTrigger="PropertyChanged"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                 ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                    <TextBox x:Name="LastExtrapolationValueButton"
+                             materialDesign:HintAssist.Hint="The last extrapolation value of function segment to analyze"
+                             Margin="16"
+                             FontSize="18"
+                             MinWidth="350"
+                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="RawParameters.ExtrapolationSegmentValue"
+                                     UpdateSourceTrigger="PropertyChanged"
+                                     Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                                     ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                <TextBox x:Name="LastValueButton"
-                         materialDesign:HintAssist.Hint="The last value of function segment to analyze"
-                         Margin="16"
-                         FontSize="18"
-                         MinWidth="350"
-                         Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
-                    <TextBox.Text>
-                        <Binding Path="Parameters.EndValue"
-                                 UpdateSourceTrigger="PropertyChanged"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                 ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                    <TextBox x:Name="LaunchesNumberButton"
+                             materialDesign:HintAssist.Hint="The initial launches number"
+                             Margin="16"
+                             FontSize="18"
+                             MinWidth="350"
+                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="RawParameters.LaunchesNumber"
+                                     UpdateSourceTrigger="PropertyChanged"
+                                     Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                                     ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                <TextBox x:Name="LastExtrapolationValueButton"
-                         materialDesign:HintAssist.Hint="The last extrapolation value of function segment to analyze"
-                         Margin="16"
-                         FontSize="18"
-                         MinWidth="350"
-                         Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
-                    <TextBox.Text>
-                        <Binding Path="Parameters.ExtrapolationSegmentValue"
-                                 UpdateSourceTrigger="PropertyChanged"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                 ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                    <TextBox x:Name="StepValueButton"
+                             materialDesign:HintAssist.Hint="The size of step for function segment"
+                             Margin="16"
+                             FontSize="18"
+                             MinWidth="350"
+                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                        <TextBox.Text>
+                            <Binding Path="RawParameters.Step"
+                                     UpdateSourceTrigger="PropertyChanged"
+                                     Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                                     ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
 
-                <TextBox x:Name="LaunchesNumberButton"
-                         materialDesign:HintAssist.Hint="The initial launches number"
-                         Margin="16"
-                         FontSize="18"
-                         MinWidth="350"
-                         Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
-                    <TextBox.Text>
-                        <Binding Path="Parameters.LaunchesNumber"
-                                 UpdateSourceTrigger="PropertyChanged"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                 ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+                </StackPanel>
+            </materialDesign:Card>
 
-                <TextBox x:Name="StepValueButton"
-                         materialDesign:HintAssist.Hint="The size of step for function segment"
-                         Margin="16"
-                         FontSize="18"
-                         MinWidth="350"
-                         Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
-                    <TextBox.Text>
-                        <Binding Path="Parameters.Step"
-                                 UpdateSourceTrigger="PropertyChanged"
-                                 Mode="TwoWay">
-                            <Binding.ValidationRules>
-                                <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                 ValidatesOnTargetUpdated="True" />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
+            <materialDesign:Card Padding="8"
+                                 Margin="8"
+                                 VerticalAlignment="Stretch"
+                                 HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Vertical"
+                            HorizontalAlignment="Center">
+                    <TextBlock Margin="16 16 12 8"
+                               FontSize="16">
+                        Analysis parameters
+                    </TextBlock>
 
-                <TextBlock Text="Max degree of parallerism"
-                           HorizontalAlignment="Center"
-                           Margin="0 7 0 3" />
-                <Slider TickPlacement="BottomRight"
-                        IsSnapToTickEnabled="True"
-                        Minimum="{Binding Path=AnalysisModel.MinDegreeOfParallerism}"
-                        Maximum="{Binding Path=AnalysisModel.MaxDegreeOfParallerism}"
-                        Value="{Binding Path=Parameters.MaxDegreeOfParallelism}"
-                        SmallChange="1"
-                        AutoToolTipPlacement="BottomRight"
-                        AutoToolTipPrecision="0" />
+                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
 
-                <CheckBox Content="Show analysis window"
-                          HorizontalAlignment="Center"
-                          Margin="0 14 0 6"
-                          IsChecked="{Binding Path=Parameters.ShowAnalysisWindow}" />
+                    <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part one"
+                              HorizontalAlignment="Stretch"
+                              MinWidth="350"
+                              Margin="16"
+                              SelectedIndex="0"
+                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseOnePartOne}"
+                              SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseOnePartOne}"
+                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
 
-                <CheckBox Content="Open analysis results"
-                          HorizontalAlignment="Center"
-                          Margin="0 14 0 6"
-                          IsChecked="{Binding Path=AnalysisModel.OpenAnalysisResults}" />
-            </StackPanel>
+                    <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part two"
+                              HorizontalAlignment="Stretch"
+                              MinWidth="350"
+                              Margin="16"
+                              SelectedIndex="0"
+                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseOnePartTwo}"
+                              SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseOnePartTwo}"
+                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
 
-            <StackPanel Width="280">
-                <UniformGrid Rows="1"
-                             Columns="2">
-                    <Button Command="{Binding Path=RunCommand}"
-                            Margin="5"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            ToolTip="Run analysis (window will be blocked)">
-                        <Button.IsEnabled>
-                            <MultiBinding Converter="{StaticResource ResourceKey=InverseAndBooleansToBooleanConverter}"
-                                          Mode="TwoWay">
-                                <Binding ElementName="FirstValueButton"
-                                         Path="(Validation.HasError)" />
-                                <Binding ElementName="LastValueButton"
-                                         Path="(Validation.HasError)" />
-                                <Binding ElementName="LastExtrapolationValueButton"
-                                         Path="(Validation.HasError)" />
-                                <Binding ElementName="LaunchesNumberButton"
-                                         Path="(Validation.HasError)" />
-                                <Binding ElementName="StepValueButton"
-                                         Path="(Validation.HasError)" />
-                            </MultiBinding>
-                        </Button.IsEnabled>
-                        Run
-                    </Button>
-                    <Button Command="{Binding Path=ResetCommand}"
-                            Margin="5"
-                            HorizontalContentAlignment="Center"
-                            VerticalContentAlignment="Center"
-                            ToolTip="Reset analysis parameters">
-                        Reset
-                    </Button>
-                </UniformGrid>
-            </StackPanel>
+                    <!-- TODO: reset selected index when implement normal distribution. -->
+                    <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase two"
+                              HorizontalAlignment="Stretch"
+                              MinWidth="350"
+                              Margin="16"
+                              SelectedIndex="1"
+                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseTwo}"
+                              SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseTwo}"
+                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+
+                    <ComboBox materialDesign:HintAssist.Hint="Goodness of fit"
+                              HorizontalAlignment="Stretch"
+                              MinWidth="350"
+                              Margin="16"
+                              SelectedIndex="0"
+                              ItemsSource="{Binding Path=SelectiveParameters.AvailableGoodnessOfFitKinds}"
+                              SelectedItem="{Binding Path=SelectiveParameters.SelectedGoodnessOfFitKind}"
+                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+
+                    <TextBlock Text="Max degree of parallerism"
+                               HorizontalAlignment="Center"
+                               Margin="0 8 0 4" />
+                    <Slider TickPlacement="BottomRight"
+                            IsSnapToTickEnabled="True"
+                            Margin="16 0"
+                            HorizontalAlignment="Stretch"
+                            Minimum="{Binding Path=RawParameters.MinDegreeOfParallerism}"
+                            Maximum="{Binding Path=RawParameters.MaxDegreeOfParallerism}"
+                            Value="{Binding Path=RawParameters.MaxDegreeOfParallelism}"
+                            SmallChange="1"
+                            AutoToolTipPlacement="BottomRight"
+                            AutoToolTipPrecision="0" />
+                </StackPanel>
+            </materialDesign:Card>
+
+            <materialDesign:Card Padding="8"
+                                 Margin="8"
+                                 VerticalAlignment="Stretch"
+                                 HorizontalAlignment="Stretch">
+                <StackPanel Orientation="Vertical"
+                            HorizontalAlignment="Center">
+                    <TextBlock Margin="16 16 12 8"
+                               FontSize="16">
+                        Advanced parameters
+                    </TextBlock>
+
+                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+
+                    <CheckBox Content="Show analysis window"
+                              HorizontalAlignment="Stretch"
+                              Margin="16 8"
+                              IsChecked="{Binding Path=RawParameters.ShowAnalysisWindow}" />
+
+                    <CheckBox Content="Open analysis results"
+                              HorizontalAlignment="Stretch"
+                              Margin="16 8"
+                              IsChecked="{Binding Path=AnalysisSpecific.OpenAnalysisResults}" />
+                </StackPanel>
+            </materialDesign:Card>
         </StackPanel>
-    </Grid>
+
+        <StackPanel Width="280"
+                    Orientation="Vertical">
+            <UniformGrid Rows="1"
+                         Columns="2">
+                <Button Command="{Binding Path=RunCommand}"
+                        Margin="8"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        ToolTip="Run analysis (window will be blocked)">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource ResourceKey=InverseAndBooleansToBooleanConverter}"
+                                      Mode="TwoWay">
+                            <Binding ElementName="FirstValueButton"
+                                     Path="(Validation.HasError)" />
+                            <Binding ElementName="LastValueButton"
+                                     Path="(Validation.HasError)" />
+                            <Binding ElementName="LastExtrapolationValueButton"
+                                     Path="(Validation.HasError)" />
+                            <Binding ElementName="LaunchesNumberButton"
+                                     Path="(Validation.HasError)" />
+                            <Binding ElementName="StepValueButton"
+                                     Path="(Validation.HasError)" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                    Run
+                </Button>
+                <Button Command="{Binding Path=ResetCommand}"
+                        Margin="8"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        ToolTip="Reset analysis parameters">
+                    Reset
+                </Button>
+            </UniformGrid>
+        </StackPanel>
+
+    </StackPanel>
 
 </Window>

@@ -14,6 +14,8 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
     internal static class AnalysisRunner
     {
+        // TODO: add stopwatch to measure time of analysis.
+
         private static readonly ILogger _logger =
             LoggerFactory.CreateLoggerFor(typeof(AnalysisRunner));
 
@@ -101,7 +103,9 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 processingTasks.Add(processingTask);
             }
 
-            await Task.WhenAll(processingTasks.Select(task => AwaitAndProcessAsync(task, callback)));
+            await Task.WhenAll(
+                processingTasks.Select(task => AwaitAndProcessAsync(task, callback))
+            );
         }
 
         private static void CheckExpectedFilenamesNumber(int expectedFilesNumber,

@@ -4,44 +4,11 @@ using Prism.Mvvm;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
-using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
     internal sealed class RawParametersPack : BindableBase, IResetable
     {
-        // Initializes through Reset method in ctor.
-        private PhaseOnePartOneAnalysisKind _selectedPhaseOnePartOne = default!;
-        public PhaseOnePartOneAnalysisKind SelectedPhaseOnePartOne
-        {
-            get => _selectedPhaseOnePartOne;
-            set => SetProperty(ref _selectedPhaseOnePartOne, value.ThrowIfNull(nameof(value)));
-        }
-
-        // Initializes through Reset method in ctor.
-        private PhaseOnePartTwoAnalysisKind _selectedPhaseOnePartTwo = default!;
-        public PhaseOnePartTwoAnalysisKind SelectedPhaseOnePartTwo
-        {
-            get => _selectedPhaseOnePartTwo;
-            set => SetProperty(ref _selectedPhaseOnePartTwo, value.ThrowIfNull(nameof(value)));
-        }
-
-        // Initializes through Reset method in ctor.
-        private PhaseTwoAnalysisKind _selectedPhaseTwo = default!;
-        public PhaseTwoAnalysisKind SelectedPhaseTwo
-        {
-            get => _selectedPhaseTwo;
-            set => SetProperty(ref _selectedPhaseTwo, value.ThrowIfNull(nameof(value)));
-        }
-
-        // Initializes through Reset method in ctor.
-        private AlgorithmType _selectedAlgorithmType = default!;
-        public AlgorithmType SelectedAlgorithmType
-        {
-            get => _selectedAlgorithmType;
-            set => SetProperty(ref _selectedAlgorithmType, value.ThrowIfNull(nameof(value)));
-        }
-
         // Initializes through Reset method in ctor.
         private string _startValue = default!;
         public string StartValue
@@ -89,6 +56,10 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _showAnalysisWindow, value);
         }
 
+        public int MinDegreeOfParallerism { get; }
+
+        public int MaxDegreeOfParallerism { get; }
+
         private int _maxDegreeOfParallelism;
         public int MaxDegreeOfParallelism
         {
@@ -99,6 +70,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public RawParametersPack()
         {
+            MinDegreeOfParallerism = DesktopOptions.MinDegreeOfParallerism;
+            MaxDegreeOfParallerism = DesktopOptions.MaxDegreeOfParallerism;
+
             Reset();
         }
 
@@ -106,9 +80,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void Reset()
         {
-            SelectedPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOnePartOne[0];
-            SelectedPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseOnePartTwo[0];
-            SelectedAlgorithmType = DesktopOptions.AvailableAlgorithms[0];
             StartValue = "80";
             EndValue = "320";
             ExtrapolationSegmentValue = "2560";
@@ -120,23 +91,28 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         #endregion
 
-        public AnalysisContext CreateContext(FileInfo outputExcelFile)
+        public AnalysisContext CreateContext(FileInfo outputExcelFile,
+            SelectiveParametersModel selectiveParameters)
         {
+            outputExcelFile.ThrowIfNull(nameof(outputExcelFile));
+            selectiveParameters.ThrowIfNull(nameof(selectiveParameters));
+
             return new AnalysisContext(
-                args: ConvertArgs(),
+                args: ConvertArgs(selectiveParameters),
                 launchContext: CreateLaunchContext(),
                 outputExcelFile: outputExcelFile,
-                phaseOnePartOne: SelectedPhaseOnePartOne,
-                phaseOnePartTwo: SelectedPhaseOnePartTwo,
-                phaseTwo: SelectedPhaseTwo
+                phaseOnePartOne: selectiveParameters.SelectedPhaseOnePartOne,
+                phaseOnePartTwo: selectiveParameters.SelectedPhaseOnePartTwo,
+                phaseTwo: selectiveParameters.SelectedPhaseTwo,
+                goodnessOfFit: selectiveParameters.SelectedGoodnessOfFitKind
             );
         }
 
-        private ParametersPack ConvertArgs()
+        private ParametersPack ConvertArgs(SelectiveParametersModel selectiveParameters)
         {
             return ParametersPack.Create(
                 analysisOptions: ConfigOptions.Analysis,
-                algorithmType: SelectedAlgorithmType,
+                algorithmType: selectiveParameters.SelectedAlgorithmType,
                 startValue: int.Parse(StartValue),
                 endValue: int.Parse(EndValue),
                 extrapolationSegmentValue: int.Parse(ExtrapolationSegmentValue),

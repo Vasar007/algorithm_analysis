@@ -32,6 +32,8 @@
 
         string Min(string range);
 
+        string Pearson(string firstVariableRange, string secondVariableRange);
+
         string RoundUp(string number, string numberOfDigits);
 
         string StdDev(string range);

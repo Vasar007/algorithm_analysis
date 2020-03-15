@@ -7,9 +7,9 @@ using AlgorithmAnalysis.Math.Functions;
 
 namespace AlgorithmAnalysis.Math.Selectors
 {
-    public sealed class FunctionSelectorBasedOnCoefficientOfDetermination : IFunctionSelector
+    public sealed class FunctionSelectorBasedOnRSquaredValue : IFunctionSelector
     {
-        public FunctionSelectorBasedOnCoefficientOfDetermination()
+        public FunctionSelectorBasedOnRSquaredValue()
         {
         }
 
@@ -24,22 +24,22 @@ namespace AlgorithmAnalysis.Math.Selectors
             IReadOnlyList<double> enumeratedValues = observedValues.ToReadOnlyList();
 
             return modelledFunctions
-                .Select(modelledFunction => CalculateCoefficientOfDetermination(modelledFunction, enumeratedValues))
-                .MaxBy(result => result.coefficientOfDetermination)
+                .Select(modelledFunction => CalculateRSquaredValue(modelledFunction, enumeratedValues))
+                .MaxBy(result => result.rSquaredValue)
                 .modelledFunction;
         }
 
         #endregion
 
-        private static (IModelledFunction modelledFunction, double coefficientOfDetermination)
-            CalculateCoefficientOfDetermination(IModelledFunction modelledFunction,
+        private static (IModelledFunction modelledFunction, double rSquaredValue)
+            CalculateRSquaredValue(IModelledFunction modelledFunction,
             IEnumerable<double> observedValues)
         {
-            double coefficientOfDetermination = GoodnessOfFit.CoefficientOfDetermination(
+            double rSquaredValue = GoodnessOfFit.RSquared(
                 observedValues, modelledFunction.Calculate(observedValues)
             );
 
-            return (modelledFunction, coefficientOfDetermination);
+            return (modelledFunction, rSquaredValue);
         }
     }
 }

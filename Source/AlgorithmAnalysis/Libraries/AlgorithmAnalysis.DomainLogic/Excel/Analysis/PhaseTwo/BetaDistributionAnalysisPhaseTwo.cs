@@ -16,6 +16,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
 
         private readonly int _iterationsNumber;
 
+        private readonly int _lastSegmentValueRowIndex;
+
         private readonly ExcelColumnIndex _additionalDataColumn;
 
         private readonly ExcelColumnIndex _sampleSizeColumnIndex;
@@ -35,6 +37,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             _regression = regression.ThrowIfNull(nameof(regression));
 
             _iterationsNumber = args.GetIterationsNumber(phaseNumber: 2);
+            _lastSegmentValueRowIndex = _iterationsNumber.SkipHeader();
             _additionalDataColumn = ExcelWrapperForPhaseTwo.GetAdditionalDataColumn(_iterationsNumber);
             _sampleSizeColumnIndex = ExcelWrapperForPhaseTwo.GetSampleSizeColumn(_iterationsNumber);
             _theoreticalMinColumn = ExcelWrapperForPhaseTwo.GetTheoreticalMinColumn(_iterationsNumber);
@@ -105,8 +108,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             var xValues = new List<double>(_iterationsNumber);
             var yValues = new List<double>(_iterationsNumber);
 
-            int lastValueIndex = _iterationsNumber.SkipHeader();
-            for (int rowIndex = 1.SkipHeader(); rowIndex <= lastValueIndex; ++rowIndex)
+            for (int rowIndex = 1.SkipHeader(); rowIndex <= _lastSegmentValueRowIndex; ++rowIndex)
             {
                 IExcelCellHolder sampleSizeCell = sheet[_sampleSizeColumnIndex, rowIndex];
                 xValues.Add(sampleSizeCell.NumericValue);
@@ -123,25 +125,25 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             int rowIndex = 1;
 
             var sampleMeanColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[sampleMeanColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.SampleMean);
+            sheet[sampleMeanColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.SampleMeanColumnName);
 
             var sampleVarianceColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[sampleVarianceColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.SampleVariance);
+            sheet[sampleVarianceColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.SampleVarianceColumnName);
 
             var sampleDeviationColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[sampleDeviationColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.SampleDeviation);
+            sheet[sampleDeviationColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.SampleDeviationColumnName);
 
             var normalizedMeanColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[normalizedMeanColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NormalizedMean);
+            sheet[normalizedMeanColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NormalizedMeanColumnName);
 
             var normalizedVarienceColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[normalizedVarienceColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NormalizedVarience);
+            sheet[normalizedVarienceColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NormalizedVarienceColumnName);
 
             var alphaColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[alphaColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.Alpha);
+            sheet[alphaColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.AlphaColumnName);
 
             var betaColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[betaColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.Beta);
+            sheet[betaColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.BetaColumnName);
 
             ++rowIndex;
             int launchesColumnIndex = 0;
@@ -211,22 +213,25 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             sheet[nColumnColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NColumnName);
 
             var alphaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[alphaNColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.AlphaN);
+            sheet[alphaNColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.AlphaNColumnName);
 
             var betaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[betaNColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.BetaN);
+            sheet[betaNColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.BetaNColumnName);
+            
+            var analysisValuesColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[analysisValuesColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.AnalysisValuesColumnName);
 
             // Remain blank column.
             ++currentColumnIndex;
 
             var leftYQuantileColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[leftYQuantileColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.LeftYQuantile);
+            sheet[leftYQuantileColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.LeftYQuantileColumnName);
 
             var complexityFunctionColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[complexityFunctionColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.ComplexityFunction);
+            sheet[complexityFunctionColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.ComplexityFunctionColumnName);
 
             var comparisonColumnIndex = currentColumnIndex.AsEnum<ExcelColumnIndex>();
-            sheet[comparisonColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.Comparison);
+            sheet[comparisonColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.ComparisonColumnName);
 
             IExcelCellHolder confidenceFactorCell = GetConfidenceFactorCell(sheet);
 
@@ -281,9 +286,26 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
                 ++rowIndex;
             }
 
+            string alphaPearsonFormula = sheet.FormulaProvider.Pearson(
+                $"{sheet[_alphaColumn, 2].Address}:" +
+                $"{sheet[_alphaColumn, _lastSegmentValueRowIndex].Address}",
+                $"{sheet[alphaNColumnIndex, 2].Address}:" +
+                $"{sheet[alphaNColumnIndex, _lastSegmentValueRowIndex].Address}"
+            );
+            sheet[analysisValuesColumnIndex, 2].SetFormula(alphaPearsonFormula);
+
+            string betaPearsonFormula = sheet.FormulaProvider.Pearson(
+                $"{sheet[_betaColumn, 2].Address}:" +
+                $"{sheet[_betaColumn, _lastSegmentValueRowIndex].Address}",
+                $"{sheet[betaNColumnIndex, 2].Address}:" +
+                $"{sheet[betaNColumnIndex, _lastSegmentValueRowIndex].Address}"
+            );
+            sheet[analysisValuesColumnIndex, 3].SetFormula(betaPearsonFormula);
+
             sheet.AutoSizeColumn(nColumnColumnIndex);
             sheet.AutoSizeColumn(alphaNColumnIndex);
             sheet.AutoSizeColumn(betaNColumnIndex);
+            sheet.AutoSizeColumn(analysisValuesColumnIndex);
             sheet.AutoSizeColumn(leftYQuantileColumnIndex);
             sheet.AutoSizeColumn(complexityFunctionColumnIndex);
             sheet.AutoSizeColumn(comparisonColumnIndex);

@@ -117,67 +117,71 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdditionalData" xml:space="preserve">
+  <data name="AdditionalDataColumnName" xml:space="preserve">
     <value>Дополнительные данные</value>
     <comment>Column name (%_i).</comment>
   </data>
-  <data name="Alpha" xml:space="preserve">
+  <data name="AlphaColumnName" xml:space="preserve">
     <value>Альфа</value>
     <comment>Column name ([% + 10]_1).</comment>
   </data>
-  <data name="AlphaN" xml:space="preserve">
+  <data name="AlphaNColumnName" xml:space="preserve">
     <value>α(n)</value>
     <comment>Column name ([%% + 1]_1).</comment>
   </data>
-  <data name="Beta" xml:space="preserve">
+  <data name="AnalysisValuesColumnName" xml:space="preserve">
+    <value>Значения анализа</value>
+    <comment>Column name ([%% + 3]_1).</comment>
+  </data>
+  <data name="BetaColumnName" xml:space="preserve">
     <value>Бета</value>
     <comment>Column name ([% + 11]_1).</comment>
   </data>
-  <data name="BetaN" xml:space="preserve">
+  <data name="BetaNColumnName" xml:space="preserve">
     <value>β(n)</value>
     <comment>Column name ([%% + 2]_1).</comment>
   </data>
-  <data name="Comparison" xml:space="preserve">
+  <data name="ComparisonColumnName" xml:space="preserve">
     <value>Сравнение (max / fγ(n))</value>
-    <comment>Column name ([%% + 5]_1).</comment>
+    <comment>Column name ([%% + 7]_1).</comment>
   </data>
-  <data name="ComplexityFunction" xml:space="preserve">
+  <data name="ComplexityFunctionColumnName" xml:space="preserve">
     <value>fγ(n)</value>
-    <comment>Column name ([%% + 4]_1).</comment>
+    <comment>Column name ([%% + 6]_1).</comment>
   </data>
   <data name="ConfidenceFactorValue" xml:space="preserve">
     <value>0.95</value>
     <comment>Value cell (%_[i + 3]).</comment>
   </data>
-  <data name="LeftYQuantile" xml:space="preserve">
+  <data name="LeftYQuantileColumnName" xml:space="preserve">
     <value>Xγ(n)</value>
-    <comment>Column name ([%% + 3]_1).</comment>
+    <comment>Column name ([%% + 5]_1).</comment>
   </data>
   <data name="NColumnName" xml:space="preserve">
     <value>n</value>
     <comment>Column name (%%_1).</comment>
   </data>
-  <data name="NormalizedMean" xml:space="preserve">
+  <data name="NormalizedMeanColumnName" xml:space="preserve">
     <value>Нормированное среднее</value>
     <comment>Column name ([% + 8]_1).</comment>
   </data>
-  <data name="NormalizedVarience" xml:space="preserve">
+  <data name="NormalizedVarienceColumnName" xml:space="preserve">
     <value>Нормированная дисперсия</value>
     <comment>Column name ([% + 9]_1).</comment>
   </data>
-  <data name="SampleDeviation" xml:space="preserve">
+  <data name="SampleDeviationColumnName" xml:space="preserve">
     <value>Выборочное отклонение</value>
     <comment>Column name ([% + 7]_1).</comment>
   </data>
-  <data name="SampleMean" xml:space="preserve">
+  <data name="SampleMeanColumnName" xml:space="preserve">
     <value>Выборочное среднее</value>
     <comment>Column name ([% + 5]_1).</comment>
   </data>
-  <data name="SampleSize" xml:space="preserve">
+  <data name="SampleSizeColumnName" xml:space="preserve">
     <value>Объём выборки, n</value>
     <comment>Column name ([% + 1]_1).</comment>
   </data>
-  <data name="SampleVariance" xml:space="preserve">
+  <data name="SampleVarianceColumnName" xml:space="preserve">
     <value>Выборочная дисперсия</value>
     <comment>Column name ([% + 6]_1).</comment>
   </data>
@@ -185,15 +189,15 @@
     <value>1 - {0}</value>
     <comment>Value cell (%_[i + 4]).</comment>
   </data>
-  <data name="TheoreticalAverage" xml:space="preserve">
+  <data name="TheoreticalAverageColumnName" xml:space="preserve">
     <value>Теоретическое значение в среднем</value>
     <comment>Column name ([% + 4]_1).</comment>
   </data>
-  <data name="TheoreticalMax" xml:space="preserve">
+  <data name="TheoreticalMaxColumnName" xml:space="preserve">
     <value>Теоретический максимум</value>
     <comment>Column name ([% + 3]_1).</comment>
   </data>
-  <data name="TheoreticalMin" xml:space="preserve">
+  <data name="TheoreticalMinColumnName" xml:space="preserve">
     <value>Теоретический минимум</value>
     <comment>Column name ([% + 2]_1).</comment>
   </data>

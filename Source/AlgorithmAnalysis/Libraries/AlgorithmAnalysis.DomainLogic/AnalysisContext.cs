@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Math;
 using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DomainLogic
@@ -19,6 +20,8 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public PhaseTwoAnalysisKind PhaseTwo { get; }
 
+        public GoodnessOfFitKind GoodnessOfFit { get; }
+
 
         public AnalysisContext(
             ParametersPack args,
@@ -26,7 +29,8 @@ namespace AlgorithmAnalysis.DomainLogic
             FileInfo outputExcelFile,
             PhaseOnePartOneAnalysisKind phaseOnePartOne,
             PhaseOnePartTwoAnalysisKind phaseOnePartTwo,
-            PhaseTwoAnalysisKind phaseTwo)
+            PhaseTwoAnalysisKind phaseTwo,
+            GoodnessOfFitKind goodnessOfFit)
         {
             Args = args.ThrowIfNull(nameof(args));
             LaunchContext = launchContext.ThrowIfNull(nameof(launchContext));
@@ -34,6 +38,20 @@ namespace AlgorithmAnalysis.DomainLogic
             PhaseOnePartOne = phaseOnePartOne.ThrowIfNull(nameof(phaseOnePartOne));
             PhaseOnePartTwo = phaseOnePartTwo.ThrowIfNull(nameof(phaseOnePartTwo));
             PhaseTwo = phaseTwo.ThrowIfNull(nameof(phaseTwo));
+            GoodnessOfFit = goodnessOfFit.ThrowIfNull(nameof(goodnessOfFit));
+        }
+
+        public AnalysisContext CreateWith(ParametersPack args)
+        {
+            return new AnalysisContext(
+                args: args,
+                launchContext: LaunchContext,
+                outputExcelFile: OutputExcelFile,
+                phaseOnePartOne: PhaseOnePartOne,
+                phaseOnePartTwo: PhaseOnePartTwo,
+                phaseTwo: PhaseTwo,
+                goodnessOfFit: GoodnessOfFit
+            );
         }
 
         #region ILoggable Implementation
@@ -47,7 +65,8 @@ namespace AlgorithmAnalysis.DomainLogic
                 .AppendLine($"OutputExcelFile: '{OutputExcelFile}'")
                 .AppendLine($"PhaseOnePartOne: {PhaseOnePartOne.ToLogString()}")
                 .AppendLine($"PhaseOnePartTwo: {PhaseOnePartTwo.ToLogString()}")
-                .AppendLine($"PhaseOnePartTwo: {PhaseTwo.ToLogString()}");
+                .AppendLine($"PhaseOnePartTwo: {PhaseTwo.ToLogString()}")
+                .AppendLine($"GoodnessOfFit: {GoodnessOfFit.ToLogString()}");
 
             return sb.ToString();
         }

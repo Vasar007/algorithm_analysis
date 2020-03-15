@@ -32,6 +32,15 @@ namespace AlgorithmAnalysis.Math
             );
         }
 
+        // TODO: allow to specify function provider too (need to add new option in UI and context).
+        public static Regression Create(IFunctionSelector goodnessOfFit)
+        {
+            return new Regression(
+                functionProvider: new FunctionProviderSimilarToExcel(),
+                functionSelector: goodnessOfFit
+            );
+        }
+
         #region IRegression Implementation
 
         public IModelledFunction Fit(IEnumerable<double> xValues, IEnumerable<double> yValues)

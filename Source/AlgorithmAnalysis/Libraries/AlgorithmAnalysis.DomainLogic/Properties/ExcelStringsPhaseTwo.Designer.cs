@@ -63,63 +63,72 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Дополнительные данные.
         /// </summary>
-        internal static string AdditionalData {
+        internal static string AdditionalDataColumnName {
             get {
-                return ResourceManager.GetString("AdditionalData", resourceCulture);
+                return ResourceManager.GetString("AdditionalDataColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Альфа.
         /// </summary>
-        internal static string Alpha {
+        internal static string AlphaColumnName {
             get {
-                return ResourceManager.GetString("Alpha", resourceCulture);
+                return ResourceManager.GetString("AlphaColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to α(n).
         /// </summary>
-        internal static string AlphaN {
+        internal static string AlphaNColumnName {
             get {
-                return ResourceManager.GetString("AlphaN", resourceCulture);
+                return ResourceManager.GetString("AlphaNColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Значения анализа.
+        /// </summary>
+        internal static string AnalysisValuesColumnName {
+            get {
+                return ResourceManager.GetString("AnalysisValuesColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Бета.
         /// </summary>
-        internal static string Beta {
+        internal static string BetaColumnName {
             get {
-                return ResourceManager.GetString("Beta", resourceCulture);
+                return ResourceManager.GetString("BetaColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to β(n).
         /// </summary>
-        internal static string BetaN {
+        internal static string BetaNColumnName {
             get {
-                return ResourceManager.GetString("BetaN", resourceCulture);
+                return ResourceManager.GetString("BetaNColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Сравнение (max / fγ(n)).
         /// </summary>
-        internal static string Comparison {
+        internal static string ComparisonColumnName {
             get {
-                return ResourceManager.GetString("Comparison", resourceCulture);
+                return ResourceManager.GetString("ComparisonColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to fγ(n).
         /// </summary>
-        internal static string ComplexityFunction {
+        internal static string ComplexityFunctionColumnName {
             get {
-                return ResourceManager.GetString("ComplexityFunction", resourceCulture);
+                return ResourceManager.GetString("ComplexityFunctionColumnName", resourceCulture);
             }
         }
         
@@ -135,9 +144,9 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Xγ(n).
         /// </summary>
-        internal static string LeftYQuantile {
+        internal static string LeftYQuantileColumnName {
             get {
-                return ResourceManager.GetString("LeftYQuantile", resourceCulture);
+                return ResourceManager.GetString("LeftYQuantileColumnName", resourceCulture);
             }
         }
         
@@ -153,54 +162,54 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Нормированное среднее.
         /// </summary>
-        internal static string NormalizedMean {
+        internal static string NormalizedMeanColumnName {
             get {
-                return ResourceManager.GetString("NormalizedMean", resourceCulture);
+                return ResourceManager.GetString("NormalizedMeanColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Нормированная дисперсия.
         /// </summary>
-        internal static string NormalizedVarience {
+        internal static string NormalizedVarienceColumnName {
             get {
-                return ResourceManager.GetString("NormalizedVarience", resourceCulture);
+                return ResourceManager.GetString("NormalizedVarienceColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Выборочное отклонение.
         /// </summary>
-        internal static string SampleDeviation {
+        internal static string SampleDeviationColumnName {
             get {
-                return ResourceManager.GetString("SampleDeviation", resourceCulture);
+                return ResourceManager.GetString("SampleDeviationColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Выборочное среднее.
         /// </summary>
-        internal static string SampleMean {
+        internal static string SampleMeanColumnName {
             get {
-                return ResourceManager.GetString("SampleMean", resourceCulture);
+                return ResourceManager.GetString("SampleMeanColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Объём выборки, n.
         /// </summary>
-        internal static string SampleSize {
+        internal static string SampleSizeColumnName {
             get {
-                return ResourceManager.GetString("SampleSize", resourceCulture);
+                return ResourceManager.GetString("SampleSizeColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Выборочная дисперсия.
         /// </summary>
-        internal static string SampleVariance {
+        internal static string SampleVarianceColumnName {
             get {
-                return ResourceManager.GetString("SampleVariance", resourceCulture);
+                return ResourceManager.GetString("SampleVarianceColumnName", resourceCulture);
             }
         }
         
@@ -216,27 +225,27 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Теоретическое значение в среднем.
         /// </summary>
-        internal static string TheoreticalAverage {
+        internal static string TheoreticalAverageColumnName {
             get {
-                return ResourceManager.GetString("TheoreticalAverage", resourceCulture);
+                return ResourceManager.GetString("TheoreticalAverageColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Теоретический максимум.
         /// </summary>
-        internal static string TheoreticalMax {
+        internal static string TheoreticalMaxColumnName {
             get {
-                return ResourceManager.GetString("TheoreticalMax", resourceCulture);
+                return ResourceManager.GetString("TheoreticalMaxColumnName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Теоретический минимум.
         /// </summary>
-        internal static string TheoreticalMin {
+        internal static string TheoreticalMinColumnName {
             get {
-                return ResourceManager.GetString("TheoreticalMin", resourceCulture);
+                return ResourceManager.GetString("TheoreticalMinColumnName", resourceCulture);
             }
         }
     }

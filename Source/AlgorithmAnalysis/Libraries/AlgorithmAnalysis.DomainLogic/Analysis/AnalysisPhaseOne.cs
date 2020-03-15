@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.DomainLogic.Excel;
@@ -34,23 +35,53 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         public async Task<AnalysisResult> AnalyzeAsync(AnalysisContext context)
         {
             _logger.Info("Starting analysis phase one.");
+            _logger.Info($"Context: {context.ToLogString()}");
 
             // Find appropriate launches number iteratively (part 1 of phase 1).
             AnalysisPhaseOnePartOneResult partOneResult =
                 await PerformPartOneAsync(context);
 
+            AnalysisContext updatedContext = context.CreateWith(
+                args: context.Args.CreateWith(partOneResult.CalculatedSampleSize)
+            );
+
             // Check H0 hypothesis on calculated launches number (part 2 of phase 1).
             AnalysisPhaseOnePartTwoResult partTwoResult =
-                await PerfromPartTwoAsync(context, partOneResult);
+                await PerfromPartTwoAsync(updatedContext, partOneResult);
 
-            return partTwoResult.IsH0HypothesisProved
-                ? AnalysisResult.CreateSuccess("H0 hypothesis for the algorithm was proved.")
-                : AnalysisResult.CreateFailure("H0 hypothesis for the algorithm was not proved.");
+            if (partTwoResult.IsH0HypothesisProved)
+            {
+                return AnalysisResult.CreateSuccess(
+                    "H0 hypothesis for the algorithm was proved.", updatedContext
+                );
+            }
+            
+            return AnalysisResult.CreateFailure(
+                "H0 hypothesis for the algorithm was not proved.", updatedContext
+            );
         }
 
         #endregion
 
-        private async Task<AnalysisPhaseOnePartOneResult> PerformPartOneAsync(AnalysisContext context)
+        private static ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne> CreateExcelContextPartOne(
+            AnalysisContext context, int iterationNumber, int calculatedSampleSize)
+        {
+            Func<ParametersPack, IAnalysisPhaseOnePartOne> analysisFactory =
+                args => AnalysisHelper.CreateAnalysisPhaseOnePartOne(
+                            context.PhaseOnePartOne, args
+                        );
+
+            return ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne>.CreateFor(
+                args: context.Args.CreateWith(calculatedSampleSize),
+                launchContext: context.LaunchContext,
+                outputExcelFile: context.OutputExcelFile,
+                sheetName: ExcelHelper.CreateSheetName(PhaseNumber, iterationNumber),
+                analysisFactory: analysisFactory
+            );
+        }
+
+        private async Task<AnalysisPhaseOnePartOneResult> PerformPartOneAsync(
+            AnalysisContext context)
         {
             _logger.Info("Starting analysis phase one part one.");
 
@@ -67,12 +98,8 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
                 previousCalculatedSampleSize = calculatedSampleSize;
 
-                var excelContext = ExcelContextForPhaseOne<IAnalysisPhaseOnePartOne>.CreateFor(
-                    args: context.Args.CreateWith(calculatedSampleSize),
-                    launchContext: context.LaunchContext,
-                    outputExcelFile: context.OutputExcelFile,
-                    sheetName: ExcelHelper.CreateSheetName(PhaseNumber, iterationNumber),
-                    analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartOne(context.PhaseOnePartOne, args)
+                var excelContext = CreateExcelContextPartOne(
+                    context, iterationNumber, calculatedSampleSize
                 );
                 _logger.Info($"Iteration parameters pack: {excelContext.Args.ToLogString()}");
 
@@ -83,9 +110,9 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
             _logger.Info("Finished analysis phase one part one.");
             _logger.Info(
-                    $"Total iteration number: '{iterationNumber.ToString()}', " +
-                    $"final calculated sample size: '{calculatedSampleSize.ToString()}'."
-                );
+                $"Total iteration number: '{iterationNumber.ToString()}', " +
+                $"final calculated sample size: '{calculatedSampleSize.ToString()}'."
+            );
             return new AnalysisPhaseOnePartOneResult(calculatedSampleSize, iterationNumber);
         }
 
@@ -101,21 +128,34 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             );
         }
 
-        private async Task<AnalysisPhaseOnePartTwoResult> PerfromPartTwoAsync(AnalysisContext context,
-            AnalysisPhaseOnePartOneResult partOneResult)
+        private static ExcelContextForPhaseOne<IAnalysisPhaseOnePartTwo> CreateExcelContextPartTwo(
+            AnalysisContext context, AnalysisPhaseOnePartOneResult partOneResult)
+        {
+            string sheetName =
+                ExcelHelper.CreateSheetName(PhaseNumber, partOneResult.TotalIterationNumber);
+
+            Func<ParametersPack, IAnalysisPhaseOnePartTwo> analysisFactory =
+                args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args);
+
+            return ExcelContextForPhaseOne<IAnalysisPhaseOnePartTwo>.CreateFor(
+                args: context.Args,
+                launchContext: context.LaunchContext,
+                outputExcelFile: context.OutputExcelFile,
+                sheetName: sheetName,
+                analysisFactory: analysisFactory
+            );
+        }
+
+        private async Task<AnalysisPhaseOnePartTwoResult> PerfromPartTwoAsync(
+            AnalysisContext context, AnalysisPhaseOnePartOneResult partOneResult)
         {
             _logger.Info("Starting analysis phase one part two.");
 
-            // Perform the final iteration to get actual data using calculated sample size.
-            var excelContext = ExcelContextForPhaseOne<IAnalysisPhaseOnePartTwo>.CreateFor(
-                args: context.Args.CreateWith(partOneResult.CalculatedSampleSize),
-                launchContext: context.LaunchContext,
-                outputExcelFile: context.OutputExcelFile,
-                sheetName: ExcelHelper.CreateSheetName(PhaseNumber, partOneResult.TotalIterationNumber),
-                analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseOnePartTwo(context.PhaseOnePartTwo, args)
-            );
+            var excelContext = CreateExcelContextPartTwo(context, partOneResult);
+
             _logger.Info($"Final parameters pack: {excelContext.Args.ToLogString()}");
 
+            // Perform the final iteration to get actual data using calculated sample size.
             using FileObject fileObject = await AnalysisRunner.PerformOneIterationOfPhaseOneAsync(
                  excelContext.Args, excelContext.LaunchContext, _fileWorker
              );
@@ -125,6 +165,9 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             );
 
             _logger.Info("Finished analysis phase one part two.");
+            _logger.Info(
+                $"H0 hypothesis for the algorithm was proved: '{isH0HypothesisProved.ToString()}'."
+            );
             return new AnalysisPhaseOnePartTwoResult(partOneResult, isH0HypothesisProved);
         }
     }

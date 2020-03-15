@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Acolyte.Assertions;
 using AlgorithmAnalysis.Math.Functions;
 
 namespace AlgorithmAnalysis.Math.Providers
@@ -18,6 +19,9 @@ namespace AlgorithmAnalysis.Math.Providers
         public IEnumerable<IModelledFunction> Provide(IEnumerable<double> xValues,
             IEnumerable<double> yValues)
         {
+            xValues.ThrowIfNullOrEmpty(nameof(xValues));
+            yValues.ThrowIfNullOrEmpty(nameof(yValues));
+
             double[] xArray = xValues.ToArray();
             double[] yArray = yValues.ToArray();
 

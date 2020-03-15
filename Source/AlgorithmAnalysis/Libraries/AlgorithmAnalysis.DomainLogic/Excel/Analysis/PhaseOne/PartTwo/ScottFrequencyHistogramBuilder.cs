@@ -2,11 +2,15 @@
 using Acolyte.Assertions;
 using AlgorithmAnalysis.DomainLogic.Properties;
 using AlgorithmAnalysis.Excel;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
 {
     internal sealed class ScottFrequencyHistogramBuilder : IFrequencyHistogramBuilder
     {
+        private static readonly ILogger _logger =
+            LoggerFactory.CreateLoggerFor<ScottFrequencyHistogramBuilder>();
+
         private readonly ParametersPack _args;
 
 
@@ -81,7 +85,12 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo
             IExcelCellValueHolder chi2Observable = sheet.EvaluateCell(ExcelColumnIndex.J, 14);
             IExcelCellValueHolder chi2Critical = sheet.EvaluateCell(ExcelColumnIndex.J, 16);
 
-            return chi2Observable.NumericValue < chi2Critical.NumericValue;
+            double chi2ObservableValue = chi2Observable.NumericValue;
+            double chi2CriticalValue = chi2Critical.NumericValue;
+
+            _logger.Info($"Chi2 observable: '{chi2ObservableValue.ToString()}'.");
+            _logger.Info($"Chi2 critical: '{chi2CriticalValue.ToString()}'.");
+            return chi2ObservableValue < chi2CriticalValue;
         }
 
         #endregion

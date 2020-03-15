@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using AlgorithmAnalysis.DomainLogic;
+using AlgorithmAnalysis.Math;
 using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.Domain
@@ -21,6 +22,9 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
 
         public static IReadOnlyList<PhaseTwoAnalysisKind> AvailableAnalysisKindForPhaseTwo { get; } =
             AnalysisHelper.GetAvailableAnalysisKindForPhaseTwo();
+
+        public static IReadOnlyList<GoodnessOfFitKind> AvailableGoodnessOfFitKinds { get; } =
+            AnalysisHelper.GetAvailableGoodnessOfFitKinds();
 
         public static IReadOnlyList<AlgorithmType> AvailableAlgorithms =>
             AnalysisHelper.GetAvailableAlgorithms();

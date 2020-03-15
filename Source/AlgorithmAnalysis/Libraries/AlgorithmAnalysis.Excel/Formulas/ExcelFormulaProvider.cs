@@ -158,6 +158,15 @@ namespace AlgorithmAnalysis.Excel.Formulas
             return $"{formulaName}({range})";
         }
 
+        public string Pearson(string firstVariableRange, string secondVariableRange)
+        {
+            firstVariableRange.ThrowIfNullOrWhiteSpace(nameof(firstVariableRange));
+            secondVariableRange.ThrowIfNullOrWhiteSpace(nameof(secondVariableRange));
+
+            string formulaName = _mapper.GetFormulaName(_excelVersion);
+            return $"{formulaName}({firstVariableRange}, {secondVariableRange})";
+        }
+
         public string RoundUp(string number, string numberOfDigits)
         {
             string formulaName = _mapper.GetFormulaName(_excelVersion);

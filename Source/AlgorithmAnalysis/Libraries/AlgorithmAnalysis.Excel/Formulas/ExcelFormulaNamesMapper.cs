@@ -78,6 +78,9 @@ namespace AlgorithmAnalysis.Excel.Formulas
                 { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.Min)), "MIN" },
                 { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.Min)), "MIN" },
 
+                { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.Pearson)), "PEARSON" },
+                { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.Pearson)), "PEARSON" },
+
                 { (ExcelVersion.V2007, nameof(IExcelFormulaProvider.RoundUp)), "ROUNDUP" },
                 { (ExcelVersion.V2019, nameof(IExcelFormulaProvider.RoundUp)), "ROUNDUP" },
 

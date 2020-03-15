@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Excel;
 using AlgorithmAnalysis.Excel.Formulas;
@@ -60,7 +59,6 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
 
             return $"{min} + {leftYQuantile} * ({max} - {min})";
         }
-
 
         public static string Chi2Single(string relativeFrequency, string theoreticalFrequency)
         {

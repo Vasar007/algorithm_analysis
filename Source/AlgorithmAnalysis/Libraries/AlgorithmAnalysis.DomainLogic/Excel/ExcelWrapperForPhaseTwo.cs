@@ -158,7 +158,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             ref int currentColumnIndex)
         {
             var additionalDataColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[additionalDataColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.AdditionalData);
+            sheet[additionalDataColumnIndex, 1].SetValue(ExcelStringsPhaseTwo.AdditionalDataColumnName);
             sheet[additionalDataColumnIndex, 2].SetValue(args.LaunchesNumber);
             sheet[additionalDataColumnIndex, 3].SetValue(args.Step);
             sheet[additionalDataColumnIndex, 4].SetValue(double.Parse(ExcelStringsPhaseTwo.ConfidenceFactorValue));
@@ -187,16 +187,16 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             int rowIndex = 1;
 
             var sampleSizeColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[sampleSizeColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.SampleSize);
+            sheet[sampleSizeColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.SampleSizeColumnName);
 
             var theoreticalMinColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[theoreticalMinColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.TheoreticalMin);
+            sheet[theoreticalMinColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.TheoreticalMinColumnName);
 
             var theoreticalAverageColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[theoreticalAverageColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.TheoreticalAverage);
+            sheet[theoreticalAverageColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.TheoreticalAverageColumnName);
 
             var theoreticalMaxColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[theoreticalMaxColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.TheoreticalMax);
+            sheet[theoreticalMaxColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.TheoreticalMaxColumnName);
 
             ++rowIndex;
 

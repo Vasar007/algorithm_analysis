@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne;
 
@@ -7,9 +8,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
     internal sealed class ExcelContextForPhaseOne<TAnalysisPhaseOne>
         where TAnalysisPhaseOne : IAnalysisPhaseOne
     {
-        public delegate TAnalysisPhaseOne AnalysisCreation(ParametersPack args);
-
-        private readonly AnalysisCreation _partOneFactory;
+        private readonly Func<ParametersPack, TAnalysisPhaseOne> _partOneFactory;
 
         public ParametersPack Args { get; }
 
@@ -25,7 +24,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             AnalysisLaunchContext launchContext,
             FileInfo outputExcelFile,
             string sheetName,
-            AnalysisCreation analysisFactory)
+            Func<ParametersPack, TAnalysisPhaseOne> analysisFactory)
         {
             Args = args.ThrowIfNull(nameof(args));
             LaunchContext = launchContext.ThrowIfNull(nameof(launchContext));
@@ -39,7 +38,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             AnalysisLaunchContext launchContext,
             FileInfo outputExcelFile,
             string sheetName,
-            AnalysisCreation analysisFactory)
+            Func<ParametersPack, TAnalysisPhaseOne> analysisFactory)
         {
             return new ExcelContextForPhaseOne<TAnalysisPhaseOne>(
                 args: args,

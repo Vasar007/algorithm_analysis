@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
 using AlgorithmAnalysis.Logging;
+using AlgorithmAnalysis.Math.Selectors;
 
 namespace AlgorithmAnalysis.DomainLogic.Analysis
 {
@@ -29,31 +31,44 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
         public async Task<AnalysisResult> AnalyzeAsync(AnalysisContext context)
         {
-            _logger.Info("Starting analysis phase one.");
+            _logger.Info("Starting analysis phase two.");
+            _logger.Info($"Context: {context.ToLogString()}");
 
             // Perform full analysis and calculate confidence complexity function.
             AnalysisPhaseTwoResult _ = await PerformPhaseTwoAsync(context);
 
             _logger.Info("Finished analysis phase two.");
-            return AnalysisResult.CreateSuccess("Analysis finished successfully.");
+            return AnalysisResult.CreateSuccess("Analysis finished successfully.", context);
         }
 
         #endregion
 
-        private async Task<AnalysisPhaseTwoResult> PerformPhaseTwoAsync(AnalysisContext context)
+        private static ExcelContextForPhaseTwo<IAnalysisPhaseTwo> CreateExcelContext(
+            AnalysisContext context)
         {
-            var excelContext = ExcelContextForPhaseTwo<IAnalysisPhaseTwo>.CreateFor(
-                analysisContext: context,
-                sheetName: ExcelHelper.CreateSheetName(PhaseNumber),
-                analysisFactory: args => AnalysisHelper.CreateAnalysisPhaseTwo(context.PhaseTwo, args)
-
+            IFunctionSelector goonessOfFit = AnalysisHelper.CreateGoodnessOfFit(
+                context.GoodnessOfFit
             );
 
+            Func<ParametersPack, IAnalysisPhaseTwo> analysisFactory =
+                args => AnalysisHelper.CreateAnalysisPhaseTwo(context.PhaseTwo, goonessOfFit, args);
+
+            return ExcelContextForPhaseTwo<IAnalysisPhaseTwo>.CreateFor(
+                analysisContext: context,
+                sheetName: ExcelHelper.CreateSheetName(PhaseNumber),
+                analysisFactory: analysisFactory
+            );
+        }
+
+        private async Task<AnalysisPhaseTwoResult> PerformPhaseTwoAsync(AnalysisContext context)
+        {
+            var excelContext = CreateExcelContext(context);
+
             await AnalysisRunner.PerformFullAnalysisForPhaseTwoAsync(
-                context.Args,
-                context.LaunchContext,
-                _fileWorker,
-                fileObject => PerformOneIteration(excelContext, fileObject)
+                args: context.Args,
+                launchContext: context.LaunchContext,
+                fileWorker: _fileWorker,
+                callback: fileObject => PerformOneIteration(excelContext, fileObject)
             );
 
             _excelWrapperForPhaseTwo.ApplyAnalysisAndSaveData(excelContext);
@@ -65,9 +80,9 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             FileObject fileObject)
         {
             _excelWrapperForPhaseTwo.ApplyAnalysisAndSaveDataOneIteration(
-                fileObject.Data.GetData(item => item.operationNumber),
-                excelContext,
-                fileObject.Data.Name
+                data: fileObject.Data.GetData(item => item.operationNumber),
+                excelContext: excelContext,
+                dataFilename: fileObject.Data.Name
             );
         }
     }

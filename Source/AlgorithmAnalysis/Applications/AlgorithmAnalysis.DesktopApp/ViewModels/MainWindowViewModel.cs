@@ -22,9 +22,11 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public string Title { get; }
 
-        public AnalysisSpecificModel AnalysisModel { get; }
+        public AnalysisSpecificModel AnalysisSpecific { get; }
 
-        public RawParametersPack Parameters { get; }
+        public RawParametersPack RawParameters { get; }
+
+        public SelectiveParametersModel SelectiveParameters { get; }
 
         private bool _canExecuteAnalysis;
         public bool CanExecuteAnalysis
@@ -45,8 +47,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
             Title = DesktopOptions.Title;
 
-            AnalysisModel = new AnalysisSpecificModel();
-            Parameters = new RawParametersPack();
+            AnalysisSpecific = new AnalysisSpecificModel();
+            RawParameters = new RawParametersPack();
+            SelectiveParameters = new SelectiveParametersModel();
             CanExecuteAnalysis = true;
 
             RunCommand = new AsyncRelayCommand(LaunchAnalysis);
@@ -61,12 +64,14 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             {
                 // TODO: display waiting message (and progress bar, if it's possible).
 
-                AnalysisContext context = Parameters.CreateContext(_outputExcelFile);
+                AnalysisContext context = RawParameters.CreateContext(
+                    _outputExcelFile, SelectiveParameters
+                );
 
                 CheckOutputFile();
 
                 // TODO: add cancellation button to interupt analysis.
-                AnalysisResult result = await _performer.PerformAnalysisAsync(context)
+                AnalysisResult result = await Task.Run(() => _performer.PerformAnalysisAsync(context))
                     .ConfigureAwait(false);
 
                 ProcessResult(result);
@@ -83,8 +88,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         private void ResetFields()
         {
-            AnalysisModel.Reset();
-            Parameters.Reset();
+            AnalysisSpecific.Reset();
+            RawParameters.Reset();
+            SelectiveParameters.Reset();
         }
 
         private void CheckOutputFile()
@@ -119,7 +125,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         private void OpenResultsIfNeeded()
         {
-            if (AnalysisModel.OpenAnalysisResults)
+            if (AnalysisSpecific.OpenAnalysisResults)
             {
                 _ = ProcessManager.OpenFileWithAssociatedAppAsync(_outputExcelFile);
             }

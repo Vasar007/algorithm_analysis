@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
 
@@ -7,9 +8,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
     internal sealed class ExcelContextForPhaseTwo<TAnalysisPhaseTwo>
         where TAnalysisPhaseTwo : IAnalysisPhaseTwo
     {
-        public delegate TAnalysisPhaseTwo AnalysisPhaseTwoCreation(ParametersPack args);
-
-        private readonly AnalysisPhaseTwoCreation _partTwoFactory;
+        private readonly Func<ParametersPack, TAnalysisPhaseTwo> _partTwoFactory;
 
         public ParametersPack Args { get; }
 
@@ -25,7 +24,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
             AnalysisLaunchContext launchContext,
             FileInfo outputExcelFile,
             string sheetName,
-            AnalysisPhaseTwoCreation analysisFactory)
+            Func<ParametersPack, TAnalysisPhaseTwo> analysisFactory)
         {
             Args = args.ThrowIfNull(nameof(args));
             LaunchContext = launchContext.ThrowIfNull(nameof(launchContext));
@@ -37,7 +36,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel
         public static ExcelContextForPhaseTwo<TAnalysisPhaseTwo> CreateFor(
             AnalysisContext analysisContext,
             string sheetName,
-            AnalysisPhaseTwoCreation analysisFactory)
+            Func<ParametersPack, TAnalysisPhaseTwo> analysisFactory)
         {
             analysisContext.ThrowIfNull(nameof(analysisContext));
 
