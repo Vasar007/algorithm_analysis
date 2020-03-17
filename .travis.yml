@@ -37,34 +37,55 @@ script: |
 
 matrix:
   include:
-    # Linux + GCC
+    # Linux + GCC (Debug)
     - os: linux
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64 MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
+      before_install:
+        - eval "${MATRIX_EVAL}"
+    # Linux + GCC (Release)
+    - os: linux
+      env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64 MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
       before_install:
         - eval "${MATRIX_EVAL}"
-    # Linux + Clang
+    # Linux + Clang (Debug)
     - os: linux
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64 MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
+      before_install:
+        - eval "${MATRIX_EVAL}"
+    # Linux + Clang (Release)
+    - os: linux
+      env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64 MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
       before_install:
         - eval "${MATRIX_EVAL}"
-    # macOS + GCC
+    # macOS + GCC (Debug)
     - os: osx
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64 MATRIX_EVAL="brew install gcc@9 && CC=gcc-9 && CXX=g++-9"
+      before_install:
+        - eval "${MATRIX_EVAL}"
+    # macOS + GCC (Release)
+    - os: osx
+      env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64 MATRIX_EVAL="brew install gcc@9 && CC=gcc-9 && CXX=g++-9"
       before_install:
         - eval "${MATRIX_EVAL}"
-    # macOS + Clang
+    # macOS + Clang (Debug)
     - os: osx
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64
+    # macOS + Clang (Release)
+    - os: osx
+      env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64
-    # Windows + MSVC
+    # Windows + MSVC (Debug)
     - os: windows
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64
+    # Windows + MSVC (Release)
+    - os: windows
+      env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64
