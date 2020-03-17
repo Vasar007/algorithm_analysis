@@ -8,8 +8,8 @@ os:
 dist: bionic
 
 env:
-  - TARGET_CPU=x64 BUILD_CONFIGURATION=Debug
-  - TARGET_CPU=x64 BUILD_CONFIGURATION=Release
+  - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64
+  - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64
 
 branches:
   only:
@@ -19,6 +19,6 @@ branches:
 script:
   - mkdir build
   - cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU -A $TARGET_CPU || exit 1
+  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU -A $TARGET_PLATFORM || exit 1
   - cmake --build . || exit 1
   - ctest --output-on-failure || exit 1
