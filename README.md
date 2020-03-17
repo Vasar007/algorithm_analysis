@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Vasar007/algorithm_analysis/blob/master/LICENSE)
 [![AppVeyor branch](https://img.shields.io/appveyor/ci/Vasar007/algorithm-analysis/master.svg)](https://ci.appveyor.com/project/Vasar007/algorithm-analysis)
+[![Travis (.org)](https://travis-ci.com/Vasar007/algorithm_analysis.svg?branch=master)](https://travis-ci.com/Vasar007/algorithm_analysis)
 
 [![GitHub wiki](https://img.shields.io/badge/Docs-GitHub%20wiki-brightgreen)](https://github.com/Vasar007/algorithm_analysis/wiki)
 
