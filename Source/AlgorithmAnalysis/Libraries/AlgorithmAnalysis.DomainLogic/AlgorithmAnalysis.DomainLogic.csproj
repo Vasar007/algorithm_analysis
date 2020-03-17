@@ -35,11 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\ExcelStrings - Copy.Designer.cs">
-      <DependentUpon>ExcelStringsPhaseOnePartTwo.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="Properties\ExcelStringsPhaseOnePartOne.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -29,25 +29,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <COMReference Include="Microsoft.Office.Core.dll">
-      <Guid>2df8d04c-5bfa-101b-bde5-00aa0044de52</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>8</VersionMinor>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Lcid>0</Lcid>
-      <Isolated>false</Isolated>
-    </COMReference>
-    <COMReference Include="Microsoft.Office.Excel.dll">
-      <Guid>00020813-0000-0000-c000-000000000046</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>9</VersionMinor>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Lcid>0</Lcid>
-      <Isolated>false</Isolated>
-    </COMReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="EPPlus" Version="5.0.4" />
     <PackageReference Include="NPOI" Version="2.4.1" />
   </ItemGroup>
@@ -55,6 +36,15 @@
   <ItemGroup>
     <ProjectReference Include="..\AlgorithmAnalysis.Configuration\AlgorithmAnalysis.Configuration.csproj" />
     <ProjectReference Include="..\AlgorithmAnalysis.Models\AlgorithmAnalysis.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Interop.Microsoft.Office.Core">
+      <HintPath>Resources\Interop.Microsoft.Office.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Microsoft.Office.Interop.Excel">
+      <HintPath>Resources\Interop.Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
