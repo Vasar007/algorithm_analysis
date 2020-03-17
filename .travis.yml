@@ -6,6 +6,14 @@ os:
   - windows
 
 dist: bionic
+osx_image: xcode11.3
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-9
+      
 
 env:
   - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64
