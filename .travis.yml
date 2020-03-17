@@ -8,16 +8,18 @@ language: cpp
 arch:
   - amd64
 
-dist: bionic
-osx_image: xcode11.3
 addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-9
     packages:
       - g++-9
       - clang-9
+    update: true
+  homebrew:
+    packages:
+      - gcc
+    update: true
 
 script: |
   mkdir build
@@ -34,46 +36,54 @@ matrix:
   include:
     # Linux + GCC (Debug)
     - os: linux
+      dist: bionic
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64 MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
       before_install:
         - eval "${MATRIX_EVAL}"
     # Linux + GCC (Release)
     - os: linux
+      dist: bionic
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64 MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
       before_install:
         - eval "${MATRIX_EVAL}"
     # Linux + Clang (Debug)
     - os: linux
+      dist: bionic
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64 MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
       before_install:
         - eval "${MATRIX_EVAL}"
     # Linux + Clang (Release)
     - os: linux
+      dist: bionic
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64 MATRIX_EVAL="CC=clang-9 && CXX=clang++-9"
       before_install:
         - eval "${MATRIX_EVAL}"
     # macOS + GCC (Debug)
     - os: osx
+      osx_image: xcode11.3
       env:
-        - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64 MATRIX_EVAL="brew install gcc@9 && CC=gcc-9 && CXX=g++-9"
+        - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64 MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
       before_install:
         - eval "${MATRIX_EVAL}"
     # macOS + GCC (Release)
     - os: osx
+      osx_image: xcode11.3
       env:
-        - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64 MATRIX_EVAL="brew install gcc@9 && CC=gcc-9 && CXX=g++-9"
+        - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64 MATRIX_EVAL="CC=gcc-9 && CXX=g++-9"
       before_install:
         - eval "${MATRIX_EVAL}"
     # macOS + Clang (Debug)
     - os: osx
+      osx_image: xcode11.3
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug TARGET_PLATFORM=x64
     # macOS + Clang (Release)
     - os: osx
+      osx_image: xcode11.3
       env:
         - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release TARGET_PLATFORM=x64
     # Windows + MSVC (Debug)
