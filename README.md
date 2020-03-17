@@ -10,8 +10,7 @@ Empirical analysis of algorithms.
 
 ## Usage examples
 
-TODO: add usage examples.
-TODO: upload binaries.
+TODO: add usage examples and upload binaries.
 
 ## Dependencies
 
