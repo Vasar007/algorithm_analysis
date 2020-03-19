@@ -4,7 +4,7 @@
 
 There are some samples based on [AlgorithmAnalysis](https://github.com/Vasar007/algorithm_analysis) application:
 
-- [Implementing and adding new algorithm module](https://github.com/Vasar007/algorithm_analysis/tree/master/Examples/NewAlgorithm).
+- [Implementing and adding new algorithm module](https://github.com/Vasar007/algorithm_analysis/tree/master/Examples/AlgorithmAnalysis.Examples.NewAlgorithm).
   Sample shows step-by-step instructions from implementing simple algorithm to adding it to the `AlgorithmAnalysis` system.
 
 ## Requirements
