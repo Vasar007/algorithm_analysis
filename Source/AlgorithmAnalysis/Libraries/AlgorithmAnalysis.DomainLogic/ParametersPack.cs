@@ -30,8 +30,10 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public string CommonAnalysisFilenameSuffix { get; }
 
+        public string OutputFileExtension { get; }
 
-        public ParametersPack(
+
+        private ParametersPack(
             FileInfo analysisProgramName,
             AlgorithmType algorithmType,
             int startValue,
@@ -40,7 +42,8 @@ namespace AlgorithmAnalysis.DomainLogic
             int launchesNumber,
             int step,
             string outputFilenamePattern,
-            string commonAnalysisFilenameSuffix)
+            string commonAnalysisFilenameSuffix,
+            string outputFileExtension)
         {
             AnalysisProgramName = analysisProgramName.ThrowIfNull(nameof(analysisProgramName));
             AlgorithmType = algorithmType.ThrowIfNull(nameof(algorithmType));
@@ -51,6 +54,7 @@ namespace AlgorithmAnalysis.DomainLogic
             Step = step.ThrowIfValueIsOutOfRange(nameof(step), 1, int.MaxValue);
             OutputFilenamePattern = outputFilenamePattern.ThrowIfNullOrWhiteSpace(nameof(outputFilenamePattern));
             CommonAnalysisFilenameSuffix = commonAnalysisFilenameSuffix.ThrowIfNullOrWhiteSpace(nameof(commonAnalysisFilenameSuffix));
+            OutputFileExtension = outputFileExtension.ThrowIfNullOrWhiteSpace(nameof(outputFileExtension));
         }
 
         public static ParametersPack Create(
@@ -63,17 +67,19 @@ namespace AlgorithmAnalysis.DomainLogic
             int step)
         {
             analysisOptions.ThrowIfNull(nameof(analysisOptions));
+            algorithmType.ThrowIfNull(nameof(algorithmType));
 
             return new ParametersPack(
-                analysisProgramName: new FileInfo(analysisOptions.AnalysisProgramName),
+                analysisProgramName: new FileInfo(algorithmType.AnalysisProgramName),
                 algorithmType: algorithmType,
                 startValue: startValue,
                 endValue: endValue,
                 extrapolationSegmentValue: extrapolationSegmentValue,
                 launchesNumber: launchesNumber,
                 step: step,
-                outputFilenamePattern: analysisOptions.OutputFilenamePattern,
-                commonAnalysisFilenameSuffix: analysisOptions.CommonAnalysisFilenameSuffix
+                outputFilenamePattern: algorithmType.OutputFilenamePattern,
+                commonAnalysisFilenameSuffix: analysisOptions.CommonAnalysisFilenameSuffix,
+                outputFileExtension: analysisOptions.OutputFileExtension
             );
         }
 
@@ -88,7 +94,8 @@ namespace AlgorithmAnalysis.DomainLogic
                 launchesNumber: newLaunchesNumber,
                 step: Step,
                 outputFilenamePattern: OutputFilenamePattern,
-                commonAnalysisFilenameSuffix: CommonAnalysisFilenameSuffix
+                commonAnalysisFilenameSuffix: CommonAnalysisFilenameSuffix,
+                outputFileExtension: OutputFileExtension
             );
         }
 
@@ -102,10 +109,12 @@ namespace AlgorithmAnalysis.DomainLogic
                 .AppendLine($"AlgorithmType: {AlgorithmType.ToLogString()}")
                 .AppendLine($"StartValue: '{StartValue.ToString()}'")
                 .AppendLine($"EndValue: '{EndValue.ToString()}'")
+                .AppendLine($"ExtrapolationSegmentValue: '{ExtrapolationSegmentValue.ToString()}'")
                 .AppendLine($"LaunchesNumber: '{LaunchesNumber.ToString()}'")
                 .AppendLine($"Step: '{Step.ToString()}'")
                 .AppendLine($"OutputFilenamePattern: '{OutputFilenamePattern}'")
-                .AppendLine($"CommonAnalysisFilenameSuffix: '{CommonAnalysisFilenameSuffix}'");
+                .AppendLine($"CommonAnalysisFilenameSuffix: '{CommonAnalysisFilenameSuffix}'")
+                .AppendLine($"OutputFileExtension: '{OutputFileExtension}'");
 
             return sb.ToString();
         }

@@ -6,19 +6,31 @@
         "Value": "0",
         "MinFormula": "x",
         "AverageFormula": "x * x * (x - 1) / 2",
-        "MaxFormula": "x * x * x * (x - 1) / 2"
+        "MaxFormula": "x * x * x * (x - 1) / 2",
+        "AnalysisProgramName": "algorithm_analysis.exe",
+        "OutputFilenamePattern": "tests_average_"
       },
       {
         "Description": "Insertion sort",
         "Value": "1",
         "MinFormula": "x",
         "AverageFormula": "x^2",
-        "MaxFormula": "x^2"
+        "MaxFormula": "x^2",
+        "AnalysisProgramName": "algorithm_analysis.exe",
+        "OutputFilenamePattern": "tests_average_"
+      },
+      {
+        "Description": "Bubble sort",
+        "Value": "2",
+        "MinFormula": "x",
+        "AverageFormula": "x^2",
+        "MaxFormula": "x^2",
+        "AnalysisProgramName": "AlgorithmAnalysis.Examples.NewAlgorithm.exe",
+        "OutputFilenamePattern": "tests_average_"
       }
     ],
-    "AnalysisProgramName": "algorithm_analysis.exe",
-    "OutputFilenamePattern": "tests_average_",
-    "CommonAnalysisFilenameSuffix": "series"
+    "CommonAnalysisFilenameSuffix": "series",
+    "OutputFileExtension": ".txt"
   },
 
   "ExcelOptions": {
@@ -29,6 +41,7 @@
   },
 
   "LoggerOptions": {
-    "RelativeLogFolderPath": "logs"
+    "RelativeLogFolderPath": "logs",
+    "EnableLogForExcelLibrary": "false"
   }
 }

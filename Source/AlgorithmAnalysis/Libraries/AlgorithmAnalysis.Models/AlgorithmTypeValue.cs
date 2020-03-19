@@ -12,6 +12,10 @@
 
         public string MaxFormula { get; set; } = string.Empty;
 
+        public string AnalysisProgramName { get; set; } = string.Empty;
+
+        public string OutputFilenamePattern { get; set; } = string.Empty;
+
 
         public AlgorithmTypeValue()
         {

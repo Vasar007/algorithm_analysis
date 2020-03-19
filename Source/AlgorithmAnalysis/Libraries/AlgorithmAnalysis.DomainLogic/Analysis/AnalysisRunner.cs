@@ -31,7 +31,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
             // Contract: output files are located in the same directory as our app.
             IReadOnlyList<FileInfo> finalOutputFiles = args.GetOutputFilenames(phaseNumber: 1);
-            CheckExpectedFilenamesNumber(expectedFilesNumber: 2, finalOutputFiles);
+            CheckExpectedFilenamesNumber(upperBound: 2, finalOutputFiles);
 
             var fileDeleter = new FileDeleter(finalOutputFiles);
 
@@ -108,17 +108,17 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             );
         }
 
-        private static void CheckExpectedFilenamesNumber(int expectedFilesNumber,
+        private static void CheckExpectedFilenamesNumber(int upperBound,
             IReadOnlyList<FileInfo> actualOutputFiles)
         {
-            expectedFilesNumber.ThrowIfValueIsOutOfRange(nameof(expectedFilesNumber), 1, int.MaxValue);
+            upperBound.ThrowIfValueIsOutOfRange(nameof(upperBound), 1, int.MaxValue);
             actualOutputFiles.ThrowIfNullOrEmpty(nameof(actualOutputFiles));
 
-            if (actualOutputFiles.Count != expectedFilesNumber)
+            if (actualOutputFiles.Count > upperBound)
             {
                 string message =
-                    "Failed to perform analysis. Should be only " +
-                    $"{expectedFilesNumber.ToString()} output files but was " +
+                    "Failed to perform analysis. Should be no more than  " +
+                    $"{upperBound.ToString()} output files but was " +
                     $"{actualOutputFiles.Count.ToString()}.";
 
                 throw new InvalidOperationException(message);

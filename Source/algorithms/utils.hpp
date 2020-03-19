@@ -263,7 +263,7 @@ struct parameters_pack
             this->is_valid = false;
         }
 
-        // Integer overflow should be contriolled by caller.
+        // Integer overflow should be controlled by caller.
         constexpr auto max_int = std::numeric_limits<decltype(start_value)>::max();
 
         if (start_value <= 0)

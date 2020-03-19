@@ -76,9 +76,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
             chi2Range.ThrowIfNullOrWhiteSpace(nameof(chi2Range));
             experimentsNumber.ThrowIfNullOrWhiteSpace(nameof(experimentsNumber));
 
-            // TODO: remove this dirty hack.
-            const string dirtyHack = " / 100";
-            return $"{formulaProvider.Sum(chi2Range)} * {experimentsNumber}{dirtyHack}";
+            return $"{formulaProvider.Sum(chi2Range)} * {experimentsNumber}";
         }
 
         public static string ScottFormula(IExcelFormulaProvider formulaProvider,

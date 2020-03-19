@@ -7,10 +7,20 @@
 [![GitHub wiki](https://img.shields.io/badge/Docs-GitHub%20wiki-brightgreen)](https://github.com/Vasar007/algorithm_analysis/wiki)
 
 Empirical analysis of algorithms.
+Now you may think about standard empirical analysis methods like calculating theoretical complexity function on average.
+However, this approach has some downsides.
+The latest stay-of-the-art solution provides more complex analysis method (see original [article](http://www.isa.ru/jitcs/images/stories/2009/02/23_37.pdf)).
+
+Read more about this approach [here](https://github.com/Vasar007/algorithm_analysis/blob/master/Article/Application%20of%20probabilistic%20analysis%20to%20the%20problem%20of%20finding%20the%20shortest%20route/article.pdf).
+
+In short, method includes two stages — the stage of preliminary research, the purpose of which is to test the hypothesis about the law of distribution of the algorithm’s labor intensity values as a discrete limited random variable, and the stage of the main study, which determines the values of the confidence labor intensity `𝑓𝛾(𝑛)` as a function of the input length of the algorithm.
+
+So, this repository contains system that allow you to fully automate such empirical analysis.
+Provide analysis to system, have a rest, relax, make a cup of coffee and get analysis result report upon completion!
 
 ## Usage examples
 
-TODO: add usage examples and upload binaries.
+Check examples [here](https://github.com/Vasar007/algorithm_analysis/tree/master/Examples/).
 
 ## Dependencies
 

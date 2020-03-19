@@ -32,7 +32,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             _package = new ExcelPackage();
             _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
 
-            AttachLogger();
+            AttachLogger(ConfigOptions.Logger);
             RegisterFunctionModules();
         }
 
@@ -46,7 +46,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             _package = new ExcelPackage(pathToWorkbook);
             _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
 
-            AttachLogger();
+            AttachLogger(ConfigOptions.Logger);
             RegisterFunctionModules();
         }
 
@@ -100,9 +100,13 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             _package.Workbook.FormulaParserManager.LoadFunctionModule(new ExtendedFunctionModule());
         }
 
-        private void AttachLogger()
+        private void AttachLogger(LoggerOptions loggerOptions)
         {
-            string logFolderPath = ConfigOptions.Logger.RelativeLogFolderPath;
+            loggerOptions.ThrowIfNull(nameof(loggerOptions));
+
+            if (!loggerOptions.EnableLogForExcelLibrary) return;
+
+            string logFolderPath = loggerOptions.RelativeLogFolderPath;
             string logFilePath = Utils.GetLogFilePath(logFolderPath, EpplusLibLogFilename);
 
             var logfile = new FileInfo(logFilePath);

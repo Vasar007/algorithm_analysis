@@ -13,18 +13,27 @@ namespace AlgorithmAnalysis.Models
 
         public string MaxFormulaFormat { get; }
 
+        // Contract: the analysis program is located in the same directory as our app.
+        public string AnalysisProgramName { get; }
+
+        public string OutputFilenamePattern { get; }
+
 
         private AlgorithmType(
             string description,
             int value,
             string minFormulaFormat,
             string averageFormulaFormat,
-            string maxFormulaFormat)
+            string maxFormulaFormat,
+            string analysisProgramName,
+            string outputFilenamePattern)
             : base(description, value)
         {
             MinFormulaFormat = minFormulaFormat.ThrowIfNullOrWhiteSpace(nameof(minFormulaFormat));
             AverageFormulaFormat = averageFormulaFormat.ThrowIfNullOrWhiteSpace(nameof(averageFormulaFormat));
             MaxFormulaFormat = maxFormulaFormat.ThrowIfNullOrWhiteSpace(nameof(maxFormulaFormat));
+            AnalysisProgramName = analysisProgramName.ThrowIfNullOrWhiteSpace(nameof(analysisProgramName));
+            OutputFilenamePattern = outputFilenamePattern.ThrowIfNullOrWhiteSpace(nameof(outputFilenamePattern));
         }
 
         public static AlgorithmType Create(AlgorithmTypeValue algorithmValue)
@@ -34,7 +43,9 @@ namespace AlgorithmAnalysis.Models
                 value: algorithmValue.Value,
                 minFormulaFormat: TransformRawFormulaToFormulaFormat(algorithmValue.MinFormula),
                 averageFormulaFormat: TransformRawFormulaToFormulaFormat(algorithmValue.AverageFormula),
-                maxFormulaFormat: TransformRawFormulaToFormulaFormat(algorithmValue.MaxFormula)
+                maxFormulaFormat: TransformRawFormulaToFormulaFormat(algorithmValue.MaxFormula),
+                analysisProgramName: algorithmValue.AnalysisProgramName,
+                outputFilenamePattern: algorithmValue.OutputFilenamePattern
             );
         }
 
