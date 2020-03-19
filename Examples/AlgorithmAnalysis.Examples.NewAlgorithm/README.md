@@ -93,7 +93,7 @@ Enough of words, jump to opened IDE and start coding.
 Create project folder and enter into it.
 Create C# console app project using command `dotnet new console`:
 
-TODO: insert picture.
+![dotnet new console](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/dotnet_new_console.jpg?raw=true)
 
 Open file `Program.cs` and paste follow code:
 
@@ -207,7 +207,9 @@ namespace AlgorithmAnalysis.Examples.NewAlgorithm
 
 Build and create module app using command `dotnet publish -r win-x64 -c Release /p:PublishSingleFile=true /p:PublishTrimmed=true`:
 
-TODO: insert picture.
+![dotnet publish](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/dotnet_publish.jpg?raw=true)
+
+**Note:** I build module for OS Windows and x64 platform!
 
 Well, now we have built module in `bin\Release\netcoreapp3.1\win-x64\publish\` folder.
 Executable file will have the same name as folder where `Program.cs` exists.
@@ -219,10 +221,10 @@ So, we almost finished our way.
 But you should build `AlgorithmAnalysis` solution (TODO: add `AlgorithmAnalysis` installer).
 Copy "BubbleSort.exe" module to the folder with `AlgorithmAnalysis` app.
 
-Start `AlgorithmAnalysis` app.
+Start `AlgorithmAnalysis` app and select `Algorithm` combobox.
 You can see the following picture:
 
-TODO: insert picture.
+![UI before adding](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/before_adding.jpg?raw=true)
 
 Open `config.json` and paste following code:
 
@@ -277,7 +279,9 @@ Open `config.json` and paste following code:
 
 ```
 
-Start `AlgorithmAnalysis` app.
-Now you can select "Bubble sort" in algorithms and execute analysis.
+Start `AlgorithmAnalysis` app and select `Algorithm` combobox again.
+Now you can select "Bubble sort" in algorithms and execute analysis:
+
+![UI after adding](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/after_adding.jpg?raw=true)
 
 The end.
