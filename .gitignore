@@ -370,4 +370,4 @@ ASALocalRun/
 *.aux
 *.toc
 *.gz
-[gitignore]*/
+*[gitignore]*/
