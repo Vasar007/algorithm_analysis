@@ -16,6 +16,7 @@ namespace AlgorithmAnalysis.DesktopApp.Views
         public MainWindow()
         {
             InitializeComponent();
+
             _logger.Info("Main window was created.");
         }
 

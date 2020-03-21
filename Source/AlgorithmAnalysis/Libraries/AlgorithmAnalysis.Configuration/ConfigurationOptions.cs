@@ -10,7 +10,7 @@ namespace AlgorithmAnalysis.Configuration
         private static readonly Lazy<IConfigurationRoot> Root =
             new Lazy<IConfigurationRoot>(LoadOptions);
 
-        public static readonly string ConfigFilename = "config.json";
+        public static string ConfigFilename { get; } = "config.json";
 
         public static AnalysisOptions Analysis => GetOptions<AnalysisOptions>();
 
@@ -34,10 +34,10 @@ namespace AlgorithmAnalysis.Configuration
             var configurationBuilder = new ConfigurationBuilder();
 
             string configPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigFilename)
+                ? Path.Combine(Directory.GetCurrentDirectory(), ConfigFilename)
                 : $"/etc/algorithm_analysis/{ConfigFilename}";
 
-            configurationBuilder.AddJsonFile(configPath, optional: true, reloadOnChange: true);
+            configurationBuilder.AddJsonFile(configPath, optional: false, reloadOnChange: true);
             return configurationBuilder.Build();
         }
     }
