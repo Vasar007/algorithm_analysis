@@ -19,8 +19,7 @@ namespace AlgorithmAnalysis.DesktopApp
     {
         private static readonly ILogger _logger = LoggerFactory.CreateLoggerFor<App>();
 
-        private static readonly string TraceLogFilename =
-            $"trace-{Utils.GetLocalShortDate()}.log";
+        private static readonly string TraceLogFilename = LogHelper.CreateLogFilename("trace");
 
 
         public App()

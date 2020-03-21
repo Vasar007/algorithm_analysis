@@ -6,13 +6,13 @@ using AlgorithmAnalysis.Excel.EPPlus.Functions;
 using AlgorithmAnalysis.Excel.Interop;
 using AlgorithmAnalysis.Excel.Formulas;
 using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.Excel.EPPlus
 {
     internal sealed class EpplusExcelWorkbook : IExcelWorkbook
     {
-        private static readonly string EpplusLibLogFilename =
-            $"epplus-{Utils.GetLocalShortDate()}.log";
+        private static readonly string EpplusLibLogFilename = LogHelper.CreateLogFilename("epplus");
 
         private readonly ExcelPackage _package;
 

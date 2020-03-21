@@ -42,6 +42,8 @@
 
   "LoggerOptions": {
     "RelativeLogFolderPath": "logs",
-    "EnableLogForExcelLibrary": "false"
+    "EnableLogForExcelLibrary": "false",
+    "LogFilesExtension": ".log",
+    "LogNameSeparator": "-"
   }
 }
