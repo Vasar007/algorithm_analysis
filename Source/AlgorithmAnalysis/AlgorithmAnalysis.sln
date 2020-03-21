@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Common", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Math", "Libraries\AlgorithmAnalysis.Math\AlgorithmAnalysis.Math.csproj", "{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}"
 EndProject
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "AlgorithmAnalysis.Package", "Applications\AlgorithmAnalysis.Package\AlgorithmAnalysis.Package.wapproj", "{634CABFD-0F53-4E56-967E-659E0AA70EDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -63,6 +65,12 @@ Global
 		{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}.Debug|x64.Build.0 = Debug|x64
 		{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}.Release|x64.ActiveCfg = Release|x64
 		{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}.Release|x64.Build.0 = Release|x64
+		{634CABFD-0F53-4E56-967E-659E0AA70EDE}.Debug|x64.ActiveCfg = Debug|x64
+		{634CABFD-0F53-4E56-967E-659E0AA70EDE}.Debug|x64.Build.0 = Debug|x64
+		{634CABFD-0F53-4E56-967E-659E0AA70EDE}.Debug|x64.Deploy.0 = Debug|x64
+		{634CABFD-0F53-4E56-967E-659E0AA70EDE}.Release|x64.ActiveCfg = Release|x64
+		{634CABFD-0F53-4E56-967E-659E0AA70EDE}.Release|x64.Build.0 = Release|x64
+		{634CABFD-0F53-4E56-967E-659E0AA70EDE}.Release|x64.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +84,7 @@ Global
 		{32D109ED-C543-4FA1-9C2C-26FF68FF5626} = {221ADEF8-495F-4A11-B453-15153C636930}
 		{93DDFD75-E613-4EA4-A191-C79613228E5E} = {221ADEF8-495F-4A11-B453-15153C636930}
 		{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5} = {221ADEF8-495F-4A11-B453-15153C636930}
+		{634CABFD-0F53-4E56-967E-659E0AA70EDE} = {AA6DDCA3-6E06-4598-9447-F6601C496804}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {71599CFB-855E-4F42-B219-B17234CCB145}
