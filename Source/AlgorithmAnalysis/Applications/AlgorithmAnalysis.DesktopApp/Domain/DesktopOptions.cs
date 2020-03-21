@@ -8,7 +8,7 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
 {
     internal static class DesktopOptions
     {
-        public static string Title { get; } = "Algorithm analysis";
+        public static string Title { get; } = "Algorithm Analysis System";
 
         public static int MinDegreeOfParallelism { get; } = 1;
 
