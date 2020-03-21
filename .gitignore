@@ -370,4 +370,4 @@ ASALocalRun/
 *.aux
 *.toc
 *.gz
-*[gitignore]*/
+/Article/Automated system for evaluating the effectiveness of algorithms based on empirical analysis/Examples
