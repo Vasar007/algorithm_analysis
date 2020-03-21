@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Logging",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Common", "Libraries\AlgorithmAnalysis.Common\AlgorithmAnalysis.Common.csproj", "{93DDFD75-E613-4EA4-A191-C79613228E5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmAnalysis.Math", "Libraries\AlgorithmAnalysis.Math\AlgorithmAnalysis.Math.csproj", "{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmAnalysis.Math", "Libraries\AlgorithmAnalysis.Math\AlgorithmAnalysis.Math.csproj", "{F9BD9B0A-404D-4DE9-BBEF-335E7835C3E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
