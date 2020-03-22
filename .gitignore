@@ -371,3 +371,4 @@ ASALocalRun/
 *.toc
 *.gz
 /Article/Automated system for evaluating the effectiveness of algorithms based on empirical analysis/Examples
+/Source/AlgorithmAnalysis/Applications/AlgorithmAnalysis.Installer/Installers
