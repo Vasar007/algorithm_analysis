@@ -64,15 +64,7 @@ namespace AlgorithmAnalysis.DomainLogic
         {
             args.ThrowIfNull(nameof(args));
 
-            string dataDirectory = Path.GetDirectoryName(args.OutputFilenamePattern);
-            if (string.IsNullOrWhiteSpace(dataDirectory))
-            {
-                string message =
-                    "Failed to create data folder: cannot parsed output filename pattern.";
-                throw new ArgumentException(message, nameof(args));
-            }
-
-            return Utils.GetOrCreateFolder(dataDirectory);
+            return Utils.GetOrCreateFolderUsingFilePath(args.OutputFilenamePattern);
         }
 
         internal static IAnalysisPhaseOnePartOne CreateAnalysisPhaseOnePartOne(

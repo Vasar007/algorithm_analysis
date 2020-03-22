@@ -16,7 +16,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
     internal sealed class MainWindowViewModel : BindableBase
     {
-        private readonly FileInfo _outputExcelFile;
+        private readonly ResultWrapper _result;
 
         private readonly AnalysisPerformer _performer;
 
@@ -42,7 +42,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public MainWindowViewModel()
         {
-            _outputExcelFile = new FileInfo(ConfigOptions.Excel.OutputExcelFilename);
+            _result = ResultWrapper.Create(ConfigOptions.Excel);
             _performer = new AnalysisPerformer();
 
             Title = DesktopOptions.Title;
@@ -65,7 +65,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 // TODO: display waiting message (and progress bar, if it's possible).
 
                 AnalysisContext context = RawParameters.CreateContext(
-                    _outputExcelFile, SelectiveParameters
+                    _result.OutputExcelFile, SelectiveParameters
                 );
 
                 CheckOutputFile();
@@ -96,17 +96,17 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         private void CheckOutputFile()
         {
             // Use static File methods because FileInfo can have out-of-date state.
-            if (!File.Exists(_outputExcelFile.FullName)) return;
+            if (!File.Exists(_result.OutputExcelFile.FullName)) return;
 
             // TODO: check final excel file and ASK user to delete file or change output name.
             string message =
                 "There are file with the same name as output analysis file " +
-                $"('{_outputExcelFile}'). " +
+                $"('{_result}'). " +
                 "This file will be removed.";
 
             MessageBoxProvider.ShowInfo(message);
 
-            File.Delete(_outputExcelFile.FullName);
+            File.Delete(_result.OutputExcelFile.FullName);
         }
 
         private void ProcessResult(AnalysisResult result)
@@ -127,7 +127,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         {
             if (AnalysisSpecific.OpenAnalysisResults)
             {
-                _ = ProcessManager.OpenFileWithAssociatedAppAsync(_outputExcelFile);
+                _ = ProcessManager.OpenFileWithAssociatedAppAsync(_result.OutputExcelFile);
             }
         }
     }

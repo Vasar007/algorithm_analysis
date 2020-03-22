@@ -33,5 +33,20 @@ namespace AlgorithmAnalysis.Common
 
             return folderPath;
         }
+
+        public static string GetOrCreateFolderUsingFilePath(string filePath)
+        {
+            filePath.ThrowIfNullOrWhiteSpace(nameof(filePath));
+
+            string dataDirectory = Path.GetDirectoryName(filePath);
+            if (string.IsNullOrWhiteSpace(dataDirectory))
+            {
+                string message =
+                    "Failed to create data folder: cannot parsed folder path.";
+                throw new ArgumentException(message, nameof(filePath));
+            }
+
+            return GetOrCreateFolder(dataDirectory);
+        }
     }
 }

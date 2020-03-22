@@ -37,7 +37,7 @@
     "CellCreationMode": "Centerized",
     "LibraryProvider": "EPPlus",
     "Version": "V2007",
-    "OutputExcelFilename": "results.xlsx"
+    "OutputExcelFilename": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/results/results.xlsx"
   },
 
   "LoggerOptions": {
