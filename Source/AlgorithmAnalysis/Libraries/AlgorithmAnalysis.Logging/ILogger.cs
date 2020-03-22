@@ -4,9 +4,6 @@ namespace AlgorithmAnalysis.Logging
 {
     public interface ILogger
     {
-        string RelativeLogFolderPath { get; }
-
-
         void PrintHeader(string message);
 
         void PrintFooter(string message);

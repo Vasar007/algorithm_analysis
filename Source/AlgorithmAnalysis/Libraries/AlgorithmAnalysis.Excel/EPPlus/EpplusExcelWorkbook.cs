@@ -106,8 +106,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 
             if (!loggerOptions.EnableLogForExcelLibrary) return;
 
-            string logFolderPath = loggerOptions.RelativeLogFolderPath;
-            string logFilePath = Utils.GetLogFilePath(logFolderPath, EpplusLibLogFilename);
+            string logFilePath = LogHelper.GetLogFilePath(loggerOptions, EpplusLibLogFilename);
 
             var logfile = new FileInfo(logFilePath);
             _package.Workbook.FormulaParserManager.AttachLogger(logfile);

@@ -34,8 +34,7 @@ namespace AlgorithmAnalysis.DesktopApp
                 )
             );
 
-            string logFolderPath = ConfigOptions.Logger.RelativeLogFolderPath;
-            string logFilePath = Utils.GetLogFilePath(logFolderPath, TraceLogFilename);
+            string logFilePath = LogHelper.GetLogFilePath(ConfigOptions.Logger, TraceLogFilename);
             TraceHelper.SetTraceListener(logFilePath, "TextLogTraceListener");
 
             _logger.PrintHeader("Desktop client application started.");

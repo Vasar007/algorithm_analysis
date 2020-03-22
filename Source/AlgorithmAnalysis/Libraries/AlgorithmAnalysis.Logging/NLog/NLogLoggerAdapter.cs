@@ -17,26 +17,29 @@ namespace AlgorithmAnalysis.Logging
         private readonly Logger _logger;
 
         /// <summary>
-        /// Folder where all log files are stored.
+        /// Contains configuration options for logger instance.
         /// </summary>
-        public string RelativeLogFolderPath => ConfigOptions.Logger.RelativeLogFolderPath;
+        private readonly LoggerOptions _loggerOptions;
 
 
         /// <summary>
         /// Private constructor which could be called by create methods.
         /// </summary>
         /// <param name="loggerName">Logger name to create.</param>
+        /// <param name="loggerOptions">Logger options to configure.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="loggerName" /> is <c>null</c>.
+        /// <paramref name="loggerName" /> is <c>null</c>. -or-
+        /// <paramref name="loggerOptions" /> is <c>null</c>.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// <paramref name="loggerName" /> presents empty string.
         /// </exception>
-        internal NLogLoggerAdapter(string loggerName)
+        internal NLogLoggerAdapter(string loggerName, LoggerOptions loggerOptions)
         {
             loggerName.ThrowIfNullOrEmpty(nameof(loggerName));
 
             _logger = LogManager.GetLogger(loggerName);
+            _loggerOptions = loggerOptions.ThrowIfNull(nameof(loggerOptions));
         }
 
         /// <summary>
@@ -47,7 +50,7 @@ namespace AlgorithmAnalysis.Logging
         {
             message.ThrowIfNull(nameof(message));
 
-            TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow);
+            string offset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow).ToString();
             _logger.Info($"UTC offset is {offset}.");
 
             _logger.Info(message);
