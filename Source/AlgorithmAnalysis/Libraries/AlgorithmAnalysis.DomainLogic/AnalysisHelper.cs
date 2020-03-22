@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;

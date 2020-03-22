@@ -42,7 +42,8 @@ namespace AlgorithmAnalysis.Common
             if (string.IsNullOrWhiteSpace(dataDirectory))
             {
                 string message =
-                    "Failed to create data folder: cannot parsed folder path.";
+                    "Failed to create data folder: cannot parsed folder path. " +
+                    $"Argument: {filePath}";
                 throw new ArgumentException(message, nameof(filePath));
             }
 

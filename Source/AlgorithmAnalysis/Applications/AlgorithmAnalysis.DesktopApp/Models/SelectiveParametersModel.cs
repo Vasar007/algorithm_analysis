@@ -1,9 +1,11 @@
-﻿using Acolyte.Assertions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Acolyte.Assertions;
 using Prism.Mvvm;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.Models;
-using System.Collections.Generic;
 using AlgorithmAnalysis.Math;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
@@ -76,14 +78,34 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void Reset()
         {
-            SelectedPhaseOnePartOne = AvailableAnalysisKindForPhaseOnePartOne[0];
-            SelectedPhaseOnePartTwo = AvailableAnalysisKindForPhaseOnePartTwo[0];
-            // TODO: reset selected index when implement normal distribution.
-            SelectedPhaseTwo = AvailableAnalysisKindForPhaseTwo[1];
-            SelectedAlgorithmType = AvailableAlgorithms[0];
-            SelectedGoodnessOfFitKind = AvailableGoodnessOfFitKinds[0];
+            SelectedPhaseOnePartOne = AvailableAnalysisKindForPhaseOnePartOne.FirstOrDefault();
+            Assert(SelectedPhaseOnePartOne, nameof(AvailableAnalysisKindForPhaseOnePartOne));
+
+            SelectedPhaseOnePartTwo = AvailableAnalysisKindForPhaseOnePartTwo.FirstOrDefault();
+            Assert(SelectedPhaseOnePartTwo, nameof(AvailableAnalysisKindForPhaseOnePartTwo));
+
+            // TODO: use first value instead of last when implement normal distribution.
+            SelectedPhaseTwo = AvailableAnalysisKindForPhaseTwo.LastOrDefault();
+            Assert(SelectedPhaseTwo, nameof(AvailableAnalysisKindForPhaseTwo));
+
+            SelectedAlgorithmType = AvailableAlgorithms.FirstOrDefault();
+            Assert(SelectedAlgorithmType, nameof(AvailableAlgorithms));
+
+            SelectedGoodnessOfFitKind = AvailableGoodnessOfFitKinds.FirstOrDefault();
+            Assert(SelectedGoodnessOfFitKind, nameof(AvailableGoodnessOfFitKinds));
         }
 
         #endregion
+
+        public void Assert<T>(T valueToCheck, string collectionName)
+        {
+            if (valueToCheck is null)
+            {
+                string message =
+                    "Failed to retrive value from collection. " +
+                    $"Collection: {collectionName}";
+                throw new InvalidOperationException(message);
+            }
+        }
     }
 }

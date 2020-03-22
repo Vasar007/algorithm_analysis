@@ -36,7 +36,9 @@ namespace AlgorithmAnalysis.Common.Files
             // Now supported only one special expression.
             if (startingCharsNumber == 1 && endingCharsNumber == 1) return true;
 
-            string message = "Failed to parse log folder path: invalid path format.";
+            string message =
+                "Failed to parse log folder path: invalid path format. " +
+                $"Argument: {unresolvedPath}";
             throw new ArgumentException(message, nameof(unresolvedPath));
         }
 
@@ -56,7 +58,9 @@ namespace AlgorithmAnalysis.Common.Files
                 return unresolvedPath.Replace(valueToReplace, newValue);
             }
 
-            string message = "Failed to parse log folder path: invalid special folder value.";
+            string message =
+                "Failed to parse log folder path: invalid special folder value. " +
+                $"Argument: {unresolvedPath}";
             throw new ArgumentException(message, nameof(unresolvedPath));
         }
     }
