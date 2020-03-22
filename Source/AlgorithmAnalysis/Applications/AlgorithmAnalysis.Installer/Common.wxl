@@ -3,7 +3,7 @@
 
   <String Id="Company">Vasily Vasilyev</String>
 
-  <String Id="ProductNameFolder">AlgorithmAnalysis.DesktopApp</String>
+  <String Id="ProductNameFolder">AlgorithmAnalysis</String>
   
   <String Id="ProductName_x64">Algorithm Analysis System</String>
 

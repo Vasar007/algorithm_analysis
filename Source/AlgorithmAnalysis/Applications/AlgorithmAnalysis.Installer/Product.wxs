@@ -24,19 +24,17 @@
              Description="!(loc.Description)"
              Keywords="!(loc.Keywords)"
              Comments="!(loc.Comments)"
-             Languages="!(loc.Language)"
-             />
+             Languages="!(loc.Language)" />
 
     <!-- Downgrade error message -->
     <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeErrorMessage)" />
     
     <!-- Include .cab file into .msi file -->
-    <MediaTemplate
-      EmbedCab="yes"
-      />
+    <MediaTemplate EmbedCab="yes" />
 
     <!-- Define main app icon -->
-    <Icon Id="icon.ico" SourceFile="$(var.AlgorithmAnalysis.DesktopApp.ProjectDir)\Resources\AlgorithmAnalysisIcon.ico" />
+    <Icon Id="icon.ico"
+          SourceFile="$(var.AlgorithmAnalysis.DesktopApp.ProjectDir)\Resources\AlgorithmAnalysisIcon.ico" />
 
     <!-- Use the icon.ico icon for this installer (shows up in Add/Remove programs) -->
     <Property Id="ARPPRODUCTICON">icon.ico</Property>
@@ -47,12 +45,17 @@
     <UIRef Id="WixUI_Minimal" />
     
     <!-- Change the installer UI background images -->
-    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\Assets\Brief Info.rtf" />
-    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\Assets\Background.bmp" />
-    <WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\Assets\Banner.bmp" />
+    <WixVariable Id="WixUILicenseRtf"
+                 Value="$(var.ProjectDir)\Assets\Brief Info.rtf" />
+    <WixVariable Id="WixUIDialogBmp"
+                 Value="$(var.ProjectDir)\Assets\Background.bmp" />
+    <WixVariable Id="WixUIBannerBmp"
+                 Value="$(var.ProjectDir)\Assets\Banner.bmp" />
 
     <!-- Define components, shortcuts, files etc... for installer -->
-    <Feature Id="ProductFeature" Title="AlgorithmAnalysis.DesktopApp" Level="1">
+    <Feature Id="ProductFeature"
+             Title="AlgorithmAnalysis"
+             Level="1">
 
       <ComponentGroupRef Id="ProductComponents" />
       <ComponentGroupRef Id="PublishedComponents" />

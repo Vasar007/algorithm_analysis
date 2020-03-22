@@ -49,7 +49,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="Resources\AlgorithmAnalysisIcon.ico">
+    <None Include="..\..\Applications\AlgorithmAnalysis.DesktopApp\Resources\AlgorithmAnalysisIcon.ico">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

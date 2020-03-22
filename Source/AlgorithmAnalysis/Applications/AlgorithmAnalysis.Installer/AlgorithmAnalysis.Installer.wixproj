@@ -13,11 +13,17 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
-    <DefineConstants>Debug</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components.wxs" />
@@ -90,6 +96,6 @@
     </GetAssemblyIdentity>
     <!-- Rename and move final MSI -->
     <Exec Command="if not exist Installers mkdir Installers" />
-    <Exec Command="move bin\$(Platform)\$(Configuration)\$(OutputName).msi Installers\AlgorithmAnalysis.DesktopApp-%(AssemblyVersion.Version)-$(Configuration)-$(Platform).msi" />
+    <Exec Command="move bin\$(Platform)\$(Configuration)\$(OutputName).msi Installers\AlgorithmAnalysis-%(AssemblyVersion.Version)-$(Configuration)-$(Platform).msi" />
   </Target>
 </Project>
