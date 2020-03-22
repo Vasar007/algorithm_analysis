@@ -8,7 +8,7 @@
         "AverageFormula": "x * x * (x - 1) / 2",
         "MaxFormula": "x * x * x * (x - 1) / 2",
         "AnalysisProgramName": "algorithm_analysis.exe",
-        "OutputFilenamePattern": "tests_average_"
+        "OutputFilenamePattern": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/data/tests_average_"
       },
       {
         "Description": "Insertion sort",
@@ -17,7 +17,7 @@
         "AverageFormula": "x^2",
         "MaxFormula": "x^2",
         "AnalysisProgramName": "algorithm_analysis.exe",
-        "OutputFilenamePattern": "tests_average_"
+        "OutputFilenamePattern": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/data/tests_average_"
       },
       {
         "Description": "Bubble sort",
@@ -26,7 +26,7 @@
         "AverageFormula": "x^2",
         "MaxFormula": "x^2",
         "AnalysisProgramName": "AlgorithmAnalysis.Examples.NewAlgorithm.exe",
-        "OutputFilenamePattern": "tests_average_"
+        "OutputFilenamePattern": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/data/tests_average_"
       }
     ],
     "CommonAnalysisFilenameSuffix": "series",

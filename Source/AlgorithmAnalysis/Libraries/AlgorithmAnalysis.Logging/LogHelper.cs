@@ -7,26 +7,18 @@ namespace AlgorithmAnalysis.Logging
 {
     public static class LogHelper
     {
-        public static string GetLogFolderPath(LoggerOptions loggerOptions)
+        public static string ResolveLogFolderPath(LoggerOptions loggerOptions)
         {
             loggerOptions.ThrowIfNull(nameof(loggerOptions));
 
-            var parser = new LogFolderPathParser();
-            return parser.Parse(loggerOptions);
+            return Utils.ResolvePath(loggerOptions.LogFolderPath);
         }
 
         public static string GetOrCreateLogFolder(LoggerOptions loggerOptions)
         {
             loggerOptions.ThrowIfNull(nameof(loggerOptions));
 
-            string logFolderPath = GetLogFolderPath(loggerOptions);
-
-            if (!Directory.Exists(logFolderPath))
-            {
-                Directory.CreateDirectory(logFolderPath);
-            }
-
-            return logFolderPath;
+            return Utils.GetOrCreateFolder(loggerOptions.LogFolderPath);
         }
 
         public static string GetLogFilePath(LoggerOptions loggerOptions, string logFilename)

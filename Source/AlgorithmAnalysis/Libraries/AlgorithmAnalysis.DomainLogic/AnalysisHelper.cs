@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
@@ -56,6 +58,21 @@ namespace AlgorithmAnalysis.DomainLogic
         public static IReadOnlyList<AlgorithmType> GetAvailableAlgorithms()
         {
             return ConfigOptions.Analysis.GetAlgorithmTypes();
+        }
+
+        internal static string GetOrCreateDataFolder(ParametersPack args)
+        {
+            args.ThrowIfNull(nameof(args));
+
+            string dataDirectory = Path.GetDirectoryName(args.OutputFilenamePattern);
+            if (string.IsNullOrWhiteSpace(dataDirectory))
+            {
+                string message =
+                    "Failed to create data folder: cannot parsed output filename pattern.";
+                throw new ArgumentException(message, nameof(args));
+            }
+
+            return Utils.GetOrCreateFolder(dataDirectory);
         }
 
         internal static IAnalysisPhaseOnePartOne CreateAnalysisPhaseOnePartOne(

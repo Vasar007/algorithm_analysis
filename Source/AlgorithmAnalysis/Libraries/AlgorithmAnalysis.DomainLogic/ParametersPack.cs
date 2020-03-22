@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Acolyte.Assertions;
 using Acolyte.Collections;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Models;
 
@@ -77,7 +78,7 @@ namespace AlgorithmAnalysis.DomainLogic
                 extrapolationSegmentValue: extrapolationSegmentValue,
                 launchesNumber: launchesNumber,
                 step: step,
-                outputFilenamePattern: algorithmType.OutputFilenamePattern,
+                outputFilenamePattern: Utils.ResolvePath(algorithmType.OutputFilenamePattern),
                 commonAnalysisFilenameSuffix: analysisOptions.CommonAnalysisFilenameSuffix,
                 outputFileExtension: analysisOptions.OutputFileExtension
             );
@@ -193,9 +194,12 @@ namespace AlgorithmAnalysis.DomainLogic
         {
             int iterationsNumber = GetIterationsNumber(phaseNumber: 2);
 
+            // TODO: remove this dirty hack to retrieve number of iteration.
             char[] filenameIterationNumberArray = filename
-                .Skip(OutputFilenamePattern.Length)
+                .Reverse()
+                .Skip(OutputFileExtension.Length)
                 .TakeWhile(ch => char.IsDigit(ch))
+                .Reverse()
                 .ToArray();
 
             int filenameIterationNumber = int.Parse(filenameIterationNumberArray);

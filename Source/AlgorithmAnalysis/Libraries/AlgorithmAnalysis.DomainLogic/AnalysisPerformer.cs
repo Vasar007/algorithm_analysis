@@ -56,6 +56,8 @@ namespace AlgorithmAnalysis.DomainLogic
         {
             _logger.Info("Performing all analysis sequentially.");
 
+            AnalysisHelper.GetOrCreateDataFolder(context.Args);
+
             AnalysisResult result = AnalysisResult.CreateDefault(context);
             foreach (IAnalysis analysis in _analyses)
             {
