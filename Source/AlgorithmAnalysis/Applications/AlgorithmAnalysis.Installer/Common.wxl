@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
+
+  <String Id="Company">Vasily Vasilyev</String>
+
+  <String Id="ProductNameFolder">AlgorithmAnalysis.DesktopApp</String>
+  
+  <String Id="ProductName_x64">Algorithm Analysis System</String>
+
+  <String Id="Description">The automated system for evaluating the effectiveness of algorithms based on the confidence labor intensity function. In a given range of input data, the confidence labor intensity is calculated automatically based on an empirical analysis of the software implementation. There is an opportunity to add new implementations of algorithms for analysis to the system. The developed system is useful for comparative analysis in order to select the most effective algorithms and their software implementations when creating effective software for onboard computer systems operating in real time.</String>
+  <String Id="Comments">Open source AlgorithmAnalysis project.</String>
+  <String Id="Keywords">analysis, algorithms, math, statistics, empirical-analysis excel, dotnet</String>
+
+  <String Id="DowngradeErrorMessage">A newer version of Console App is already installed.</String>
+  
+  <String Id="Language">1033</String>
+  
+</WixLocalization>
