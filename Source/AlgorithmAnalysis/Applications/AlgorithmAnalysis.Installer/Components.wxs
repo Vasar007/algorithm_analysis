@@ -6,12 +6,18 @@
     <!-- Product Components -->
     <ComponentGroup Id="ProductComponents">
 
-      <!--Start menu shortcut -->
+      <!-- Start menu shortcut -->
       <ComponentRef Id="StartMenuShortcut" />
 
-      <!--Desktop shortcut -->
+      <!-- Desktop shortcut -->
       <ComponentRef Id="DesktopShortcut" />
-      
+
+      <!-- Pallotino's algorithm and Insertion sort module -->
+      <ComponentRef Id="PallotinoInsertionModule" />
+
+      <!-- Bubble sort module -->
+      <ComponentRef Id="BubbleModule" />
+
     </ComponentGroup>
 
     <!-- Installed files -->
@@ -38,7 +44,7 @@
                        Type="integer"
                        KeyPath="yes" />
         
-        <!--Remove start menu items -->
+        <!-- Remove start menu items -->
         <RemoveFolder Id="RemoveStartMenu"
                       Directory="InstallProgramMenuFolder"
                       On="uninstall" />
@@ -65,10 +71,32 @@
                        Type="integer"
                        KeyPath="yes" />
 
-        <!--Remove desktop folder items -->
+        <!-- Remove desktop folder items -->
         <RemoveFolder Id="RemoveDesktopFolder"
                       Directory="DesktopFolder"
                       On="uninstall" />
+
+      </Component>
+
+      <!-- Pallotino's algorithm and Insertion sort -->
+      <Component Id="PallotinoInsertionModule"
+                 Guid="{E18C955A-407C-44AC-9D10-0DB0BFD9CF68}">
+
+        <File Id="algorithm_analysis.exe"
+              Source="$(var.ProjectDir)\Binaries\algorithm_analysis.exe"
+              KeyPath="yes"
+              Checksum="yes" />
+
+      </Component>
+
+      <!-- Bubble sort from example project -->
+      <Component Id="BubbleModule"
+                 Guid="{A27CA09B-EE02-4389-ADBE-41B79126607D}">
+
+        <File Id="AlgorithmAnalysis.Examples.NewAlgorithm.exe"
+              Source="$(var.ProjectDir)\Binaries\AlgorithmAnalysis.Examples.NewAlgorithm.exe"
+              KeyPath="yes"
+              Checksum="yes" />
 
       </Component>
       
