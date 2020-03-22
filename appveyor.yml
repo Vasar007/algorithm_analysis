@@ -28,7 +28,7 @@ before_build:
   - cmd: dotnet restore
 
 build:
-  verbosity: minimal
+  verbosity: normal
 
 test:
   assemblies:

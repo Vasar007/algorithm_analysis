@@ -89,7 +89,7 @@
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
     <!-- Rename and move final MSI -->
-    <!-- <Exec Command="if not exist Installers mkdir Installers" />
-    <Exec Command="move bin\$(Platform)\$(Configuration)\$(OutputName).msi Installers\AlgorithmAnalysis.DesktopApp-%(AssemblyVersion.Version)-$(Configuration)-$(Platform).msi" /> -->
+    <Exec Command="if not exist Installers mkdir Installers" />
+    <Exec Command="move bin\$(Platform)\$(Configuration)\$(OutputName).msi Installers\AlgorithmAnalysis.DesktopApp-%(AssemblyVersion.Version)-$(Configuration)-$(Platform).msi" />
   </Target>
 </Project>
