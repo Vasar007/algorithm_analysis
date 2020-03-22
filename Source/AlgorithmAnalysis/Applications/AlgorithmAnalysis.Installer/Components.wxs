@@ -6,8 +6,11 @@
     <!-- Product Components -->
     <ComponentGroup Id="ProductComponents">
 
-      <!-- Shortcut -->
-      <ComponentRef Id="MainAppShortcut" />
+      <!--Start menu shortcut -->
+      <ComponentRef Id="StartMenuShortcut" />
+
+      <!--Desktop shortcut -->
+      <ComponentRef Id="DesktopShortcut" />
       
     </ComponentGroup>
 
@@ -15,11 +18,11 @@
     <DirectoryRef Id="INSTALLFOLDER"
                   FileSource="..\AlgorithmAnalysis.DesktopApp\bin\$(var.Platform)\$(var.Configuration)\netcoreapp3.1\publish\win-$(var.Platform)">
 
-      <!-- Shortcut to main application -->
-      <Component Id="MainAppShortcut"
+      <!-- Shortcut to main application in start menu -->
+      <Component Id="StartMenuShortcut"
                  Guid="{0995664D-AE63-4DD6-B894-708A99611370}">
 
-        <Shortcut Id="MainAppShortcut"
+        <Shortcut Id="StartMenuShortcut"
                   Name="!(loc.ProductName_$(var.Platform))"
                   Target="[INSTALLFOLDER]AlgorithmAnalysis.DesktopApp.exe"
                   Directory="InstallProgramMenuFolder"
@@ -27,7 +30,7 @@
                   Icon="icon.ico" />
 
         <!-- Our unique key for this component/shortcut -->
-        <RegistryValue Id="RegShortcutKey"
+        <RegistryValue Id="RegStartMenuShortcutKey"
                        Root="HKCU"
                        Key="SOFTWARE\!(loc.ProductNameFolder)"
                        Name="Shortcut"
@@ -40,13 +43,35 @@
                       Directory="InstallProgramMenuFolder"
                       On="uninstall" />
 
-        <!--Remove installation folder. -->
-        <RemoveFolder Id="RemoveINSTALLFOLDER"
-                      Directory="INSTALLFOLDER"
-                      On="uninstall" />
-        
       </Component>
 
+      <!-- Shortcut to main application on desktop -->
+      <Component Id="DesktopShortcut"
+                 Guid="{C727C0A3-4D73-4F72-8FAB-EE9C939DB407}">
+
+        <Shortcut Id="DesktopShortcut"
+                  Name="!(loc.ProductName_$(var.Platform))"
+                  Target="[INSTALLFOLDER]AlgorithmAnalysis.DesktopApp.exe"
+                  Directory="DesktopFolder"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="icon.ico" />
+
+        <!-- Our unique key for this component/shortcut -->
+        <RegistryValue Id="RegDesktopShortcutKey"
+                       Root="HKCU"
+                       Key="SOFTWARE\!(loc.ProductNameFolder)"
+                       Name="installed"
+                       Value="1"
+                       Type="integer"
+                       KeyPath="yes" />
+
+        <!--Remove desktop folder items -->
+        <RemoveFolder Id="RemoveDesktopFolder"
+                      Directory="DesktopFolder"
+                      On="uninstall" />
+
+      </Component>
+      
     </DirectoryRef>
     
   </Fragment>

@@ -17,6 +17,9 @@
                    Name="!(loc.ProductNameFolder)" />
       </Directory>
 
+      <!-- Desktop -->
+      <Directory Id="DesktopFolder" Name="Desktop" />
+
     </Directory>
 
   </Fragment>
