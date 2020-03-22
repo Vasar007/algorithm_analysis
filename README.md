@@ -18,7 +18,12 @@ In short, method includes two stages — the stage of preliminary research, the 
 So, this repository contains system that allow you to fully automate such empirical analysis.
 Provide analysis to system, have a rest, relax, make a cup of coffee and get analysis result report upon completion!
 
-## Usage examples
+## Download
+
+See [releases page](https://github.com/Vasar007/algorithm_analysis/releases).
+You can download installer or portbale version.
+
+## Working examples
 
 Check examples [here](https://github.com/Vasar007/algorithm_analysis/tree/master/Examples/).
 
