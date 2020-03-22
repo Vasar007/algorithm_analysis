@@ -6,7 +6,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>7001a624-65ab-49c2-829b-9cd39fd49ae3</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>AlgorithmAnalysis-%24%28Configuration%29-%24%28Platform%29</OutputName>
+    <OutputName>AlgorithmAnalysis-$(Configuration)-$(Platform)</OutputName>
     <OutputType>Package</OutputType>
     <Cultures>;</Cultures>
   </PropertyGroup>
