@@ -11,6 +11,24 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 {
     internal sealed class SelectiveParametersModel : BindableBase, IResetable
     {
+        public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
+
+        private AlgorithmType? _selectedAlgorithmType;
+        public AlgorithmType? SelectedAlgorithmType
+        {
+            get => _selectedAlgorithmType;
+            set => SetProperty(ref _selectedAlgorithmType, value);
+        }
+
+        public bool IsAlgorithmSelectable => AvailableAlgorithms.Count > 0;
+
+        /// <summary>
+        /// Shows warning about no availbale algorithms to analyze.
+        /// </summary>
+        public bool IsHintForAlgorithmVisible =>
+            !IsAlgorithmSelectable &&
+            SelectedAlgorithmType is null;
+
         public IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne { get; }
 
         private PhaseOnePartOneAnalysisKind? _selectedPhaseOnePartOne;
@@ -38,15 +56,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _selectedPhaseTwo, value);
         }
 
-        public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
-
-        private AlgorithmType? _selectedAlgorithmType;
-        public AlgorithmType? SelectedAlgorithmType
-        {
-            get => _selectedAlgorithmType;
-            set => SetProperty(ref _selectedAlgorithmType, value);
-        }
-
         public IReadOnlyList<GoodnessOfFitKind> AvailableGoodnessOfFitKinds { get; }
 
         private GoodnessOfFitKind? _selectedGoodnessOfFitKind;
@@ -59,10 +68,10 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public SelectiveParametersModel()
         {
+            AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
             AvailableAnalysisKindForPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOnePartOne;
             AvailableAnalysisKindForPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseOnePartTwo;
             AvailableAnalysisKindForPhaseTwo = DesktopOptions.AvailableAnalysisKindForPhaseTwo;
-            AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
             AvailableGoodnessOfFitKinds = DesktopOptions.AvailableGoodnessOfFitKinds;
 
             Reset();
@@ -72,14 +81,14 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void Reset()
         {
+            SelectedAlgorithmType = AvailableAlgorithms.FirstOrDefault();
+
             SelectedPhaseOnePartOne = AvailableAnalysisKindForPhaseOnePartOne.FirstOrDefault();
 
             SelectedPhaseOnePartTwo = AvailableAnalysisKindForPhaseOnePartTwo.FirstOrDefault();
 
             // TODO: use first value instead of last when implement normal distribution.
             SelectedPhaseTwo = AvailableAnalysisKindForPhaseTwo.LastOrDefault();
-
-            SelectedAlgorithmType = AvailableAlgorithms.FirstOrDefault();
 
             SelectedGoodnessOfFitKind = AvailableGoodnessOfFitKinds.FirstOrDefault();
         }
@@ -88,10 +97,10 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void VerifyParameters()
         {
+            Assert(SelectedAlgorithmType, nameof(AvailableAlgorithms));
             Assert(SelectedPhaseOnePartOne, nameof(AvailableAnalysisKindForPhaseOnePartOne));
             Assert(SelectedPhaseOnePartTwo, nameof(AvailableAnalysisKindForPhaseOnePartTwo));
             Assert(SelectedPhaseTwo, nameof(AvailableAnalysisKindForPhaseTwo));
-            Assert(SelectedAlgorithmType, nameof(AvailableAlgorithms));
             Assert(SelectedGoodnessOfFitKind, nameof(AvailableGoodnessOfFitKinds));
         }
 

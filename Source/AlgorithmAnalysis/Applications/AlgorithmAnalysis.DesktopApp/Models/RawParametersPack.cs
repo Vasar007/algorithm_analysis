@@ -65,11 +65,12 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             MinDegreeOfParallelism != MaxDegreeOfParallelism;
 
         /// <summary>
-        /// Show warning about restriction to select degree of parallelism when PC has only one CPU.
-        /// May be later we change minimum value of parallelism degree.
+        /// Shows warning about restriction to select degree of parallelism when PC has only one
+        /// CPU. May be later we change minimum value of parallelism degree.
         /// </summary>
         public bool IsHintForDegreeOfParallelismVisible =>
-            !IsDegreeOfParallelismSelectable && MinDegreeOfParallelism == 1;
+            !IsDegreeOfParallelismSelectable &&
+            MinDegreeOfParallelism == DesktopOptions.MinDegreeOfParallelism;
 
         private int _selectedMaxDegreeOfParallelism;
         public int SelectedMaxDegreeOfParallelism

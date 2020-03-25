@@ -35,8 +35,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        
-            <converters:InverseAndBooleansToBooleanConverter x:Key="InverseAndBooleansToBooleanConverter" />
+
+            <converters:BooleansToBooleanInverseConverter x:Key="BooleansToBooleanInverseConverter" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
@@ -65,13 +65,15 @@
 
                     <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
-                    <ComboBox materialDesign:HintAssist.Hint="Algorithm"
+                    <ComboBox x:Name="AlgorithmComboBox"
+                              materialDesign:HintAssist.Hint="Algorithm"
                               HorizontalAlignment="Stretch"
                               Margin="16"
                               SelectedIndex="0"
                               ItemsSource="{Binding Path=SelectiveParameters.AvailableAlgorithms}"
                               SelectedItem="{Binding Path=SelectiveParameters.SelectedAlgorithmType}"
-                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
+                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
+                              IsEnabled="{Binding Path=SelectiveParameters.IsAlgorithmSelectable}">
                         <ComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel />
@@ -79,12 +81,34 @@
                         </ComboBox.ItemsPanel>
                     </ComboBox>
 
+                    <!--
+                    Show warning about no availbale algorithms to analyze.
+                    -->
+                    <Border Background="GhostWhite"
+                            BorderBrush="Gainsboro"
+                            BorderThickness="1"
+                            Margin="8 16 8 8"
+                            Visibility="{Binding Path=SelectiveParameters.IsHintForAlgorithmVisible,
+                                         Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="8">
+                            <materialDesign:PackIcon Kind="Exclamation"
+                                                     Foreground="Red" />
+
+                            <TextBlock Margin="8 0 0 0"
+                                       DockPanel.Dock="Bottom">
+                                Warning: there are no available algorithms to analyze.<LineBreak />
+                                Please, specify at least one algorithm in configuration and restart application.
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+
                     <TextBox x:Name="FirstValueTextBox"
-                            materialDesign:HintAssist.Hint="The first value of function segment to analyze"
-                            Margin="16"
-                            FontSize="18"
-                            MaxWidth="500"
-                            Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                             materialDesign:HintAssist.Hint="The first value of function segment to analyze"
+                             Margin="16"
+                             FontSize="18"
+                             MaxWidth="500"
+                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                         <TextBox.Text>
                             <Binding Path="RawParameters.StartValue"
                                     UpdateSourceTrigger="PropertyChanged"
@@ -333,8 +357,10 @@
                         VerticalContentAlignment="Center"
                         ToolTip="Run analysis (window will be blocked)">
                     <Button.IsEnabled>
-                        <MultiBinding Converter="{StaticResource ResourceKey=InverseAndBooleansToBooleanConverter}"
-                                      Mode="TwoWay">
+                        <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
+                                      Mode="OneWay">
+                            <Binding ElementName="AlgorithmComboBox"
+                                     Path="SelectedItem" />
                             <Binding ElementName="FirstValueTextBox"
                                      Path="(Validation.HasError)" />
                             <Binding ElementName="LastValueTextBox"
