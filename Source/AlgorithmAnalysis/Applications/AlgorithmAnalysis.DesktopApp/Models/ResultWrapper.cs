@@ -3,7 +3,7 @@ using Acolyte.Assertions;
 using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;
 
-namespace AlgorithmAnalysis.DesktopApp.Domain
+namespace AlgorithmAnalysis.DesktopApp.Models
 {
     internal sealed class ResultWrapper
     {
@@ -17,12 +17,9 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
 
         public static ResultWrapper Create(ExcelOptions excelOptions)
         {
-            string outputExcelFolderPath = Utils.GetOrCreateFolderUsingFilePath(
-                excelOptions.OutputExcelFilename
+            string outputExcelFilePath = Utils.GetOrCreateFolderAndAppendFilePathToResult(
+                excelOptions.OutputExcelFilePath, CommonConstants.DefaultResultFolderPath
             );
-
-            string outputExcelFilename = Path.GetFileName(excelOptions.OutputExcelFilename);
-            string outputExcelFilePath = Path.Combine(outputExcelFolderPath, outputExcelFilename);
 
             var outputExcelFile = new FileInfo(outputExcelFilePath);
             return new ResultWrapper(outputExcelFile);

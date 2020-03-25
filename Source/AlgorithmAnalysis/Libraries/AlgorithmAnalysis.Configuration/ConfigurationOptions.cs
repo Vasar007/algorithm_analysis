@@ -37,7 +37,7 @@ namespace AlgorithmAnalysis.Configuration
                 ? Path.Combine(Directory.GetCurrentDirectory(), ConfigFilename)
                 : $"/etc/algorithm_analysis/{ConfigFilename}";
 
-            configurationBuilder.AddJsonFile(configPath, optional: false, reloadOnChange: true);
+            configurationBuilder.AddJsonFile(configPath, optional: true, reloadOnChange: true);
             return configurationBuilder.Build();
         }
     }

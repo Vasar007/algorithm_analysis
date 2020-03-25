@@ -4,9 +4,9 @@ using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Common.Files
 {
-    public sealed class FolderPathResolver
+    public sealed class SpecificPathResolver
     {
-        public FolderPathResolver()
+        public SpecificPathResolver()
         {
         }
 
@@ -16,7 +16,7 @@ namespace AlgorithmAnalysis.Common.Files
 
             if (ShouldBeParsed(unresolvedPath))
             {
-                unresolvedPath = ParseSpecialFolder(unresolvedPath);
+                unresolvedPath = ParseSpecificPath(unresolvedPath);
             }
 
             return unresolvedPath;
@@ -25,10 +25,10 @@ namespace AlgorithmAnalysis.Common.Files
         private static bool ShouldBeParsed(string unresolvedPath)
         {
             int startingCharsNumber = unresolvedPath.Count(
-                ch => ch.Equals(CommonConstants.SpecialStartingChar)
+                ch => ch.Equals(CommonConstants.SpecificStartingChar)
             );
             int endingCharsNumber = unresolvedPath.Count(
-                ch => ch.Equals(CommonConstants.SpecialEndingChar)
+                ch => ch.Equals(CommonConstants.SpecificEndingChar)
             );
 
             if (startingCharsNumber == 0 && endingCharsNumber == 0) return false;
@@ -42,14 +42,14 @@ namespace AlgorithmAnalysis.Common.Files
             throw new ArgumentException(message, nameof(unresolvedPath));
         }
 
-        public static string ParseSpecialFolder(string unresolvedPath)
+        public static string ParseSpecificPath(string unresolvedPath)
         {
             if (unresolvedPath.Contains(CommonConstants.CommonApplicationData))
             {
                 string valueToReplace =
-                    CommonConstants.SpecialStartingChar +
+                    CommonConstants.SpecificStartingChar +
                     CommonConstants.CommonApplicationData +
-                    CommonConstants.SpecialEndingChar;
+                    CommonConstants.SpecificEndingChar;
 
                 string newValue = Environment.GetFolderPath(
                     Environment.SpecialFolder.CommonApplicationData
@@ -59,7 +59,7 @@ namespace AlgorithmAnalysis.Common.Files
             }
 
             string message =
-                "Failed to parse log folder path: invalid special folder value. " +
+                "Failed to parse log folder path: invalid specific path value. " +
                 $"Argument: {unresolvedPath}";
             throw new ArgumentException(message, nameof(unresolvedPath));
         }

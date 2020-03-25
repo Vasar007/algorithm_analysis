@@ -1,4 +1,6 @@
-﻿using AlgorithmAnalysis.Models;
+﻿using System.IO;
+using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.Configuration
 {
@@ -8,9 +10,10 @@ namespace AlgorithmAnalysis.Configuration
 
         public ExcelLibraryProvider LibraryProvider { get; set; } = ExcelLibraryProvider.EPPlus;
 
-        public ExcelVersion Version { get; set; } = ExcelVersion.V2019;
+        public ExcelVersion Version { get; set; } = ExcelVersion.V2007;
 
-        public string OutputExcelFilename { get; set; } = "results.xlsx";
+        public string OutputExcelFilePath { get; set; } =
+             Path.Combine(CommonConstants.DefaultResultFolderPath, "results.xlsx");
 
 
         public ExcelOptions()

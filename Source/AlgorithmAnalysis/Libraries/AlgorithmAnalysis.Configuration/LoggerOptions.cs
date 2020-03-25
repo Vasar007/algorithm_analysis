@@ -1,10 +1,12 @@
-﻿namespace AlgorithmAnalysis.Configuration
+﻿using AlgorithmAnalysis.Common;
+
+namespace AlgorithmAnalysis.Configuration
 {
     public sealed class LoggerOptions : IOptions
     {
-        public string LogFolderPath { get; set; } = "logs";
+        public string LogFolderPath { get; set; } = CommonConstants.DefaultLogFolderPath;
 
-        public bool EnableLogForExcelLibrary { get; set; } = true;
+        public bool EnableLogForExcelLibrary { get; set; } = false;
 
         public string LogFilesExtension { get; set; } = ".log";
 

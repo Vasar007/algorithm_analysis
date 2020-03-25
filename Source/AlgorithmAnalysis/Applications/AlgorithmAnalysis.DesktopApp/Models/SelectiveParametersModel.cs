@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Acolyte.Assertions;
 using Prism.Mvvm;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
@@ -14,52 +13,47 @@ namespace AlgorithmAnalysis.DesktopApp.Models
     {
         public IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne { get; }
 
-        // Initializes through Reset method in ctor.
-        private PhaseOnePartOneAnalysisKind _selectedPhaseOnePartOne = default!;
-        public PhaseOnePartOneAnalysisKind SelectedPhaseOnePartOne
+        private PhaseOnePartOneAnalysisKind? _selectedPhaseOnePartOne;
+        public PhaseOnePartOneAnalysisKind? SelectedPhaseOnePartOne
         {
             get => _selectedPhaseOnePartOne;
-            set => SetProperty(ref _selectedPhaseOnePartOne, value.ThrowIfNull(nameof(value)));
+            set => SetProperty(ref _selectedPhaseOnePartOne, value);
         }
 
         public IReadOnlyList<PhaseOnePartTwoAnalysisKind> AvailableAnalysisKindForPhaseOnePartTwo { get; }
 
-        // Initializes through Reset method in ctor.
-        private PhaseOnePartTwoAnalysisKind _selectedPhaseOnePartTwo = default!;
-        public PhaseOnePartTwoAnalysisKind SelectedPhaseOnePartTwo
+        private PhaseOnePartTwoAnalysisKind? _selectedPhaseOnePartTwo;
+        public PhaseOnePartTwoAnalysisKind? SelectedPhaseOnePartTwo
         {
             get => _selectedPhaseOnePartTwo;
-            set => SetProperty(ref _selectedPhaseOnePartTwo, value.ThrowIfNull(nameof(value)));
+            set => SetProperty(ref _selectedPhaseOnePartTwo, value);
         }
 
         public IReadOnlyList<PhaseTwoAnalysisKind> AvailableAnalysisKindForPhaseTwo { get; }
 
-        // Initializes through Reset method in ctor.
-        private PhaseTwoAnalysisKind _selectedPhaseTwo = default!;
-        public PhaseTwoAnalysisKind SelectedPhaseTwo
+        private PhaseTwoAnalysisKind? _selectedPhaseTwo;
+        public PhaseTwoAnalysisKind? SelectedPhaseTwo
         {
             get => _selectedPhaseTwo;
-            set => SetProperty(ref _selectedPhaseTwo, value.ThrowIfNull(nameof(value)));
+            set => SetProperty(ref _selectedPhaseTwo, value);
         }
 
         public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
 
-        // Initializes through Reset method in ctor.
-        private AlgorithmType _selectedAlgorithmType = default!;
-        public AlgorithmType SelectedAlgorithmType
+        private AlgorithmType? _selectedAlgorithmType;
+        public AlgorithmType? SelectedAlgorithmType
         {
             get => _selectedAlgorithmType;
-            set => SetProperty(ref _selectedAlgorithmType, value.ThrowIfNull(nameof(value)));
+            set => SetProperty(ref _selectedAlgorithmType, value);
         }
 
         public IReadOnlyList<GoodnessOfFitKind> AvailableGoodnessOfFitKinds { get; }
 
-        // Initializes through Reset method in ctor.
-        private GoodnessOfFitKind _selectedGoodnessOfFitKind = default!;
-        public GoodnessOfFitKind SelectedGoodnessOfFitKind
+        private GoodnessOfFitKind? _selectedGoodnessOfFitKind;
+        public GoodnessOfFitKind? SelectedGoodnessOfFitKind
         {
             get => _selectedGoodnessOfFitKind;
-            set => SetProperty(ref _selectedGoodnessOfFitKind, value.ThrowIfNull(nameof(value)));
+            set => SetProperty(ref _selectedGoodnessOfFitKind, value);
         }
 
 
@@ -79,25 +73,29 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public void Reset()
         {
             SelectedPhaseOnePartOne = AvailableAnalysisKindForPhaseOnePartOne.FirstOrDefault();
-            Assert(SelectedPhaseOnePartOne, nameof(AvailableAnalysisKindForPhaseOnePartOne));
 
             SelectedPhaseOnePartTwo = AvailableAnalysisKindForPhaseOnePartTwo.FirstOrDefault();
-            Assert(SelectedPhaseOnePartTwo, nameof(AvailableAnalysisKindForPhaseOnePartTwo));
 
             // TODO: use first value instead of last when implement normal distribution.
             SelectedPhaseTwo = AvailableAnalysisKindForPhaseTwo.LastOrDefault();
-            Assert(SelectedPhaseTwo, nameof(AvailableAnalysisKindForPhaseTwo));
 
             SelectedAlgorithmType = AvailableAlgorithms.FirstOrDefault();
-            Assert(SelectedAlgorithmType, nameof(AvailableAlgorithms));
 
             SelectedGoodnessOfFitKind = AvailableGoodnessOfFitKinds.FirstOrDefault();
-            Assert(SelectedGoodnessOfFitKind, nameof(AvailableGoodnessOfFitKinds));
         }
 
         #endregion
 
-        public void Assert<T>(T valueToCheck, string collectionName)
+        public void VerifyParameters()
+        {
+            Assert(SelectedPhaseOnePartOne, nameof(AvailableAnalysisKindForPhaseOnePartOne));
+            Assert(SelectedPhaseOnePartTwo, nameof(AvailableAnalysisKindForPhaseOnePartTwo));
+            Assert(SelectedPhaseTwo, nameof(AvailableAnalysisKindForPhaseTwo));
+            Assert(SelectedAlgorithmType, nameof(AvailableAlgorithms));
+            Assert(SelectedGoodnessOfFitKind, nameof(AvailableGoodnessOfFitKinds));
+        }
+
+        private static void Assert<T>(T valueToCheck, string collectionName)
         {
             if (valueToCheck is null)
             {

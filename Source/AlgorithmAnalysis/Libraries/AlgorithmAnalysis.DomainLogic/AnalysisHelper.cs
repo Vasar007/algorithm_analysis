@@ -63,7 +63,9 @@ namespace AlgorithmAnalysis.DomainLogic
         {
             args.ThrowIfNull(nameof(args));
 
-            return Utils.GetOrCreateFolderUsingFilePath(args.OutputFilenamePattern);
+            return Utils.GetOrCreateFolderUsingFilePath(
+                args.OutputFilenamePattern, CommonConstants.DefaultDataFolderPath
+            );
         }
 
         internal static IAnalysisPhaseOnePartOne CreateAnalysisPhaseOnePartOne(

@@ -16,8 +16,22 @@ namespace AlgorithmAnalysis.Common
         {
             unresolvedPath.ThrowIfNullOrWhiteSpace(nameof(unresolvedPath));
 
-            var pathResolver = new FolderPathResolver();
+            var pathResolver = new SpecificPathResolver();
             return pathResolver.Resolve(unresolvedPath);
+        }
+
+        public static string CreateSpecificPath(string specificValue, string? path,
+            bool appendAdppFolder)
+        {
+            specificValue.ThrowIfNullOrWhiteSpace(nameof(specificValue));
+
+            var pathCreator = SpecificPathCreator.CreateDefault();
+            return pathCreator.CreateSpecificPath(specificValue, path, appendAdppFolder);
+        }
+
+        public static string CreateSpecificPath(string specificValue, bool appendAdppFolder)
+        {
+            return CreateSpecificPath(specificValue, path: null, appendAdppFolder);
         }
 
         public static string GetOrCreateFolder(string potentialFolderPath)
@@ -34,20 +48,31 @@ namespace AlgorithmAnalysis.Common
             return folderPath;
         }
 
-        public static string GetOrCreateFolderUsingFilePath(string filePath)
+        public static string GetOrCreateFolderUsingFilePath(string filePath,
+            string defaultDirectory)
         {
             filePath.ThrowIfNullOrWhiteSpace(nameof(filePath));
+            defaultDirectory.ThrowIfNullOrWhiteSpace(nameof(defaultDirectory));
 
             string dataDirectory = Path.GetDirectoryName(filePath);
             if (string.IsNullOrWhiteSpace(dataDirectory))
             {
-                string message =
-                    "Failed to create data folder: cannot parsed folder path. " +
-                    $"Argument: {filePath}";
-                throw new ArgumentException(message, nameof(filePath));
+                dataDirectory = defaultDirectory;
             }
 
             return GetOrCreateFolder(dataDirectory);
+        }
+
+        public static string GetOrCreateFolderAndAppendFilePathToResult(string filePath,
+            string defaultDirectory)
+        {
+            filePath.ThrowIfNullOrWhiteSpace(nameof(filePath));
+            defaultDirectory.ThrowIfNullOrWhiteSpace(nameof(defaultDirectory));
+
+            string folderPath = GetOrCreateFolderUsingFilePath(filePath, defaultDirectory);
+
+            string filename = Path.GetFileName(filePath);
+            return Path.Combine(folderPath, filename);
         }
     }
 }

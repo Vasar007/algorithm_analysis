@@ -1,10 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Acolyte.Assertions;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
-using System;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
@@ -137,14 +137,16 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             outputExcelFile.ThrowIfNull(nameof(outputExcelFile));
             selectiveParameters.ThrowIfNull(nameof(selectiveParameters));
 
+            selectiveParameters.VerifyParameters();
+
             return new AnalysisContext(
                 args: ConvertArgs(selectiveParameters),
                 launchContext: CreateLaunchContext(),
                 outputExcelFile: outputExcelFile,
-                phaseOnePartOne: selectiveParameters.SelectedPhaseOnePartOne,
-                phaseOnePartTwo: selectiveParameters.SelectedPhaseOnePartTwo,
-                phaseTwo: selectiveParameters.SelectedPhaseTwo,
-                goodnessOfFit: selectiveParameters.SelectedGoodnessOfFitKind
+                phaseOnePartOne: selectiveParameters.SelectedPhaseOnePartOne!,
+                phaseOnePartTwo: selectiveParameters.SelectedPhaseOnePartTwo!,
+                phaseTwo: selectiveParameters.SelectedPhaseTwo!,
+                goodnessOfFit: selectiveParameters.SelectedGoodnessOfFitKind!
             );
         }
 
@@ -152,7 +154,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         {
             return ParametersPack.Create(
                 analysisOptions: ConfigOptions.Analysis,
-                algorithmType: selectiveParameters.SelectedAlgorithmType,
+                algorithmType: selectiveParameters.SelectedAlgorithmType!,
                 startValue: int.Parse(StartValue),
                 endValue: int.Parse(EndValue),
                 extrapolationSegmentValue: int.Parse(ExtrapolationSegmentValue),
