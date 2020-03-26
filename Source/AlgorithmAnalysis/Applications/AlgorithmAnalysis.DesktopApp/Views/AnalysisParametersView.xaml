@@ -3,10 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultMinWidth">
+                300
+            </system:Double>
+            <system:Double x:Key="DefaultMaxWidth">
+                300
+            </system:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
     <materialDesign:Card Padding="8"
                          Margin="8"
@@ -24,6 +36,8 @@
             <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part one"
                       HorizontalAlignment="Stretch"
                       Margin="16"
+                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                       SelectedIndex="0"
                       ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseOnePartOne}"
                       SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseOnePartOne}"
@@ -38,6 +52,8 @@
             <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part two"
                       HorizontalAlignment="Stretch"
                       Margin="16"
+                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                       SelectedIndex="0"
                       ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseOnePartTwo}"
                       SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseOnePartTwo}"
@@ -53,6 +69,8 @@
             <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase two"
                       HorizontalAlignment="Stretch"
                       Margin="16"
+                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                       SelectedIndex="1"
                       ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseTwo}"
                       SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseTwo}"
@@ -67,6 +85,8 @@
             <ComboBox materialDesign:HintAssist.Hint="Goodness of fit"
                       HorizontalAlignment="Stretch"
                       Margin="16"
+                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                       SelectedIndex="0"
                       ItemsSource="{Binding Path=SelectiveParameters.AvailableGoodnessOfFitKinds}"
                       SelectedItem="{Binding Path=SelectiveParameters.SelectedGoodnessOfFitKind}"
@@ -106,8 +126,8 @@
                            HorizontalAlignment="Right" />
 
                 <!--
-                Show warning about restriction to select degree of parallelism when PC has
-                only one CPU.
+                Show warning about restriction to select degree of parallelism when PC has only one
+                CPU.
                         
                 May be later we change minimum value of parallelism. 
                 -->

@@ -5,20 +5,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:prism="http://prismlibrary.com/"
              xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
              xmlns:validation="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Validation"
-             xmlns:converters="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Converters"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <system:Double x:Key="DefaultMinWidth">
-                500
+                475
             </system:Double>
             <system:Double x:Key="DefaultMaxWidth">
-                500
+                475
             </system:Double>
             <system:Double x:Key="DefaultFontSize">
                 18
@@ -45,6 +43,8 @@
                       materialDesign:HintAssist.Hint="Algorithm"
                       HorizontalAlignment="Stretch"
                       Margin="16"
+                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                       SelectedIndex="0"
                       ItemsSource="{Binding Path=SelectiveParameters.AvailableAlgorithms}"
                       SelectedItem="{Binding Path=SelectiveParameters.SelectedAlgorithmType}"

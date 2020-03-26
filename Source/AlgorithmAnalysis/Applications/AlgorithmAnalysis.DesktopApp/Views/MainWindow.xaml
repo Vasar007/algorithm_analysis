@@ -55,30 +55,8 @@
 
             <views:AnalysisParametersView x:Name="AnalysisParametersView" />
 
-            <materialDesign:Card Padding="8"
-                                 Margin="8"
-                                 VerticalAlignment="Stretch"
-                                 HorizontalAlignment="Stretch">
-                <StackPanel Orientation="Vertical"
-                            HorizontalAlignment="Center">
-                    <TextBlock Margin="16 16 12 0"
-                               FontSize="16">
-                        Advanced parameters
-                    </TextBlock>
+            <views:AdvancedParametersView x:Name="AdvancedParametersView" />
 
-                    <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
-
-                    <CheckBox Content="Show analysis window"
-                              HorizontalAlignment="Stretch"
-                              Margin="16 8"
-                              IsChecked="{Binding Path=RawParameters.ShowAnalysisWindow}" />
-
-                    <CheckBox Content="Open analysis results"
-                              HorizontalAlignment="Stretch"
-                              Margin="16 8"
-                              IsChecked="{Binding Path=AnalysisSpecific.OpenAnalysisResults}" />
-                </StackPanel>
-            </materialDesign:Card>
         </StackPanel>
 
         <StackPanel Width="300"
