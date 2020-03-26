@@ -6,6 +6,8 @@ namespace AlgorithmAnalysis.Common
     {
         public static string ApplicationName { get; } = "AlgorithmAnalysis";
 
+        public static string TextLogTraceListenerName { get; } = "TextLogTraceListener";
+
         public static char SpecificStartingChar { get; } = '{';
 
         public static char SpecificEndingChar { get; } = '}';

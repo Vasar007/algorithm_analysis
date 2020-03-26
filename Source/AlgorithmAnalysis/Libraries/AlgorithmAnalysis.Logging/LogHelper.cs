@@ -45,5 +45,18 @@ namespace AlgorithmAnalysis.Logging
         {
             return CreateLogFilename(logName, ConfigOptions.Logger);
         }
+
+        public static void SetTraceLogger(string logName, LoggerOptions loggerOptions)
+        {
+            string traceLogFilename = CreateLogFilename(logName, loggerOptions);
+            string traceLogFilePath = GetLogFilePath(loggerOptions, traceLogFilename);
+
+            TraceHelper.SetTraceListener(traceLogFilePath);
+        }
+
+        public static void SetTraceLogger(string logName)
+        {
+            SetTraceLogger(logName, ConfigOptions.Logger);
+        }
     }
 }
