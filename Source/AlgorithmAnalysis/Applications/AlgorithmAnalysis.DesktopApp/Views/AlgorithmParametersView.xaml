@@ -1,0 +1,181 @@
+﻿<UserControl x:Class="AlgorithmAnalysis.DesktopApp.Views.AlgorithmParametersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
+             xmlns:validation="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Validation"
+             xmlns:converters="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Converters"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultMinWidth">
+                500
+            </system:Double>
+            <system:Double x:Key="DefaultMaxWidth">
+                500
+            </system:Double>
+            <system:Double x:Key="DefaultFontSize">
+                18
+            </system:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <materialDesign:Card x:Name="MainCard"
+                         Padding="8"
+                         Margin="8"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch">
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    x:Name="AlgorithmPanel">
+            <TextBlock Margin="16 16 12 0"
+                       FontSize="16">
+                Algorithm parameters
+            </TextBlock>
+
+            <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+
+            <ComboBox x:Name="AlgorithmComboBox"
+                      materialDesign:HintAssist.Hint="Algorithm"
+                      HorizontalAlignment="Stretch"
+                      Margin="16"
+                      SelectedIndex="0"
+                      ItemsSource="{Binding Path=SelectiveParameters.AvailableAlgorithms}"
+                      SelectedItem="{Binding Path=SelectiveParameters.SelectedAlgorithmType}"
+                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
+                      IsEnabled="{Binding Path=SelectiveParameters.IsAlgorithmSelectable}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+
+            <!--
+            Show warning about no availbale algorithms to analyze.
+            -->
+            <Border Background="GhostWhite"
+                    BorderBrush="Gainsboro"
+                    BorderThickness="1"
+                    Margin="8 16 8 8"
+                    Visibility="{Binding Path=SelectiveParameters.IsHintForAlgorithmVisible,
+                                 Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal"
+                            Margin="8">
+                    <materialDesign:PackIcon Kind="Exclamation"
+                                             Foreground="Red" />
+
+                    <TextBlock Margin="8 0 0 0"
+                               DockPanel.Dock="Bottom">
+                        Warning: there are no available algorithms to analyze.<LineBreak />
+                        Please, specify at least one algorithm in configuration and restart application.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <TextBox x:Name="FirstValueTextBox"
+                     materialDesign:HintAssist.Hint="The first value of function segment to analyze"
+                     materialDesign:HintAssist.IsFloating="False"
+                     Margin="16"
+                     FontSize="{StaticResource ResourceKey=DefaultFontSize}"
+                     MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                     MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                     Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="RawParameters.StartValue"
+                             UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                             ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox x:Name="LastValueTextBox"
+                     materialDesign:HintAssist.Hint="The last value of function segment to analyze"
+                     Margin="16"
+                     FontSize="{StaticResource ResourceKey=DefaultFontSize}"
+                     MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                     MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                     Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="RawParameters.EndValue"
+                             UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                             ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox x:Name="LastExtrapolationValueTextBox"
+                     materialDesign:HintAssist.Hint="The last extrapolation value of function segment to analyze"
+                     Margin="16"
+                     FontSize="{StaticResource ResourceKey=DefaultFontSize}"
+                     MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                     MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                     Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="RawParameters.ExtrapolationSegmentValue"
+                             UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                             ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox x:Name="LaunchesNumberTextBox"
+                     materialDesign:HintAssist.Hint="The initial launches number"
+                     Margin="16"
+                     FontSize="{StaticResource ResourceKey=DefaultFontSize}"
+                     MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                     MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                     Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="RawParameters.LaunchesNumber"
+                             UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                             ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox x:Name="StepValueTextBox"
+                     materialDesign:HintAssist.Hint="The size of step for function segment"
+                     Margin="16"
+                     FontSize="{StaticResource ResourceKey=DefaultFontSize}"
+                     MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                     MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                     Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="RawParameters.Step"
+                             UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                             ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+        </StackPanel>
+    </materialDesign:Card>
+
+</UserControl>
