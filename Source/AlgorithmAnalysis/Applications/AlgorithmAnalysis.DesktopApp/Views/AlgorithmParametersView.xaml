@@ -81,7 +81,6 @@
 
             <TextBox x:Name="FirstValueTextBox"
                      materialDesign:HintAssist.Hint="The first value of function segment to analyze"
-                     materialDesign:HintAssist.IsFloating="False"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
