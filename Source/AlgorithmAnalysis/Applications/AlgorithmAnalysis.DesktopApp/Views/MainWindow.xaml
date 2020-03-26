@@ -7,7 +7,6 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
         xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
-        xmlns:validation="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Validation"
         xmlns:converters="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Converters"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
@@ -54,130 +53,7 @@
 
             <views:AlgorithmParametersView x:Name="AlgorithmParametersView" />
 
-            <materialDesign:Card Padding="8"
-                                 Margin="8"
-                                 VerticalAlignment="Stretch"
-                                 HorizontalAlignment="Stretch">
-                <StackPanel Orientation="Vertical"
-                            HorizontalAlignment="Center">
-                    <TextBlock Margin="16 16 12 0"
-                               FontSize="16">
-                        Analysis parameters
-                    </TextBlock>
-
-                    <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
-
-                    <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part one"
-                              HorizontalAlignment="Stretch"
-                              Margin="16"
-                              SelectedIndex="0"
-                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseOnePartOne}"
-                              SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseOnePartOne}"
-                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-
-                    <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part two"
-                              HorizontalAlignment="Stretch"
-                              Margin="16"
-                              SelectedIndex="0"
-                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseOnePartTwo}"
-                              SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseOnePartTwo}"
-                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-
-                    <!-- TODO: reset selected index when implement normal distribution. -->
-                    <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase two"
-                              HorizontalAlignment="Stretch"
-                              Margin="16"
-                              SelectedIndex="1"
-                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseTwo}"
-                              SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseTwo}"
-                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-
-                    <ComboBox materialDesign:HintAssist.Hint="Goodness of fit"
-                              HorizontalAlignment="Stretch"
-                              Margin="16"
-                              SelectedIndex="0"
-                              ItemsSource="{Binding Path=SelectiveParameters.AvailableGoodnessOfFitKinds}"
-                              SelectedItem="{Binding Path=SelectiveParameters.SelectedGoodnessOfFitKind}"
-                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-
-                    <TextBlock Text="Max degree of parallerism"
-                               HorizontalAlignment="Center"
-                               Margin="0 8 0 4" />
-                    <Slider TickPlacement="BottomRight"
-                            IsSnapToTickEnabled="True"
-                            Margin="16 0"
-                            HorizontalAlignment="Stretch"
-                            Minimum="{Binding Path=RawParameters.MinDegreeOfParallelism}"
-                            Maximum="{Binding Path=RawParameters.MaxDegreeOfParallelism}"
-                            Value="{Binding Path=RawParameters.SelectedMaxDegreeOfParallelism}"
-                            SmallChange="1"
-                            AutoToolTipPlacement="BottomRight"
-                            AutoToolTipPrecision="0"
-                            IsEnabled="{Binding Path=RawParameters.IsDegreeOfParallelismSelectable}" />
-
-                    <DockPanel Margin="18 8"
-                               HorizontalAlignment="Stretch"
-                               VerticalAlignment="Stretch">
-                        <TextBlock Text="{Binding Path=RawParameters.MinDegreeOfParallelism}"
-                                   DockPanel.Dock="Left"
-                                   HorizontalAlignment="Left"
-                                   Visibility="{Binding Path=RawParameters.IsDegreeOfParallelismSelectable,
-                                                Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
-                        <TextBlock Text="{Binding Path=RawParameters.MaxDegreeOfParallelism}"
-                                   DockPanel.Dock="Right"
-                                   HorizontalAlignment="Right" />
-
-                        <!--
-                        Show warning about restriction to select degree of parallelism when PC has
-                        only one CPU.
-                        
-                        May be later we change minimum value of parallelism. 
-                        -->
-                        <Border Background="GhostWhite"
-                                BorderBrush="Gainsboro"
-                                BorderThickness="1"
-                                Margin="8 16 8 8"
-                                Visibility="{Binding Path=RawParameters.IsHintForDegreeOfParallelismVisible,
-                                                Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
-                            <StackPanel Orientation="Horizontal"
-                                        Margin="8">
-                                <materialDesign:PackIcon Kind="Exclamation"
-                                                         Foreground="Red" />
-
-                                <TextBlock Margin="8 0 0 0"
-                                           DockPanel.Dock="Bottom">
-                                Warning: you cannot specify degree of parallelism<LineBreak />
-                                because PC has insufficient number of resources.
-                                </TextBlock>
-                            </StackPanel>
-                        </Border>
-                    </DockPanel>
-                </StackPanel>
-            </materialDesign:Card>
+            <views:AnalysisParametersView x:Name="AnalysisParametersView" />
 
             <materialDesign:Card Padding="8"
                                  Margin="8"
@@ -218,17 +94,23 @@
                         <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
                                       Mode="OneWay">
                             <Binding ElementName="AlgorithmParametersView"
-                                     Path="AlgorithmComboBoxProxy.SelectedItem" />
+                                     Path="AlgorithmComboBoxProxy.SelectedItem"
+                                     Mode="OneWay" />
                             <Binding ElementName="AlgorithmParametersView"
-                                     Path="FirstValueTextBoxProxy.(Validation.HasError)" />
+                                     Path="FirstValueTextBoxProxy.(Validation.HasError)"
+                                     Mode="OneWay" />
                             <Binding ElementName="AlgorithmParametersView"
-                                     Path="LastValueTextBoxProxy.(Validation.HasError)" />
+                                     Path="LastValueTextBoxProxy.(Validation.HasError)"
+                                     Mode="OneWay" />
                             <Binding ElementName="AlgorithmParametersView"
-                                     Path="LastExtrapolationValueTextBoxProxy.(Validation.HasError)" />
+                                     Path="LastExtrapolationValueTextBoxProxy.(Validation.HasError)"
+                                     Mode="OneWay" />
                             <Binding ElementName="AlgorithmParametersView"
-                                     Path="LaunchesNumberTextBoxProxy.(Validation.HasError)" />
+                                     Path="LaunchesNumberTextBoxProxy.(Validation.HasError)"
+                                     Mode="OneWay" />
                             <Binding ElementName="AlgorithmParametersView"
-                                     Path="StepValueTextBoxProxy.(Validation.HasError)" />
+                                     Path="StepValueTextBoxProxy.(Validation.HasError)"
+                                     Mode="OneWay" />
                         </MultiBinding>
                     </Button.IsEnabled>
                     Run
