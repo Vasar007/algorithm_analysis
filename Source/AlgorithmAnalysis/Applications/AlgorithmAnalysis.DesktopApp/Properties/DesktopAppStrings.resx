@@ -117,15 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdvancedParametersHeader" xml:space="preserve">
+    <value>Advanced parameters</value>
+    <comment>Header text for advanced parameters panel.</comment>
+  </data>
   <data name="AlgorithmHint" xml:space="preserve">
     <value>Algorithm</value>
     <comment>Hint for algorithm combo box.</comment>
   </data>
-  <data name="AlgorithmParametersPanelHeader" xml:space="preserve">
+  <data name="AlgorithmParametersHeader" xml:space="preserve">
     <value>Algorithms parameters</value>
     <comment>Header text for algorithm parameters panel.</comment>
   </data>
-  <data name="AnalysisParametersPanelHeader" xml:space="preserve">
+  <data name="AnalysisParametersHeader" xml:space="preserve">
     <value>Analysis parameters</value>
     <comment>Header text for analysis parameters panel.</comment>
   </data>
@@ -165,6 +169,10 @@
     <value>Max degree of parallerism</value>
     <comment>Text for max degree of parallerism text block.</comment>
   </data>
+  <data name="OpenAnalysisResultsText" xml:space="preserve">
+    <value>Open analysis results</value>
+    <comment>Text for check box to open analysis results when analysis will be completed.</comment>
+  </data>
   <data name="ResetButtonText" xml:space="preserve">
     <value>Reset</value>
     <comment>Text for reset button to restore default analysis parameters.</comment>
@@ -180,6 +188,10 @@
   <data name="RunButtonToolTip" xml:space="preserve">
     <value>Run analysis (window will be blocked)</value>
     <comment>Tool tip for run button to execute analysis.</comment>
+  </data>
+  <data name="ShowAnalysisWindowText" xml:space="preserve">
+    <value>Show analysis window</value>
+    <comment>Text for check box to show analysis window during analysis process.</comment>
   </data>
   <data name="StepValueHint" xml:space="preserve">
     <value>The size of step for function segment</value>

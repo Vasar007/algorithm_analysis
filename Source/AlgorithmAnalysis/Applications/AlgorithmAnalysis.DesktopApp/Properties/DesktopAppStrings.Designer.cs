@@ -61,6 +61,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced parameters.
+        /// </summary>
+        public static string AdvancedParametersHeader {
+            get {
+                return ResourceManager.GetString("AdvancedParametersHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Algorithm.
         /// </summary>
         public static string AlgorithmHint {
@@ -72,18 +81,18 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Algorithms parameters.
         /// </summary>
-        public static string AlgorithmParametersPanelHeader {
+        public static string AlgorithmParametersHeader {
             get {
-                return ResourceManager.GetString("AlgorithmParametersPanelHeader", resourceCulture);
+                return ResourceManager.GetString("AlgorithmParametersHeader", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Analysis parameters.
         /// </summary>
-        public static string AnalysisParametersPanelHeader {
+        public static string AnalysisParametersHeader {
             get {
-                return ResourceManager.GetString("AnalysisParametersPanelHeader", resourceCulture);
+                return ResourceManager.GetString("AnalysisParametersHeader", resourceCulture);
             }
         }
         
@@ -169,6 +178,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open analysis results.
+        /// </summary>
+        public static string OpenAnalysisResultsText {
+            get {
+                return ResourceManager.GetString("OpenAnalysisResultsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string ResetButtonText {
@@ -201,6 +219,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string RunButtonToolTip {
             get {
                 return ResourceManager.GetString("RunButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show analysis window.
+        /// </summary>
+        public static string ShowAnalysisWindowText {
+            get {
+                return ResourceManager.GetString("ShowAnalysisWindowText", resourceCulture);
             }
         }
         

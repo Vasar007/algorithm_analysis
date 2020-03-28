@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
+             xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
 
@@ -15,18 +16,17 @@
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center">
             <TextBlock Margin="16 16 12 0"
-                       FontSize="16">
-                Advanced parameters
-            </TextBlock>
+                       FontSize="16"
+                       Text="{x:Static properties:DesktopAppStrings.AdvancedParametersHeader}" />
 
             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
-            <CheckBox Content="Show analysis window"
+            <CheckBox Content="{x:Static properties:DesktopAppStrings.ShowAnalysisWindowText}"
                       HorizontalAlignment="Stretch"
                       Margin="16 8"
                       IsChecked="{Binding Path=RawParameters.ShowAnalysisWindow}" />
 
-            <CheckBox Content="Open analysis results"
+            <CheckBox Content="{x:Static properties:DesktopAppStrings.OpenAnalysisResultsText}"
                       HorizontalAlignment="Stretch"
                       Margin="16 8"
                       IsChecked="{Binding Path=AnalysisSpecific.OpenAnalysisResults}" />
