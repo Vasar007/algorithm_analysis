@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlgorithmComboBoxHint" xml:space="preserve">
+    <value>Algorithm</value>
+    <comment>Hint for algorithm combo box.</comment>
+  </data>
+  <data name="AlgorithmParametersPanelName" xml:space="preserve">
+    <value>Algorithms parameters</value>
+    <comment>Text for algorithm parameters panel.</comment>
+  </data>
+  <data name="FirstValueTextBoxHint" xml:space="preserve">
+    <value>The first value of function segment to analyze</value>
+    <comment>Hint for first value text box.</comment>
+  </data>
+  <data name="LastExtrapolationValueTextBoxHint" xml:space="preserve">
+    <value>The last extrapolation value of function segment to analyze</value>
+    <comment>Hint for last extrapolation value text box.</comment>
+  </data>
+  <data name="LastValueTextBoxHint" xml:space="preserve">
+    <value>The last value of function segment to analyze</value>
+    <comment>Hint for last value text box.</comment>
+  </data>
+  <data name="LaunchesNumberTextBoxHint" xml:space="preserve">
+    <value>The initial launches number</value>
+    <comment>Hint for initial launches number text box.</comment>
+  </data>
   <data name="ResetButtonText" xml:space="preserve">
     <value>Reset</value>
     <comment>Text for reset button to restore default analysis parameters.</comment>
@@ -132,6 +156,10 @@
   <data name="RunButtonToolTip" xml:space="preserve">
     <value>Run analysis (window will be blocked)</value>
     <comment>Tool tip for run button to execute analysis.</comment>
+  </data>
+  <data name="StepValueTextBoxHint" xml:space="preserve">
+    <value>The size of step for function segment</value>
+    <comment>Hint for step value text box.</comment>
   </data>
   <data name="WarningNoAlgorithms" xml:space="preserve">
     <value>Warning: there are no available algorithms to analyze.

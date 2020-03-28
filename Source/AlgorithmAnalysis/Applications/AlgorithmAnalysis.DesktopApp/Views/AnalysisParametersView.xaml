@@ -65,13 +65,12 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
 
-            <!-- TODO: reset selected index when implement normal distribution. -->
             <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase two"
                       HorizontalAlignment="Stretch"
                       Margin="16"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                       MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                      SelectedIndex="1"
+                      SelectedIndex="0"
                       ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseTwo}"
                       SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseTwo}"
                       Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">

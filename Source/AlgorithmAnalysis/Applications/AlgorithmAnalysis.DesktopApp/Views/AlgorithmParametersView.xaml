@@ -35,14 +35,13 @@
                     HorizontalAlignment="Center"
                     x:Name="AlgorithmPanel">
             <TextBlock Margin="16 16 12 0"
-                       FontSize="16">
-                Algorithm parameters
-            </TextBlock>
+                       FontSize="16"
+                       Text="{x:Static properties:DesktopAppStrings.AlgorithmParametersPanelName}" />
 
             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
             <ComboBox x:Name="AlgorithmComboBox"
-                      materialDesign:HintAssist.Hint="Algorithm"
+                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AlgorithmComboBoxHint}"
                       HorizontalAlignment="Stretch"
                       Margin="16"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -68,7 +67,7 @@
             </views:WarningOnEmptyControlView>
 
             <TextBox x:Name="FirstValueTextBox"
-                     materialDesign:HintAssist.Hint="The first value of function segment to analyze"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.FirstValueTextBoxHint}"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -87,7 +86,7 @@
             </TextBox>
 
             <TextBox x:Name="LastValueTextBox"
-                     materialDesign:HintAssist.Hint="The last value of function segment to analyze"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LastValueTextBoxHint}"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -106,7 +105,7 @@
             </TextBox>
 
             <TextBox x:Name="LastExtrapolationValueTextBox"
-                     materialDesign:HintAssist.Hint="The last extrapolation value of function segment to analyze"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LastExtrapolationValueTextBoxHint}"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -125,7 +124,7 @@
             </TextBox>
 
             <TextBox x:Name="LaunchesNumberTextBox"
-                     materialDesign:HintAssist.Hint="The initial launches number"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LaunchesNumberTextBoxHint}"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -144,7 +143,7 @@
             </TextBox>
 
             <TextBox x:Name="StepValueTextBox"
-                     materialDesign:HintAssist.Hint="The size of step for function segment"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.StepValueTextBoxHint}"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"

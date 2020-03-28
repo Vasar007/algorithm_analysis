@@ -61,6 +61,60 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Algorithm.
+        /// </summary>
+        public static string AlgorithmComboBoxHint {
+            get {
+                return ResourceManager.GetString("AlgorithmComboBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Algorithms parameters.
+        /// </summary>
+        public static string AlgorithmParametersPanelName {
+            get {
+                return ResourceManager.GetString("AlgorithmParametersPanelName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The first value of function segment to analyze.
+        /// </summary>
+        public static string FirstValueTextBoxHint {
+            get {
+                return ResourceManager.GetString("FirstValueTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The last extrapolation value of function segment to analyze.
+        /// </summary>
+        public static string LastExtrapolationValueTextBoxHint {
+            get {
+                return ResourceManager.GetString("LastExtrapolationValueTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The last value of function segment to analyze.
+        /// </summary>
+        public static string LastValueTextBoxHint {
+            get {
+                return ResourceManager.GetString("LastValueTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The initial launches number.
+        /// </summary>
+        public static string LaunchesNumberTextBoxHint {
+            get {
+                return ResourceManager.GetString("LaunchesNumberTextBoxHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string ResetButtonText {
@@ -93,6 +147,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string RunButtonToolTip {
             get {
                 return ResourceManager.GetString("RunButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The size of step for function segment.
+        /// </summary>
+        public static string StepValueTextBoxHint {
+            get {
+                return ResourceManager.GetString("StepValueTextBoxHint", resourceCulture);
             }
         }
         
