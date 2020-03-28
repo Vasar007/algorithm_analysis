@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
         xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
         xmlns:converters="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Converters"
+        xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
         Title="{Binding Path=Title, Mode=OneWay}"
@@ -38,6 +39,10 @@
 
             <converters:BooleansToBooleanInverseConverter x:Key="BooleansToBooleanInverseConverter" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+            <system:Double x:Key="DefaultBottomPanelWidth">
+                300
+            </system:Double>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -59,7 +64,7 @@
 
         </StackPanel>
 
-        <StackPanel Width="300"
+        <StackPanel Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
                     Orientation="Vertical">
             <UniformGrid Rows="1"
                          Columns="2">
@@ -67,7 +72,8 @@
                         Margin="8"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
-                        ToolTip="Run analysis (window will be blocked)">
+                        ToolTip="{x:Static properties:DesktopAppStrings.RunButtonToolTip}"
+                        Content="{x:Static properties:DesktopAppStrings.RunButtonText}">
                     <Button.IsEnabled>
                         <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
                                       Mode="OneWay">
@@ -91,15 +97,15 @@
                                      Mode="OneWay" />
                         </MultiBinding>
                     </Button.IsEnabled>
-                    Run
                 </Button>
+
                 <Button Command="{Binding Path=ResetCommand}"
                         Margin="8"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
-                        ToolTip="Reset analysis parameters">
-                    Reset
-                </Button>
+                        ToolTip="{x:Static properties:DesktopAppStrings.ResetButtonToolTip}"
+                        Content="{x:Static properties:DesktopAppStrings.ResetButtonText}" />
+
             </UniformGrid>
         </StackPanel>
 
