@@ -113,7 +113,7 @@
                     AutoToolTipPrecision="0"
                     IsEnabled="{Binding Path=RawParameters.IsDegreeOfParallelismSelectable}" />
 
-            <DockPanel Margin="18 8"
+            <DockPanel Margin="16 4"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch">
                 <TextBlock Text="{Binding Path=RawParameters.MinDegreeOfParallelism}"

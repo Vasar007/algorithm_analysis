@@ -241,8 +241,8 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warning: you cannot specify degree of parallelism
-        ///because PC has insufficient number of resources..
+        ///   Looks up a localized string similar to Warning: you cannot specify degree of parallelism.
+        ///PC has insufficient number of resources..
         /// </summary>
         public static string WarningInsufficientNumberOfResourcesText {
             get {

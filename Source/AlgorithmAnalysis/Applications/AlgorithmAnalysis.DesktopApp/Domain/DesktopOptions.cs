@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.Math;
 using AlgorithmAnalysis.Models;
@@ -10,7 +11,7 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
     {
         public static string Title { get; } = "Algorithm Analysis System";
 
-        public static int MinDegreeOfParallelism { get; } = 1;
+        public static int MinDegreeOfParallelism { get; } = CommonConstants.MinimumProcessorCount;
 
         public static int MaxDegreeOfParallelism { get; } = Environment.ProcessorCount;
 

@@ -8,6 +8,10 @@ namespace AlgorithmAnalysis.Common
 
         public static string TextLogTraceListenerName { get; } = "TextLogTraceListener";
 
+        public static int EmptyCollectionCount { get; } = 0;
+
+        public static int MinimumProcessorCount { get; } = 1;
+
         public static char SpecificStartingChar { get; } = '{';
 
         public static char SpecificEndingChar { get; } = '}';

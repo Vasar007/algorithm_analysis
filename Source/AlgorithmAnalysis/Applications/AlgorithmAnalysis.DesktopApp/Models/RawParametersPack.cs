@@ -2,6 +2,7 @@
 using System.IO;
 using Acolyte.Assertions;
 using Prism.Mvvm;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
@@ -70,7 +71,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         /// </summary>
         public bool IsHintForDegreeOfParallelismVisible =>
             !IsDegreeOfParallelismSelectable &&
-            MinDegreeOfParallelism == DesktopOptions.MinDegreeOfParallelism;
+            MinDegreeOfParallelism == CommonConstants.MinimumProcessorCount;
 
         private int _selectedMaxDegreeOfParallelism;
         public int SelectedMaxDegreeOfParallelism
@@ -138,7 +139,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             outputExcelFile.ThrowIfNull(nameof(outputExcelFile));
             selectiveParameters.ThrowIfNull(nameof(selectiveParameters));
 
-            selectiveParameters.VerifyParameters();
+            selectiveParameters.ValidateParameters();
 
             return new AnalysisContext(
                 args: ConvertArgs(selectiveParameters),

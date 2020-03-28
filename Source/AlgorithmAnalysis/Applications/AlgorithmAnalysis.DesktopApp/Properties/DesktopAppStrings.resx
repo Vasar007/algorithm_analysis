@@ -198,8 +198,8 @@
     <comment>Hint for step value text box.</comment>
   </data>
   <data name="WarningInsufficientNumberOfResourcesText" xml:space="preserve">
-    <value>Warning: you cannot specify degree of parallelism
-because PC has insufficient number of resources.</value>
+    <value>Warning: you cannot specify degree of parallelism.
+PC has insufficient number of resources.</value>
     <comment>Text for warning control when there are insufficient number of resources.</comment>
   </data>
   <data name="WarningNoAlgorithmsText" xml:space="preserve">

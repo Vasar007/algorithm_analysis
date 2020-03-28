@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Prism.Mvvm;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.Models;
@@ -20,7 +21,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _selectedAlgorithmType, value);
         }
 
-        public bool IsAlgorithmSelectable => AvailableAlgorithms.Count > 0;
+        public bool IsAlgorithmSelectable =>
+            AvailableAlgorithms.Count > CommonConstants.EmptyCollectionCount;
 
         /// <summary>
         /// Shows warning about no availbale algorithms to analyze.
@@ -95,7 +97,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         #endregion
 
-        public void VerifyParameters()
+        public void ValidateParameters()
         {
             Assert(SelectedAlgorithmType, nameof(AvailableAlgorithms));
             Assert(SelectedPhaseOnePartOne, nameof(AvailableAnalysisKindForPhaseOnePartOne));
