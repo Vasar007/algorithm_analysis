@@ -77,6 +77,7 @@
                     <Button.IsEnabled>
                         <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
                                       Mode="OneWay">
+                            <!-- Algorithm parameters panel -->
                             <Binding ElementName="AlgorithmParametersView"
                                      Path="AlgorithmComboBoxProxy.SelectedItem"
                                      Mode="OneWay" />
@@ -94,6 +95,20 @@
                                      Mode="OneWay" />
                             <Binding ElementName="AlgorithmParametersView"
                                      Path="StepValueTextBoxProxy.(Validation.HasError)"
+                                     Mode="OneWay" />
+
+                            <!-- Analysis parameters panel -->
+                            <Binding ElementName="AnalysisParametersView"
+                                     Path="AnalysisPhaseOnePartOneComboBoxProxy.SelectedItem"
+                                     Mode="OneWay" />
+                            <Binding ElementName="AnalysisParametersView"
+                                     Path="AnalysisPhaseOnePartTwoComboBoxProxy.SelectedItem"
+                                     Mode="OneWay" />
+                            <Binding ElementName="AnalysisParametersView"
+                                     Path="AnalysisPhaseTwoComboBoxProxy.SelectedItem"
+                                     Mode="OneWay" />
+                            <Binding ElementName="AnalysisParametersView"
+                                     Path="GoodnessOfFitComboBoxProxy.SelectedItem"
                                      Mode="OneWay" />
                         </MultiBinding>
                     </Button.IsEnabled>

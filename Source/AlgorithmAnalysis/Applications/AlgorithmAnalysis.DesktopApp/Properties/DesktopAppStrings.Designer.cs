@@ -259,5 +259,45 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
                 return ResourceManager.GetString("WarningNoAlgorithmsText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: there are no analysis kind for phase one part one.
+        ///Please, check configuration and restart application..
+        /// </summary>
+        public static string WarningNoAnalysisKindForPhaseOnePartOne {
+            get {
+                return ResourceManager.GetString("WarningNoAnalysisKindForPhaseOnePartOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: there are no analysis kind for phase one part two.
+        ///Please, check configuration and restart application..
+        /// </summary>
+        public static string WarningNoAnalysisKindForPhaseOnePartTwo {
+            get {
+                return ResourceManager.GetString("WarningNoAnalysisKindForPhaseOnePartTwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: there are no analysis kind for phase two.
+        ///Please, check configuration and restart application..
+        /// </summary>
+        public static string WarningNoAnalysisKindForPhaseTwo {
+            get {
+                return ResourceManager.GetString("WarningNoAnalysisKindForPhaseTwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: there are no goodness of fit methods.
+        ///Please, check configuration and restart application..
+        /// </summary>
+        public static string WarningNoGoodnessOfFitMethods {
+            get {
+                return ResourceManager.GetString("WarningNoGoodnessOfFitMethods", resourceCulture);
+            }
+        }
     }
 }

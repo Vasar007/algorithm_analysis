@@ -10,8 +10,7 @@
                     <ControlTemplate TargetType="{x:Type UserControl}" >
                         <Border Background="GhostWhite"
                                 BorderBrush="Gainsboro"
-                                BorderThickness="1"
-                                Margin="8 16 8 8">
+                                BorderThickness="1">
                             <StackPanel Orientation="Horizontal"
                                         Margin="8">
                                 <materialDesign:PackIcon Kind="Exclamation"
