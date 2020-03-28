@@ -63,54 +63,108 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Algorithm.
         /// </summary>
-        public static string AlgorithmComboBoxHint {
+        public static string AlgorithmHint {
             get {
-                return ResourceManager.GetString("AlgorithmComboBoxHint", resourceCulture);
+                return ResourceManager.GetString("AlgorithmHint", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Algorithms parameters.
         /// </summary>
-        public static string AlgorithmParametersPanelName {
+        public static string AlgorithmParametersPanelHeader {
             get {
-                return ResourceManager.GetString("AlgorithmParametersPanelName", resourceCulture);
+                return ResourceManager.GetString("AlgorithmParametersPanelHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analysis parameters.
+        /// </summary>
+        public static string AnalysisParametersPanelHeader {
+            get {
+                return ResourceManager.GetString("AnalysisParametersPanelHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analysis kind for phase one part one.
+        /// </summary>
+        public static string AnalysisPhaseOnePartOneHint {
+            get {
+                return ResourceManager.GetString("AnalysisPhaseOnePartOneHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analysis kind for phase one part two.
+        /// </summary>
+        public static string AnalysisPhaseOnePartTwoHint {
+            get {
+                return ResourceManager.GetString("AnalysisPhaseOnePartTwoHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analysis kind for phase two.
+        /// </summary>
+        public static string AnalysisPhaseTwoHint {
+            get {
+                return ResourceManager.GetString("AnalysisPhaseTwoHint", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The first value of function segment to analyze.
         /// </summary>
-        public static string FirstValueTextBoxHint {
+        public static string FirstValueHint {
             get {
-                return ResourceManager.GetString("FirstValueTextBoxHint", resourceCulture);
+                return ResourceManager.GetString("FirstValueHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Goodness of fit.
+        /// </summary>
+        public static string GoodnessOfFitHint {
+            get {
+                return ResourceManager.GetString("GoodnessOfFitHint", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The last extrapolation value of function segment to analyze.
         /// </summary>
-        public static string LastExtrapolationValueTextBoxHint {
+        public static string LastExtrapolationValueHint {
             get {
-                return ResourceManager.GetString("LastExtrapolationValueTextBoxHint", resourceCulture);
+                return ResourceManager.GetString("LastExtrapolationValueHint", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The last value of function segment to analyze.
         /// </summary>
-        public static string LastValueTextBoxHint {
+        public static string LastValueHint {
             get {
-                return ResourceManager.GetString("LastValueTextBoxHint", resourceCulture);
+                return ResourceManager.GetString("LastValueHint", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The initial launches number.
         /// </summary>
-        public static string LaunchesNumberTextBoxHint {
+        public static string LaunchesNumberHint {
             get {
-                return ResourceManager.GetString("LaunchesNumberTextBoxHint", resourceCulture);
+                return ResourceManager.GetString("LaunchesNumberHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max degree of parallerism.
+        /// </summary>
+        public static string MaxDegreeOfParallerismText {
+            get {
+                return ResourceManager.GetString("MaxDegreeOfParallerismText", resourceCulture);
             }
         }
         
@@ -153,9 +207,19 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The size of step for function segment.
         /// </summary>
-        public static string StepValueTextBoxHint {
+        public static string StepValueHint {
             get {
-                return ResourceManager.GetString("StepValueTextBoxHint", resourceCulture);
+                return ResourceManager.GetString("StepValueHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: you cannot specify degree of parallelism
+        ///because PC has insufficient number of resources..
+        /// </summary>
+        public static string WarningInsufficientNumberOfResourcesText {
+            get {
+                return ResourceManager.GetString("WarningInsufficientNumberOfResourcesText", resourceCulture);
             }
         }
         
@@ -163,9 +227,9 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         ///   Looks up a localized string similar to Warning: there are no available algorithms to analyze.
         ///Please, specify at least one algorithm in configuration and restart application..
         /// </summary>
-        public static string WarningNoAlgorithms {
+        public static string WarningNoAlgorithmsText {
             get {
-                return ResourceManager.GetString("WarningNoAlgorithms", resourceCulture);
+                return ResourceManager.GetString("WarningNoAlgorithmsText", resourceCulture);
             }
         }
     }

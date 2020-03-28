@@ -5,7 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
              xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
+             xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
 
@@ -27,13 +29,12 @@
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center">
             <TextBlock Margin="16 16 12 0"
-                       FontSize="16">
-                Analysis parameters
-            </TextBlock>
+                       FontSize="16"
+                       Text="{x:Static properties:DesktopAppStrings.AnalysisParametersPanelHeader}" />
 
             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
-            <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part one"
+            <ComboBox materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AnalysisPhaseOnePartOneHint}"
                       HorizontalAlignment="Stretch"
                       Margin="16"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -49,7 +50,7 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
 
-            <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part two"
+            <ComboBox materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AnalysisPhaseOnePartTwoHint}"
                       HorizontalAlignment="Stretch"
                       Margin="16"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -65,7 +66,7 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
 
-            <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase two"
+            <ComboBox materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AnalysisPhaseTwoHint}"
                       HorizontalAlignment="Stretch"
                       Margin="16"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -81,7 +82,7 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
 
-            <ComboBox materialDesign:HintAssist.Hint="Goodness of fit"
+            <ComboBox materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.GoodnessOfFitHint}"
                       HorizontalAlignment="Stretch"
                       Margin="16"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -97,9 +98,9 @@
                 </ComboBox.ItemsPanel>
             </ComboBox>
 
-            <TextBlock Text="Max degree of parallerism"
-                               HorizontalAlignment="Center"
-                               Margin="0 8 0 4" />
+            <TextBlock Text="{x:Static properties:DesktopAppStrings.MaxDegreeOfParallerismText}"
+                       HorizontalAlignment="Center"
+                       Margin="0 8 0 4" />
             <Slider TickPlacement="BottomRight"
                     IsSnapToTickEnabled="True"
                     Margin="16 0"
@@ -127,27 +128,13 @@
                 <!--
                 Show warning about restriction to select degree of parallelism when PC has only one
                 CPU.
-                        
+
                 May be later we change minimum value of parallelism. 
                 -->
-                <Border Background="GhostWhite"
-                        BorderBrush="Gainsboro"
-                        BorderThickness="1"
-                        Margin="8 16 8 8"
-                        Visibility="{Binding Path=RawParameters.IsHintForDegreeOfParallelismVisible,
-                                     Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
-                    <StackPanel Orientation="Horizontal"
-                                Margin="8">
-                        <materialDesign:PackIcon Kind="Exclamation"
-                                                 Foreground="Red" />
-
-                        <TextBlock Margin="8 0 0 0"
-                                   DockPanel.Dock="Bottom">
-                            Warning: you cannot specify degree of parallelism<LineBreak />
-                            because PC has insufficient number of resources.
-                        </TextBlock>
-                    </StackPanel>
-                </Border>
+                <views:WarningOnEmptyControlView Visibility="{Binding Path=RawParameters.IsHintForDegreeOfParallelismVisible,
+                                                              Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                    <Run Text="{x:Static properties:DesktopAppStrings.WarningInsufficientNumberOfResourcesText}" />
+                </views:WarningOnEmptyControlView>
             </DockPanel>
         </StackPanel>
     </materialDesign:Card>

@@ -36,12 +36,12 @@
                     x:Name="AlgorithmPanel">
             <TextBlock Margin="16 16 12 0"
                        FontSize="16"
-                       Text="{x:Static properties:DesktopAppStrings.AlgorithmParametersPanelName}" />
+                       Text="{x:Static properties:DesktopAppStrings.AlgorithmParametersPanelHeader}" />
 
             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
             <ComboBox x:Name="AlgorithmComboBox"
-                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AlgorithmComboBoxHint}"
+                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AlgorithmHint}"
                       HorizontalAlignment="Stretch"
                       Margin="16"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -63,11 +63,11 @@
             -->
             <views:WarningOnEmptyControlView Visibility="{Binding Path=SelectiveParameters.IsHintForAlgorithmVisible,
                                                           Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
-                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAlgorithms}" />
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAlgorithmsText}" />
             </views:WarningOnEmptyControlView>
 
             <TextBox x:Name="FirstValueTextBox"
-                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.FirstValueTextBoxHint}"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.FirstValueHint}"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -86,7 +86,7 @@
             </TextBox>
 
             <TextBox x:Name="LastValueTextBox"
-                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LastValueTextBoxHint}"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LastValueHint}"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -105,7 +105,7 @@
             </TextBox>
 
             <TextBox x:Name="LastExtrapolationValueTextBox"
-                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LastExtrapolationValueTextBoxHint}"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LastExtrapolationValueHint}"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -124,7 +124,7 @@
             </TextBox>
 
             <TextBox x:Name="LaunchesNumberTextBox"
-                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LaunchesNumberTextBoxHint}"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LaunchesNumberHint}"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
@@ -143,7 +143,7 @@
             </TextBox>
 
             <TextBox x:Name="StepValueTextBox"
-                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.StepValueTextBoxHint}"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.StepValueHint}"
                      Margin="16"
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
