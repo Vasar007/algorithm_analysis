@@ -72,7 +72,7 @@
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                     Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                     Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
                     <Binding Path="RawParameters.StartValue"
                              UpdateSourceTrigger="PropertyChanged"
@@ -91,7 +91,7 @@
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                     Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                     Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
                     <Binding Path="RawParameters.EndValue"
                              UpdateSourceTrigger="PropertyChanged"
@@ -110,7 +110,7 @@
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                     Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                     Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
                     <Binding Path="RawParameters.ExtrapolationSegmentValue"
                              UpdateSourceTrigger="PropertyChanged"
@@ -129,7 +129,7 @@
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                     Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                     Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
                     <Binding Path="RawParameters.LaunchesNumber"
                              UpdateSourceTrigger="PropertyChanged"
@@ -148,7 +148,7 @@
                      FontSize="{StaticResource ResourceKey=DefaultFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                     Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                     Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
                     <Binding Path="RawParameters.Step"
                              UpdateSourceTrigger="PropertyChanged"
