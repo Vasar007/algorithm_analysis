@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Common.Files;
+using AlgorithmAnalysis.Common.Threading;
 using AlgorithmAnalysis.DomainLogic.Excel;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo;
 using AlgorithmAnalysis.Logging;
@@ -19,12 +20,15 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
         private readonly ExcelWrapperForPhaseTwo _excelWrapperForPhaseTwo;
 
+        private readonly AsyncLock _asyncLock;
+
 
         public AnalysisPhaseTwo(LocalFileWorker fileWorker)
         {
             _fileWorker = fileWorker.ThrowIfNull(nameof(fileWorker));
 
             _excelWrapperForPhaseTwo = new ExcelWrapperForPhaseTwo();
+            _asyncLock = new AsyncLock();
         }
 
         #region IAnalysis Implementation
@@ -68,7 +72,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
                 args: context.Args,
                 launchContext: context.LaunchContext,
                 fileWorker: _fileWorker,
-                callback: fileObject => PerformOneIteration(excelContext, fileObject)
+                asyncCallback: fileObject => PerformOneIterationASync(excelContext, fileObject)
             );
 
             _excelWrapperForPhaseTwo.ApplyAnalysisAndSaveData(excelContext);
@@ -76,14 +80,18 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             return new AnalysisPhaseTwoResult();
         }
 
-        private void PerformOneIteration(ExcelContextForPhaseTwo<IAnalysisPhaseTwo> excelContext,
-            FileObject fileObject)
+        private async Task PerformOneIterationASync(
+            ExcelContextForPhaseTwo<IAnalysisPhaseTwo> excelContext, FileObject fileObject)
         {
-            _excelWrapperForPhaseTwo.ApplyAnalysisAndSaveDataOneIteration(
-                data: fileObject.Data.GetData(item => item.operationNumber),
-                excelContext: excelContext,
-                dataFilename: fileObject.Data.Name
-            );
+             // Lock data processing to avoid corrupted results in the final Excel file.
+            using (await _asyncLock.EnterAsync())
+            {
+                _excelWrapperForPhaseTwo.ApplyAnalysisAndSaveDataOneIteration(
+                    data: fileObject.Data.GetData(item => item.operationNumber),
+                    excelContext: excelContext,
+                    dataFilename: fileObject.Data.Name
+                );
+            }
         }
     }
 }
