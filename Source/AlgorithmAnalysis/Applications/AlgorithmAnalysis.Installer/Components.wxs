@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
   <Fragment>
-    
+
     <!-- Product Components -->
     <ComponentGroup Id="ProductComponents">
 
@@ -17,6 +17,9 @@
 
       <!-- Bubble sort module -->
       <ComponentRef Id="BubbleModule" />
+
+      <!-- Working folder -->
+      <ComponentRef Id="ProcessingCommonAppDataFolder" />
 
     </ComponentGroup>
 
@@ -43,7 +46,7 @@
                        Value="1"
                        Type="integer"
                        KeyPath="yes" />
-        
+
         <!-- Remove start menu items -->
         <RemoveFolder Id="RemoveStartMenu"
                       Directory="InstallProgramMenuFolder"
@@ -84,8 +87,7 @@
 
         <File Id="algorithm_analysis.exe"
               Source="$(var.ProjectDir)\Binaries\algorithm_analysis.exe"
-              KeyPath="yes"
-              Checksum="yes" />
+              KeyPath="yes" />
 
       </Component>
 
@@ -95,13 +97,24 @@
 
         <File Id="AlgorithmAnalysis.Examples.NewAlgorithm.exe"
               Source="$(var.ProjectDir)\Binaries\AlgorithmAnalysis.Examples.NewAlgorithm.exe"
-              KeyPath="yes"
-              Checksum="yes" />
+              KeyPath="yes" />
 
       </Component>
-      
+
+      <!-- Create working folder on install and remove on uninstall -->
+      <Component Id="ProcessingCommonAppDataFolder"
+                 Guid="{2C1C3831-D3C7-47F4-A7A9-7AA069039762}"
+                 KeyPath="yes">
+
+        <CreateFolder Directory="CommonAppDataWorkingFolder" />
+        <RemoveFolder Id="RemoveWorkingAppDataFolder"
+                      Directory="CommonAppDataWorkingFolder"
+                      On="uninstall" />
+
+      </Component>
+
     </DirectoryRef>
-    
+
   </Fragment>
  
 

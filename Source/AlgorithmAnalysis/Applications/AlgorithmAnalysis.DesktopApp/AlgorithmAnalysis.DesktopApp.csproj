@@ -12,7 +12,7 @@
     <WarningLevel>4</WarningLevel>
     <RootNamespace>AlgorithmAnalysis.DesktopApp</RootNamespace>
     <ApplicationIcon>Resources\AlgorithmAnalysisIcon.ico</ApplicationIcon>
-    <Version>1.0.0.0</Version>
+    <Version>1.1.0.0</Version>
     <Authors>Vasily Vasilyev</Authors>
     <Product>Algorithm Analysis System</Product>
     <Description>The automated system for evaluating the effectiveness of algorithms based on the confidence labor intensity function. In a given range of input data, the confidence labor intensity is calculated automatically based on an empirical analysis of the software implementation. There is an opportunity to add new implementations of algorithms for analysis to the system. The developed system is useful for comparative analysis in order to select the most effective algorithms and their software implementations when creating effective software for onboard computer systems operating in real time.</Description>
@@ -23,6 +23,8 @@
     <RepositoryUrl>https://github.com/Vasar007/algorithm_analysis</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>analysis, algorithms, math, statistics, empirical-analysis excel, dotnet</PackageTags>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
