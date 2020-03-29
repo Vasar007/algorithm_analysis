@@ -83,13 +83,23 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         private async Task PerformOneIterationASync(
             ExcelContextForPhaseTwo<IAnalysisPhaseTwo> excelContext, FileObject fileObject)
         {
-             // Lock data processing to avoid corrupted results in the final Excel file.
+            _logger.Info("Awaiting an opportunity to start processing of algorithm results.");
+
+            // Lock data processing to avoid corrupted results in the final Excel file.
             using (await _asyncLock.EnterAsync())
             {
+                _logger.Info(
+                    "Processing began for algorithm results for one iteration of phase two."
+                );
+
                 _excelWrapperForPhaseTwo.ApplyAnalysisAndSaveDataOneIteration(
                     data: fileObject.Data.GetData(item => item.operationNumber),
                     excelContext: excelContext,
                     dataFilename: fileObject.Data.Name
+                );
+
+                _logger.Info(
+                    "Processing finished for algorithm results for one iteration of phase two."
                 );
             }
         }
