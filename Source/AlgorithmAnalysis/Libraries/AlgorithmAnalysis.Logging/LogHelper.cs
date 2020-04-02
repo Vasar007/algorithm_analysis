@@ -36,7 +36,7 @@ namespace AlgorithmAnalysis.Logging
             loggerOptions.ThrowIfNull(nameof(loggerOptions));
 
             string fullLogFilename =
-                $"{logName}{loggerOptions.LogNameSeparator}{Utils.GetLocalShortDate()}";
+                $"{logName}{loggerOptions.LogFilenameSeparator}{Utils.GetLocalShortDate()}";
 
             return $"{fullLogFilename}{loggerOptions.LogFilesExtension}";
         }
