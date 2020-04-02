@@ -13,7 +13,7 @@ namespace AlgorithmAnalysis.Configuration
         public ExcelVersion Version { get; set; } = ExcelVersion.V2007;
 
         public string OutputExcelFilePath { get; set; } =
-             Path.Combine(CommonConstants.DefaultResultFolderPath, "results.xlsx");
+             Path.Combine(CommonConstants.DefaultResultFolderPath, CommonConstants.DefaultResultFilename);
 
 
         public ExcelOptions()

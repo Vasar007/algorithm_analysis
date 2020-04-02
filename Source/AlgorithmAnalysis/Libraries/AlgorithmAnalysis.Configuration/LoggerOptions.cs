@@ -8,9 +8,9 @@ namespace AlgorithmAnalysis.Configuration
 
         public bool EnableLogForExcelLibrary { get; set; } = false;
 
-        public string LogFilesExtension { get; set; } = ".log";
+        public string LogFilesExtension { get; set; } = CommonConstants.DefaultLogFilenameExtensions;
 
-        public string LogNameSeparator { get; set; } = "-";
+        public string LogFilenameSeparator { get; set; } = CommonConstants.DefaultLogFilenameSeparator;
 
 
         public LoggerOptions()

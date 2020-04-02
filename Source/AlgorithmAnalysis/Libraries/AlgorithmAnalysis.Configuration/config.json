@@ -44,6 +44,6 @@
     "LogFolderPath": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/logs",
     "EnableLogForExcelLibrary": "false",
     "LogFilesExtension": ".log",
-    "LogNameSeparator": "-"
+    "LogFilenameSeparator": "-"
   }
 }

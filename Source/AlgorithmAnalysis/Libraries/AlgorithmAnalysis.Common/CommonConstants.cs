@@ -18,6 +18,12 @@ namespace AlgorithmAnalysis.Common
 
         public static string CommonApplicationData { get; } = "SpecialFolder.CommonApplicationData";
 
+        public static string DefaultLogFilenameExtensions { get; } = ".log";
+
+        public static string DefaultLogFilenameSeparator { get; } = "-";
+
+        public static string DefaultResultFilename { get; } = "results.xlsx";
+
         public static string DefaultWorkingPath { get; } =
             Utils.CreateSpecificPath(CommonApplicationData, appendAdppFolder: true);
 
