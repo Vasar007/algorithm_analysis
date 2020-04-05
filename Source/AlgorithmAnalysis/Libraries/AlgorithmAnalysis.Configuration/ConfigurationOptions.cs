@@ -1,20 +1,23 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using AlgorithmAnalysis.Common;
 using Microsoft.Extensions.Configuration;
 
 namespace AlgorithmAnalysis.Configuration
 {
-    public static partial class ConfigOptions
+    public static class ConfigOptions
     {
         private static readonly Lazy<IConfigurationRoot> Root =
             new Lazy<IConfigurationRoot>(LoadOptions);
 
-        public static string ConfigFilename { get; } = "config.json";
+        public static string ConfigFilename => CommonConstants.ConfigFilename;
+
+        public static string AlternativeOptionsPath => PredefinedPaths.AlternativeOptionsPath;
 
         public static AnalysisOptions Analysis => GetOptions<AnalysisOptions>();
 
-        public static ExcelOptions Excel => GetOptions<ExcelOptions>();
+        public static ReportOptions Report => GetOptions<ReportOptions>();
 
         public static LoggerOptions Logger => GetOptions<LoggerOptions>();
 
@@ -35,7 +38,7 @@ namespace AlgorithmAnalysis.Configuration
 
             string configPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
                 ? Path.Combine(Directory.GetCurrentDirectory(), ConfigFilename)
-                : $"/etc/algorithm_analysis/{ConfigFilename}";
+                : AlternativeOptionsPath;
 
             configurationBuilder.AddJsonFile(configPath, optional: true, reloadOnChange: true);
             return configurationBuilder.Build();

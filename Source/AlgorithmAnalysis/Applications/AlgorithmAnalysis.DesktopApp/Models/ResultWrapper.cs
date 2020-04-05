@@ -7,22 +7,22 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 {
     internal sealed class ResultWrapper
     {
-        public FileInfo OutputExcelFile { get; }
+        public FileInfo OutputReportFile { get; }
 
 
-        private ResultWrapper(FileInfo outputExcelFile)
+        private ResultWrapper(FileInfo outputReportFile)
         {
-            OutputExcelFile = outputExcelFile.ThrowIfNull(nameof(outputExcelFile));
+            OutputReportFile = outputReportFile.ThrowIfNull(nameof(outputReportFile));
         }
 
-        public static ResultWrapper Create(ExcelOptions excelOptions)
+        public static ResultWrapper Create(ReportOptions reportOptions)
         {
-            string outputExcelFilePath = Utils.GetOrCreateFolderAndAppendFilePathToResult(
-                excelOptions.OutputExcelFilePath, CommonConstants.DefaultResultFolderPath
+            string outputReportFilePath = Utils.GetOrCreateFolderAndAppendFilePathToResult(
+                reportOptions.OutputReportFilePath, PredefinedPaths.DefaultResultFolderPath
             );
 
-            var outputExcelFile = new FileInfo(outputExcelFilePath);
-            return new ResultWrapper(outputExcelFile);
+            var outputReportFile = new FileInfo(outputReportFilePath);
+            return new ResultWrapper(outputReportFile);
         }
     }
 }

@@ -33,7 +33,7 @@
     "OutputFileExtension": ".txt"
   },
 
-  "ExcelOptions": {
+  "ReportOptions": {
     "CellCreationMode": "Centerized",
     "LibraryProvider": "EPPlus",
     "Version": "V2007",

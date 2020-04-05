@@ -8,7 +8,7 @@ namespace AlgorithmAnalysis.Excel
     internal static class ExcelWrapperHelper
     {
         public static IExcelCellHolder GetCellHolder(IExcelSheet sheet,
-            ExcelColumnIndex columnIndex, int rowIndex, ExcelOptions excelOptions)
+            ExcelColumnIndex columnIndex, int rowIndex, ReportOptions excelOptions)
         {
             sheet.ThrowIfNull(nameof(sheet));
             excelOptions.ThrowIfNull(nameof(excelOptions));

@@ -4,7 +4,7 @@ using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.Configuration
 {
-    public sealed class ExcelOptions : IOptions
+    public sealed class ReportOptions : IOptions
     {
         public ExcelCellCreationMode CellCreationMode { get; set; } = ExcelCellCreationMode.Centerized;
 
@@ -12,11 +12,11 @@ namespace AlgorithmAnalysis.Configuration
 
         public ExcelVersion Version { get; set; } = ExcelVersion.V2007;
 
-        public string OutputExcelFilePath { get; set; } =
-             Path.Combine(CommonConstants.DefaultResultFolderPath, CommonConstants.DefaultResultFilename);
+        public string OutputReportFilePath { get; set; } =
+             Path.Combine(PredefinedPaths.DefaultResultFolderPath, CommonConstants.DefaultResultFilename);
 
 
-        public ExcelOptions()
+        public ReportOptions()
         {
         }
     }

@@ -64,7 +64,7 @@ namespace AlgorithmAnalysis.DomainLogic
             args.ThrowIfNull(nameof(args));
 
             return Utils.GetOrCreateFolderUsingFilePath(
-                args.OutputFilenamePattern, CommonConstants.DefaultDataFolderPath
+                args.OutputFilenamePattern, PredefinedPaths.DefaultDataFolderPath
             );
         }
 

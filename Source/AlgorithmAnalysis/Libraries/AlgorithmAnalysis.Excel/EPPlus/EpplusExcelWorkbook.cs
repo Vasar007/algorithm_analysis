@@ -14,14 +14,14 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 
         private readonly IExcelFormulaProvider _formulaProvider;
 
-        private readonly ExcelOptions _excelOptions;
+        private readonly ReportOptions _excelOptions;
 
         private readonly EpplusLogger _epplusLogger;
 
         private bool _disposed;
 
 
-        public EpplusExcelWorkbook(ExcelOptions excelOptions)
+        public EpplusExcelWorkbook(ReportOptions excelOptions)
         {
             InitPackageLicence();
 
@@ -34,7 +34,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             RegisterFunctionModules();
         }
 
-        public EpplusExcelWorkbook(FileInfo pathToWorkbook, ExcelOptions excelOptions)
+        public EpplusExcelWorkbook(FileInfo pathToWorkbook, ReportOptions excelOptions)
         {
             pathToWorkbook.ThrowIfNull(nameof(pathToWorkbook));
 

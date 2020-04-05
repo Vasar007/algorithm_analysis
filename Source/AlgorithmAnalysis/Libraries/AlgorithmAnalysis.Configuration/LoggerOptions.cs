@@ -4,7 +4,7 @@ namespace AlgorithmAnalysis.Configuration
 {
     public sealed class LoggerOptions : IOptions
     {
-        public string LogFolderPath { get; set; } = CommonConstants.DefaultLogFolderPath;
+        public string LogFolderPath { get; set; } = PredefinedPaths.DefaultLogFolderPath;
 
         public bool EnableLogForExcelLibrary { get; set; } = false;
 

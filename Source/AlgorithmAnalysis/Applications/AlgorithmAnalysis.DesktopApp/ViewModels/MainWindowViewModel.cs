@@ -44,7 +44,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public MainWindowViewModel()
         {
-            _result = ResultWrapper.Create(ConfigOptions.Excel);
+            _result = ResultWrapper.Create(ConfigOptions.Report);
             _performer = new AnalysisPerformer();
 
             Title = DesktopOptions.Title;
@@ -71,7 +71,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 // TODO: display waiting message (and progress bar, if it's possible).
 
                 AnalysisContext context = RawParameters.CreateContext(
-                    _result.OutputExcelFile, SelectiveParameters
+                    _result.OutputReportFile, SelectiveParameters
                 );
 
                 CheckOutputFile();
@@ -102,9 +102,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         private void CheckOutputFile()
         {
             // Use static File methods because FileInfo can have out-of-date state.
-            if (!File.Exists(_result.OutputExcelFile.FullName)) return;
+            if (!File.Exists(_result.OutputReportFile.FullName)) return;
 
-            // TODO: check final excel file and ASK user to delete file or change output name.
+            // TODO: check final report file and ASK user to delete file or change output name.
             string message =
                 "There are file with the same name as output analysis file " +
                 $"('{_result}'). " +
@@ -112,7 +112,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
             MessageBoxProvider.ShowInfo(message);
 
-            File.Delete(_result.OutputExcelFile.FullName);
+            File.Delete(_result.OutputReportFile.FullName);
         }
 
         private void ProcessResult(AnalysisResult result)
@@ -133,7 +133,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         {
             if (AnalysisSpecific.OpenAnalysisResults)
             {
-                _ = ProcessManager.OpenFileWithAssociatedAppAsync(_result.OutputExcelFile);
+                _ = ProcessManager.OpenFileWithAssociatedAppAsync(_result.OutputReportFile);
             }
         }
     }

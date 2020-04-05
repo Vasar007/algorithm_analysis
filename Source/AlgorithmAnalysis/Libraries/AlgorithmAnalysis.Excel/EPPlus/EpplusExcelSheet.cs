@@ -15,7 +15,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
 
         internal EpplusExcelSheet(
             ExcelWorksheet sheet,
-            ExcelOptions excelOptions,
+            ReportOptions excelOptions,
             IExcelFormulaProvider formulaProvider)
             : base(excelOptions, formulaProvider)
         {
