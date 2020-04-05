@@ -49,7 +49,7 @@
 
     <materialDesign:DialogHost x:Name="MainWindowDialogHost"
                                Identifier="RootDialog"
-                               CloseOnClickAway="True">
+                               CloseOnClickAway="False">
 
         <DockPanel>
             <materialDesign:ColorZone Mode="Inverted"

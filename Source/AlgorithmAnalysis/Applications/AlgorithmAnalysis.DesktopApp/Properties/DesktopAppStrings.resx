@@ -145,6 +145,14 @@
     <value>Analysis kind for phase two</value>
     <comment>Hint for analysis kind for phase two combo box.</comment>
   </data>
+  <data name="CloseButtonText" xml:space="preserve">
+    <value>Close</value>
+    <comment>Text for close button to close dialog.</comment>
+  </data>
+  <data name="CloseButtonToolTip" xml:space="preserve">
+    <value>Close dialog</value>
+    <comment>Tool tip for close button to close dialog.</comment>
+  </data>
   <data name="ExitButtonText" xml:space="preserve">
     <value>Exit</value>
     <comment>Text for exit button to close app.</comment>
