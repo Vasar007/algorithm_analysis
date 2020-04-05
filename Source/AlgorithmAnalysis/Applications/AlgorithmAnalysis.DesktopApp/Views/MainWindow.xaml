@@ -75,10 +75,14 @@
                         </StackPanel>
                     </materialDesign:PopupBox>
 
-                    <TextBlock HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontSize="22"
-                               Text="{Binding Path=Title, Mode=OneWay}" />
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="22"
+                                       Text="{Binding Path=Title}" />
+
+                        <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+                    </StackPanel>
                 </DockPanel>
             </materialDesign:ColorZone>
 
