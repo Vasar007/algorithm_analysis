@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:system="clr-namespace:System;assembly=System.Runtime"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
         xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
         xmlns:converters="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Converters"
@@ -46,84 +47,123 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <StackPanel VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch"
-                Orientation="Vertical"
-                Margin="16"
-                IsEnabled="{Binding Path=CanExecuteAnalysis}">
+    <materialDesign:DialogHost x:Name="MainWindowDialogHost"
+                               Identifier="RootDialog"
+                               CloseOnClickAway="True">
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Orientation="Horizontal">
+        <DockPanel>
+            <materialDesign:ColorZone Mode="Inverted"
+                                      Padding="16"
+                                      DockPanel.Dock="Top">
+                <DockPanel>
+                    <materialDesign:PopupBox DockPanel.Dock="Right"
+                                             PlacementMode="BottomAndAlignRightEdges"
+                                             StaysOpen="False">
+                        <StackPanel>
+                            <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                    ToolTip="{x:Static properties:DesktopAppStrings.SettingsButtonToolTip}"
+                                    Content="{x:Static properties:DesktopAppStrings.SettingsButtonText}">
+                                <Button.CommandParameter>
+                                    <views:SettingsView />
+                                </Button.CommandParameter>
+                            </Button >
 
-            <views:AlgorithmParametersView x:Name="AlgorithmParametersView" />
+                            <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+                            <Button Command="{Binding Path=AppCloseCommand}"
+                                    ToolTip="{x:Static properties:DesktopAppStrings.ExitButtonToolTip}"
+                                    Content="{x:Static properties:DesktopAppStrings.ExitButtonText}" />
+                        </StackPanel>
+                    </materialDesign:PopupBox>
 
-            <views:AnalysisParametersView x:Name="AnalysisParametersView" />
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="22"
+                               Text="{Binding Path=Title, Mode=OneWay}" />
+                </DockPanel>
+            </materialDesign:ColorZone>
 
-            <views:AdvancedParametersView x:Name="AdvancedParametersView" />
 
-        </StackPanel>
+            <StackPanel VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        Orientation="Vertical"
+                        Margin="16"
+                        IsEnabled="{Binding Path=CanExecuteAnalysis}">
 
-        <StackPanel Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
-                    Orientation="Vertical">
-            <UniformGrid Rows="1"
-                         Columns="2">
-                <Button Command="{Binding Path=RunCommand}"
-                        Margin="8"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        ToolTip="{x:Static properties:DesktopAppStrings.RunButtonToolTip}"
-                        Content="{x:Static properties:DesktopAppStrings.RunButtonText}">
-                    <Button.IsEnabled>
-                        <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
-                                      Mode="OneWay">
-                            <!-- Algorithm parameters panel -->
-                            <Binding ElementName="AlgorithmParametersView"
-                                     Path="AlgorithmComboBoxProxy.SelectedItem"
-                                     Mode="OneWay" />
-                            <Binding ElementName="AlgorithmParametersView"
-                                     Path="FirstValueTextBoxProxy.(Validation.HasError)"
-                                     Mode="OneWay" />
-                            <Binding ElementName="AlgorithmParametersView"
-                                     Path="LastValueTextBoxProxy.(Validation.HasError)"
-                                     Mode="OneWay" />
-                            <Binding ElementName="AlgorithmParametersView"
-                                     Path="LastExtrapolationValueTextBoxProxy.(Validation.HasError)"
-                                     Mode="OneWay" />
-                            <Binding ElementName="AlgorithmParametersView"
-                                     Path="LaunchesNumberTextBoxProxy.(Validation.HasError)"
-                                     Mode="OneWay" />
-                            <Binding ElementName="AlgorithmParametersView"
-                                     Path="StepValueTextBoxProxy.(Validation.HasError)"
-                                     Mode="OneWay" />
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
 
-                            <!-- Analysis parameters panel -->
-                            <Binding ElementName="AnalysisParametersView"
-                                     Path="AnalysisPhaseOnePartOneComboBoxProxy.SelectedItem"
-                                     Mode="OneWay" />
-                            <Binding ElementName="AnalysisParametersView"
-                                     Path="AnalysisPhaseOnePartTwoComboBoxProxy.SelectedItem"
-                                     Mode="OneWay" />
-                            <Binding ElementName="AnalysisParametersView"
-                                     Path="AnalysisPhaseTwoComboBoxProxy.SelectedItem"
-                                     Mode="OneWay" />
-                            <Binding ElementName="AnalysisParametersView"
-                                     Path="GoodnessOfFitComboBoxProxy.SelectedItem"
-                                     Mode="OneWay" />
-                        </MultiBinding>
-                    </Button.IsEnabled>
-                </Button>
+                    <views:AlgorithmParametersView x:Name="AlgorithmParametersView" />
 
-                <Button Command="{Binding Path=ResetCommand}"
-                        Margin="8"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        ToolTip="{x:Static properties:DesktopAppStrings.ResetButtonToolTip}"
-                        Content="{x:Static properties:DesktopAppStrings.ResetButtonText}" />
+                    <views:AnalysisParametersView x:Name="AnalysisParametersView" />
 
-            </UniformGrid>
-        </StackPanel>
+                    <views:AdvancedParametersView x:Name="AdvancedParametersView" />
 
-    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
+                            Orientation="Vertical">
+                    <UniformGrid Rows="1"
+                                 Columns="2">
+                        <Button Command="{Binding Path=RunCommand}"
+                                Margin="8"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                ToolTip="{x:Static properties:DesktopAppStrings.RunButtonToolTip}"
+                                Content="{x:Static properties:DesktopAppStrings.RunButtonText}">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
+                                              Mode="OneWay">
+                                    <!-- Algorithm parameters panel -->
+                                    <Binding ElementName="AlgorithmParametersView"
+                                             Path="AlgorithmComboBoxProxy.SelectedItem"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="AlgorithmParametersView"
+                                             Path="FirstValueTextBoxProxy.(Validation.HasError)"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="AlgorithmParametersView"
+                                             Path="LastValueTextBoxProxy.(Validation.HasError)"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="AlgorithmParametersView"
+                                             Path="LastExtrapolationValueTextBoxProxy.(Validation.HasError)"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="AlgorithmParametersView"
+                                             Path="LaunchesNumberTextBoxProxy.(Validation.HasError)"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="AlgorithmParametersView"
+                                             Path="StepValueTextBoxProxy.(Validation.HasError)"
+                                             Mode="OneWay" />
+
+                                    <!-- Analysis parameters panel -->
+                                    <Binding ElementName="AnalysisParametersView"
+                                             Path="AnalysisPhaseOnePartOneComboBoxProxy.SelectedItem"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="AnalysisParametersView"
+                                             Path="AnalysisPhaseOnePartTwoComboBoxProxy.SelectedItem"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="AnalysisParametersView"
+                                             Path="AnalysisPhaseTwoComboBoxProxy.SelectedItem"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="AnalysisParametersView"
+                                             Path="GoodnessOfFitComboBoxProxy.SelectedItem"
+                                             Mode="OneWay" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
+
+                        <Button Command="{Binding Path=ResetCommand}"
+                                Margin="8"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                ToolTip="{x:Static properties:DesktopAppStrings.ResetButtonToolTip}"
+                                Content="{x:Static properties:DesktopAppStrings.ResetButtonText}" />
+
+                    </UniformGrid>
+                </StackPanel>
+
+            </StackPanel>
+        </DockPanel>
+
+    </materialDesign:DialogHost>
 
 </Window>

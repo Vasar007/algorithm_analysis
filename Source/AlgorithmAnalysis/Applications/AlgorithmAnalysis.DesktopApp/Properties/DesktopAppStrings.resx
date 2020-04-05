@@ -145,6 +145,14 @@
     <value>Analysis kind for phase two</value>
     <comment>Hint for analysis kind for phase two combo box.</comment>
   </data>
+  <data name="ExitButtonText" xml:space="preserve">
+    <value>Exit</value>
+    <comment>Text for exit button to close app.</comment>
+  </data>
+  <data name="ExitButtonToolTip" xml:space="preserve">
+    <value>Close app</value>
+    <comment>Tool tip for exit button to close app.</comment>
+  </data>
   <data name="FirstValueHint" xml:space="preserve">
     <value>The first value of function segment to analyze</value>
     <comment>Hint for first value text box.</comment>
@@ -188,6 +196,14 @@
   <data name="RunButtonToolTip" xml:space="preserve">
     <value>Run analysis (window will be blocked)</value>
     <comment>Tool tip for run button to execute analysis.</comment>
+  </data>
+  <data name="SettingsButtonText" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Text for settigns button to open app settings.</comment>
+  </data>
+  <data name="SettingsButtonToolTip" xml:space="preserve">
+    <value>Open app settings</value>
+    <comment>Tool tip for settigns button to open app settings.</comment>
   </data>
   <data name="ShowAnalysisWindowText" xml:space="preserve">
     <value>Show analysis window</value>

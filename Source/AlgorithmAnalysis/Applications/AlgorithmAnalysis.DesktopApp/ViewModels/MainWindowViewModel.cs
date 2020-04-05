@@ -35,6 +35,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             set => SetProperty(ref _canExecuteAnalysis, value);
         }
 
+        public ICommand AppCloseCommand { get; }
+
         public ICommand RunCommand { get; }
 
         public ICommand ResetCommand { get; }
@@ -51,6 +53,10 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             RawParameters = new RawParametersPack();
             SelectiveParameters = new SelectiveParametersModel();
             CanExecuteAnalysis = true;
+
+            AppCloseCommand = new DelegateCommand(
+                ApplicationCloseCommand.Execute, ApplicationCloseCommand.CanExecute
+            );
 
             RunCommand = new AsyncRelayCommand(LaunchAnalysis);
             ResetCommand = new DelegateCommand(ResetFields);

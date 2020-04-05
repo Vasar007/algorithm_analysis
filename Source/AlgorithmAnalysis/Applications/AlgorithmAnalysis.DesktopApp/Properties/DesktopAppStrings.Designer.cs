@@ -124,6 +124,24 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        public static string ExitButtonText {
+            get {
+                return ResourceManager.GetString("ExitButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close app.
+        /// </summary>
+        public static string ExitButtonToolTip {
+            get {
+                return ResourceManager.GetString("ExitButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The first value of function segment to analyze.
         /// </summary>
         public static string FirstValueHint {
@@ -219,6 +237,24 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string RunButtonToolTip {
             get {
                 return ResourceManager.GetString("RunButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string SettingsButtonText {
+            get {
+                return ResourceManager.GetString("SettingsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open app settings.
+        /// </summary>
+        public static string SettingsButtonToolTip {
+            get {
+                return ResourceManager.GetString("SettingsButtonToolTip", resourceCulture);
             }
         }
         
