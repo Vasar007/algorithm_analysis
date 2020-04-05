@@ -3,9 +3,9 @@
 namespace AlgorithmAnalysis.DesktopApp.Views
 {
     /// <summary>
-    /// Interaction logic for AnalysisParametersView.xaml
+    /// Interaction logic for ParametersAnalysisView.xaml
     /// </summary>
-    public sealed partial class AnalysisParametersView : UserControl
+    public sealed partial class ParametersAnalysisView : UserControl
     {
         #region Proxy Properties
 
@@ -19,7 +19,7 @@ namespace AlgorithmAnalysis.DesktopApp.Views
 
         #endregion
 
-        public AnalysisParametersView()
+        public ParametersAnalysisView()
         {
             InitializeComponent();
         }

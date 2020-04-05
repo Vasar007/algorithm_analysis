@@ -88,6 +88,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analysis.
+        /// </summary>
+        public static string AnalysisOptionsHeader {
+            get {
+                return ResourceManager.GetString("AnalysisOptionsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Analysis parameters.
         /// </summary>
         public static string AnalysisParametersHeader {
@@ -126,9 +135,9 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Appearence.
         /// </summary>
-        public static string AppearenceHeader {
+        public static string AppearenceOptionsHeader {
             get {
-                return ResourceManager.GetString("AppearenceHeader", resourceCulture);
+                return ResourceManager.GetString("AppearenceOptionsHeader", resourceCulture);
             }
         }
         
@@ -232,6 +241,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logger.
+        /// </summary>
+        public static string LoggerOptionsHeader {
+            get {
+                return ResourceManager.GetString("LoggerOptionsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max degree of parallerism.
         /// </summary>
         public static string MaxDegreeOfParallerismText {
@@ -246,6 +264,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string OpenAnalysisResultsText {
             get {
                 return ResourceManager.GetString("OpenAnalysisResultsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report.
+        /// </summary>
+        public static string ReportOptionsHeader {
+            get {
+                return ResourceManager.GetString("ReportOptionsHeader", resourceCulture);
             }
         }
         
@@ -282,6 +309,24 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string RunButtonToolTip {
             get {
                 return ResourceManager.GetString("RunButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string SaveButtonText {
+            get {
+                return ResourceManager.GetString("SaveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save all settings.
+        /// </summary>
+        public static string SaveButtonToolTip {
+            get {
+                return ResourceManager.GetString("SaveButtonToolTip", resourceCulture);
             }
         }
         

@@ -6,47 +6,68 @@
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
              xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
              xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}"
              prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <StackPanel>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultBottomPanelWidth">
+                300
+            </system:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
-        <materialDesign:Card Padding="8">
-            <StackPanel>
-                <TextBlock Margin="16 16 12 0"
-                           FontSize="16"
-                           Text="{x:Static properties:DesktopAppStrings.AppearenceHeader}" />
+    <StackPanel VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Orientation="Vertical"
+                Margin="16">
 
-                <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+        <StackPanel Orientation="Horizontal">
 
-                <StackPanel Orientation="Horizontal"
-                            Margin="8">
-                    <TextBlock VerticalAlignment="Center"
-                               Text="{x:Static properties:DesktopAppStrings.LightMode}" />
-                    <ToggleButton Margin="8 0 16 0"
-                                  Command="{Binding Path=ToggleBaseCommand}"
-                                  CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
-                                                     Path=IsChecked}" />
-                    <TextBlock VerticalAlignment="Center"
-                               Text="{x:Static properties:DesktopAppStrings.DarkMode}" />
-                </StackPanel>
-            </StackPanel>
-        </materialDesign:Card>
+            <views:SettingsAppearenceView />
 
-        <Button IsCancel="True"
-                Margin="8"
-                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                ToolTip="{x:Static properties:DesktopAppStrings.CloseButtonToolTip}"
-                Content="{x:Static properties:DesktopAppStrings.CloseButtonText}">
-            <Button.CommandParameter>
-                <system:Boolean>
-                    False
-                </system:Boolean>
-            </Button.CommandParameter>
-        </Button>
+            <views:SettingsAnalysisView />
+
+            <views:SettingsLoggerView />
+
+            <views:SettingsReportView />
+
+        </StackPanel>
+
+        <StackPanel Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
+                    Orientation="Vertical">
+            <UniformGrid Rows="1"
+                         Columns="2">
+                <Button IsDefault="True"
+                        Margin="8"
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        ToolTip="{x:Static properties:DesktopAppStrings.SaveButtonToolTip}"
+                        Content="{x:Static properties:DesktopAppStrings.SaveButtonText}">
+                    <Button.CommandParameter>
+                        <system:Boolean>
+                            True
+                        </system:Boolean>
+                    </Button.CommandParameter>
+                </Button>
+
+                <Button IsCancel="True"
+                        Margin="8"
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        ToolTip="{x:Static properties:DesktopAppStrings.CloseButtonToolTip}"
+                        Content="{x:Static properties:DesktopAppStrings.CloseButtonText}">
+                    <Button.CommandParameter>
+                        <system:Boolean>
+                            False
+                        </system:Boolean>
+                    </Button.CommandParameter>
+                </Button>
+
+            </UniformGrid>
+        </StackPanel>
 
     </StackPanel>
 

@@ -51,7 +51,7 @@
                                Identifier="RootDialog"
                                CloseOnClickAway="False">
 
-        <DockPanel>
+        <DockPanel LastChildFill="True">
             <materialDesign:ColorZone Mode="Standard"
                                       Padding="16"
                                       DockPanel.Dock="Top">
@@ -93,11 +93,11 @@
                             HorizontalAlignment="Center"
                             Orientation="Horizontal">
 
-                    <views:AlgorithmParametersView x:Name="AlgorithmParametersView" />
+                    <views:ParametersAlgorithmView x:Name="ParametersAlgorithmView" />
 
-                    <views:AnalysisParametersView x:Name="AnalysisParametersView" />
+                    <views:ParametersAnalysisView x:Name="ParametersAnalysisView" />
 
-                    <views:AdvancedParametersView x:Name="AdvancedParametersView" />
+                    <views:ParametersAdvancedView x:Name="ParametersAdvancedView" />
 
                 </StackPanel>
 
@@ -105,6 +105,7 @@
                             Orientation="Vertical">
                     <UniformGrid Rows="1"
                                  Columns="2">
+
                         <Button Command="{Binding Path=RunCommand}"
                                 Margin="8"
                                 HorizontalContentAlignment="Center"
@@ -115,36 +116,36 @@
                                 <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
                                               Mode="OneWay">
                                     <!-- Algorithm parameters panel -->
-                                    <Binding ElementName="AlgorithmParametersView"
+                                    <Binding ElementName="ParametersAlgorithmView"
                                              Path="AlgorithmComboBoxProxy.SelectedItem"
                                              Mode="OneWay" />
-                                    <Binding ElementName="AlgorithmParametersView"
+                                    <Binding ElementName="ParametersAlgorithmView"
                                              Path="FirstValueTextBoxProxy.(Validation.HasError)"
                                              Mode="OneWay" />
-                                    <Binding ElementName="AlgorithmParametersView"
+                                    <Binding ElementName="ParametersAlgorithmView"
                                              Path="LastValueTextBoxProxy.(Validation.HasError)"
                                              Mode="OneWay" />
-                                    <Binding ElementName="AlgorithmParametersView"
+                                    <Binding ElementName="ParametersAlgorithmView"
                                              Path="LastExtrapolationValueTextBoxProxy.(Validation.HasError)"
                                              Mode="OneWay" />
-                                    <Binding ElementName="AlgorithmParametersView"
+                                    <Binding ElementName="ParametersAlgorithmView"
                                              Path="LaunchesNumberTextBoxProxy.(Validation.HasError)"
                                              Mode="OneWay" />
-                                    <Binding ElementName="AlgorithmParametersView"
+                                    <Binding ElementName="ParametersAlgorithmView"
                                              Path="StepValueTextBoxProxy.(Validation.HasError)"
                                              Mode="OneWay" />
 
                                     <!-- Analysis parameters panel -->
-                                    <Binding ElementName="AnalysisParametersView"
+                                    <Binding ElementName="ParametersAnalysisView"
                                              Path="AnalysisPhaseOnePartOneComboBoxProxy.SelectedItem"
                                              Mode="OneWay" />
-                                    <Binding ElementName="AnalysisParametersView"
+                                    <Binding ElementName="ParametersAnalysisView"
                                              Path="AnalysisPhaseOnePartTwoComboBoxProxy.SelectedItem"
                                              Mode="OneWay" />
-                                    <Binding ElementName="AnalysisParametersView"
+                                    <Binding ElementName="ParametersAnalysisView"
                                              Path="AnalysisPhaseTwoComboBoxProxy.SelectedItem"
                                              Mode="OneWay" />
-                                    <Binding ElementName="AnalysisParametersView"
+                                    <Binding ElementName="ParametersAnalysisView"
                                              Path="GoodnessOfFitComboBoxProxy.SelectedItem"
                                              Mode="OneWay" />
                                 </MultiBinding>

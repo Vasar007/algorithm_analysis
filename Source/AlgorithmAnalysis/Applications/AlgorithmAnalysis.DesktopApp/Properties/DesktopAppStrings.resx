@@ -129,6 +129,10 @@
     <value>Algorithms parameters</value>
     <comment>Header text for algorithm parameters panel.</comment>
   </data>
+  <data name="AnalysisOptionsHeader" xml:space="preserve">
+    <value>Analysis</value>
+    <comment>Header text for analysis card in settings.</comment>
+  </data>
   <data name="AnalysisParametersHeader" xml:space="preserve">
     <value>Analysis parameters</value>
     <comment>Header text for analysis parameters panel.</comment>
@@ -145,7 +149,7 @@
     <value>Analysis kind for phase two</value>
     <comment>Hint for analysis kind for phase two combo box.</comment>
   </data>
-  <data name="AppearenceHeader" xml:space="preserve">
+  <data name="AppearenceOptionsHeader" xml:space="preserve">
     <value>Appearence</value>
     <comment>Header text for appearence card in settings.</comment>
   </data>
@@ -193,6 +197,10 @@
     <value>Light</value>
     <comment>Text for light mode on appearence card.</comment>
   </data>
+  <data name="LoggerOptionsHeader" xml:space="preserve">
+    <value>Logger</value>
+    <comment>Header text for logger card in settings.</comment>
+  </data>
   <data name="MaxDegreeOfParallerismText" xml:space="preserve">
     <value>Max degree of parallerism</value>
     <comment>Text for max degree of parallerism text block.</comment>
@@ -200,6 +208,10 @@
   <data name="OpenAnalysisResultsText" xml:space="preserve">
     <value>Open analysis results</value>
     <comment>Text for check box to open analysis results when analysis will be completed.</comment>
+  </data>
+  <data name="ReportOptionsHeader" xml:space="preserve">
+    <value>Report</value>
+    <comment>Header text for report card in settings.</comment>
   </data>
   <data name="ResetButtonText" xml:space="preserve">
     <value>Reset</value>
@@ -216,6 +228,14 @@
   <data name="RunButtonToolTip" xml:space="preserve">
     <value>Run analysis (window will be blocked)</value>
     <comment>Tool tip for run button to execute analysis.</comment>
+  </data>
+  <data name="SaveButtonText" xml:space="preserve">
+    <value>Save</value>
+    <comment>Text for save button to save settings.</comment>
+  </data>
+  <data name="SaveButtonToolTip" xml:space="preserve">
+    <value>Save all settings</value>
+    <comment>Tool tip for save button to save settings.</comment>
   </data>
   <data name="SettingsButtonText" xml:space="preserve">
     <value>Settings</value>

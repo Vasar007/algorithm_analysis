@@ -3,11 +3,11 @@
 namespace AlgorithmAnalysis.DesktopApp.Views
 {
     /// <summary>
-    /// Interaction logic for AdvancedParametersView.xaml
+    /// Interaction logic for SettingsAnalysisView.xaml
     /// </summary>
-    public sealed partial class AdvancedParametersView : UserControl
+    public sealed partial class SettingsAnalysisView : UserControl
     {
-        public AdvancedParametersView()
+        public SettingsAnalysisView()
         {
             InitializeComponent();
         }
