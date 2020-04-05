@@ -52,7 +52,7 @@
                                CloseOnClickAway="False">
 
         <DockPanel>
-            <materialDesign:ColorZone Mode="Inverted"
+            <materialDesign:ColorZone Mode="Standard"
                                       Padding="16"
                                       DockPanel.Dock="Top">
                 <DockPanel>

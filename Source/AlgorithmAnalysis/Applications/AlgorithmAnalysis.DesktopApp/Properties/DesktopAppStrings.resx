@@ -145,6 +145,10 @@
     <value>Analysis kind for phase two</value>
     <comment>Hint for analysis kind for phase two combo box.</comment>
   </data>
+  <data name="AppearenceHeader" xml:space="preserve">
+    <value>Appearence</value>
+    <comment>Header text for appearence card in settings.</comment>
+  </data>
   <data name="CloseButtonText" xml:space="preserve">
     <value>Close</value>
     <comment>Text for close button to close dialog.</comment>
@@ -152,6 +156,10 @@
   <data name="CloseButtonToolTip" xml:space="preserve">
     <value>Close dialog</value>
     <comment>Tool tip for close button to close dialog.</comment>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Dark</value>
+    <comment>Text for dark mode on appearence card.</comment>
   </data>
   <data name="ExitButtonText" xml:space="preserve">
     <value>Exit</value>
@@ -180,6 +188,10 @@
   <data name="LaunchesNumberHint" xml:space="preserve">
     <value>The initial launches number</value>
     <comment>Hint for initial launches number text box.</comment>
+  </data>
+  <data name="LightMode" xml:space="preserve">
+    <value>Light</value>
+    <comment>Text for light mode on appearence card.</comment>
   </data>
   <data name="MaxDegreeOfParallerismText" xml:space="preserve">
     <value>Max degree of parallerism</value>

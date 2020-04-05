@@ -8,7 +8,7 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
              xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}"
              prism:ViewModelLocator.AutoWireViewModel="True">
 
@@ -17,23 +17,21 @@
         <materialDesign:Card Padding="8">
             <StackPanel>
                 <TextBlock Margin="16 16 12 0"
-                           FontSize="16">
-                    Appearance
-                </TextBlock>
+                           FontSize="16"
+                           Text="{x:Static properties:DesktopAppStrings.AppearenceHeader}" />
 
                 <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
                 <StackPanel Orientation="Horizontal"
-                    Margin="8">
-                    <TextBlock VerticalAlignment="Center">
-                        Light
-                    </TextBlock>
+                            Margin="8">
+                    <TextBlock VerticalAlignment="Center"
+                               Text="{x:Static properties:DesktopAppStrings.LightMode}" />
                     <ToggleButton Margin="8 0 16 0"
-                          Command="{Binding Path=ToggleBaseCommand}"
-                          CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}" />
-                    <TextBlock VerticalAlignment="Center">
-                        Dark
-                    </TextBlock>
+                                  Command="{Binding Path=ToggleBaseCommand}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
+                                                     Path=IsChecked}" />
+                    <TextBlock VerticalAlignment="Center"
+                               Text="{x:Static properties:DesktopAppStrings.DarkMode}" />
                 </StackPanel>
             </StackPanel>
         </materialDesign:Card>
@@ -49,5 +47,7 @@
                 </system:Boolean>
             </Button.CommandParameter>
         </Button>
+
     </StackPanel>
+
 </UserControl>

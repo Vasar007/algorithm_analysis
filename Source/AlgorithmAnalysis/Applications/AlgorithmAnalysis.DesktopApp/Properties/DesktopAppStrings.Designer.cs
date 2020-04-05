@@ -124,6 +124,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Appearence.
+        /// </summary>
+        public static string AppearenceHeader {
+            get {
+                return ResourceManager.GetString("AppearenceHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string CloseButtonText {
@@ -138,6 +147,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string CloseButtonToolTip {
             get {
                 return ResourceManager.GetString("CloseButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string DarkMode {
+            get {
+                return ResourceManager.GetString("DarkMode", resourceCulture);
             }
         }
         
@@ -201,6 +219,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string LaunchesNumberHint {
             get {
                 return ResourceManager.GetString("LaunchesNumberHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string LightMode {
+            get {
+                return ResourceManager.GetString("LightMode", resourceCulture);
             }
         }
         
