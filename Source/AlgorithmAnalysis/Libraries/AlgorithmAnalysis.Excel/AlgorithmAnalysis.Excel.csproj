@@ -38,8 +38,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="5.0.4" />
-    <PackageReference Include="NPOI" Version="2.4.1" />
+    <PackageReference Include="EPPlus" Version="5.1.0" />
+    <PackageReference Include="NPOI" Version="2.5.1" />
   </ItemGroup>
 
   <ItemGroup>
