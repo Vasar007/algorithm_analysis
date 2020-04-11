@@ -1,8 +1,8 @@
 ﻿using Prism.Mvvm;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;
+using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {

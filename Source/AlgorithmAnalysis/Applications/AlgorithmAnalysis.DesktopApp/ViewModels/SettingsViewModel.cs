@@ -4,10 +4,10 @@ using Acolyte.Assertions;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using AlgorithmAnalysis.Logging;
-using AlgorithmAnalysis.DesktopApp.Models;
-using AlgorithmAnalysis.DesktopApp.Domain.Messages;
 using AlgorithmAnalysis.DesktopApp.Domain;
+using AlgorithmAnalysis.DesktopApp.Domain.Messages;
+using AlgorithmAnalysis.DesktopApp.Models;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {

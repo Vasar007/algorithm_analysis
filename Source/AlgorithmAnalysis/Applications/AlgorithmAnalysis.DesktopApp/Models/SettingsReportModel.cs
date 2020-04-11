@@ -3,10 +3,10 @@ using Prism.Mvvm;
 using Acolyte.Assertions;
 using Acolyte.Common;
 using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.Validation;
 using AlgorithmAnalysis.Models;
-using AlgorithmAnalysis.Configuration;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
