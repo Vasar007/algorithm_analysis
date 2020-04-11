@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using AlgorithmAnalysis.Common;
 using Microsoft.Extensions.Configuration;
+using AlgorithmAnalysis.Common;
 
 namespace AlgorithmAnalysis.Configuration
 {
@@ -27,14 +28,30 @@ namespace AlgorithmAnalysis.Configuration
         #endregion
 
 
-        public static T GetOptions<T>()
-            where T : IOptions, new()
+        [return: MaybeNull]
+        public static TOptions FindOptions<TOptions>()
+            where TOptions : class, IOptions, new()
         {
-            T section = Root.Value.GetSection(typeof(T).Name).Get<T>();
+            return Root.Value.GetSection(typeof(TOptions).Name).Get<TOptions>();
+        }
 
-            if (section == null) return new T();
+        [return: NotNull]
+        public static TOptions GetOptions<TOptions>()
+            where TOptions : class, IOptions, new()
+        {
+            TOptions? section = FindOptions<TOptions>();
+
+            if (section is null) return new TOptions();
 
             return section;
+        }
+
+        public static void SetOptions<TOptions>([AllowNull] TOptions options)
+            where TOptions : class, IOptions, new()
+        {
+            if (options is null) return;
+
+            Root.Value.GetSection(typeof(TOptions).Name).Bind(options);
         }
 
         private static IConfigurationRoot LoadOptions()
@@ -45,7 +62,12 @@ namespace AlgorithmAnalysis.Configuration
                 ? DefaultOptionsPath
                 : AlternativeOptionsPath;
 
-            configurationBuilder.AddJsonFile(configPath, optional: true, reloadOnChange: true);
+            configurationBuilder.AddWritableJsonFile(
+                path: configPath,
+                optional: true,
+                reloadOnChange: true
+            );
+
             return configurationBuilder.Build();
         }
     }
