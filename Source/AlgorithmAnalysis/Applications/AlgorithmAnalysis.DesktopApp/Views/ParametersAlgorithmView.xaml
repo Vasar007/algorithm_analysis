@@ -44,10 +44,10 @@
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                       MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                       SelectedIndex="0"
-                      ItemsSource="{Binding Path=SelectiveParameters.AvailableAlgorithms}"
-                      SelectedItem="{Binding Path=SelectiveParameters.SelectedAlgorithmType}"
+                      ItemsSource="{Binding Path=Parameters.Algorithm.AvailableAlgorithms}"
+                      SelectedItem="{Binding Path=Parameters.Algorithm.SelectedAlgorithmType}"
                       Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
-                      IsEnabled="{Binding Path=SelectiveParameters.IsAlgorithmSelectable}">
+                      IsEnabled="{Binding Path=Parameters.Algorithm.IsAlgorithmSelectable}">
                 <ComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel />
@@ -58,7 +58,7 @@
             <!--
             Show warning about no availbale algorithms to analyze.
             -->
-            <views:WarningOnEmptyControlView Visibility="{Binding Path=SelectiveParameters.IsHintForAlgorithmVisible,
+            <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Algorithm.IsHintForAlgorithmVisible,
                                                           Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
                 <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAlgorithmsText}" />
             </views:WarningOnEmptyControlView>
@@ -70,7 +70,7 @@
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="RawParameters.StartValue"
+                    <Binding Path="Parameters.Algorithm.StartValue"
                              UpdateSourceTrigger="PropertyChanged"
                              Mode="TwoWay">
                         <Binding.ValidationRules>
@@ -88,7 +88,7 @@
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="RawParameters.EndValue"
+                    <Binding Path="Parameters.Algorithm.EndValue"
                              UpdateSourceTrigger="PropertyChanged"
                              Mode="TwoWay">
                         <Binding.ValidationRules>
@@ -106,7 +106,7 @@
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="RawParameters.ExtrapolationSegmentValue"
+                    <Binding Path="Parameters.Algorithm.ExtrapolationSegmentValue"
                              UpdateSourceTrigger="PropertyChanged"
                              Mode="TwoWay">
                         <Binding.ValidationRules>
@@ -124,7 +124,7 @@
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="RawParameters.LaunchesNumber"
+                    <Binding Path="Parameters.Algorithm.LaunchesNumber"
                              UpdateSourceTrigger="PropertyChanged"
                              Mode="TwoWay">
                         <Binding.ValidationRules>
@@ -142,7 +142,7 @@
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
                 <TextBox.Text>
-                    <Binding Path="RawParameters.Step"
+                    <Binding Path="Parameters.Algorithm.Step"
                              UpdateSourceTrigger="PropertyChanged"
                              Mode="TwoWay">
                         <Binding.ValidationRules>

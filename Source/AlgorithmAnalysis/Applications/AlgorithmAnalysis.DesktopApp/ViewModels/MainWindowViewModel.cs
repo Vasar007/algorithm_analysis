@@ -22,11 +22,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public string Title { get; }
 
-        public AnalysisSpecificModel AnalysisSpecific { get; }
-
-        public RawParametersPack RawParameters { get; }
-
-        public SelectiveParametersModel SelectiveParameters { get; }
+        public ParametersModel Parameters { get; }
 
         private bool _canExecuteAnalysis;
         public bool CanExecuteAnalysis
@@ -49,9 +45,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
             Title = DesktopOptions.Title;
 
-            AnalysisSpecific = new AnalysisSpecificModel();
-            RawParameters = new RawParametersPack();
-            SelectiveParameters = new SelectiveParametersModel();
+            Parameters = new ParametersModel();
             CanExecuteAnalysis = true;
 
             AppCloseCommand = new DelegateCommand(
@@ -70,9 +64,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             {
                 // TODO: display waiting message (and progress bar, if it's possible).
 
-                AnalysisContext context = RawParameters.CreateContext(
-                    _result.OutputReportFile, SelectiveParameters
-                );
+                AnalysisContext context = Parameters.CreateContext(_result.OutputReportFile);
 
                 CheckOutputFile();
 
@@ -94,9 +86,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         private void ResetFields()
         {
-            AnalysisSpecific.Reset();
-            RawParameters.Reset();
-            SelectiveParameters.Reset();
+            Parameters.Reset();
         }
 
         private void CheckOutputFile()
@@ -131,7 +121,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         private void OpenResultsIfNeeded()
         {
-            if (AnalysisSpecific.OpenAnalysisResults)
+            if (Parameters.Advanced.OpenAnalysisResults)
             {
                 _ = ProcessManager.OpenFileWithAssociatedAppAsync(_result.OutputReportFile);
             }

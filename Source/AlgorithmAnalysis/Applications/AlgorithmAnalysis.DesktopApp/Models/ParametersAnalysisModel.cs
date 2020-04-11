@@ -1,40 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.DesktopApp.Domain;
+using AlgorithmAnalysis.DesktopApp.Domain.Validation;
 using AlgorithmAnalysis.DomainLogic;
-using AlgorithmAnalysis.Models;
 using AlgorithmAnalysis.Math;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SelectiveParametersModel : BindableBase, IResetable
+    internal sealed class ParametersAnalysisModel : BindableBase, IChangeableModel
     {
-        #region Algorithms
-
-        public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
-
-        private AlgorithmType? _selectedAlgorithmType;
-        public AlgorithmType? SelectedAlgorithmType
-        {
-            get => _selectedAlgorithmType;
-            set => SetProperty(ref _selectedAlgorithmType, value);
-        }
-
-        public bool IsAlgorithmSelectable =>
-            AvailableAlgorithms.Count > CommonConstants.EmptyCollectionCount;
-
-        /// <summary>
-        /// Shows warning about no availbale algorithms to analyze.
-        /// </summary>
-        public bool IsHintForAlgorithmVisible =>
-            !IsAlgorithmSelectable &&
-            SelectedAlgorithmType is null;
-
-        #endregion
-
         #region Analysis Kind Phase One Part One
 
         public IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne { get; }
@@ -127,24 +103,51 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         #endregion
 
+        #region Degree Of Parallerism
 
-        public SelectiveParametersModel()
+        public int MinDegreeOfParallelism { get; }
+
+        public int MaxDegreeOfParallelism { get; }
+
+        public bool IsDegreeOfParallelismSelectable =>
+            MinDegreeOfParallelism != MaxDegreeOfParallelism;
+
+        /// <summary>
+        /// Shows warning about restriction to select degree of parallelism when PC has only one
+        /// CPU. May be later we change minimum value of parallelism degree.
+        /// </summary>
+        public bool IsHintForDegreeOfParallelismVisible =>
+            !IsDegreeOfParallelismSelectable &&
+            MinDegreeOfParallelism == CommonConstants.MinimumProcessorCount;
+
+        private int _selectedMaxDegreeOfParallelism;
+        public int SelectedMaxDegreeOfParallelism
         {
-            AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
+            get => _selectedMaxDegreeOfParallelism;
+            set => SetProperty(ref _selectedMaxDegreeOfParallelism, value);
+        }
+
+        #endregion
+
+
+        public ParametersAnalysisModel()
+        {
             AvailableAnalysisKindForPhaseOnePartOne = DesktopOptions.AvailableAnalysisKindForPhaseOnePartOne;
             AvailableAnalysisKindForPhaseOnePartTwo = DesktopOptions.AvailableAnalysisKindForPhaseOnePartTwo;
             AvailableAnalysisKindForPhaseTwo = DesktopOptions.AvailableAnalysisKindForPhaseTwo;
             AvailableGoodnessOfFitKinds = DesktopOptions.AvailableGoodnessOfFitKinds;
 
+            MinDegreeOfParallelism = DesktopOptions.MinDegreeOfParallelism;
+            MaxDegreeOfParallelism = DesktopOptions.MaxDegreeOfParallelism;
+
             Reset();
+            Validate();
         }
 
-        #region IResetable Implementation
+        #region IChangeableModel Implementation
 
         public void Reset()
         {
-            SelectedAlgorithmType = AvailableAlgorithms.FirstOrDefault();
-
             SelectedPhaseOnePartOne = AvailableAnalysisKindForPhaseOnePartOne.FirstOrDefault();
 
             SelectedPhaseOnePartTwo = AvailableAnalysisKindForPhaseOnePartTwo.FirstOrDefault();
@@ -153,28 +156,46 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             SelectedPhaseTwo = AvailableAnalysisKindForPhaseTwo.LastOrDefault();
 
             SelectedGoodnessOfFitKind = AvailableGoodnessOfFitKinds.FirstOrDefault();
+
+            SelectedMaxDegreeOfParallelism = MinDegreeOfParallelism;
+        }
+
+
+        public void Validate()
+        {
+            ValidationHelper.AssertIfNull(
+                SelectedPhaseOnePartOne, nameof(AvailableAnalysisKindForPhaseOnePartOne)
+            );
+            ValidationHelper.AssertIfNull(
+                SelectedPhaseOnePartTwo, nameof(AvailableAnalysisKindForPhaseOnePartTwo)
+            );
+            ValidationHelper.AssertIfNull(
+                SelectedPhaseTwo, nameof(AvailableAnalysisKindForPhaseTwo)
+            );
+            ValidationHelper.AssertIfNull(
+                SelectedGoodnessOfFitKind, nameof(AvailableGoodnessOfFitKinds)
+            );
+
+            string minDegreeAssertMessage =
+                "Invalid min values for degree of parallelism: " +
+                $"{MinDegreeOfParallelism.ToString()} <= 0.";
+            ValidationHelper.AssertIf(MinDegreeOfParallelism <= 0, minDegreeAssertMessage);
+
+            string maxDegreeAssertMessage =
+                "Invalid max values for degree of parallelism: " +
+                $"{MaxDegreeOfParallelism.ToString()} <= 0.";
+            ValidationHelper.AssertIf(MaxDegreeOfParallelism <= 0, maxDegreeAssertMessage);
+
+            string invalidDegreeValuesAssertMessage =
+                "Invalid min and max values for degree of parallelism: " +
+                $"{MinDegreeOfParallelism.ToString()} > {MaxDegreeOfParallelism.ToString()}.";
+            ValidationHelper.AssertIf(
+                MinDegreeOfParallelism > MaxDegreeOfParallelism,
+                invalidDegreeValuesAssertMessage
+            );
+            
         }
 
         #endregion
-
-        public void ValidateParameters()
-        {
-            Assert(SelectedAlgorithmType, nameof(AvailableAlgorithms));
-            Assert(SelectedPhaseOnePartOne, nameof(AvailableAnalysisKindForPhaseOnePartOne));
-            Assert(SelectedPhaseOnePartTwo, nameof(AvailableAnalysisKindForPhaseOnePartTwo));
-            Assert(SelectedPhaseTwo, nameof(AvailableAnalysisKindForPhaseTwo));
-            Assert(SelectedGoodnessOfFitKind, nameof(AvailableGoodnessOfFitKinds));
-        }
-
-        private static void Assert<T>(T valueToCheck, string collectionName)
-        {
-            if (valueToCheck is null)
-            {
-                string message =
-                    "Failed to retrive value from collection. " +
-                    $"Collection: {collectionName}";
-                throw new InvalidOperationException(message);
-            }
-        }
     }
 }

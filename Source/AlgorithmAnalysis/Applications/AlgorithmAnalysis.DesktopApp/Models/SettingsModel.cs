@@ -3,7 +3,7 @@ using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsModel : BindableBase, IResetable
+    internal sealed class SettingsModel : BindableBase, IChangeableModel
     {
         public SettingsLoggerModel Logger { get; }
 
@@ -15,11 +15,16 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Reset();
         }
 
-        #region IResetable Implementation
+        #region IChangeableModel Implementation
 
         public void Reset()
         {
             Logger.Reset();
+        }
+
+        public void Validate()
+        {
+            Logger.Validate();
         }
 
         #endregion

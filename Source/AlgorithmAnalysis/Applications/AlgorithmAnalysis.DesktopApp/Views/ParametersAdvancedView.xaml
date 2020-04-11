@@ -24,12 +24,12 @@
             <CheckBox Content="{x:Static properties:DesktopAppStrings.ShowAnalysisWindowText}"
                       HorizontalAlignment="Stretch"
                       Margin="16 8"
-                      IsChecked="{Binding Path=RawParameters.ShowAnalysisWindow}" />
+                      IsChecked="{Binding Path=Parameters.Advanced.ShowAnalysisWindow}" />
 
             <CheckBox Content="{x:Static properties:DesktopAppStrings.OpenAnalysisResultsText}"
                       HorizontalAlignment="Stretch"
                       Margin="16 8"
-                      IsChecked="{Binding Path=AnalysisSpecific.OpenAnalysisResults}" />
+                      IsChecked="{Binding Path=Parameters.Advanced.OpenAnalysisResults}" />
         </StackPanel>
     </materialDesign:Card>
 

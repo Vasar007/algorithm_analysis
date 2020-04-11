@@ -6,7 +6,7 @@ using AlgorithmAnalysis.Configuration;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsLoggerModel : BindableBase, IResetable
+    internal sealed class SettingsLoggerModel : BindableBase, IChangeableModel
     {
         // Initializes through Reset method in ctor.
         private string _logFolderPath = default!;
@@ -54,6 +54,11 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             EnableLogForExcelLibrary = loggerOptions.EnableLogForExcelLibrary;
             LogFilesExtension = loggerOptions.LogFilesExtension;
             LogFilenameSeparator = loggerOptions.LogFilenameSeparator;
+        }
+
+        public void Validate()
+        {
+            // TODO: implement settings parameters validation.
         }
 
         #endregion
