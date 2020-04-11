@@ -14,11 +14,17 @@ namespace AlgorithmAnalysis.Configuration
 
         public static string AlternativeOptionsPath => PredefinedPaths.AlternativeOptionsPath;
 
+        #region Options
+
+        public static AppearanceOptions Appearence => GetOptions<AppearanceOptions>();
+
         public static AnalysisOptions Analysis => GetOptions<AnalysisOptions>();
 
         public static ReportOptions Report => GetOptions<ReportOptions>();
 
         public static LoggerOptions Logger => GetOptions<LoggerOptions>();
+
+        #endregion
 
 
         public static T GetOptions<T>()

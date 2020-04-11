@@ -1,4 +1,8 @@
 {
+  "AppearanceOptions": {
+    "Theme": "Light"
+  },
+
   "AnalysisOptions": {
     "AvailableAlgorithms": [
       {

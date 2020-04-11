@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Windows.Input;
+using Acolyte.Assertions;
 using MaterialDesignThemes.Wpf;
 using Prism.Commands;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Logging;
 using AlgorithmAnalysis.DesktopApp.Models;
+using AlgorithmAnalysis.DesktopApp.Domain.MaterialDesign;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
@@ -24,32 +26,35 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         {
             Settings = new SettingsModel();
 
-            ToggleBaseCommand = new DelegateCommand<bool?>(ApplyBase);
+            ToggleBaseCommand = new DelegateCommand<bool?>(ApplyTheme);
+
+            ApplyThemeFromSettings();
         }
 
-        private static void ApplyBase(bool? isDark)
+        private void ApplyThemeFromSettings()
+        {
+            ThemeWrapper newTheme = Settings.Appearence.CurrentTheme;
+            ApplyBase(newTheme);
+        }
+
+        private void ApplyTheme(bool? isDark)
         {
             if (!isDark.HasValue)
             {
                 throw new ArgumentException("Boolean flag should be specified.", nameof(isDark));
             }
 
-            IBaseTheme newTheme;
-            string newThemeName;
-            if (isDark.Value)
-            {
-                newTheme = Theme.Dark;
-                newThemeName = "Dark";
-            }
-            else
-            {
-                newTheme = Theme.Light;
-                newThemeName = "Light";
-            }
+            ThemeWrapper newTheme = Settings.Appearence.GetTheme(isDark.Value);
+            ApplyBase(newTheme);
+        }
 
-            _logger.Info($"Changing application theme. New theme: '{newThemeName}'.");
+        private void ApplyBase(ThemeWrapper newTheme)
+        {
+            newTheme.ThrowIfNull(nameof(newTheme));
 
-            ModifyTheme(theme => theme.SetBaseTheme(newTheme));
+            _logger.Info($"Changing application theme. New theme: '{newTheme.ThemeName}'.");
+
+            ModifyTheme(theme => theme.SetBaseTheme(newTheme.Value));
         }
 
         private static void ModifyTheme(Action<ITheme>? modificationAction)

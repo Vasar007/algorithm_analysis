@@ -41,12 +41,23 @@
         <StackPanel Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
                     Orientation="Vertical">
             <UniformGrid Rows="1"
-                         Columns="2">
+                         Columns="3">
                 <Button IsDefault="True"
                         Margin="8"
                         Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                         ToolTip="{x:Static properties:DesktopAppStrings.SaveButtonToolTip}"
                         Content="{x:Static properties:DesktopAppStrings.SaveButtonText}">
+                    <Button.CommandParameter>
+                        <system:Boolean>
+                            True
+                        </system:Boolean>
+                    </Button.CommandParameter>
+                </Button>
+
+                <Button Margin="8"
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        ToolTip="{x:Static properties:DesktopAppStrings.ResetButtonText}"
+                        Content="{x:Static properties:DesktopAppStrings.ResetButtonText}">
                     <Button.CommandParameter>
                         <system:Boolean>
                             True
