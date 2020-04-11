@@ -2,7 +2,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Common.Json;
 
 namespace AlgorithmAnalysis.Configuration
 {
@@ -32,18 +34,19 @@ namespace AlgorithmAnalysis.Configuration
         public static TOptions FindOptions<TOptions>()
             where TOptions : class, IOptions, new()
         {
-            return Root.Value.GetSection(typeof(TOptions).Name).Get<TOptions>();
+            IConfigurationSection section = GetConfigurationSection<TOptions>();
+            return section.Get<TOptions>();
         }
 
         [return: NotNull]
         public static TOptions GetOptions<TOptions>()
             where TOptions : class, IOptions, new()
         {
-            TOptions? section = FindOptions<TOptions>();
+            TOptions? options = FindOptions<TOptions>();
 
-            if (section is null) return new TOptions();
+            if (options is null) return new TOptions();
 
-            return section;
+            return options;
         }
 
         public static void SetOptions<TOptions>([AllowNull] TOptions options)
@@ -51,7 +54,19 @@ namespace AlgorithmAnalysis.Configuration
         {
             if (options is null) return;
 
-            Root.Value.GetSection(typeof(TOptions).Name).Bind(options);
+            IConfigurationSection section = GetConfigurationSection<TOptions>();
+
+            string output = JsonConvert.SerializeObject(
+                options, JsonHelper.DefaultSerializerSettings
+            );
+            section.Value = output;
+        }
+
+        [return: NotNull]
+        private static IConfigurationSection GetConfigurationSection<TOptions>()
+              where TOptions : class, IOptions, new()
+        {
+            return Root.Value.GetSection(typeof(TOptions).Name);
         }
 
         private static IConfigurationRoot LoadOptions()

@@ -5,7 +5,7 @@ using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsAnalysisModel : BindableBase, IChangeableModel
+    internal sealed class SettingsAnalysisModel : BindableBase, IChangeable, ISaveable
     {
         // TODO: allow to configure algorithms.
 
@@ -29,7 +29,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public SettingsAnalysisModel()
         {
             Reset();
-            Validate();
         }
 
         #region IChangeableModel Implementation
@@ -47,6 +46,24 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             // TODO: implement settings parameters validation:
             // CommonAnalysisFilenameSuffix
             // OutputFileExtension
+        }
+
+        #endregion
+
+        #region ISaveable Implementation
+
+        public void SaveToConfigFile()
+        {
+            Validate();
+
+            AnalysisOptions analysisOptions = ConfigOptions.Analysis;
+
+            // TODO: allow to configure algorithms.
+            analysisOptions.AvailableAlgorithms = analysisOptions.AvailableAlgorithms;
+            analysisOptions.CommonAnalysisFilenameSuffix = CommonAnalysisFilenameSuffix;
+            analysisOptions.OutputFileExtension = OutputFileExtension;
+
+            ConfigOptions.SetOptions(analysisOptions);
         }
 
         #endregion

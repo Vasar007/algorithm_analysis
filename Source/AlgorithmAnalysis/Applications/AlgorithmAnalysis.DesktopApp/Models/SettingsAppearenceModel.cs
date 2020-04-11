@@ -5,7 +5,7 @@ using AlgorithmAnalysis.DesktopApp.Domain.MaterialDesign;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsAppearenceModel : BindableBase, IChangeableModel
+    internal sealed class SettingsAppearenceModel : BindableBase, IChangeable, ISaveable
     {
         // Initializes through Reset method in ctor.
         public ThemeWrapper CurrentTheme { get; private set; } = default!;
@@ -26,14 +26,13 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public SettingsAppearenceModel()
         {
             Reset();
-            Validate();
         }
 
         #region IChangeableModel Implementation
 
         public void Reset()
         {
-            var appearenceOptions = ConfigOptions.Appearence;
+            AppearanceOptions appearenceOptions = ConfigOptions.Appearence;
 
             CurrentTheme = ThemeWrapper.Create(appearenceOptions.Theme);
             IsDark = CurrentTheme.IsDark;
@@ -46,9 +45,19 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         #endregion
 
-        public void Set()
-        {
+        #region ISaveable Implementation
 
+        public void SaveToConfigFile()
+        {
+            Validate();
+
+            AppearanceOptions appearenceOptions = ConfigOptions.Appearence;
+
+            appearenceOptions.Theme = CurrentTheme.Kind;
+
+            ConfigOptions.SetOptions(appearenceOptions);
         }
+
+        #endregion
     }
 }

@@ -9,7 +9,7 @@ using AlgorithmAnalysis.Math;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class ParametersAnalysisModel : BindableBase, IChangeableModel
+    internal sealed class ParametersAnalysisModel : BindableBase, IChangeable
     {
         #region Analysis Kind Phase One Part One
 
@@ -141,7 +141,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             MaxDegreeOfParallelism = DesktopOptions.MaxDegreeOfParallelism;
 
             Reset();
-            Validate();
         }
 
         #region IChangeableModel Implementation

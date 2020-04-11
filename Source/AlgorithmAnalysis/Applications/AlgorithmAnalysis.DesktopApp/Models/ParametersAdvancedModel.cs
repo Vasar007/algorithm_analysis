@@ -3,7 +3,7 @@ using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class ParametersAdvancedModel : BindableBase, IChangeableModel
+    internal sealed class ParametersAdvancedModel : BindableBase, IChangeable
     {
         private bool _showAnalysisWindow;
         public bool ShowAnalysisWindow
@@ -23,7 +23,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public ParametersAdvancedModel()
         {
             Reset();
-            Validate();
         }
 
         #region IChangeableModel Implementation

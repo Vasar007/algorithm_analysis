@@ -6,7 +6,7 @@ using AlgorithmAnalysis.Configuration;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsLoggerModel : BindableBase, IChangeableModel
+    internal sealed class SettingsLoggerModel : BindableBase, IChangeable, ISaveable
     {
         // Initializes through Reset method in ctor.
         private string _logFolderPath = default!;
@@ -43,7 +43,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public SettingsLoggerModel()
         {
             Reset();
-            Validate();
         }
 
         #region IResetable Implementation
@@ -64,6 +63,24 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             // LogFolderPath
             // LogFilesExtension
             // LogFilenameSeparator
+        }
+
+        #endregion
+
+        #region ISaveable Implementation
+
+        public void SaveToConfigFile()
+        {
+            Validate();
+
+            LoggerOptions loggerOptions = ConfigOptions.Logger;
+
+            loggerOptions.LogFolderPath = LogFolderPath;
+            loggerOptions.EnableLogForExcelLibrary = EnableLogForExcelLibrary;
+            loggerOptions.LogFilesExtension = LogFilesExtension;
+            loggerOptions.LogFilenameSeparator = LogFilenameSeparator;
+
+            ConfigOptions.SetOptions(loggerOptions);
         }
 
         #endregion

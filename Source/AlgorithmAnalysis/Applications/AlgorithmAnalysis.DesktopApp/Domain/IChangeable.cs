@@ -1,6 +1,6 @@
 ﻿namespace AlgorithmAnalysis.DesktopApp.Domain
 {
-    internal interface IChangeableModel
+    internal interface IChangeable
     {
         void Reset();
 

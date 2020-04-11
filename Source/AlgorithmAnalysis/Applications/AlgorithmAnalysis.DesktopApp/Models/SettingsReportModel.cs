@@ -10,7 +10,7 @@ using AlgorithmAnalysis.Configuration;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsReportModel : BindableBase, IChangeableModel
+    internal sealed class SettingsReportModel : BindableBase, IChangeable, ISaveable
     {
         #region Cell Creation Mode
 
@@ -58,7 +58,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         #endregion
 
-        #region Library Provider
+        #region Excel Version
 
         public IReadOnlyList<ExcelVersion> AvailableExcelVersions { get; }
 
@@ -82,11 +82,11 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         #endregion
 
         // Initializes through Reset method in ctor.
-        private string _outputExcelFilePath = default!;
-        public string OutputExcelFilePath
+        private string _outputReportFilePath = default!;
+        public string OutputReportFilePath
         {
-            get => _outputExcelFilePath;
-            set => SetProperty(ref _outputExcelFilePath, value.ThrowIfNull(nameof(value)));
+            get => _outputReportFilePath;
+            set => SetProperty(ref _outputReportFilePath, value.ThrowIfNull(nameof(value)));
         }
 
 
@@ -97,7 +97,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             AvailableExcelVersions = DesktopOptions.AvailableExcelVersions;
 
             Reset();
-            Validate();
         }
 
         #region IChangeableModel Implementation
@@ -109,7 +108,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             CellCreationMode = reportOptions.CellCreationMode;
             LibraryProvider = reportOptions.LibraryProvider;
             ExcelVersion = reportOptions.ExcelVersion;
-            OutputExcelFilePath = Utils.ResolvePath(reportOptions.OutputReportFilePath);
+            OutputReportFilePath = Utils.ResolvePath(reportOptions.OutputReportFilePath);
         }
 
         public void Validate()
@@ -120,6 +119,24 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
             // TODO: implement settings parameters validation:
             // OutputExcelFilePath
+        }
+
+        #endregion
+
+        #region ISaveable Implementation
+
+        public void SaveToConfigFile()
+        {
+            Validate();
+
+            ReportOptions reportOptions = ConfigOptions.Report;
+
+            reportOptions.CellCreationMode = CellCreationMode;
+            reportOptions.LibraryProvider = LibraryProvider;
+            reportOptions.ExcelVersion = ExcelVersion;
+            reportOptions.OutputReportFilePath = OutputReportFilePath;
+
+            ConfigOptions.SetOptions(reportOptions);
         }
 
         #endregion

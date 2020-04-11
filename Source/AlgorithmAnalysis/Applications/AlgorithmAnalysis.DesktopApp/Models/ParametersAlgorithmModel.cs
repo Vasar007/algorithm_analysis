@@ -9,7 +9,7 @@ using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class ParametersAlgorithmModel : BindableBase, IChangeableModel
+    internal sealed class ParametersAlgorithmModel : BindableBase, IChangeable
     {
         #region Algorithms
 
@@ -80,7 +80,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
 
             Reset();
-            Validate();
         }
 
         #region IChangeableModel Implementation

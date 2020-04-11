@@ -118,7 +118,7 @@
                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
-                         Text="{Binding Path=Settings.Report.OutputExcelFilePath}" />
+                         Text="{Binding Path=Settings.Report.OutputReportFilePath}" />
 
             </StackPanel>
         </StackPanel>

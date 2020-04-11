@@ -5,6 +5,7 @@ using Prism.Mvvm;
 using AlgorithmAnalysis.Logging;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.DesktopApp.Domain.Messages;
+using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
@@ -44,13 +45,33 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
             try
             {
-                settingsModel.Validate();
-
-
+                settingsModel.SaveToConfigFile();
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "Failed to save settings to configuration file.");
+                string message = $"Failed to save settings to configuration file: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
+            }
+        }
+
+        private void ResetSettings(SettingsModel settingsModel)
+        {
+            settingsModel.ThrowIfNull(nameof(settingsModel));
+
+            _logger.Info("Saving settings to configuration file.");
+
+            try
+            {
+                settingsModel.Reset();
+            }
+            catch (Exception ex)
+            {
+                string message = $"Failed to reset settings: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
             }
         }
     }

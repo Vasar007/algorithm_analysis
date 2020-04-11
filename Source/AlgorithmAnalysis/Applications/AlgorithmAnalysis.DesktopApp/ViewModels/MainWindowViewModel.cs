@@ -11,11 +11,15 @@ using AlgorithmAnalysis.DesktopApp.Domain.Commands;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.DomainLogic.Analysis;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
     internal sealed class MainWindowViewModel : BindableBase
     {
+        private static readonly ILogger _logger =
+            LoggerFactory.CreateLoggerFor<SettingsViewModel>();
+
         private readonly ResultWrapper _result;
 
         private readonly AnalysisPerformer _performer;
@@ -76,7 +80,10 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBoxProvider.ShowError($"Analysis failed. Exception occurred: {ex.Message}");
+                string message = $"Failed to perform analysis: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
             }
             finally
             {

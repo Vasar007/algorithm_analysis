@@ -7,7 +7,7 @@ using AlgorithmAnalysis.DomainLogic;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class ParametersModel : BindableBase, IChangeableModel
+    internal sealed class ParametersModel : BindableBase, IChangeable
     {
         public ParametersAlgorithmModel Algorithm { get; }
 
@@ -22,8 +22,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Analysis = new ParametersAnalysisModel();
             Advanced = new ParametersAdvancedModel();
 
-            Reset();
-            Validate();
+            // Internal model should call Reset method in ctors themself.
         }
 
         #region IChangeableModel Implementation

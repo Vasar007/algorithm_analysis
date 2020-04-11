@@ -3,7 +3,7 @@ using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsModel : BindableBase, IChangeableModel
+    internal sealed class SettingsModel : BindableBase, IChangeable, ISaveable
     {
         public SettingsAppearenceModel Appearence { get; }
 
@@ -22,7 +22,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Logger = new SettingsLoggerModel();
 
             Reset();
-            Validate();
         }
 
         #region IChangeableModel Implementation
@@ -45,9 +44,19 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         #endregion
 
+        #region ISaveable Implementation
+
         public void SaveToConfigFile()
         {
-            
+            // Internal models should call Validate method themself
+            // because SaveToConfigFile can be called for separate model too.
+
+            Appearence.SaveToConfigFile();
+            Analysis.SaveToConfigFile();
+            Report.SaveToConfigFile();
+            Logger.SaveToConfigFile();
         }
+
+        #endregion
     }
 }
