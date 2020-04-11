@@ -12,6 +12,9 @@ namespace AlgorithmAnalysis.Common
             return DateTime.Now.ToString("yyyy-MM-dd");
         }
 
+        // ResolvePath and CreateSpecificPath is paired methods: result one of them can be
+        // converted back with another.
+
         public static string ResolvePath(string unresolvedPath)
         {
             unresolvedPath.ThrowIfNullOrWhiteSpace(nameof(unresolvedPath));
@@ -73,6 +76,13 @@ namespace AlgorithmAnalysis.Common
 
             string filename = Path.GetFileName(filePath);
             return Path.Combine(folderPath, filename);
+        }
+
+        public static string UnifyDirectorySeparatorChars(string path)
+        {
+            path.ThrowIfNullOrWhiteSpace(nameof(path));
+
+            return path.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
         }
     }
 }

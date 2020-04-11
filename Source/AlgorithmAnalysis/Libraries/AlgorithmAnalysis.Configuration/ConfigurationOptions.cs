@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using AlgorithmAnalysis.Common;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +10,7 @@ namespace AlgorithmAnalysis.Configuration
         private static readonly Lazy<IConfigurationRoot> Root =
             new Lazy<IConfigurationRoot>(LoadOptions);
 
-        public static string ConfigFilename => CommonConstants.ConfigFilename;
+        public static string DefaultOptionsPath => PredefinedPaths.DefaultOptionsPath;
 
         public static string AlternativeOptionsPath => PredefinedPaths.AlternativeOptionsPath;
 
@@ -37,7 +36,7 @@ namespace AlgorithmAnalysis.Configuration
             var configurationBuilder = new ConfigurationBuilder();
 
             string configPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? Path.Combine(Directory.GetCurrentDirectory(), ConfigFilename)
+                ? DefaultOptionsPath
                 : AlternativeOptionsPath;
 
             configurationBuilder.AddJsonFile(configPath, optional: true, reloadOnChange: true);

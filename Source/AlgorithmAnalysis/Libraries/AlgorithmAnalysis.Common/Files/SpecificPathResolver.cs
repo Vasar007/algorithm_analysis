@@ -14,12 +14,13 @@ namespace AlgorithmAnalysis.Common.Files
         {
             unresolvedPath.ThrowIfNullOrWhiteSpace(nameof(unresolvedPath));
 
+            string resolvedPath = unresolvedPath;
             if (ShouldBeParsed(unresolvedPath))
             {
-                unresolvedPath = ParseSpecificPath(unresolvedPath);
+                resolvedPath = ParseSpecificPath(unresolvedPath);
             }
 
-            return unresolvedPath;
+            return Utils.UnifyDirectorySeparatorChars(resolvedPath);
         }
 
         private static bool ShouldBeParsed(string unresolvedPath)
