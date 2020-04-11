@@ -153,6 +153,10 @@
     <value>Appearence</value>
     <comment>Header text for appearence card in settings.</comment>
   </data>
+  <data name="CellCreationModeHint" xml:space="preserve">
+    <value>Cell creation mode</value>
+    <comment>Hint for cell creation mode combo box.</comment>
+  </data>
   <data name="CloseButtonText" xml:space="preserve">
     <value>Close</value>
     <comment>Text for close button to close dialog.</comment>
@@ -168,6 +172,10 @@
   <data name="EnableLogForExcelLibraryText" xml:space="preserve">
     <value>Enable logging for Excel library</value>
     <comment>Text for check box to enable loggin for Excel library.</comment>
+  </data>
+  <data name="ExcelVersionHint" xml:space="preserve">
+    <value>Excel version</value>
+    <comment>Hint for Excel version combo box.</comment>
   </data>
   <data name="ExitButtonText" xml:space="preserve">
     <value>Exit</value>
@@ -197,6 +205,10 @@
     <value>The initial launches number</value>
     <comment>Hint for initial launches number text box.</comment>
   </data>
+  <data name="LibraryProviderHint" xml:space="preserve">
+    <value>Library provider</value>
+    <comment>Hint for library provider combo box.</comment>
+  </data>
   <data name="LightMode" xml:space="preserve">
     <value>Light</value>
     <comment>Text for light mode on appearence card.</comment>
@@ -224,6 +236,10 @@
   <data name="OpenAnalysisResultsText" xml:space="preserve">
     <value>Open analysis results</value>
     <comment>Text for check box to open analysis results when analysis will be completed.</comment>
+  </data>
+  <data name="OutputExcelFilePathHint" xml:space="preserve">
+    <value>Output Excel file path</value>
+    <comment>Hint for output Excel file path text box.</comment>
   </data>
   <data name="ReportOptionsHeader" xml:space="preserve">
     <value>Report</value>
@@ -279,24 +295,39 @@ PC has insufficient number of resources.</value>
 Please, specify at least one algorithm in configuration and restart application.</value>
     <comment>Text for warning control when there are no available algorithms.</comment>
   </data>
-  <data name="WarningNoAnalysisKindForPhaseOnePartOne" xml:space="preserve">
+  <data name="WarningNoAnalysisKindForPhaseOnePartOneText" xml:space="preserve">
     <value>Warning: there are no analysis kind for phase one part one.
 Please, check configuration and restart application.</value>
     <comment>Text for warning control when there are no analysis kind for phase one part one.</comment>
   </data>
-  <data name="WarningNoAnalysisKindForPhaseOnePartTwo" xml:space="preserve">
+  <data name="WarningNoAnalysisKindForPhaseOnePartTwoText" xml:space="preserve">
     <value>Warning: there are no analysis kind for phase one part two.
 Please, check configuration and restart application.</value>
     <comment>Text for warning control when there are no analysis kind for phase one part two.</comment>
   </data>
-  <data name="WarningNoAnalysisKindForPhaseTwo" xml:space="preserve">
+  <data name="WarningNoAnalysisKindForPhaseTwoText" xml:space="preserve">
     <value>Warning: there are no analysis kind for phase two.
 Please, check configuration and restart application.</value>
     <comment>Text for warning control when there are no analysis kind for phase two.</comment>
   </data>
-  <data name="WarningNoGoodnessOfFitMethods" xml:space="preserve">
+  <data name="WarningNoCellCreationModeText" xml:space="preserve">
+    <value>Warning: there are no available cell creation mode.
+Please, check configuration and restart application.</value>
+    <comment>Text for warning control when there are no available cell creation modes.</comment>
+  </data>
+  <data name="WarningNoExcelVersionText" xml:space="preserve">
+    <value>Warning: there are no available Excel versions.
+Please, check configuration and restart application.</value>
+    <comment>Text for warning control when there are no available Excel versions.</comment>
+  </data>
+  <data name="WarningNoGoodnessOfFitMethodsText" xml:space="preserve">
     <value>Warning: there are no goodness of fit methods.
 Please, check configuration and restart application.</value>
     <comment>Text for warning control when there are no goodness of fit methods.</comment>
+  </data>
+  <data name="WarningNoLibraryProviderText" xml:space="preserve">
+    <value>Warning: there are no available library providers.
+Please, check configuration and restart application.</value>
+    <comment>Text for warning control when there are no available library providers.</comment>
   </data>
 </root>

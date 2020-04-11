@@ -142,6 +142,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cell creation mode.
+        /// </summary>
+        public static string CellCreationModeHint {
+            get {
+                return ResourceManager.GetString("CellCreationModeHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string CloseButtonText {
@@ -174,6 +183,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string EnableLogForExcelLibraryText {
             get {
                 return ResourceManager.GetString("EnableLogForExcelLibraryText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel version.
+        /// </summary>
+        public static string ExcelVersionHint {
+            get {
+                return ResourceManager.GetString("ExcelVersionHint", resourceCulture);
             }
         }
         
@@ -241,6 +259,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Library provider.
+        /// </summary>
+        public static string LibraryProviderHint {
+            get {
+                return ResourceManager.GetString("LibraryProviderHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light.
         /// </summary>
         public static string LightMode {
@@ -300,6 +327,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string OpenAnalysisResultsText {
             get {
                 return ResourceManager.GetString("OpenAnalysisResultsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Output Excel file path.
+        /// </summary>
+        public static string OutputExcelFilePathHint {
+            get {
+                return ResourceManager.GetString("OutputExcelFilePathHint", resourceCulture);
             }
         }
         
@@ -426,9 +462,9 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         ///   Looks up a localized string similar to Warning: there are no analysis kind for phase one part one.
         ///Please, check configuration and restart application..
         /// </summary>
-        public static string WarningNoAnalysisKindForPhaseOnePartOne {
+        public static string WarningNoAnalysisKindForPhaseOnePartOneText {
             get {
-                return ResourceManager.GetString("WarningNoAnalysisKindForPhaseOnePartOne", resourceCulture);
+                return ResourceManager.GetString("WarningNoAnalysisKindForPhaseOnePartOneText", resourceCulture);
             }
         }
         
@@ -436,9 +472,9 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         ///   Looks up a localized string similar to Warning: there are no analysis kind for phase one part two.
         ///Please, check configuration and restart application..
         /// </summary>
-        public static string WarningNoAnalysisKindForPhaseOnePartTwo {
+        public static string WarningNoAnalysisKindForPhaseOnePartTwoText {
             get {
-                return ResourceManager.GetString("WarningNoAnalysisKindForPhaseOnePartTwo", resourceCulture);
+                return ResourceManager.GetString("WarningNoAnalysisKindForPhaseOnePartTwoText", resourceCulture);
             }
         }
         
@@ -446,9 +482,29 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         ///   Looks up a localized string similar to Warning: there are no analysis kind for phase two.
         ///Please, check configuration and restart application..
         /// </summary>
-        public static string WarningNoAnalysisKindForPhaseTwo {
+        public static string WarningNoAnalysisKindForPhaseTwoText {
             get {
-                return ResourceManager.GetString("WarningNoAnalysisKindForPhaseTwo", resourceCulture);
+                return ResourceManager.GetString("WarningNoAnalysisKindForPhaseTwoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: there are no available cell creation mode.
+        ///Please, check configuration and restart application..
+        /// </summary>
+        public static string WarningNoCellCreationModeText {
+            get {
+                return ResourceManager.GetString("WarningNoCellCreationModeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: there are no available Excel versions.
+        ///Please, check configuration and restart application..
+        /// </summary>
+        public static string WarningNoExcelVersionText {
+            get {
+                return ResourceManager.GetString("WarningNoExcelVersionText", resourceCulture);
             }
         }
         
@@ -456,9 +512,19 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         ///   Looks up a localized string similar to Warning: there are no goodness of fit methods.
         ///Please, check configuration and restart application..
         /// </summary>
-        public static string WarningNoGoodnessOfFitMethods {
+        public static string WarningNoGoodnessOfFitMethodsText {
             get {
-                return ResourceManager.GetString("WarningNoGoodnessOfFitMethods", resourceCulture);
+                return ResourceManager.GetString("WarningNoGoodnessOfFitMethodsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: there are no available library providers.
+        ///Please, check configuration and restart application..
+        /// </summary>
+        public static string WarningNoLibraryProviderText {
+            get {
+                return ResourceManager.GetString("WarningNoLibraryProviderText", resourceCulture);
             }
         }
     }

@@ -28,13 +28,13 @@
 
         <StackPanel Orientation="Horizontal">
 
-            <views:SettingsAppearenceView />
+            <views:SettingsAppearenceView x:Name="SettingsAppearenceView" />
 
-            <views:SettingsAnalysisView />
+            <views:SettingsAnalysisView x:Name="SettingsAnalysisView" />
 
-            <views:SettingsLoggerView />
+            <views:SettingsReportView x:Name="SettingsReportView" />
 
-            <views:SettingsReportView />
+            <views:SettingsLoggerView x:Name="SettingsLoggerView" />
 
         </StackPanel>
 

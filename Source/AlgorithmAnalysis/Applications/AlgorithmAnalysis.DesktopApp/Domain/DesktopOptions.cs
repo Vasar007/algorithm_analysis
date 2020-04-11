@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Acolyte.Common;
 using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.Math;
@@ -15,19 +16,28 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
 
         public static int MaxDegreeOfParallelism { get; } = Environment.ProcessorCount;
 
-        public static IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne { get; } =
+        public static IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne =>
             AnalysisHelper.GetAvailableAnalysisKindForPhaseOnePartOne();
 
-        public static IReadOnlyList<PhaseOnePartTwoAnalysisKind> AvailableAnalysisKindForPhaseOnePartTwo { get; } =
+        public static IReadOnlyList<PhaseOnePartTwoAnalysisKind> AvailableAnalysisKindForPhaseOnePartTwo =>
             AnalysisHelper.GetAvailableAnalysisKindForPhaseOnePartTwo();
 
-        public static IReadOnlyList<PhaseTwoAnalysisKind> AvailableAnalysisKindForPhaseTwo { get; } =
+        public static IReadOnlyList<PhaseTwoAnalysisKind> AvailableAnalysisKindForPhaseTwo =>
             AnalysisHelper.GetAvailableAnalysisKindForPhaseTwo();
 
-        public static IReadOnlyList<GoodnessOfFitKind> AvailableGoodnessOfFitKinds { get; } =
+        public static IReadOnlyList<GoodnessOfFitKind> AvailableGoodnessOfFitKinds =>
             AnalysisHelper.GetAvailableGoodnessOfFitKinds();
 
         public static IReadOnlyList<AlgorithmType> AvailableAlgorithms =>
             AnalysisHelper.GetAvailableAlgorithms();
+
+        public static IReadOnlyList<ExcelCellCreationMode> AvailableCellCreationModes { get; } =
+            EnumHelper.GetValues<ExcelCellCreationMode>();
+
+        public static IReadOnlyList<ExcelLibraryProvider> AvailableLibraryProviders { get; } =
+            EnumHelper.GetValues<ExcelLibraryProvider>();
+
+        public static IReadOnlyList<ExcelVersion> AvailableExcelVersions { get; } =
+            EnumHelper.GetValues<ExcelVersion>();
     }
 }

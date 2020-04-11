@@ -68,15 +68,15 @@ namespace AlgorithmAnalysis.Excel
         {
             reportOptions.ThrowIfNull(nameof(reportOptions));
 
-            return reportOptions.Version switch
+            return reportOptions.ExcelVersion switch
             {
-                ExcelVersion.V2007 => new ExcelFormulaProvider(reportOptions.Version),
+                ExcelVersion.V2007 => new ExcelFormulaProvider(reportOptions.ExcelVersion),
 
-                ExcelVersion.V2019 => new ExcelFormulaProvider(reportOptions.Version),
+                ExcelVersion.V2019 => new ExcelFormulaProvider(reportOptions.ExcelVersion),
 
                 _ => throw new ArgumentOutOfRangeException(
-                         nameof(reportOptions), reportOptions.Version,
-                         $"Unknown Excel version: '{reportOptions.Version.ToString()}'."
+                         nameof(reportOptions), reportOptions.ExcelVersion,
+                         $"Unknown Excel version: '{reportOptions.ExcelVersion.ToString()}'."
                      )
             };
         }

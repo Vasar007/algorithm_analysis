@@ -22,6 +22,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Logger = new SettingsLoggerModel();
 
             Reset();
+            Validate();
         }
 
         #region IChangeableModel Implementation

@@ -88,7 +88,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public void Reset()
         {
             SelectedAlgorithmType = AvailableAlgorithms.FirstOrDefault();
-
             StartValue = "80";
             EndValue = "320";
             ExtrapolationSegmentValue = "2560";
@@ -98,7 +97,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void Validate()
         {
-            ValidationHelper.AssertIfNull(SelectedAlgorithmType, nameof(AvailableAlgorithms));
+            ValidationHelper.AssertIfGotNullValueFromCollection(
+                SelectedAlgorithmType, nameof(AvailableAlgorithms)
+            );
         }
 
         #endregion

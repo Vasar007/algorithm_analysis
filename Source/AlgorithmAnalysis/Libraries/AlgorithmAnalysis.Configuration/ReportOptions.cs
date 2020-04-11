@@ -10,7 +10,7 @@ namespace AlgorithmAnalysis.Configuration
 
         public ExcelLibraryProvider LibraryProvider { get; set; } = ExcelLibraryProvider.EPPlus;
 
-        public ExcelVersion Version { get; set; } = ExcelVersion.V2007;
+        public ExcelVersion ExcelVersion { get; set; } = ExcelVersion.V2007;
 
         public string OutputReportFilePath { get; set; } =
              Path.Combine(PredefinedPaths.DefaultResultFolderPath, CommonConstants.DefaultResultFilename);

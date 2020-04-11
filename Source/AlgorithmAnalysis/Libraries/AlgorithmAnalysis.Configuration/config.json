@@ -40,7 +40,7 @@
   "ReportOptions": {
     "CellCreationMode": "Centerized",
     "LibraryProvider": "EPPlus",
-    "Version": "V2007",
+    "ExcelVersion": "V2007",
     "OutputExcelFilePath": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/results/results.xlsx"
   },
 

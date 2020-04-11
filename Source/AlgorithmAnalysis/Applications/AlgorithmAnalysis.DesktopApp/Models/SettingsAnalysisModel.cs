@@ -8,6 +8,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public SettingsAnalysisModel()
         {
             Reset();
+            Validate();
         }
 
         #region IChangeableModel Implementation

@@ -149,30 +149,26 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public void Reset()
         {
             SelectedPhaseOnePartOne = AvailableAnalysisKindForPhaseOnePartOne.FirstOrDefault();
-
             SelectedPhaseOnePartTwo = AvailableAnalysisKindForPhaseOnePartTwo.FirstOrDefault();
-
             // TODO: use first value instead of last when implement normal distribution.
             SelectedPhaseTwo = AvailableAnalysisKindForPhaseTwo.LastOrDefault();
-
             SelectedGoodnessOfFitKind = AvailableGoodnessOfFitKinds.FirstOrDefault();
-
             SelectedMaxDegreeOfParallelism = MinDegreeOfParallelism;
         }
 
 
         public void Validate()
         {
-            ValidationHelper.AssertIfNull(
+            ValidationHelper.AssertIfGotNullValueFromCollection(
                 SelectedPhaseOnePartOne, nameof(AvailableAnalysisKindForPhaseOnePartOne)
             );
-            ValidationHelper.AssertIfNull(
+            ValidationHelper.AssertIfGotNullValueFromCollection(
                 SelectedPhaseOnePartTwo, nameof(AvailableAnalysisKindForPhaseOnePartTwo)
             );
-            ValidationHelper.AssertIfNull(
+            ValidationHelper.AssertIfGotNullValueFromCollection(
                 SelectedPhaseTwo, nameof(AvailableAnalysisKindForPhaseTwo)
             );
-            ValidationHelper.AssertIfNull(
+            ValidationHelper.AssertIfGotNullValueFromCollection(
                 SelectedGoodnessOfFitKind, nameof(AvailableGoodnessOfFitKinds)
             );
 

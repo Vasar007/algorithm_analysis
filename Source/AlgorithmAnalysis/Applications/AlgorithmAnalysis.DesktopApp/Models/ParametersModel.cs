@@ -23,6 +23,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Advanced = new ParametersAdvancedModel();
 
             Reset();
+            Validate();
         }
 
         #region IChangeableModel Implementation

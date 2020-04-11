@@ -13,6 +13,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public SettingsAppearenceModel()
         {
             Reset();
+            Validate();
         }
 
         #region IChangeableModel Implementation

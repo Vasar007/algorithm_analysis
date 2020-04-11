@@ -57,7 +57,7 @@
             -->
             <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Analysis.IsHintForAnalysisKindForPhaseOnePartOneVisible,
                                                           Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
-                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAnalysisKindForPhaseOnePartOne}" />
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAnalysisKindForPhaseOnePartOneText}" />
             </views:WarningOnEmptyControlView>
 
             <ComboBox x:Name="AnalysisPhaseOnePartTwoComboBox"
@@ -83,7 +83,7 @@
             -->
             <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Analysis.IsHintForAnalysisKindForPhaseOnePartTwoVisible,
                                                           Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
-                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAnalysisKindForPhaseOnePartTwo}" />
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAnalysisKindForPhaseOnePartTwoText}" />
             </views:WarningOnEmptyControlView>
 
             <ComboBox x:Name="AnalysisPhaseTwoComboBox"
@@ -109,7 +109,7 @@
             -->
             <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Analysis.IsHintForAnalysisKindForPhaseTwoVisible,
                                                           Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
-                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAnalysisKindForPhaseTwo}" />
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAnalysisKindForPhaseTwoText}" />
             </views:WarningOnEmptyControlView>
 
             <ComboBox x:Name="GoodnessOfFitComboBox"
@@ -135,7 +135,7 @@
             -->
             <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Analysis.IsHintForGoodnessOfFitVisible,
                                                           Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
-                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoGoodnessOfFitMethods}" />
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoGoodnessOfFitMethodsText}" />
             </views:WarningOnEmptyControlView>
 
             <TextBlock Text="{x:Static properties:DesktopAppStrings.MaxDegreeOfParallerismText}"

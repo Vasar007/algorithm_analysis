@@ -43,13 +43,15 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public SettingsLoggerModel()
         {
             Reset();
+            Validate();
         }
 
         #region IResetable Implementation
 
         public void Reset()
         {
-            var loggerOptions = ConfigOptions.Logger;
+            LoggerOptions loggerOptions = ConfigOptions.Logger;
+
             LogFolderPath = Utils.ResolvePath(loggerOptions.LogFolderPath);
             EnableLogForExcelLibrary = loggerOptions.EnableLogForExcelLibrary;
             LogFilesExtension = loggerOptions.LogFilesExtension;
@@ -58,7 +60,10 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void Validate()
         {
-            // TODO: implement settings parameters validation.
+            // TODO: implement settings parameters validation:
+            // LogFolderPath
+            // LogFilesExtension
+            // LogFilenameSeparator
         }
 
         #endregion
