@@ -116,9 +116,9 @@
                         <Button Margin="8"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                Content="{x:Static properties:DesktopAppStrings.RunButtonText}"
-                                ToolTip="{x:Static properties:DesktopAppStrings.RunButtonToolTip}"
-                                Command="{Binding Path=RunCommand}">
+                                Content="{x:Static properties:DesktopAppStrings.RunAnalysisButtonText}"
+                                ToolTip="{x:Static properties:DesktopAppStrings.RunAnalysisButtonToolTip}"
+                                Command="{Binding Path=RunAnalysisCommand}">
                             <Button.IsEnabled>
                                 <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
                                               Mode="OneWay">
@@ -162,9 +162,9 @@
                         <Button Margin="8"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                Content="{x:Static properties:DesktopAppStrings.ResetButtonText}"
-                                ToolTip="{x:Static properties:DesktopAppStrings.ResetButtonToolTip}"
-                                Command="{Binding Path=ResetCommand}" />
+                                Content="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonText}"
+                                ToolTip="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonToolTip}"
+                                Command="{Binding Path=ResetParametersCommand}" />
 
                     </UniformGrid>
                 </StackPanel>

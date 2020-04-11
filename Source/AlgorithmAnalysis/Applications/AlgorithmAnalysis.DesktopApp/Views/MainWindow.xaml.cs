@@ -51,15 +51,40 @@ namespace AlgorithmAnalysis.DesktopApp.Views
 
         private void Settings_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
-            if (Equals(eventArgs.Parameter, false)) return;
+            // Use different types to publish different events.
+            switch (eventArgs.Parameter)
+            {
+                case SettingsModel _:
+                    // Save settings to config file and close dialog.
+                    SaveSettings();
+                    break;
 
-            if (!(eventArgs.Parameter is SettingsViewModel settingsViewModel)) return;
+                case SettingsViewModel _:
+                    // Reset settings and close dialog.
+                    ResetSettings();
+                    break;
 
-            SettingsModel settingsModel = settingsViewModel.Settings;
+                default:
+                    string typeName = eventArgs.Parameter?.GetType().Name ?? "NULL";
+                    throw new ArgumentOutOfRangeException(
+                              nameof(eventArgs), eventArgs.Parameter,
+                              $"Unknwon parameter type: '{typeName}'."
+                          );
+            }
+        }
 
+        private void SaveSettings()
+        {
             _eventAggregator
                 .GetEvent<SaveSettingsMessage>()
-                .Publish(settingsModel);
+                .Publish();
+        }
+
+        private void ResetSettings()
+        {
+            _eventAggregator
+                .GetEvent<ResetSettingsMessage>()
+                .Publish();
         }
     }
 }

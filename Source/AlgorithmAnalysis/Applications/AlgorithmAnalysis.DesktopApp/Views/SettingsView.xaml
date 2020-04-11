@@ -46,37 +46,26 @@
                         Margin="8"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
-                        Content="{x:Static properties:DesktopAppStrings.SaveButtonText}"
-                        ToolTip="{x:Static properties:DesktopAppStrings.SaveButtonToolTip}"
+                        Content="{x:Static properties:DesktopAppStrings.ApplySettingsButtonText}"
+                        ToolTip="{x:Static properties:DesktopAppStrings.ApplySettingsButtonToolTip}"
                         Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                        CommandParameter="{Binding Path=.}" />
+                        CommandParameter="{Binding Path=Settings}" />
 
                 <Button Margin="8"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
-                        Content="{x:Static properties:DesktopAppStrings.ResetButtonText}"
-                        ToolTip="{x:Static properties:DesktopAppStrings.ResetButtonText}"
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-                    <Button.CommandParameter>
-                        <system:Boolean>
-                            True
-                        </system:Boolean>
-                    </Button.CommandParameter>
-                </Button>
+                        Content="{x:Static properties:DesktopAppStrings.ResetSettingButtonText}"
+                        ToolTip="{x:Static properties:DesktopAppStrings.ResetSettingButtonToolTip}"
+                        Command="{Binding Path=ResetSettingsCommand}" />
 
                 <Button IsCancel="True"
                         Margin="8"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
-                        Content="{x:Static properties:DesktopAppStrings.CloseButtonText}"
-                        ToolTip="{x:Static properties:DesktopAppStrings.CloseButtonToolTip}"
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-                    <Button.CommandParameter>
-                        <system:Boolean>
-                            False
-                        </system:Boolean>
-                    </Button.CommandParameter>
-                </Button>
+                        Content="{x:Static properties:DesktopAppStrings.CloseSettingsButtonText}"
+                        ToolTip="{x:Static properties:DesktopAppStrings.CloseSettingsButtonToolTip}"
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        CommandParameter="{Binding Path=.}" />
 
             </UniformGrid>
         </StackPanel>

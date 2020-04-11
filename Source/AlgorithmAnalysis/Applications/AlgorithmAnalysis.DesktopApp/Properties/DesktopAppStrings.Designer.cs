@@ -142,6 +142,24 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply.
+        /// </summary>
+        public static string ApplySettingsButtonText {
+            get {
+                return ResourceManager.GetString("ApplySettingsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply all settings.
+        /// </summary>
+        public static string ApplySettingsButtonToolTip {
+            get {
+                return ResourceManager.GetString("ApplySettingsButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cell creation mode.
         /// </summary>
         public static string CellCreationModeHint {
@@ -153,18 +171,18 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
-        public static string CloseButtonText {
+        public static string CloseSettingsButtonText {
             get {
-                return ResourceManager.GetString("CloseButtonText", resourceCulture);
+                return ResourceManager.GetString("CloseSettingsButtonText", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Close dialog.
         /// </summary>
-        public static string CloseButtonToolTip {
+        public static string CloseSettingsButtonToolTip {
             get {
-                return ResourceManager.GetString("CloseButtonToolTip", resourceCulture);
+                return ResourceManager.GetString("CloseSettingsButtonToolTip", resourceCulture);
             }
         }
         
@@ -369,54 +387,54 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
-        public static string ResetButtonText {
+        public static string ResetAnalysisButtonText {
             get {
-                return ResourceManager.GetString("ResetButtonText", resourceCulture);
+                return ResourceManager.GetString("ResetAnalysisButtonText", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Reset analysis parameters.
         /// </summary>
-        public static string ResetButtonToolTip {
+        public static string ResetAnalysisButtonToolTip {
             get {
-                return ResourceManager.GetString("ResetButtonToolTip", resourceCulture);
+                return ResourceManager.GetString("ResetAnalysisButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string ResetSettingButtonText {
+            get {
+                return ResourceManager.GetString("ResetSettingButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset settings.
+        /// </summary>
+        public static string ResetSettingButtonToolTip {
+            get {
+                return ResourceManager.GetString("ResetSettingButtonToolTip", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Run.
         /// </summary>
-        public static string RunButtonText {
+        public static string RunAnalysisButtonText {
             get {
-                return ResourceManager.GetString("RunButtonText", resourceCulture);
+                return ResourceManager.GetString("RunAnalysisButtonText", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Run analysis (window will be blocked).
         /// </summary>
-        public static string RunButtonToolTip {
+        public static string RunAnalysisButtonToolTip {
             get {
-                return ResourceManager.GetString("RunButtonToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save.
-        /// </summary>
-        public static string SaveButtonText {
-            get {
-                return ResourceManager.GetString("SaveButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save all settings.
-        /// </summary>
-        public static string SaveButtonToolTip {
-            get {
-                return ResourceManager.GetString("SaveButtonToolTip", resourceCulture);
+                return ResourceManager.GetString("RunAnalysisButtonToolTip", resourceCulture);
             }
         }
         

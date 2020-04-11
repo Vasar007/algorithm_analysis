@@ -37,9 +37,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public ICommand AppCloseCommand { get; }
 
-        public ICommand RunCommand { get; }
+        public ICommand RunAnalysisCommand { get; }
 
-        public ICommand ResetCommand { get; }
+        public ICommand ResetParametersCommand { get; }
 
 
         public MainWindowViewModel()
@@ -56,8 +56,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 ApplicationCloseCommand.Execute, ApplicationCloseCommand.CanExecute
             );
 
-            RunCommand = new AsyncRelayCommand(LaunchAnalysis);
-            ResetCommand = new DelegateCommand(ResetFields);
+            RunAnalysisCommand = new AsyncRelayCommand(LaunchAnalysis);
+            ResetParametersCommand = new DelegateCommand(ResetFields);
         }
 
         private async Task LaunchAnalysis()

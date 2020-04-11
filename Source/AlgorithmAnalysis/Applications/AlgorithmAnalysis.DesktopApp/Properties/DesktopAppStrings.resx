@@ -153,17 +153,25 @@
     <value>Appearence</value>
     <comment>Header text for appearence card in settings.</comment>
   </data>
+  <data name="ApplySettingsButtonText" xml:space="preserve">
+    <value>Apply</value>
+    <comment>Text for apply button to save settings.</comment>
+  </data>
+  <data name="ApplySettingsButtonToolTip" xml:space="preserve">
+    <value>Apply all settings</value>
+    <comment>Tool tip for apply button to save settings.</comment>
+  </data>
   <data name="CellCreationModeHint" xml:space="preserve">
     <value>Cell creation mode</value>
     <comment>Hint for cell creation mode combo box.</comment>
   </data>
-  <data name="CloseButtonText" xml:space="preserve">
+  <data name="CloseSettingsButtonText" xml:space="preserve">
     <value>Close</value>
-    <comment>Text for close button to close dialog.</comment>
+    <comment>Text for close button to close settings dialog.</comment>
   </data>
-  <data name="CloseButtonToolTip" xml:space="preserve">
+  <data name="CloseSettingsButtonToolTip" xml:space="preserve">
     <value>Close dialog</value>
-    <comment>Tool tip for close button to close dialog.</comment>
+    <comment>Tool tip for close button to close settings dialog.</comment>
   </data>
   <data name="CommonAnalysisFilenameSuffixHint" xml:space="preserve">
     <value>Common analysis filename suffix</value>
@@ -253,29 +261,29 @@
     <value>Report</value>
     <comment>Header text for report card in settings.</comment>
   </data>
-  <data name="ResetButtonText" xml:space="preserve">
+  <data name="ResetAnalysisButtonText" xml:space="preserve">
     <value>Reset</value>
     <comment>Text for reset button to restore default analysis parameters.</comment>
   </data>
-  <data name="ResetButtonToolTip" xml:space="preserve">
+  <data name="ResetAnalysisButtonToolTip" xml:space="preserve">
     <value>Reset analysis parameters</value>
     <comment>Tool tip for reset button to restore default analysis parameters.</comment>
   </data>
-  <data name="RunButtonText" xml:space="preserve">
+  <data name="ResetSettingButtonText" xml:space="preserve">
+    <value>Reset</value>
+    <comment>Text for reset button to restore default settings.</comment>
+  </data>
+  <data name="ResetSettingButtonToolTip" xml:space="preserve">
+    <value>Reset settings</value>
+    <comment>Tool tip for reset button to restore default settings.</comment>
+  </data>
+  <data name="RunAnalysisButtonText" xml:space="preserve">
     <value>Run</value>
     <comment>Text for run button to execute analysis.</comment>
   </data>
-  <data name="RunButtonToolTip" xml:space="preserve">
+  <data name="RunAnalysisButtonToolTip" xml:space="preserve">
     <value>Run analysis (window will be blocked)</value>
     <comment>Tool tip for run button to execute analysis.</comment>
-  </data>
-  <data name="SaveButtonText" xml:space="preserve">
-    <value>Save</value>
-    <comment>Text for save button to save settings.</comment>
-  </data>
-  <data name="SaveButtonToolTip" xml:space="preserve">
-    <value>Save all settings</value>
-    <comment>Tool tip for save button to save settings.</comment>
   </data>
   <data name="SettingsButtonText" xml:space="preserve">
     <value>Settings</value>
