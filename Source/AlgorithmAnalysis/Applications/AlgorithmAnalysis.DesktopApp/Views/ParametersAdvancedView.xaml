@@ -16,7 +16,7 @@
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center">
             <TextBlock Margin="16 16 12 0"
-                       FontSize="16"
+                       FontSize="18"
                        Text="{x:Static properties:DesktopAppStrings.AdvancedParametersHeader}" />
 
             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />

@@ -88,10 +88,10 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
             Reset();
 
-            VerifyParameters();
+            ValidateParameters();
         }
 
-        private void VerifyParameters()
+        private void ValidateParameters()
         {
             if (MinDegreeOfParallelism <= 0)
             {

@@ -15,13 +15,13 @@
                                  Margin="8">
         <StackPanel>
             <TextBlock Margin="16 16 12 0"
-                               FontSize="16"
-                               Text="{x:Static properties:DesktopAppStrings.AnalysisOptionsHeader}" />
+                       FontSize="18"
+                       Text="{x:Static properties:DesktopAppStrings.AnalysisOptionsHeader}" />
 
             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
-            <StackPanel Orientation="Horizontal"
-                                Margin="8">
+            <StackPanel Orientation="Vertical"
+                        Margin="8">
 
             </StackPanel>
         </StackPanel>

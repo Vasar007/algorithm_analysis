@@ -165,6 +165,10 @@
     <value>Dark</value>
     <comment>Text for dark mode on appearence card.</comment>
   </data>
+  <data name="EnableLogForExcelLibraryText" xml:space="preserve">
+    <value>Enable logging for Excel library</value>
+    <comment>Text for check box to enable loggin for Excel library.</comment>
+  </data>
   <data name="ExitButtonText" xml:space="preserve">
     <value>Exit</value>
     <comment>Text for exit button to close app.</comment>
@@ -196,6 +200,18 @@
   <data name="LightMode" xml:space="preserve">
     <value>Light</value>
     <comment>Text for light mode on appearence card.</comment>
+  </data>
+  <data name="LogFilenameSeparatorHint" xml:space="preserve">
+    <value>Log filename separator</value>
+    <comment>Hing for log filename separator.</comment>
+  </data>
+  <data name="LogFilesExtensionHint" xml:space="preserve">
+    <value>Log files extension</value>
+    <comment>Hint for log files extension text box.</comment>
+  </data>
+  <data name="LogFolderPathHint" xml:space="preserve">
+    <value>Folder path to store app logs</value>
+    <comment>Hint for log folder path text box.</comment>
   </data>
   <data name="LoggerOptionsHeader" xml:space="preserve">
     <value>Logger</value>

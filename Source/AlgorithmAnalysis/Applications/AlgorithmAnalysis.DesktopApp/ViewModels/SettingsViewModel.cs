@@ -4,6 +4,7 @@ using MaterialDesignThemes.Wpf;
 using Prism.Commands;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Logging;
+using AlgorithmAnalysis.DesktopApp.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
@@ -14,11 +15,15 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         private static readonly ILogger _logger =
             LoggerFactory.CreateLoggerFor<SettingsViewModel>();
 
+        public SettingsModel Settings { get; }
+
         public ICommand ToggleBaseCommand { get; }
 
 
         public SettingsViewModel()
         {
+            Settings = new SettingsModel();
+
             ToggleBaseCommand = new DelegateCommand<bool?>(ApplyBase);
         }
 

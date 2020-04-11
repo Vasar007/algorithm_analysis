@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
@@ -11,17 +12,57 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultMinWidth">
+                300
+            </system:Double>
+            <system:Double x:Key="DefaultMaxWidth">
+                300
+            </system:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <materialDesign:Card Padding="8"
                                  Margin="8">
         <StackPanel>
             <TextBlock Margin="16 16 12 0"
-                               FontSize="16"
-                               Text="{x:Static properties:DesktopAppStrings.LoggerOptionsHeader}" />
+                       FontSize="18"
+                       Text="{x:Static properties:DesktopAppStrings.LoggerOptionsHeader}" />
 
             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
-            <StackPanel Orientation="Horizontal"
-                                Margin="8">
+            <StackPanel Orientation="Vertical"
+                        Margin="8">
+
+                <TextBox x:Name="LogFolderPathTextBox"
+                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LogFolderPathHint}"
+                         Margin="16"
+                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding Path=Settings.Logger.LogFolderPath}" />
+
+                <CheckBox Content="{x:Static properties:DesktopAppStrings.EnableLogForExcelLibraryText}"
+                          HorizontalAlignment="Stretch"
+                          Margin="16 8"
+                          IsChecked="{Binding Path=Settings.Logger.EnableLogForExcelLibrary}" />
+
+                <TextBox x:Name="LogFilesExtensionTextBox"
+                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LogFilesExtensionHint}"
+                         Margin="16"
+                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding Path=Settings.Logger.LogFilesExtension}" />
+
+                <TextBox x:Name="LogFilenameSeparatorTextBox"
+                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LogFilenameSeparatorHint}"
+                         Margin="16"
+                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding Path=Settings.Logger.LogFilenameSeparator}" />
 
             </StackPanel>
         </StackPanel>

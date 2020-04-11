@@ -169,6 +169,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable logging for Excel library.
+        /// </summary>
+        public static string EnableLogForExcelLibraryText {
+            get {
+                return ResourceManager.GetString("EnableLogForExcelLibraryText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string ExitButtonText {
@@ -237,6 +246,33 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string LightMode {
             get {
                 return ResourceManager.GetString("LightMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log filename separator.
+        /// </summary>
+        public static string LogFilenameSeparatorHint {
+            get {
+                return ResourceManager.GetString("LogFilenameSeparatorHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log files extension.
+        /// </summary>
+        public static string LogFilesExtensionHint {
+            get {
+                return ResourceManager.GetString("LogFilesExtensionHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder path to store app logs.
+        /// </summary>
+        public static string LogFolderPathHint {
+            get {
+                return ResourceManager.GetString("LogFolderPathHint", resourceCulture);
             }
         }
         
