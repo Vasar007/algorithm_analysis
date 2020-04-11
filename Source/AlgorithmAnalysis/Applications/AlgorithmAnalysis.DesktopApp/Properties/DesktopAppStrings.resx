@@ -165,6 +165,10 @@
     <value>Close dialog</value>
     <comment>Tool tip for close button to close dialog.</comment>
   </data>
+  <data name="CommonAnalysisFilenameSuffixHint" xml:space="preserve">
+    <value>Common analysis filename suffix</value>
+    <comment>Hint for common analysis filename suffix text box.</comment>
+  </data>
   <data name="DarkMode" xml:space="preserve">
     <value>Dark</value>
     <comment>Text for dark mode on appearence card.</comment>
@@ -241,6 +245,10 @@
     <value>Output Excel file path</value>
     <comment>Hint for output Excel file path text box.</comment>
   </data>
+  <data name="OutputFileExtensionHint" xml:space="preserve">
+    <value>Output file extension</value>
+    <comment>Hint for output file extension.</comment>
+  </data>
   <data name="ReportOptionsHeader" xml:space="preserve">
     <value>Report</value>
     <comment>Header text for report card in settings.</comment>
@@ -284,6 +292,13 @@
   <data name="StepValueHint" xml:space="preserve">
     <value>The size of step for function segment</value>
     <comment>Hint for step value text box.</comment>
+  </data>
+  <data name="WarningCannotConfigureAlgorithmsText" xml:space="preserve">
+    <value>Warning: currently you cannot configure
+algorithms though settings. Please,
+configure algorithms through configuration
+file and restart application.</value>
+    <comment>Text for warning control when user cannot configure algorithms though settings.</comment>
   </data>
   <data name="WarningInsufficientNumberOfResourcesText" xml:space="preserve">
     <value>Warning: you cannot specify degree of parallelism.

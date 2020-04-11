@@ -5,8 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:prism="http://prismlibrary.com/"
-             xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
              xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
              xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
              mc:Ignorable="d"
@@ -15,10 +13,10 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <system:Double x:Key="DefaultMinWidth">
-                300
+                250
             </system:Double>
             <system:Double x:Key="DefaultMaxWidth">
-                300
+                250
             </system:Double>
         </ResourceDictionary>
     </UserControl.Resources>

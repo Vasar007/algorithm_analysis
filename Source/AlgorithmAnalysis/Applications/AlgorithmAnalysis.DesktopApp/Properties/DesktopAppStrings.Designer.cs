@@ -169,6 +169,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Common analysis filename suffix.
+        /// </summary>
+        public static string CommonAnalysisFilenameSuffixHint {
+            get {
+                return ResourceManager.GetString("CommonAnalysisFilenameSuffixHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dark.
         /// </summary>
         public static string DarkMode {
@@ -340,6 +349,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Output file extension.
+        /// </summary>
+        public static string OutputFileExtensionHint {
+            get {
+                return ResourceManager.GetString("OutputFileExtensionHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Report.
         /// </summary>
         public static string ReportOptionsHeader {
@@ -435,6 +453,18 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string StepValueHint {
             get {
                 return ResourceManager.GetString("StepValueHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: currently you cannot configure
+        ///algorithms though settings. Please,
+        ///configure algorithms through configuration
+        ///file and restart application..
+        /// </summary>
+        public static string WarningCannotConfigureAlgorithmsText {
+            get {
+                return ResourceManager.GetString("WarningCannotConfigureAlgorithmsText", resourceCulture);
             }
         }
         
