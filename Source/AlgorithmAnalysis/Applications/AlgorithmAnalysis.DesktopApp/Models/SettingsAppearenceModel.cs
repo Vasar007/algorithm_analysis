@@ -1,4 +1,5 @@
 ﻿using Prism.Mvvm;
+using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.MaterialDesign;
 
@@ -8,6 +9,18 @@ namespace AlgorithmAnalysis.DesktopApp.Models
     {
         // Initializes through Reset method in ctor.
         public ThemeWrapper CurrentTheme { get; private set; } = default!;
+
+        private bool _isDark;
+        public bool IsDark
+        {
+            get => _isDark;
+            set
+            {
+                CurrentTheme = value ? ThemeWrapper.Dark : ThemeWrapper.Light;
+                CurrentTheme.ApplyBaseTheme();
+                SetProperty(ref _isDark, value);
+            }
+        }
 
 
         public SettingsAppearenceModel()
@@ -20,7 +33,10 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public void Reset()
         {
-            CurrentTheme = ThemeWrapper.CreateFromConfig();
+            var appearenceOptions = ConfigOptions.Appearence;
+
+            CurrentTheme = ThemeWrapper.Create(appearenceOptions.Theme);
+            IsDark = CurrentTheme.IsDark;
         }
 
         public void Validate()
@@ -30,10 +46,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         #endregion
 
-        public ThemeWrapper GetTheme(bool isDark)
+        public void Set()
         {
-            CurrentTheme = isDark ? ThemeWrapper.Dark : ThemeWrapper.Light;
-            return CurrentTheme;
+
         }
     }
 }

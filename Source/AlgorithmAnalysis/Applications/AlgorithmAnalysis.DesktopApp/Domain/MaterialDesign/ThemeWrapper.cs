@@ -1,6 +1,6 @@
 ﻿using System;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.Configuration;
+using AlgorithmAnalysis.Logging;
 using AlgorithmAnalysis.Models;
 using MaterialDesignThemes.Wpf;
 
@@ -8,6 +8,8 @@ namespace AlgorithmAnalysis.DesktopApp.Domain.MaterialDesign
 {
     internal sealed class ThemeWrapper
     {
+        private static readonly ILogger _logger = LoggerFactory.CreateLoggerFor<ThemeWrapper>();
+
         public static readonly ThemeWrapper Light = Create(ThemeKind.Light);
 
         public static readonly ThemeWrapper Dark = Create(ThemeKind.Dark);
@@ -37,17 +39,17 @@ namespace AlgorithmAnalysis.DesktopApp.Domain.MaterialDesign
         {
             themeKind.ThrowIfEnumValueIsUndefined(nameof(themeKind));
 
-            return GetActualTheme(themeKind);
+            return GetThemeByKind(themeKind);
         }
 
-        public static ThemeWrapper CreateFromConfig()
+        public void ApplyBaseTheme()
         {
-            var appearenceOptions = ConfigOptions.Appearence;
+            _logger.Info($"Changing application theme. New theme: '{ThemeName}'.");
 
-            return Create(appearenceOptions.Theme);
+            ModifyTheme(theme => theme.SetBaseTheme(Value));
         }
 
-        private static ThemeWrapper GetActualTheme(ThemeKind themeKind)
+        private static ThemeWrapper GetThemeByKind(ThemeKind themeKind)
         {
             return themeKind switch
             {
@@ -64,6 +66,18 @@ namespace AlgorithmAnalysis.DesktopApp.Domain.MaterialDesign
                          $"Unknown theme kind: '{themeKind.ToString()}'."
                      )
             };
+        }
+
+        private static void ModifyTheme(Action<ITheme>? modificationAction)
+        {
+            _logger.Info("Modifying application theme.");
+
+            var paletteHelper = new PaletteHelper();
+            ITheme theme = paletteHelper.GetTheme();
+
+            modificationAction?.Invoke(theme);
+
+            paletteHelper.SetTheme(theme);
         }
     }
 }

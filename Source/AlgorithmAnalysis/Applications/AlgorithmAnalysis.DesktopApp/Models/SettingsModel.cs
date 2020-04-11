@@ -44,5 +44,10 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         }
 
         #endregion
+
+        public void SaveToConfigFile()
+        {
+            
+        }
     }
 }

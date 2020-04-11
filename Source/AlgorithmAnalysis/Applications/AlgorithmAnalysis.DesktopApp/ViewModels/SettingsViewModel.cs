@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Windows.Input;
 using Acolyte.Assertions;
-using MaterialDesignThemes.Wpf;
-using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Logging;
 using AlgorithmAnalysis.DesktopApp.Models;
-using AlgorithmAnalysis.DesktopApp.Domain.MaterialDesign;
+using AlgorithmAnalysis.DesktopApp.Domain.Messages;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
@@ -17,56 +15,43 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         private static readonly ILogger _logger =
             LoggerFactory.CreateLoggerFor<SettingsViewModel>();
 
+        private readonly IEventAggregator _eventAggregator;
+
         public SettingsModel Settings { get; }
 
-        public ICommand ToggleBaseCommand { get; }
 
-
-        public SettingsViewModel()
+        public SettingsViewModel(IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator.ThrowIfNull(nameof(eventAggregator));
+
             Settings = new SettingsModel();
 
-            ToggleBaseCommand = new DelegateCommand<bool?>(ApplyTheme);
-
-            ApplyThemeFromSettings();
+            SubscribeOnEvents();
         }
 
-        private void ApplyThemeFromSettings()
+        private void SubscribeOnEvents()
         {
-            ThemeWrapper newTheme = Settings.Appearence.CurrentTheme;
-            ApplyBase(newTheme);
+            _eventAggregator
+               .GetEvent<SaveSettingsMessage>()
+               .Subscribe(SaveSettings);
         }
 
-        private void ApplyTheme(bool? isDark)
+        private void SaveSettings(SettingsModel settingsModel)
         {
-            if (!isDark.HasValue)
+            settingsModel.ThrowIfNull(nameof(settingsModel));
+
+            _logger.Info("Saving settings to configuration file.");
+
+            try
             {
-                throw new ArgumentException("Boolean flag should be specified.", nameof(isDark));
+                settingsModel.Validate();
+
+
             }
-
-            ThemeWrapper newTheme = Settings.Appearence.GetTheme(isDark.Value);
-            ApplyBase(newTheme);
-        }
-
-        private void ApplyBase(ThemeWrapper newTheme)
-        {
-            newTheme.ThrowIfNull(nameof(newTheme));
-
-            _logger.Info($"Changing application theme. New theme: '{newTheme.ThemeName}'.");
-
-            ModifyTheme(theme => theme.SetBaseTheme(newTheme.Value));
-        }
-
-        private static void ModifyTheme(Action<ITheme>? modificationAction)
-        {
-            _logger.Info("Modifying application theme.");
-
-            var paletteHelper = new PaletteHelper();
-            ITheme theme = paletteHelper.GetTheme();
-
-            modificationAction?.Invoke(theme);
-
-            paletteHelper.SetTheme(theme);
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Failed to save settings to configuration file.");
+            }
         }
     }
 }

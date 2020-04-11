@@ -61,18 +61,20 @@
                                              PlacementMode="BottomAndAlignRightEdges"
                                              StaysOpen="False">
                         <StackPanel>
-                            <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                            <Button Content="{x:Static properties:DesktopAppStrings.SettingsButtonText}"
                                     ToolTip="{x:Static properties:DesktopAppStrings.SettingsButtonToolTip}"
-                                    Content="{x:Static properties:DesktopAppStrings.SettingsButtonText}">
+                                    Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                    materialDesign:DialogHost.DialogOpenedAttached="Settings_DialogOpened"
+                                    materialDesign:DialogHost.DialogClosingAttached="Settings_DialogClosing">
                                 <Button.CommandParameter>
                                     <views:SettingsView />
                                 </Button.CommandParameter>
                             </Button >
 
                             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
-                            <Button Command="{Binding Path=AppCloseCommand}"
-                                    ToolTip="{x:Static properties:DesktopAppStrings.ExitButtonToolTip}"
-                                    Content="{x:Static properties:DesktopAppStrings.ExitButtonText}" />
+                            <Button Content="{x:Static properties:DesktopAppStrings.ExitButtonText}" 
+                                    Command="{Binding Path=AppCloseCommand}"
+                                    ToolTip="{x:Static properties:DesktopAppStrings.ExitButtonToolTip}" />
                         </StackPanel>
                     </materialDesign:PopupBox>
 
@@ -111,12 +113,12 @@
                     <UniformGrid Rows="1"
                                  Columns="2">
 
-                        <Button Command="{Binding Path=RunCommand}"
-                                Margin="8"
+                        <Button Margin="8"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
+                                Content="{x:Static properties:DesktopAppStrings.RunButtonText}"
                                 ToolTip="{x:Static properties:DesktopAppStrings.RunButtonToolTip}"
-                                Content="{x:Static properties:DesktopAppStrings.RunButtonText}">
+                                Command="{Binding Path=RunCommand}">
                             <Button.IsEnabled>
                                 <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
                                               Mode="OneWay">
@@ -157,12 +159,12 @@
                             </Button.IsEnabled>
                         </Button>
 
-                        <Button Command="{Binding Path=ResetCommand}"
-                                Margin="8"
+                        <Button Margin="8"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
+                                Content="{x:Static properties:DesktopAppStrings.ResetButtonText}"
                                 ToolTip="{x:Static properties:DesktopAppStrings.ResetButtonToolTip}"
-                                Content="{x:Static properties:DesktopAppStrings.ResetButtonText}" />
+                                Command="{Binding Path=ResetCommand}" />
 
                     </UniformGrid>
                 </StackPanel>

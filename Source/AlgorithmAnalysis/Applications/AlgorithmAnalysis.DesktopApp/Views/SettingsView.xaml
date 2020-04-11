@@ -44,20 +44,19 @@
                          Columns="3">
                 <Button IsDefault="True"
                         Margin="8"
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Content="{x:Static properties:DesktopAppStrings.SaveButtonText}"
                         ToolTip="{x:Static properties:DesktopAppStrings.SaveButtonToolTip}"
-                        Content="{x:Static properties:DesktopAppStrings.SaveButtonText}">
-                    <Button.CommandParameter>
-                        <system:Boolean>
-                            True
-                        </system:Boolean>
-                    </Button.CommandParameter>
-                </Button>
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        CommandParameter="{Binding Path=.}" />
 
                 <Button Margin="8"
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Content="{x:Static properties:DesktopAppStrings.ResetButtonText}"
                         ToolTip="{x:Static properties:DesktopAppStrings.ResetButtonText}"
-                        Content="{x:Static properties:DesktopAppStrings.ResetButtonText}">
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
                     <Button.CommandParameter>
                         <system:Boolean>
                             True
@@ -67,9 +66,11 @@
 
                 <Button IsCancel="True"
                         Margin="8"
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Content="{x:Static properties:DesktopAppStrings.CloseButtonText}"
                         ToolTip="{x:Static properties:DesktopAppStrings.CloseButtonToolTip}"
-                        Content="{x:Static properties:DesktopAppStrings.CloseButtonText}">
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
                     <Button.CommandParameter>
                         <system:Boolean>
                             False

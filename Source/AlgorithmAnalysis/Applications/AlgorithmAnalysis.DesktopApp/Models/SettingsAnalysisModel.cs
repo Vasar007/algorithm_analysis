@@ -7,6 +7,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 {
     internal sealed class SettingsAnalysisModel : BindableBase, IChangeableModel
     {
+        // TODO: allow to configure algorithms.
+
         // Initializes through Reset method in ctor.
         private string _commonAnalysisFilenameSuffix = default!;
         public string CommonAnalysisFilenameSuffix

@@ -23,10 +23,7 @@
                 <TextBlock VerticalAlignment="Center"
                            Text="{x:Static properties:DesktopAppStrings.LightMode}" />
                 <ToggleButton Margin="8 0 16 0"
-                              IsChecked="{Binding Path=Settings.Appearence.CurrentTheme.IsDark, Mode=OneTime}"
-                              Command="{Binding Path=ToggleBaseCommand}"
-                              CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self},
-                                                 Path=IsChecked}" />
+                              IsChecked="{Binding Path=Settings.Appearence.IsDark}" />
                 <TextBlock VerticalAlignment="Center"
                            Text="{x:Static properties:DesktopAppStrings.DarkMode}" />
             </StackPanel>
