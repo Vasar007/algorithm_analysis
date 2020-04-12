@@ -31,8 +31,8 @@
 
         <StackPanel Orientation="Vertical">
             <TextBlock Margin="16 16 12 0"
-                        FontSize="18"
-                        Text="{x:Static properties:DesktopAppStrings.AnalysisOptionsHeader}" />
+                       FontSize="18"
+                       Text="{x:Static properties:DesktopAppStrings.AnalysisOptionsHeader}" />
 
             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
@@ -44,9 +44,9 @@
                                         Mode=OneWay}" />
 
                     <Hyperlink TextDecorations="Underline"
-                                Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-                                materialDesign:DialogHost.DialogOpenedAttached="SettingsAlgorithmsView_DialogOpened"
-                                materialDesign:DialogHost.DialogClosingAttached="SettingsAlgorithmsView_DialogClosing">
+                               Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                               materialDesign:DialogHost.DialogOpenedAttached="SettingsAlgorithmsView_DialogOpened"
+                               materialDesign:DialogHost.DialogClosingAttached="SettingsAlgorithmsView_DialogClosing">
                         <Hyperlink.CommandParameter>
                             <views:SettingsAlgorithmsView DataContext="{Binding Path=Data, Source={StaticResource Proxy}}" />
                         </Hyperlink.CommandParameter>
@@ -64,20 +64,20 @@
                 </views:WarningOnEmptyControlView>
 
                 <TextBox x:Name="CommonAnalysisFilenameSuffixTextBox"
-                            materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.CommonAnalysisFilenameSuffixHint}"
-                            Margin="16"
-                            MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
-                            MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                            Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding Path=Settings.Analysis.CommonAnalysisFilenameSuffix}" />
+                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.CommonAnalysisFilenameSuffixHint}"
+                         Margin="16"
+                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding Path=Settings.Analysis.CommonAnalysisFilenameSuffix}" />
 
                 <TextBox x:Name="OutputFileExtensionTextBox"
-                            materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.OutputFileExtensionHint}"
-                            Margin="16"
-                            MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
-                            MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                            Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding Path=Settings.Analysis.OutputFileExtension}" />
+                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.OutputFileExtensionHint}"
+                         Margin="16"
+                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding Path=Settings.Analysis.OutputFileExtension}" />
 
             </StackPanel>
         </StackPanel>
