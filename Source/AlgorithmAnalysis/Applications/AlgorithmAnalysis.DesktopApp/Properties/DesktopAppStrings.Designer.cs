@@ -466,6 +466,42 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        public static string SpecifiedAlgorithmsClickViewText {
+            get {
+                return ResourceManager.GetString("SpecifiedAlgorithmsClickViewText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found {0} algorithms..
+        /// </summary>
+        public static string SpecifiedAlgorithmsManyText {
+            get {
+                return ResourceManager.GetString("SpecifiedAlgorithmsManyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not find any algorithms..
+        /// </summary>
+        public static string SpecifiedAlgorithmsNotFoundText {
+            get {
+                return ResourceManager.GetString("SpecifiedAlgorithmsNotFoundText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Found {0} algorithm..
+        /// </summary>
+        public static string SpecifiedAlgorithmsSingleText {
+            get {
+                return ResourceManager.GetString("SpecifiedAlgorithmsSingleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The size of step for function segment.
         /// </summary>
         public static string StepValueHint {

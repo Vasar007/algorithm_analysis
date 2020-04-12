@@ -34,8 +34,18 @@
             <StackPanel Orientation="Vertical"
                         Margin="8">
 
+                <TextBlock Margin="16">
+                    <TextBlock Text="{Binding Path=Settings.Analysis.SpecifiedAlgorithmsStatusText,
+                                      Mode=OneWay}" />
+                    <Hyperlink 
+                               TextDecorations="Underline"
+                               Foreground="Black">
+                        <TextBlock Text="{x:Static properties:DesktopAppStrings.SpecifiedAlgorithmsClickViewText}" />
+                    </Hyperlink>
+                </TextBlock>
+
                 <!--
-                Show warning about no availbale algorithms to analyze.
+                Show warning about no availbale algorithms to analyze. Command="{Binding Path=GoToPathCommand}"
                 -->
                 <views:WarningOnEmptyControlView Visibility="{Binding Path=Settings.Analysis.IsHintForAlgorithmVisible,
                                                               Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">

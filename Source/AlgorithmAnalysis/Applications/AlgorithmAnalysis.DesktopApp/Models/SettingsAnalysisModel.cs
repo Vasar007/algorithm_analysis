@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Acolyte.Assertions;
 using Acolyte.Collections;
@@ -7,6 +8,7 @@ using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.Models;
+using AlgorithmAnalysis.DesktopApp.Properties;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
@@ -14,16 +16,21 @@ namespace AlgorithmAnalysis.DesktopApp.Models
     {
         #region Algorithms
 
-        public ObservableCollection<AlgorithmType> SpecifiedAlgorithms { get; }
+        // Initializes through Reset method in ctor.
+        public ObservableCollection<AlgorithmType> SpecifiedAlgorithms { get; private set; } =
+            default!;
 
-        public int SpecifiedAlgorithmsCount => SpecifiedAlgorithms.Count;
+        public int SpecifiedAlgorithmsNumber => SpecifiedAlgorithms.Count;
 
-        public bool IsAnyAlgorithmExists => SpecifiedAlgorithms.IsNotEmpty();
+        public string SpecifiedAlgorithmsStatusText =>
+            string.Format(SpecifiedAlgorithmsStatusTextFormat(), SpecifiedAlgorithmsNumber);
+
+        public bool IsAnyAlgorithmSpecified => SpecifiedAlgorithms.IsNotEmpty();
 
         /// <summary>
         /// Shows warning about no availbale algorithms to analyze.
         /// </summary>
-        public bool IsHintForAlgorithmVisible => !IsAnyAlgorithmExists;
+        public bool IsHintForAlgorithmVisible => !IsAnyAlgorithmSpecified;
 
         #endregion
 
@@ -46,8 +53,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public SettingsAnalysisModel()
         {
-            SpecifiedAlgorithms = new ObservableCollection<AlgorithmType>();
-
             Reset();
         }
 
@@ -57,6 +62,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         {
             AnalysisOptions analysisOptions = ConfigOptions.Analysis;
 
+            var algorithmTypes = analysisOptions.AvailableAlgorithms.GetAlgorithmTypes();
+            SpecifiedAlgorithms = new ObservableCollection<AlgorithmType>(algorithmTypes);
             CommonAnalysisFilenameSuffix = analysisOptions.CommonAnalysisFilenameSuffix;
             OutputFileExtension = analysisOptions.OutputFileExtension;
         }
@@ -64,6 +71,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public void Validate()
         {
             // TODO: implement settings parameters validation:
+            // AvailableAlgorithms
             // CommonAnalysisFilenameSuffix
             // OutputFileExtension
         }
@@ -78,7 +86,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
             AnalysisOptions analysisOptions = ConfigOptions.Analysis;
 
-            // TODO: allow to configure algorithms.
             analysisOptions.AvailableAlgorithms = SpecifiedAlgorithms.GetAlgorithmTypeValues();
             analysisOptions.CommonAnalysisFilenameSuffix = CommonAnalysisFilenameSuffix;
             analysisOptions.OutputFileExtension = OutputFileExtension;
@@ -87,5 +94,22 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         }
 
         #endregion
+
+        private string SpecifiedAlgorithmsStatusTextFormat()
+        {
+            return SpecifiedAlgorithmsNumber switch
+            {
+                0 => DesktopAppStrings.SpecifiedAlgorithmsNotFoundText,
+
+                1 => DesktopAppStrings.SpecifiedAlgorithmsSingleText,
+
+                _ when SpecifiedAlgorithmsNumber > 1 => DesktopAppStrings.SpecifiedAlgorithmsManyText,
+
+                _ => throw new ArgumentOutOfRangeException(
+                         nameof(SpecifiedAlgorithmsNumber), SpecifiedAlgorithmsNumber,
+                         $"Unexpected algorithms number: '{SpecifiedAlgorithmsNumber.ToString()}'."
+                     )
+            };
+        }
     }
 }

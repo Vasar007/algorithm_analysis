@@ -297,6 +297,22 @@
     <value>Show analysis window</value>
     <comment>Text for check box to show analysis window during analysis process.</comment>
   </data>
+  <data name="SpecifiedAlgorithmsClickViewText" xml:space="preserve">
+    <value>View</value>
+    <comment>Text for specified algorithm node hyperlink in settings to edit algorithms.</comment>
+  </data>
+  <data name="SpecifiedAlgorithmsManyText" xml:space="preserve">
+    <value>Found {0} algorithms.</value>
+    <comment>Text for specified algorithm node in settings when there are more than one specified algorithm.</comment>
+  </data>
+  <data name="SpecifiedAlgorithmsNotFoundText" xml:space="preserve">
+    <value>Could not find any algorithms.</value>
+    <comment>Text for specified algorithm node in settings when there are no specified algorithms.</comment>
+  </data>
+  <data name="SpecifiedAlgorithmsSingleText" xml:space="preserve">
+    <value>Found {0} algorithm.</value>
+    <comment>Text for specified algorithm node in settings when there is only one specified algorithm.</comment>
+  </data>
   <data name="StepValueHint" xml:space="preserve">
     <value>The size of step for function segment</value>
     <comment>Hint for step value text box.</comment>
