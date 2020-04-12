@@ -3,7 +3,6 @@ using Prism.Mvvm;
 using Acolyte.Assertions;
 using Acolyte.Collections;
 using Acolyte.Common;
-using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.Validation;
@@ -106,7 +105,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             CellCreationMode = reportOptions.CellCreationMode;
             LibraryProvider = reportOptions.LibraryProvider;
             ExcelVersion = reportOptions.ExcelVersion;
-            OutputReportFilePath = PathHelper.ResolveRelativePath(
+            OutputReportFilePath = ModelPathTransformer.TransformPathToRelative(
                 reportOptions.OutputReportFilePath
             );
         }

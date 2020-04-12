@@ -11,13 +11,19 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public int MaxDegreeOfParallelism { get; }
 
+        public bool ShowResults { get; }
+
 
         public AnalysisLaunchContext(
             bool showAnalysisWindow,
-            int maxDegreeOfParallelism)
+            int maxDegreeOfParallelism,
+            bool showResults)
         {
             ShowAnalysisWindow = showAnalysisWindow;
-            MaxDegreeOfParallelism = maxDegreeOfParallelism.ThrowIfValueIsOutOfRange(nameof(maxDegreeOfParallelism), 1, Environment.ProcessorCount);
+            MaxDegreeOfParallelism = maxDegreeOfParallelism.ThrowIfValueIsOutOfRange(
+                nameof(maxDegreeOfParallelism), 1, Environment.ProcessorCount
+            );
+            ShowResults = showResults;
         }
 
         #region ILoggable Implementation
@@ -27,7 +33,8 @@ namespace AlgorithmAnalysis.DomainLogic
             var sb = new StringBuilder()
                 .AppendLine($"[{nameof(AnalysisLaunchContext)}]")
                 .AppendLine($"ShowAnalysisWindow: '{ShowAnalysisWindow.ToString()}'")
-                .AppendLine($"MaxDegreeOfParallelism: '{MaxDegreeOfParallelism.ToString()}'");
+                .AppendLine($"MaxDegreeOfParallelism: '{MaxDegreeOfParallelism.ToString()}'")
+                .AppendLine($"ShowResults: '{ShowResults.ToString()}'");
 
             return sb.ToString();
         }

@@ -1,6 +1,5 @@
 ﻿using Prism.Mvvm;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 
@@ -51,7 +50,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         {
             LoggerOptions loggerOptions = ConfigOptions.Logger;
 
-            LogFolderPath = PathHelper.ResolveRelativePath(loggerOptions.LogFolderPath);
+            LogFolderPath = ModelPathTransformer.TransformPathToRelative(
+                loggerOptions.LogFolderPath
+            );
             EnableLogForExcelLibrary = loggerOptions.EnableLogForExcelLibrary;
             LogFilesExtension = loggerOptions.LogFilesExtension;
             LogFilenameSeparator = loggerOptions.LogFilenameSeparator;
@@ -75,7 +76,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
             LoggerOptions loggerOptions = ConfigOptions.Logger;
 
-            loggerOptions.LogFolderPath = LogFolderPath;
+            loggerOptions.LogFolderPath = ModelPathTransformer.TransformPathToOriginal(
+                loggerOptions.LogFolderPath, LogFolderPath
+            );
             loggerOptions.EnableLogForExcelLibrary = EnableLogForExcelLibrary;
             loggerOptions.LogFilesExtension = LogFilesExtension;
             loggerOptions.LogFilenameSeparator = LogFilenameSeparator;

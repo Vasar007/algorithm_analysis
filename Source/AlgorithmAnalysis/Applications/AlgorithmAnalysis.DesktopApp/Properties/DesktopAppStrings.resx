@@ -293,6 +293,14 @@
     <value>Open analysis results</value>
     <comment>Text for check box to open analysis results when analysis will be completed.</comment>
   </data>
+  <data name="OpenConfigFileButtonText" xml:space="preserve">
+    <value>Open configuration file</value>
+    <comment>Text for open config button to open config file.</comment>
+  </data>
+  <data name="OpenConfigFileButtonToolTip" xml:space="preserve">
+    <value>Open configuration file on disk if it exists</value>
+    <comment>Tool tipfor open config button to open config file.</comment>
+  </data>
   <data name="OutputExcelFilePathHint" xml:space="preserve">
     <value>Output Excel file path</value>
     <comment>Hint for output Excel file path text box.</comment>
@@ -300,6 +308,15 @@
   <data name="OutputFileExtensionHint" xml:space="preserve">
     <value>Output file extension</value>
     <comment>Hint for output file extension.</comment>
+  </data>
+  <data name="ReloadSettingButtonText" xml:space="preserve">
+    <value>Reload</value>
+    <comment>Text for reload button to reload settings from configuration file.</comment>
+  </data>
+  <data name="ReloadSettingButtonToolTip" xml:space="preserve">
+    <value>Reload settings from configuration file on disk if it exists
+Otherwise, settings will be reset to default values.</value>
+    <comment>Tool tip for reload button to reload settings from configuration file.</comment>
   </data>
   <data name="ReportOptionsHeader" xml:space="preserve">
     <value>Report</value>
@@ -312,14 +329,6 @@
   <data name="ResetAnalysisButtonToolTip" xml:space="preserve">
     <value>Reset analysis parameters</value>
     <comment>Tool tip for reset button to restore default analysis parameters.</comment>
-  </data>
-  <data name="ResetSettingButtonText" xml:space="preserve">
-    <value>Reset</value>
-    <comment>Text for reset button to restore default settings.</comment>
-  </data>
-  <data name="ResetSettingButtonToolTip" xml:space="preserve">
-    <value>Reset settings</value>
-    <comment>Tool tip for reset button to restore default settings.</comment>
   </data>
   <data name="RunAnalysisButtonText" xml:space="preserve">
     <value>Run</value>
@@ -411,5 +420,10 @@ Please, check configuration and restart application.</value>
     <value>Warning: there are no available library providers.
 Please, check configuration and restart application.</value>
     <comment>Text for warning control when there are no available library providers.</comment>
+  </data>
+  <data name="WarningPathsAreRelativeText" xml:space="preserve">
+    <value>Warning: displayed paths are relative.
+If you want to specify full paths, edit configuration file.</value>
+    <comment>Text for warning control to notify that displayed paths are relative.</comment>
   </data>
 </root>

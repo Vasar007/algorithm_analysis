@@ -18,7 +18,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
     internal sealed class MainWindowViewModel : BindableBase
     {
         private static readonly ILogger _logger =
-            LoggerFactory.CreateLoggerFor<SettingsViewModel>();
+            LoggerFactory.CreateLoggerFor<MainWindowViewModel>();
 
         private readonly ResultWrapper _result;
 
@@ -56,11 +56,11 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 ApplicationCloseCommand.Execute, ApplicationCloseCommand.CanExecute
             );
 
-            RunAnalysisCommand = new AsyncRelayCommand(LaunchAnalysisSafe);
+            RunAnalysisCommand = new AsyncRelayCommand(LaunchAnalysisSafeAsync);
             ResetParametersCommand = new DelegateCommand(ResetFields);
         }
 
-        private async Task LaunchAnalysisSafe()
+        private async Task LaunchAnalysisSafeAsync()
         {
             CanExecuteAnalysis = false;
 
@@ -76,7 +76,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 AnalysisResult result = await Task.Run(() => _performer.PerformAnalysisAsync(context))
                     .ConfigureAwait(false);
 
-                ProcessResult(result);
+                _ = ProcessResultAsync(context, result);
             }
             catch (Exception ex)
             {
@@ -112,7 +112,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             File.Delete(_result.OutputReportFile.FullName);
         }
 
-        private void ProcessResult(AnalysisResult result)
+        private async Task ProcessResultAsync(AnalysisContext context, AnalysisResult result)
         {
             if (result.Success)
             {
@@ -123,14 +123,14 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 MessageBoxProvider.ShowError(result.Message);
             }
 
-            OpenResultsIfNeeded();
+            await OpenResultsIfNeededAsync(context);
         }
 
-        private void OpenResultsIfNeeded()
+        private async Task OpenResultsIfNeededAsync(AnalysisContext context)
         {
-            if (Parameters.Advanced.OpenAnalysisResults)
+            if (context.LaunchContext.ShowResults)
             {
-                _ = ProcessManager.OpenFileWithAssociatedAppAsync(_result.OutputReportFile);
+                await ProcessManager.OpenFileWithAssociatedAppAsync(_result.OutputReportFile);
             }
         }
     }

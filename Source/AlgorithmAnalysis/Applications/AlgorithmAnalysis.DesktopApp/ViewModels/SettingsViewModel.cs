@@ -22,9 +22,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public SettingsModel Settings { get; }
 
-        public ICommand ResetSettingsCommand { get; }
+        public ICommand OpenConfigFileCommand { get; }
 
-        public ICommand ViewAlgorithmsCommand { get; }
+        public ICommand ResetSettingsCommand { get; }
 
 
         public SettingsViewModel(IEventAggregator eventAggregator)
@@ -33,8 +33,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
             Settings = new SettingsModel();
 
+            OpenConfigFileCommand = new DelegateCommand(ResetSettingsSafe);
             ResetSettingsCommand = new DelegateCommand(ResetSettingsSafe);
-            ViewAlgorithmsCommand = new DelegateCommand(ResetSettingsSafe);
 
             SubscribeOnEvents();
         }

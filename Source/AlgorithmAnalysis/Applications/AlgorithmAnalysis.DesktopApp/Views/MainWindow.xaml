@@ -108,66 +108,64 @@
 
                 </StackPanel>
 
-                <StackPanel Orientation="Vertical"
-                            Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}">
-                    <UniformGrid Rows="1"
-                                 Columns="2">
+                <UniformGrid Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
+                             Rows="1"
+                             Columns="2">
 
-                        <Button Margin="8"
-                                HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center"
-                                Content="{x:Static properties:DesktopAppStrings.RunAnalysisButtonText}"
-                                ToolTip="{x:Static properties:DesktopAppStrings.RunAnalysisButtonToolTip}"
-                                Command="{Binding Path=RunAnalysisCommand}">
-                            <Button.IsEnabled>
-                                <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
-                                              Mode="OneWay">
-                                    <!-- Algorithm parameters panel -->
-                                    <Binding ElementName="ParametersAlgorithmView"
-                                             Path="AlgorithmComboBoxProxy.SelectedItem"
-                                             Mode="OneWay" />
-                                    <Binding ElementName="ParametersAlgorithmView"
-                                             Path="FirstValueTextBoxProxy.(Validation.HasError)"
-                                             Mode="OneWay" />
-                                    <Binding ElementName="ParametersAlgorithmView"
-                                             Path="LastValueTextBoxProxy.(Validation.HasError)"
-                                             Mode="OneWay" />
-                                    <Binding ElementName="ParametersAlgorithmView"
-                                             Path="LastExtrapolationValueTextBoxProxy.(Validation.HasError)"
-                                             Mode="OneWay" />
-                                    <Binding ElementName="ParametersAlgorithmView"
-                                             Path="LaunchesNumberTextBoxProxy.(Validation.HasError)"
-                                             Mode="OneWay" />
-                                    <Binding ElementName="ParametersAlgorithmView"
-                                             Path="StepValueTextBoxProxy.(Validation.HasError)"
-                                             Mode="OneWay" />
+                    <Button Margin="8"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Content="{x:Static properties:DesktopAppStrings.RunAnalysisButtonText}"
+                            ToolTip="{x:Static properties:DesktopAppStrings.RunAnalysisButtonToolTip}"
+                            Command="{Binding Path=RunAnalysisCommand}">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
+                                          Mode="OneWay">
+                                <!-- Algorithm parameters panel -->
+                                <Binding ElementName="ParametersAlgorithmView"
+                                         Path="AlgorithmComboBoxProxy.SelectedItem"
+                                         Mode="OneWay" />
+                                <Binding ElementName="ParametersAlgorithmView"
+                                         Path="FirstValueTextBoxProxy.(Validation.HasError)"
+                                         Mode="OneWay" />
+                                <Binding ElementName="ParametersAlgorithmView"
+                                         Path="LastValueTextBoxProxy.(Validation.HasError)"
+                                         Mode="OneWay" />
+                                <Binding ElementName="ParametersAlgorithmView"
+                                         Path="LastExtrapolationValueTextBoxProxy.(Validation.HasError)"
+                                         Mode="OneWay" />
+                                <Binding ElementName="ParametersAlgorithmView"
+                                         Path="LaunchesNumberTextBoxProxy.(Validation.HasError)"
+                                         Mode="OneWay" />
+                                <Binding ElementName="ParametersAlgorithmView"
+                                         Path="StepValueTextBoxProxy.(Validation.HasError)"
+                                         Mode="OneWay" />
 
-                                    <!-- Analysis parameters panel -->
-                                    <Binding ElementName="ParametersAnalysisView"
-                                             Path="AnalysisPhaseOnePartOneComboBoxProxy.SelectedItem"
-                                             Mode="OneWay" />
-                                    <Binding ElementName="ParametersAnalysisView"
-                                             Path="AnalysisPhaseOnePartTwoComboBoxProxy.SelectedItem"
-                                             Mode="OneWay" />
-                                    <Binding ElementName="ParametersAnalysisView"
-                                             Path="AnalysisPhaseTwoComboBoxProxy.SelectedItem"
-                                             Mode="OneWay" />
-                                    <Binding ElementName="ParametersAnalysisView"
-                                             Path="GoodnessOfFitComboBoxProxy.SelectedItem"
-                                             Mode="OneWay" />
-                                </MultiBinding>
-                            </Button.IsEnabled>
-                        </Button>
+                                <!-- Analysis parameters panel -->
+                                <Binding ElementName="ParametersAnalysisView"
+                                         Path="AnalysisPhaseOnePartOneComboBoxProxy.SelectedItem"
+                                         Mode="OneWay" />
+                                <Binding ElementName="ParametersAnalysisView"
+                                         Path="AnalysisPhaseOnePartTwoComboBoxProxy.SelectedItem"
+                                         Mode="OneWay" />
+                                <Binding ElementName="ParametersAnalysisView"
+                                         Path="AnalysisPhaseTwoComboBoxProxy.SelectedItem"
+                                         Mode="OneWay" />
+                                <Binding ElementName="ParametersAnalysisView"
+                                         Path="GoodnessOfFitComboBoxProxy.SelectedItem"
+                                         Mode="OneWay" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
 
-                        <Button Margin="8"
-                                HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center"
-                                Content="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonText}"
-                                ToolTip="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonToolTip}"
-                                Command="{Binding Path=ResetParametersCommand}" />
+                    <Button Margin="8"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Content="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonText}"
+                            ToolTip="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonToolTip}"
+                            Command="{Binding Path=ResetParametersCommand}" />
 
-                    </UniformGrid>
-                </StackPanel>
+                </UniformGrid>
 
             </StackPanel>
         </DockPanel>

@@ -457,6 +457,24 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open configuration file.
+        /// </summary>
+        public static string OpenConfigFileButtonText {
+            get {
+                return ResourceManager.GetString("OpenConfigFileButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open configuration file on disk if it exists.
+        /// </summary>
+        public static string OpenConfigFileButtonToolTip {
+            get {
+                return ResourceManager.GetString("OpenConfigFileButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Output Excel file path.
         /// </summary>
         public static string OutputExcelFilePathHint {
@@ -471,6 +489,25 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string OutputFileExtensionHint {
             get {
                 return ResourceManager.GetString("OutputFileExtensionHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload.
+        /// </summary>
+        public static string ReloadSettingButtonText {
+            get {
+                return ResourceManager.GetString("ReloadSettingButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reload settings from configuration file on disk if it exists
+        ///Otherwise, settings will be reset to default values..
+        /// </summary>
+        public static string ReloadSettingButtonToolTip {
+            get {
+                return ResourceManager.GetString("ReloadSettingButtonToolTip", resourceCulture);
             }
         }
         
@@ -498,24 +535,6 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string ResetAnalysisButtonToolTip {
             get {
                 return ResourceManager.GetString("ResetAnalysisButtonToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reset.
-        /// </summary>
-        public static string ResetSettingButtonText {
-            get {
-                return ResourceManager.GetString("ResetSettingButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reset settings.
-        /// </summary>
-        public static string ResetSettingButtonToolTip {
-            get {
-                return ResourceManager.GetString("ResetSettingButtonToolTip", resourceCulture);
             }
         }
         
@@ -707,6 +726,16 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string WarningNoLibraryProviderText {
             get {
                 return ResourceManager.GetString("WarningNoLibraryProviderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: displayed paths are relative.
+        ///If you want to specify full paths, edit configuration file..
+        /// </summary>
+        public static string WarningPathsAreRelativeText {
+            get {
+                return ResourceManager.GetString("WarningPathsAreRelativeText", resourceCulture);
             }
         }
     }

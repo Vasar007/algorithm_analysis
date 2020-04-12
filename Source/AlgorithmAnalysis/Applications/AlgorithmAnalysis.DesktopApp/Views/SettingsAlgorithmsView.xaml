@@ -35,7 +35,6 @@
         <!--
         Example of algorithm data:
             "Description": "Pallottino's algorithm",
-            "Value": "0",
             "MinFormula": "x",
             "AverageFormula": "x * x * (x - 1) / 2",
             "MaxFormula": "x * x * x * (x - 1) / 2",
@@ -47,62 +46,67 @@
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmNumberGridColumnName}"
-                                    Binding="{Binding Path=Index}"/>
+                                    IsReadOnly="True"
+                                    Binding="{Binding Path=Index}" />
 
                 <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmDescriptionGridColumnName}"
+                                    IsReadOnly="False"
                                     Binding="{Binding Path=Description}" />
 
                 <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmMinFormulaGridColumnName}"
+                                    IsReadOnly="False"
                                     Binding="{Binding Path=MinFormula}" />
 
                 <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmAverageFormulaGridColumnName}"
+                                    IsReadOnly="False"
                                     Binding="{Binding Path=AverageFormula}" />
 
                 <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmMaxFormulaGridColumnName}"
+                                    IsReadOnly="False"
                                     Binding="{Binding Path=MaxFormula}" />
 
                 <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmProgramNameGridColumnName}"
+                                    IsReadOnly="False"
                                     Binding="{Binding Path=AnalysisProgramName}" />
 
                 <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmFilenamePatternGridColumnName}"
+                                    IsReadOnly="False"
                                     Binding="{Binding Path=RelativeOutputFilenamePattern}" />
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Orientation="Vertical"
-                    Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}">
-            <UniformGrid Rows="1"
-                            Columns="2">
-                <Button IsDefault="True"
-                        Margin="8"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Content="{x:Static properties:DesktopAppStrings.ConfirmAlgorithmButtonText}"
-                        ToolTip="{x:Static properties:DesktopAppStrings.ConfirmAlgorithmButtonToolTip}"
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-                    <Button.CommandParameter>
-                        <system:Boolean>
-                            True
-                        </system:Boolean>
-                    </Button.CommandParameter>
-                </Button>
+        <UniformGrid Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
+                     Rows="1"
+                     Columns="2">
+            <Button IsDefault="True"
+                    Margin="8"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Content="{x:Static properties:DesktopAppStrings.ConfirmAlgorithmButtonText}"
+                    ToolTip="{x:Static properties:DesktopAppStrings.ConfirmAlgorithmButtonToolTip}"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                <Button.CommandParameter>
+                    <system:Boolean>
+                        True
+                    </system:Boolean>
+                </Button.CommandParameter>
+            </Button>
 
-                <Button IsCancel="True"
-                        Margin="8"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Content="{x:Static properties:DesktopAppStrings.CloseAlgorithmSettingsButtonText}"
-                        ToolTip="{x:Static properties:DesktopAppStrings.CloseAlgorithmSettingsToolTip}"
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
-                    <Button.CommandParameter>
-                        <system:Boolean>
-                            False
-                        </system:Boolean>
-                    </Button.CommandParameter>
-                </Button>
+            <Button IsCancel="True"
+                    Margin="8"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Content="{x:Static properties:DesktopAppStrings.CloseAlgorithmSettingsButtonText}"
+                    ToolTip="{x:Static properties:DesktopAppStrings.CloseAlgorithmSettingsToolTip}"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                <Button.CommandParameter>
+                    <system:Boolean>
+                        False
+                    </system:Boolean>
+                </Button.CommandParameter>
+            </Button>
 
-            </UniformGrid>
-        </StackPanel>
+        </UniformGrid>
 
     </StackPanel>
 

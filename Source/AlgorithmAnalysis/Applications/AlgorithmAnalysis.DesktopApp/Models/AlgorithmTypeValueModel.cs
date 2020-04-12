@@ -1,7 +1,7 @@
 ﻿using Acolyte.Assertions;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Models;
-using AlgorithmAnalysis.Common.Files;
+using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
@@ -49,6 +49,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _analysisProgramName, value.ThrowIfNull(nameof(value)));
         }
 
+        private readonly string _originalOutputFilenamePattern;
+
         private string _relativeOutputFilenamePattern = default!;
         public string RelativeOutputFilenamePattern
         {
@@ -64,7 +66,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             string averageFormula,
             string maxFormula,
             string analysisProgramName,
-            string ralativeOutputFilenamePattern)
+            string relativeOutputFilenamePattern,
+            string originalOutputFilenamePattern)
         {
             Description = description.ThrowIfNull(nameof(description));
             Index = index.ThrowIfValueIsOutOfRange(nameof(index), 1, int.MaxValue);
@@ -73,7 +76,10 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             MaxFormula = maxFormula.ThrowIfNull(nameof(maxFormula));
             AnalysisProgramName = analysisProgramName.ThrowIfNull(nameof(analysisProgramName));
             RelativeOutputFilenamePattern =
-                ralativeOutputFilenamePattern.ThrowIfNull(nameof(ralativeOutputFilenamePattern));
+                relativeOutputFilenamePattern.ThrowIfNull(nameof(relativeOutputFilenamePattern));
+
+            _originalOutputFilenamePattern =
+                originalOutputFilenamePattern.ThrowIfNull(nameof(originalOutputFilenamePattern));
         }
 
         public static AlgorithmTypeValueModel Create(
@@ -81,7 +87,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         {
             algorithmTypeValue.ThrowIfNull(nameof(algorithmTypeValue));
 
-            string ralativeOutputFilenamePattern = PathHelper.ResolveRelativePath(
+            string relativeOutputFilenamePattern = ModelPathTransformer.TransformPathToRelative(
                 algorithmTypeValue.OutputFilenamePattern
             );
 
@@ -92,12 +98,17 @@ namespace AlgorithmAnalysis.DesktopApp.Models
                 averageFormula: algorithmTypeValue.AverageFormula,
                 maxFormula: algorithmTypeValue.MaxFormula,
                 analysisProgramName: algorithmTypeValue.AnalysisProgramName,
-                ralativeOutputFilenamePattern: ralativeOutputFilenamePattern
+                relativeOutputFilenamePattern: relativeOutputFilenamePattern,
+                originalOutputFilenamePattern: algorithmTypeValue.OutputFilenamePattern
             );
         }
 
         public AlgorithmTypeValue Convert()
         {
+            string newOutputFilenamePattern = ModelPathTransformer.TransformPathToOriginal(
+                _originalOutputFilenamePattern, RelativeOutputFilenamePattern
+            );
+
             return new AlgorithmTypeValue
             {
                 Description = Description,
@@ -105,7 +116,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
                 AverageFormula = AverageFormula,
                 MaxFormula = MaxFormula,
                 AnalysisProgramName = AnalysisProgramName,
-                OutputFilenamePattern = RelativeOutputFilenamePattern
+                OutputFilenamePattern = newOutputFilenamePattern
             };
         }
     }
