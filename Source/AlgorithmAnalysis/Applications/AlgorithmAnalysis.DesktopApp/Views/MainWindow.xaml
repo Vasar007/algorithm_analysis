@@ -51,6 +51,7 @@
     </Window.Resources>
 
     <materialDesign:DialogHost x:Name="MainWindowDialogHost"
+                               Style="{StaticResource MaterialDesignEmbeddedDialogHost}"
                                Identifier="RootDialog"
                                CloseOnClickAway="False"
                                DialogTheme="Inherit">

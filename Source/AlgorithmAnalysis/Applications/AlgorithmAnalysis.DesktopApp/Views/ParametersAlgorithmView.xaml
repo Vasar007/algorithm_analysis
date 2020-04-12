@@ -15,10 +15,10 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <system:Double x:Key="DefaultMinWidth">
-                425
+                400
             </system:Double>
             <system:Double x:Key="DefaultMaxWidth">
-                425
+                400
             </system:Double>
             <system:Double x:Key="DefaultTextBoxFontSize">
                 14

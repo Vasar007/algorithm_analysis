@@ -25,7 +25,8 @@
     </UserControl.Resources>
 
     <materialDesign:DialogHost x:Name="SettingDialogHost"
-                               Identifier="EnterThingName"
+                               Style="{StaticResource MaterialDesignEmbeddedDialogHost}"
+                               Identifier="SettingDialog"
                                CloseOnClickAway="False"
                                DialogTheme="Inherit">
 
