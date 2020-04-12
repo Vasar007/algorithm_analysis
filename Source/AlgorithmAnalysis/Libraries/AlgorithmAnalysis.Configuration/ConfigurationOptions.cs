@@ -3,8 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Common.Json;
+using AlgorithmAnalysis.Common.Files;
 
 namespace AlgorithmAnalysis.Configuration
 {

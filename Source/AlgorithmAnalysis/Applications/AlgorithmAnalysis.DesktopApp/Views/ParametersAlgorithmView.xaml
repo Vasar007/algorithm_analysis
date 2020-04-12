@@ -60,7 +60,7 @@
             -->
             <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Algorithm.IsHintForAlgorithmVisible,
                                                           Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
-                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAlgorithmsText}" />
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAlgorithmsToAnalyseText}" />
             </views:WarningOnEmptyControlView>
 
             <TextBox x:Name="FirstValueTextBox"

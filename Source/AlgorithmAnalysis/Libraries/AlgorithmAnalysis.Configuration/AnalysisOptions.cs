@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Acolyte.Collections;
 using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.Configuration
@@ -17,13 +15,6 @@ namespace AlgorithmAnalysis.Configuration
 
         public AnalysisOptions()
         {
-        }
-
-        public IReadOnlyList<AlgorithmType> GetAlgorithmTypes()
-        {
-            return AvailableAlgorithms
-                .Select(AlgorithmType.Create)
-                .ToReadOnlyList();
         }
     }
 }

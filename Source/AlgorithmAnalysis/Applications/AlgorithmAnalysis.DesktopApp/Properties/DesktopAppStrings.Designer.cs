@@ -475,18 +475,6 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warning: currently you cannot configure
-        ///algorithms though settings. Please,
-        ///configure algorithms through configuration
-        ///file and restart application..
-        /// </summary>
-        public static string WarningCannotConfigureAlgorithmsText {
-            get {
-                return ResourceManager.GetString("WarningCannotConfigureAlgorithmsText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Warning: you cannot specify degree of parallelism.
         ///PC has insufficient number of resources..
         /// </summary>
@@ -497,12 +485,23 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warning: there are no available algorithms to analyze.
-        ///Please, specify at least one algorithm in configuration and restart application..
+        ///   Looks up a localized string similar to Warning: currently there are no algorithms
+        ///to analyze. Please, specify at least one
+        ///algorithm to enable analysis..
         /// </summary>
-        public static string WarningNoAlgorithmsText {
+        public static string WarningNoAlgorithmsInSettingsText {
             get {
-                return ResourceManager.GetString("WarningNoAlgorithmsText", resourceCulture);
+                return ResourceManager.GetString("WarningNoAlgorithmsInSettingsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: there are no available algorithms to analyze.
+        ///Please, specify at least one algorithm in configuration..
+        /// </summary>
+        public static string WarningNoAlgorithmsToAnalyseText {
+            get {
+                return ResourceManager.GetString("WarningNoAlgorithmsToAnalyseText", resourceCulture);
             }
         }
         

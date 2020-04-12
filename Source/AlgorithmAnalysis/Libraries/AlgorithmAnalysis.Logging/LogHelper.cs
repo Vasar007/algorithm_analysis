@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Acolyte.Assertions;
 using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.Configuration;
 
 namespace AlgorithmAnalysis.Logging
@@ -11,14 +12,14 @@ namespace AlgorithmAnalysis.Logging
         {
             loggerOptions.ThrowIfNull(nameof(loggerOptions));
 
-            return Utils.ResolvePath(loggerOptions.LogFolderPath);
+            return PathHelper.ResolvePath(loggerOptions.LogFolderPath);
         }
 
         public static string GetOrCreateLogFolder(LoggerOptions loggerOptions)
         {
             loggerOptions.ThrowIfNull(nameof(loggerOptions));
 
-            return Utils.GetOrCreateFolder(loggerOptions.LogFolderPath);
+            return PathHelper.GetOrCreateFolder(loggerOptions.LogFolderPath);
         }
 
         public static string GetLogFilePath(LoggerOptions loggerOptions, string logFilename)

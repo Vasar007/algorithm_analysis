@@ -72,11 +72,6 @@ namespace AlgorithmAnalysis.DomainLogic
                 }
             }
 
-            if (result is null)
-            {
-                throw new InvalidOperationException("Failed to perform analysis.");
-            }
-
             _logger.Info($"All analysis completed successfully.");
             return result;
         }

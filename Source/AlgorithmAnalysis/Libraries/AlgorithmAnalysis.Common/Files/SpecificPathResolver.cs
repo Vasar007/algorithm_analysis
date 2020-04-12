@@ -20,7 +20,7 @@ namespace AlgorithmAnalysis.Common.Files
                 resolvedPath = ParseSpecificPath(unresolvedPath);
             }
 
-            return Utils.UnifyDirectorySeparatorChars(resolvedPath);
+            return PathHelper.UnifyDirectorySeparatorChars(resolvedPath);
         }
 
         private static bool ShouldBeParsed(string unresolvedPath)

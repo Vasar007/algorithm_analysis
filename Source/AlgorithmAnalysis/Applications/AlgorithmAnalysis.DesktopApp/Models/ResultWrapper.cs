@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.Configuration;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
@@ -17,7 +17,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public static ResultWrapper Create(ReportOptions reportOptions)
         {
-            string outputReportFilePath = Utils.GetOrCreateFolderAndAppendFilePathToResult(
+            string outputReportFilePath = PathHelper.GetOrCreateFolderAndAppendFilePathToResult(
                 reportOptions.OutputReportFilePath, PredefinedPaths.DefaultResultFolderPath
             );
 

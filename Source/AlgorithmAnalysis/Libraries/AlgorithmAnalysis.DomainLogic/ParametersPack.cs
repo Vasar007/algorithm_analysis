@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Acolyte.Assertions;
 using Acolyte.Collections;
-using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Models;
 
@@ -78,7 +78,7 @@ namespace AlgorithmAnalysis.DomainLogic
                 extrapolationSegmentValue: extrapolationSegmentValue,
                 launchesNumber: launchesNumber,
                 step: step,
-                outputFilenamePattern: Utils.ResolvePath(algorithmType.OutputFilenamePattern),
+                outputFilenamePattern: PathHelper.ResolvePath(algorithmType.OutputFilenamePattern),
                 commonAnalysisFilenameSuffix: analysisOptions.CommonAnalysisFilenameSuffix,
                 outputFileExtension: analysisOptions.OutputFileExtension
             );

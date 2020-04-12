@@ -1,4 +1,5 @@
 ﻿using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Common.Files;
 
 namespace AlgorithmAnalysis.Configuration
 {

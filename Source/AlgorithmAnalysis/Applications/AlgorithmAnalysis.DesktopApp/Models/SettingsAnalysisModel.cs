@@ -1,13 +1,30 @@
-﻿using Acolyte.Assertions;
+﻿using System.Collections.Generic;
+using Acolyte.Assertions;
 using Prism.Mvvm;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
+using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
     internal sealed class SettingsAnalysisModel : BindableBase, IChangeable, ISaveable
     {
-        // TODO: allow to configure algorithms.
+        #region Algorithms
+
+        public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
+
+        public int AvailableAlgorithmsCount => AvailableAlgorithms.Count;
+
+        public bool IsAlgorithmSelectable =>
+            AvailableAlgorithms.Count > CommonConstants.EmptyCollectionCount;
+
+        /// <summary>
+        /// Shows warning about no availbale algorithms to analyze.
+        /// </summary>
+        public bool IsHintForAlgorithmVisible => !IsAlgorithmSelectable;
+
+        #endregion
 
         // Initializes through Reset method in ctor.
         private string _commonAnalysisFilenameSuffix = default!;
@@ -28,6 +45,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public SettingsAnalysisModel()
         {
+            AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
+
             Reset();
         }
 
@@ -59,7 +78,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             AnalysisOptions analysisOptions = ConfigOptions.Analysis;
 
             // TODO: allow to configure algorithms.
-            analysisOptions.AvailableAlgorithms = analysisOptions.AvailableAlgorithms;
+            analysisOptions.AvailableAlgorithms = AvailableAlgorithms.GetAlgorithmTypeValues();
             analysisOptions.CommonAnalysisFilenameSuffix = CommonAnalysisFilenameSuffix;
             analysisOptions.OutputFileExtension = OutputFileExtension;
 

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace AlgorithmAnalysis.Common
+namespace AlgorithmAnalysis.Common.Files
 {
     public static class PredefinedPaths
     {
@@ -11,7 +11,7 @@ namespace AlgorithmAnalysis.Common
             Path.Combine("/etc", "algorithm_analysis", CommonConstants.ConfigFilename);
 
         public static string DefaultWorkingPath { get; } =
-            Utils.CreateSpecificPath(CommonConstants.CommonApplicationData, appendAdppFolder: true);
+            PathHelper.CreateSpecificPath(CommonConstants.CommonApplicationData, appendAdppFolder: true);
 
         public static string DefaultLogFolderPath { get; } =
             Path.Combine(DefaultWorkingPath, "logs");

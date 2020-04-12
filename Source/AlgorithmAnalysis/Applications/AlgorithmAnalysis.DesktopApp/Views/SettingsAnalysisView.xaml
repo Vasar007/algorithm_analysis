@@ -37,8 +37,9 @@
                 <!--
                 Show warning about no availbale algorithms to analyze.
                 -->
-                <views:WarningOnEmptyControlView Visibility="Visible">
-                    <Run Text="{x:Static properties:DesktopAppStrings.WarningCannotConfigureAlgorithmsText}" />
+                <views:WarningOnEmptyControlView Visibility="{Binding Path=Settings.Analysis.IsHintForAlgorithmVisible,
+                                                              Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                    <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAlgorithmsInSettingsText}" />
                 </views:WarningOnEmptyControlView>
 
                 <TextBox x:Name="CommonAnalysisFilenameSuffixTextBox"
