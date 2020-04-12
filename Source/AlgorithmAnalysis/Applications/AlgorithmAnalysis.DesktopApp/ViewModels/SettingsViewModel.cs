@@ -1,10 +1,15 @@
 ﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Acolyte.Assertions;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using AlgorithmAnalysis.Common.Files;
+using AlgorithmAnalysis.Common.Processes;
 using AlgorithmAnalysis.DesktopApp.Domain;
+using AlgorithmAnalysis.DesktopApp.Domain.Commands;
 using AlgorithmAnalysis.DesktopApp.Domain.Messages;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.Logging;
@@ -33,7 +38,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
             Settings = new SettingsModel();
 
-            OpenConfigFileCommand = new DelegateCommand(ResetSettingsSafe);
+            OpenConfigFileCommand = new AsyncRelayCommand(OpenConfigFileAsync);
             ResetSettingsCommand = new DelegateCommand(ResetSettingsSafe);
 
             SubscribeOnEvents();
@@ -82,6 +87,21 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 _logger.Error(ex, message);
                 MessageBoxProvider.ShowError(message);
             }
+        }
+
+        private Task OpenConfigFileAsync()
+        {
+            string configFilePath = PredefinedPaths.DefaultOptionsPath;
+            var configFile = new FileInfo(configFilePath);
+
+            if (!configFile.Exists)
+            {
+                MessageBoxProvider.ShowInfo("Configuration file was not found on disk.");
+                return Task.CompletedTask;
+            }
+
+            _ = ProcessManager.OpenFileWithAssociatedAppAsync(configFile);
+            return Task.CompletedTask;
         }
     }
 }
