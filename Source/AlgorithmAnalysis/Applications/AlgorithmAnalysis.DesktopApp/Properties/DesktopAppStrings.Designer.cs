@@ -485,7 +485,7 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warning: currently there are no algorithms
+        ///   Looks up a localized string similar to Warning: currently, there are no algorithms
         ///to analyze. Please, specify at least one
         ///algorithm to enable analysis..
         /// </summary>

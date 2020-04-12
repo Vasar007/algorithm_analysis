@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Prism.Mvvm;
 using Acolyte.Assertions;
+using Acolyte.Collections;
 using Acolyte.Common;
-using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
@@ -24,8 +24,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _cellCreationMode, value);
         }
 
-        public bool IsCellCreationModeSelectable =>
-            AvailableCellCreationModes.Count > CommonConstants.EmptyCollectionCount;
+        public bool IsCellCreationModeSelectable => AvailableCellCreationModes.IsNotEmpty();
 
         /// <summary>
         /// Show warning about no availbale cell creation mode.
@@ -47,8 +46,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _libraryProvider, value);
         }
 
-        public bool IsLibraryProviderSelectable =>
-            AvailableLibraryProviders.Count > CommonConstants.EmptyCollectionCount;
+        public bool IsLibraryProviderSelectable => AvailableLibraryProviders.IsNotEmpty();
 
         /// <summary>
         /// Show warning about no availbale library providers.
@@ -70,8 +68,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _excelVersion, value);
         }
 
-        public bool IsExcelVersionSelectable =>
-            AvailableExcelVersions.Count > CommonConstants.EmptyCollectionCount;
+        public bool IsExcelVersionSelectable => AvailableExcelVersions.IsNotEmpty();
 
         /// <summary>
         /// Show warning about no availbale library providers.

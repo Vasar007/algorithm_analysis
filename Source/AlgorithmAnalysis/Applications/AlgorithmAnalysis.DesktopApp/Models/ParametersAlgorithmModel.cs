@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Acolyte.Assertions;
+using Acolyte.Collections;
 using Prism.Mvvm;
-using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.Validation;
 using AlgorithmAnalysis.Models;
@@ -22,8 +22,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _selectedAlgorithmType, value);
         }
 
-        public bool IsAlgorithmSelectable =>
-            AvailableAlgorithms.Count > CommonConstants.EmptyCollectionCount;
+        public bool IsAlgorithmSelectable => AvailableAlgorithms.IsNotEmpty();
 
         /// <summary>
         /// Shows warning about no availbale algorithms to analyze.

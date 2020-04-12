@@ -307,7 +307,7 @@ PC has insufficient number of resources.</value>
     <comment>Text for warning control when there are insufficient number of resources.</comment>
   </data>
   <data name="WarningNoAlgorithmsInSettingsText" xml:space="preserve">
-    <value>Warning: currently there are no algorithms
+    <value>Warning: currently, there are no algorithms
 to analyze. Please, specify at least one
 algorithm to enable analysis.</value>
     <comment>Text for warning control when there are no algorithms in settings.</comment>

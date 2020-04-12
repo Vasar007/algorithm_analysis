@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Acolyte.Assertions;
+using Acolyte.Collections;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;
@@ -12,17 +14,16 @@ namespace AlgorithmAnalysis.DesktopApp.Models
     {
         #region Algorithms
 
-        public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
+        public ObservableCollection<AlgorithmType> SpecifiedAlgorithms { get; }
 
-        public int AvailableAlgorithmsCount => AvailableAlgorithms.Count;
+        public int SpecifiedAlgorithmsCount => SpecifiedAlgorithms.Count;
 
-        public bool IsAlgorithmSelectable =>
-            AvailableAlgorithms.Count > CommonConstants.EmptyCollectionCount;
+        public bool IsAnyAlgorithmExists => SpecifiedAlgorithms.IsNotEmpty();
 
         /// <summary>
         /// Shows warning about no availbale algorithms to analyze.
         /// </summary>
-        public bool IsHintForAlgorithmVisible => !IsAlgorithmSelectable;
+        public bool IsHintForAlgorithmVisible => !IsAnyAlgorithmExists;
 
         #endregion
 
@@ -45,7 +46,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public SettingsAnalysisModel()
         {
-            AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
+            SpecifiedAlgorithms = new ObservableCollection<AlgorithmType>();
 
             Reset();
         }
@@ -78,7 +79,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             AnalysisOptions analysisOptions = ConfigOptions.Analysis;
 
             // TODO: allow to configure algorithms.
-            analysisOptions.AvailableAlgorithms = AvailableAlgorithms.GetAlgorithmTypeValues();
+            analysisOptions.AvailableAlgorithms = SpecifiedAlgorithms.GetAlgorithmTypeValues();
             analysisOptions.CommonAnalysisFilenameSuffix = CommonAnalysisFilenameSuffix;
             analysisOptions.OutputFileExtension = OutputFileExtension;
 

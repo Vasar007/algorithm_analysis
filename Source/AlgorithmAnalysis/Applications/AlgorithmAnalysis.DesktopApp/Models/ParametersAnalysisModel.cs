@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Acolyte.Collections;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.DesktopApp.Domain;
@@ -23,7 +24,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         }
 
         public bool IsAnalysisKindForPhaseOnePartOneSelectable =>
-            AvailableAnalysisKindForPhaseOnePartOne.Count > CommonConstants.EmptyCollectionCount;
+            AvailableAnalysisKindForPhaseOnePartOne.IsNotEmpty();
 
         /// <summary>
         /// Show warning about no availbale analysis kind of phase one part one.
@@ -46,7 +47,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         }
 
         public bool IsAnalysisKindForPhaseOnePartTwoSelectable =>
-            AvailableAnalysisKindForPhaseOnePartTwo.Count > CommonConstants.EmptyCollectionCount;
+            AvailableAnalysisKindForPhaseOnePartTwo.IsNotEmpty();
 
         /// <summary>
         /// Show warning about no availbale analysis kind of phase one part two.
@@ -69,7 +70,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         }
 
         public bool IsAnalysisKindForPhaseTwoSelectable =>
-            AvailableAnalysisKindForPhaseTwo.Count > CommonConstants.EmptyCollectionCount;
+            AvailableAnalysisKindForPhaseTwo.IsNotEmpty();
 
         /// <summary>
         /// Show warning about no availbale analysis kind of phase two.
@@ -91,8 +92,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _selectedGoodnessOfFitKind, value);
         }
 
-        public bool IsGoodnessOfFitSelectable =>
-            AvailableGoodnessOfFitKinds.Count > CommonConstants.EmptyCollectionCount;
+        public bool IsGoodnessOfFitSelectable => AvailableGoodnessOfFitKinds.IsNotEmpty();
 
         /// <summary>
         /// Show warning about no availbale goodness of fit methods.
