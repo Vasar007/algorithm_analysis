@@ -306,7 +306,7 @@
     <comment>Text for specified algorithm node in settings when there are more than one specified algorithm.</comment>
   </data>
   <data name="SpecifiedAlgorithmsNotFoundText" xml:space="preserve">
-    <value>Could not find any algorithms.</value>
+    <value>Not found any algorithms.</value>
     <comment>Text for specified algorithm node in settings when there are no specified algorithms.</comment>
   </data>
   <data name="SpecifiedAlgorithmsSingleText" xml:space="preserve">

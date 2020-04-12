@@ -484,7 +484,7 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not find any algorithms..
+        ///   Looks up a localized string similar to Not found any algorithms..
         /// </summary>
         public static string SpecifiedAlgorithmsNotFoundText {
             get {
