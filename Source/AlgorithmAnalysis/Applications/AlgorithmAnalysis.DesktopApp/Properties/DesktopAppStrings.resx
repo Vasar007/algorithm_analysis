@@ -121,13 +121,41 @@
     <value>Advanced parameters</value>
     <comment>Header text for advanced parameters panel.</comment>
   </data>
+  <data name="AlgorithmAverageFormulaGridColumnName" xml:space="preserve">
+    <value>Average formula</value>
+    <comment>Name for algorithm averge formula column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AlgorithmDescriptionGridColumnName" xml:space="preserve">
+    <value>Description</value>
+    <comment>Name for algorithm description column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AlgorithmFilenamePatternGridColumnName" xml:space="preserve">
+    <value>Output filename pattern</value>
+    <comment>Name for algorithm output filename pattern column on algorithm settings dialog.</comment>
+  </data>
   <data name="AlgorithmHint" xml:space="preserve">
     <value>Algorithm</value>
     <comment>Hint for algorithm combo box.</comment>
   </data>
+  <data name="AlgorithmMaxFormulaGridColumnName" xml:space="preserve">
+    <value>Max formula</value>
+    <comment>Name for algorithm max formula column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AlgorithmMinFormulaGridColumnName" xml:space="preserve">
+    <value>Min formula</value>
+    <comment>Name for algorithm min formula column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AlgorithmNumberGridColumnName" xml:space="preserve">
+    <value>№</value>
+    <comment>Name for algorithm number column on algorithm settings dialog.</comment>
+  </data>
   <data name="AlgorithmParametersHeader" xml:space="preserve">
     <value>Algorithms parameters</value>
     <comment>Header text for algorithm parameters panel.</comment>
+  </data>
+  <data name="AlgorithmProgramNameGridColumnName" xml:space="preserve">
+    <value>Analysis program name</value>
+    <comment>Name for algorithm analysis program name column on algorithm settings dialog.</comment>
   </data>
   <data name="AnalysisOptionsHeader" xml:space="preserve">
     <value>Analysis</value>
@@ -165,17 +193,33 @@
     <value>Cell creation mode</value>
     <comment>Hint for cell creation mode combo box.</comment>
   </data>
+  <data name="CloseAlgorithmSettingsButtonText" xml:space="preserve">
+    <value>Close</value>
+    <comment>Text for close button to close algorithm settings dialog.</comment>
+  </data>
+  <data name="CloseAlgorithmSettingsToolTip" xml:space="preserve">
+    <value>Close algorithm settings without saving</value>
+    <comment>Tool tip for close button to close algorithm settings dialog.</comment>
+  </data>
   <data name="CloseSettingsButtonText" xml:space="preserve">
     <value>Close</value>
     <comment>Text for close button to close settings dialog.</comment>
   </data>
   <data name="CloseSettingsButtonToolTip" xml:space="preserve">
-    <value>Close dialog</value>
+    <value>Close settings without saving</value>
     <comment>Tool tip for close button to close settings dialog.</comment>
   </data>
   <data name="CommonAnalysisFilenameSuffixHint" xml:space="preserve">
     <value>Common analysis filename suffix</value>
     <comment>Hint for common analysis filename suffix text box.</comment>
+  </data>
+  <data name="ConfirmAlgorithmButtonText" xml:space="preserve">
+    <value>Ok</value>
+    <comment>Text for confirm button to save algorithm info in settings.</comment>
+  </data>
+  <data name="ConfirmAlgorithmButtonToolTip" xml:space="preserve">
+    <value>Save algorithm settings</value>
+    <comment>Tool tip for confirm button to save algorithm info in settings.</comment>
   </data>
   <data name="DarkMode" xml:space="preserve">
     <value>Dark</value>

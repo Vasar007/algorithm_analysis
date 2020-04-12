@@ -24,6 +24,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public ICommand ResetSettingsCommand { get; }
 
+        public ICommand ViewAlgorithmsCommand { get; }
+
 
         public SettingsViewModel(IEventAggregator eventAggregator)
         {
@@ -31,7 +33,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
             Settings = new SettingsModel();
 
-            ResetSettingsCommand = new DelegateCommand(ResetSettings);
+            ResetSettingsCommand = new DelegateCommand(ResetSettingsSafe);
+            ViewAlgorithmsCommand = new DelegateCommand(ResetSettingsSafe);
 
             SubscribeOnEvents();
         }
@@ -40,14 +43,14 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         {
             _eventAggregator
                .GetEvent<SaveSettingsMessage>()
-               .Subscribe(SaveSettings);
+               .Subscribe(SaveSettingsSafe);
 
             _eventAggregator
                .GetEvent<ResetSettingsMessage>()
-               .Subscribe(ResetSettings);
+               .Subscribe(ResetSettingsSafe);
         }
 
-        private void SaveSettings()
+        private void SaveSettingsSafe()
         {
             _logger.Info("Saving settings to configuration file.");
 
@@ -64,7 +67,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
         }
 
-        private void ResetSettings()
+        private void ResetSettingsSafe()
         {
             _logger.Info("Resetting settings to default values (as in config file).");
 

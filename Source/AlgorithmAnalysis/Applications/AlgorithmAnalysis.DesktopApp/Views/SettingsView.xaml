@@ -21,55 +21,62 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StackPanel VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch"
-                Orientation="Vertical"
-                Margin="16">
+    <materialDesign:DialogHost x:Name="SettingDialogHost"
+                               Identifier="EnterThingName"
+                               CloseOnClickAway="False"
+                               DialogTheme="Inherit">
 
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Margin="16">
 
-            <views:SettingsAppearenceView x:Name="SettingsAppearenceView" />
+            <StackPanel Orientation="Horizontal">
 
-            <views:SettingsAnalysisView x:Name="SettingsAnalysisView" />
+                <views:SettingsAppearenceView x:Name="SettingsAppearenceView" />
 
-            <views:SettingsReportView x:Name="SettingsReportView" />
+                <views:SettingsAnalysisView x:Name="SettingsAnalysisView" />
 
-            <views:SettingsLoggerView x:Name="SettingsLoggerView" />
+                <views:SettingsReportView x:Name="SettingsReportView" />
+
+                <views:SettingsLoggerView x:Name="SettingsLoggerView" />
+
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical"
+                        Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}">
+                <UniformGrid Rows="1"
+                             Columns="3">
+                    <Button IsDefault="True"
+                            Margin="8"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Content="{x:Static properties:DesktopAppStrings.ApplySettingsButtonText}"
+                            ToolTip="{x:Static properties:DesktopAppStrings.ApplySettingsButtonToolTip}"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            CommandParameter="{Binding Path=Settings}" />
+
+                    <Button Margin="8"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Content="{x:Static properties:DesktopAppStrings.ResetSettingButtonText}"
+                            ToolTip="{x:Static properties:DesktopAppStrings.ResetSettingButtonToolTip}"
+                            Command="{Binding Path=ResetSettingsCommand}" />
+
+                    <Button IsCancel="True"
+                            Margin="8"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Content="{x:Static properties:DesktopAppStrings.CloseSettingsButtonText}"
+                            ToolTip="{x:Static properties:DesktopAppStrings.CloseSettingsButtonToolTip}"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            CommandParameter="{Binding Path=.}" />
+
+                </UniformGrid>
+            </StackPanel>
 
         </StackPanel>
 
-        <StackPanel Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
-                    Orientation="Vertical">
-            <UniformGrid Rows="1"
-                         Columns="3">
-                <Button IsDefault="True"
-                        Margin="8"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Content="{x:Static properties:DesktopAppStrings.ApplySettingsButtonText}"
-                        ToolTip="{x:Static properties:DesktopAppStrings.ApplySettingsButtonToolTip}"
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                        CommandParameter="{Binding Path=Settings}" />
-
-                <Button Margin="8"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Content="{x:Static properties:DesktopAppStrings.ResetSettingButtonText}"
-                        ToolTip="{x:Static properties:DesktopAppStrings.ResetSettingButtonToolTip}"
-                        Command="{Binding Path=ResetSettingsCommand}" />
-
-                <Button IsCancel="True"
-                        Margin="8"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Content="{x:Static properties:DesktopAppStrings.CloseSettingsButtonText}"
-                        ToolTip="{x:Static properties:DesktopAppStrings.CloseSettingsButtonToolTip}"
-                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                        CommandParameter="{Binding Path=.}" />
-
-            </UniformGrid>
-        </StackPanel>
-
-    </StackPanel>
+    </materialDesign:DialogHost>
 
 </UserControl>

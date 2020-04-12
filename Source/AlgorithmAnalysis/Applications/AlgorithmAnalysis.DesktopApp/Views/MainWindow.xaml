@@ -69,7 +69,7 @@
                                 <Button.CommandParameter>
                                     <views:SettingsView />
                                 </Button.CommandParameter>
-                            </Button >
+                            </Button>
 
                             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
                             <Button Content="{x:Static properties:DesktopAppStrings.ExitButtonText}" 
@@ -90,15 +90,15 @@
             </materialDesign:ColorZone>
 
 
-            <StackPanel VerticalAlignment="Stretch"
+            <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        Orientation="Vertical"
                         Margin="16"
                         IsEnabled="{Binding Path=CanExecuteAnalysis}">
 
-                <StackPanel VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
 
                     <views:ParametersAlgorithmView x:Name="ParametersAlgorithmView" />
 
@@ -108,8 +108,8 @@
 
                 </StackPanel>
 
-                <StackPanel Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
-                            Orientation="Vertical">
+                <StackPanel Orientation="Vertical"
+                            Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}">
                     <UniformGrid Rows="1"
                                  Columns="2">
 

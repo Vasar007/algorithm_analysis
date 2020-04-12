@@ -21,7 +21,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Report = new SettingsReportModel();
             Logger = new SettingsLoggerModel();
 
-            Reset();
+            // Internal model should call Reset method in ctors themself.
         }
 
         #region IChangeableModel Implementation

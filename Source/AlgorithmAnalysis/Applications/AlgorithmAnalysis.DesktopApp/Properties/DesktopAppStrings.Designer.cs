@@ -70,6 +70,33 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Average formula.
+        /// </summary>
+        public static string AlgorithmAverageFormulaGridColumnName {
+            get {
+                return ResourceManager.GetString("AlgorithmAverageFormulaGridColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string AlgorithmDescriptionGridColumnName {
+            get {
+                return ResourceManager.GetString("AlgorithmDescriptionGridColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Output filename pattern.
+        /// </summary>
+        public static string AlgorithmFilenamePatternGridColumnName {
+            get {
+                return ResourceManager.GetString("AlgorithmFilenamePatternGridColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Algorithm.
         /// </summary>
         public static string AlgorithmHint {
@@ -79,11 +106,47 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max formula.
+        /// </summary>
+        public static string AlgorithmMaxFormulaGridColumnName {
+            get {
+                return ResourceManager.GetString("AlgorithmMaxFormulaGridColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min formula.
+        /// </summary>
+        public static string AlgorithmMinFormulaGridColumnName {
+            get {
+                return ResourceManager.GetString("AlgorithmMinFormulaGridColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to №.
+        /// </summary>
+        public static string AlgorithmNumberGridColumnName {
+            get {
+                return ResourceManager.GetString("AlgorithmNumberGridColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Algorithms parameters.
         /// </summary>
         public static string AlgorithmParametersHeader {
             get {
                 return ResourceManager.GetString("AlgorithmParametersHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analysis program name.
+        /// </summary>
+        public static string AlgorithmProgramNameGridColumnName {
+            get {
+                return ResourceManager.GetString("AlgorithmProgramNameGridColumnName", resourceCulture);
             }
         }
         
@@ -171,6 +234,24 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
+        public static string CloseAlgorithmSettingsButtonText {
+            get {
+                return ResourceManager.GetString("CloseAlgorithmSettingsButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close algorithm settings without saving.
+        /// </summary>
+        public static string CloseAlgorithmSettingsToolTip {
+            get {
+                return ResourceManager.GetString("CloseAlgorithmSettingsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
         public static string CloseSettingsButtonText {
             get {
                 return ResourceManager.GetString("CloseSettingsButtonText", resourceCulture);
@@ -178,7 +259,7 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close dialog.
+        ///   Looks up a localized string similar to Close settings without saving.
         /// </summary>
         public static string CloseSettingsButtonToolTip {
             get {
@@ -192,6 +273,24 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string CommonAnalysisFilenameSuffixHint {
             get {
                 return ResourceManager.GetString("CommonAnalysisFilenameSuffixHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string ConfirmAlgorithmButtonText {
+            get {
+                return ResourceManager.GetString("ConfirmAlgorithmButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save algorithm settings.
+        /// </summary>
+        public static string ConfirmAlgorithmButtonToolTip {
+            get {
+                return ResourceManager.GetString("ConfirmAlgorithmButtonToolTip", resourceCulture);
             }
         }
         

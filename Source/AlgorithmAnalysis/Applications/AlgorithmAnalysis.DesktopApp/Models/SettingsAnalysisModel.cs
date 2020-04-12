@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Acolyte.Assertions;
 using Acolyte.Collections;
 using Prism.Mvvm;
-using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
-using AlgorithmAnalysis.Models;
 using AlgorithmAnalysis.DesktopApp.Properties;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
@@ -17,7 +15,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         #region Algorithms
 
         // Initializes through Reset method in ctor.
-        public ObservableCollection<AlgorithmType> SpecifiedAlgorithms { get; private set; } =
+        public ObservableCollection<AlgorithmTypeValueModel> SpecifiedAlgorithms { get; private set; } =
             default!;
 
         public int SpecifiedAlgorithmsNumber => SpecifiedAlgorithms.Count;
@@ -44,6 +42,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         // Initializes through Reset method in ctor.
         private string _outputFileExtension = default!;
+
         public string OutputFileExtension
         {
             get => _outputFileExtension;
@@ -62,8 +61,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         {
             AnalysisOptions analysisOptions = ConfigOptions.Analysis;
 
-            var algorithmTypes = analysisOptions.AvailableAlgorithms.GetAlgorithmTypes();
-            SpecifiedAlgorithms = new ObservableCollection<AlgorithmType>(algorithmTypes);
+            var algorithmTypes = analysisOptions.AvailableAlgorithms.Select(AlgorithmTypeValueModel.Create);
+            SpecifiedAlgorithms = new ObservableCollection<AlgorithmTypeValueModel>(algorithmTypes);
             CommonAnalysisFilenameSuffix = analysisOptions.CommonAnalysisFilenameSuffix;
             OutputFileExtension = analysisOptions.OutputFileExtension;
         }
@@ -71,7 +70,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public void Validate()
         {
             // TODO: implement settings parameters validation:
-            // AvailableAlgorithms
+            // SpecifiedAlgorithms
             // CommonAnalysisFilenameSuffix
             // OutputFileExtension
         }
@@ -86,7 +85,10 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
             AnalysisOptions analysisOptions = ConfigOptions.Analysis;
 
-            analysisOptions.AvailableAlgorithms = SpecifiedAlgorithms.GetAlgorithmTypeValues();
+            analysisOptions.AvailableAlgorithms = SpecifiedAlgorithms
+                .Select(model => model.Convert())
+                .ToList();
+
             analysisOptions.CommonAnalysisFilenameSuffix = CommonAnalysisFilenameSuffix;
             analysisOptions.OutputFileExtension = OutputFileExtension;
 

@@ -56,11 +56,11 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 ApplicationCloseCommand.Execute, ApplicationCloseCommand.CanExecute
             );
 
-            RunAnalysisCommand = new AsyncRelayCommand(LaunchAnalysis);
+            RunAnalysisCommand = new AsyncRelayCommand(LaunchAnalysisSafe);
             ResetParametersCommand = new DelegateCommand(ResetFields);
         }
 
-        private async Task LaunchAnalysis()
+        private async Task LaunchAnalysisSafe()
         {
             CanExecuteAnalysis = false;
 

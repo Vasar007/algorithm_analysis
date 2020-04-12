@@ -3,11 +3,11 @@
 namespace AlgorithmAnalysis.DesktopApp.Views
 {
     /// <summary>
-    /// Interaction logic for SettingsReportView.xaml
+    /// Interaction logic for SettingsAlgorithmsView.xaml
     /// </summary>
-    public sealed partial class SettingsReportView : UserControl
+    public sealed partial class SettingsAlgorithmsView : UserControl
     {
-        public SettingsReportView()
+        public SettingsAlgorithmsView()
         {
             InitializeComponent();
         }
