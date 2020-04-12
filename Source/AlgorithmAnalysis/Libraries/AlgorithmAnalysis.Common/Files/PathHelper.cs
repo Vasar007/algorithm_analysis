@@ -46,7 +46,8 @@ namespace AlgorithmAnalysis.Common.Files
 
         public static string CreateSpecificPath(string specificValue, bool appendAdppFolder)
         {
-            return CreateSpecificPath(specificValue, appendAdppFolder);
+            var pathCreator = SpecificPathCreator.CreateDefault();
+            return CreateSpecificPath(specificValue, appendAdppFolder, pathCreator);
         }
 
         public static string GetOrCreateFolder(string potentialFolderPath)
