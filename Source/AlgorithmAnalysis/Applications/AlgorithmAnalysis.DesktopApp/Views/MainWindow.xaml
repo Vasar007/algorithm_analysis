@@ -55,7 +55,8 @@
                                CloseOnClickAway="False"
                                DialogTheme="Inherit">
 
-        <DockPanel LastChildFill="True">
+        <DockPanel LastChildFill="True"
+                   IsEnabled="{Binding Path=CanExecuteAnalysis}">
             <materialDesign:ColorZone Mode="Standard"
                                       Padding="16"
                                       DockPanel.Dock="Top">
@@ -96,8 +97,7 @@
             <StackPanel Orientation="Vertical"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
-                        Margin="16"
-                        IsEnabled="{Binding Path=CanExecuteAnalysis}">
+                        Margin="16">
 
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
