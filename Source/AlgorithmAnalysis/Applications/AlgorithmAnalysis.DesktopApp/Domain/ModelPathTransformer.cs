@@ -12,7 +12,8 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
 
         public static string TransformPathToOriginal(string originalPath, string newPath)
         {
-            string originalPathUnified = PathHelper.UnifyDirectorySeparatorChars(originalPath);
+            string originalPathUnified =
+                PathHelper.UnifyDirectorySeparatorCharsPlatformIndependent(originalPath);
             string originalRelativePath = TransformPathToRelative(originalPath);
 
             string remainingOriginalPath = originalPathUnified.Replace(

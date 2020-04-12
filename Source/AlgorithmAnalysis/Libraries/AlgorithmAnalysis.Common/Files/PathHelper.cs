@@ -37,6 +37,7 @@ namespace AlgorithmAnalysis.Common.Files
             var options = new PathResolutionOptions
             {
                 UnifyDirectorySeparatorChars = true,
+                UsePlatformIndependentDirectorySeparatorChar = true,
                 ReturnRelativePath = false
             };
             return ResolvePath(unresolvedPath, options);
@@ -47,6 +48,7 @@ namespace AlgorithmAnalysis.Common.Files
             var options = new PathResolutionOptions
             {
                 UnifyDirectorySeparatorChars = true,
+                UsePlatformIndependentDirectorySeparatorChar = true,
                 ReturnRelativePath = true
             };
             return ResolvePath(unresolvedPath, options);
@@ -111,6 +113,16 @@ namespace AlgorithmAnalysis.Common.Files
 
             string filename = Path.GetFileName(filePath);
             return Path.Combine(folderPath, filename);
+        }
+
+        public static string UnifyDirectorySeparatorCharsPlatformIndependent(string path)
+        {
+            path.ThrowIfNullOrWhiteSpace(nameof(path));
+
+            // On Unix platforms Path.DirectorySeparatorChar == Path.AltDirectorySeparatorChar.
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? path.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                : path.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
         }
 
         public static string UnifyDirectorySeparatorChars(string path)

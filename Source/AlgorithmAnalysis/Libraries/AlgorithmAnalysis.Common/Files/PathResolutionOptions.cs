@@ -4,6 +4,8 @@
     {
         public bool UnifyDirectorySeparatorChars { get; set; } = true;
 
+        public bool UsePlatformIndependentDirectorySeparatorChar { get; set; } = true;
+
         public bool ReturnRelativePath { get; set; } = false;
 
 

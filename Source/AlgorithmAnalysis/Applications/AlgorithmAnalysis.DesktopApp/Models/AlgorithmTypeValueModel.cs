@@ -7,7 +7,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 {
     internal sealed class AlgorithmTypeValueModel : BindableBase
     {
-        private string _description = default!;
+        private string _description;
         public string Description
         {
             get => _description;
@@ -21,28 +21,28 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _index, value);
         }
 
-        private string _minFormula = default!;
+        private string _minFormula;
         public string MinFormula
         {
             get => _minFormula;
             set => SetProperty(ref _minFormula, value.ThrowIfNull(nameof(value)));
         }
 
-        private string _averageFormula = default!;
+        private string _averageFormula;
         public string AverageFormula
         {
             get => _averageFormula;
             set => SetProperty(ref _averageFormula, value.ThrowIfNull(nameof(value)));
         }
 
-        private string _maxFormula = default!;
+        private string _maxFormula;
         public string MaxFormula
         {
             get => _maxFormula;
             set => SetProperty(ref _maxFormula, value.ThrowIfNull(nameof(value)));
         }
 
-        private string _analysisProgramName = default!;
+        private string _analysisProgramName;
         public string AnalysisProgramName
         {
             get => _analysisProgramName;
@@ -51,7 +51,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         private readonly string _originalOutputFilenamePattern;
 
-        private string _relativeOutputFilenamePattern = default!;
+        private string _relativeOutputFilenamePattern;
         public string RelativeOutputFilenamePattern
         {
             get => _relativeOutputFilenamePattern;
@@ -69,15 +69,14 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             string relativeOutputFilenamePattern,
             string originalOutputFilenamePattern)
         {
-            Description = description.ThrowIfNull(nameof(description));
-            Index = index.ThrowIfValueIsOutOfRange(nameof(index), 1, int.MaxValue);
-            MinFormula = minFormula.ThrowIfNull(nameof(minFormula));
-            AverageFormula = averageFormula.ThrowIfNull(nameof(averageFormula));
-            MaxFormula = maxFormula.ThrowIfNull(nameof(maxFormula));
-            AnalysisProgramName = analysisProgramName.ThrowIfNull(nameof(analysisProgramName));
-            RelativeOutputFilenamePattern =
+            _description = description.ThrowIfNull(nameof(description));
+            _index = index.ThrowIfValueIsOutOfRange(nameof(index), 1, int.MaxValue);
+            _minFormula = minFormula.ThrowIfNull(nameof(minFormula));
+            _averageFormula = averageFormula.ThrowIfNull(nameof(averageFormula));
+            _maxFormula = maxFormula.ThrowIfNull(nameof(maxFormula));
+            _analysisProgramName = analysisProgramName.ThrowIfNull(nameof(analysisProgramName));
+            _relativeOutputFilenamePattern =
                 relativeOutputFilenamePattern.ThrowIfNull(nameof(relativeOutputFilenamePattern));
-
             _originalOutputFilenamePattern =
                 originalOutputFilenamePattern.ThrowIfNull(nameof(originalOutputFilenamePattern));
         }

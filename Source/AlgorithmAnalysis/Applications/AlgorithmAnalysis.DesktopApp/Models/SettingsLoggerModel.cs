@@ -8,6 +8,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
     internal sealed class SettingsLoggerModel : BindableBase, IChangeable, ISaveable
     {
         // Initializes through Reset method in ctor.
+        private string _originalLogFolderPath = default!;
+
+        // Initializes through Reset method in ctor.
         private string _logFolderPath = default!;
         public string LogFolderPath
         {
@@ -50,6 +53,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         {
             LoggerOptions loggerOptions = ConfigOptions.Logger;
 
+            _originalLogFolderPath = loggerOptions.LogFolderPath;
             LogFolderPath = ModelPathTransformer.TransformPathToRelative(
                 loggerOptions.LogFolderPath
             );
@@ -77,7 +81,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             LoggerOptions loggerOptions = ConfigOptions.Logger;
 
             loggerOptions.LogFolderPath = ModelPathTransformer.TransformPathToOriginal(
-                loggerOptions.LogFolderPath, LogFolderPath
+                _originalLogFolderPath, LogFolderPath
             );
             loggerOptions.EnableLogForExcelLibrary = EnableLogForExcelLibrary;
             loggerOptions.LogFilesExtension = LogFilesExtension;

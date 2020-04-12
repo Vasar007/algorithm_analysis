@@ -79,6 +79,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         #endregion
 
         // Initializes through Reset method in ctor.
+        private string _originalOutputReportFilePath = default!;
+
+        // Initializes through Reset method in ctor.
         private string _outputReportFilePath = default!;
         public string OutputReportFilePath
         {
@@ -105,6 +108,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             CellCreationMode = reportOptions.CellCreationMode;
             LibraryProvider = reportOptions.LibraryProvider;
             ExcelVersion = reportOptions.ExcelVersion;
+            _originalOutputReportFilePath = reportOptions.OutputReportFilePath;
             OutputReportFilePath = ModelPathTransformer.TransformPathToRelative(
                 reportOptions.OutputReportFilePath
             );
@@ -133,7 +137,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             reportOptions.CellCreationMode = CellCreationMode;
             reportOptions.LibraryProvider = LibraryProvider;
             reportOptions.ExcelVersion = ExcelVersion;
-            reportOptions.OutputReportFilePath = OutputReportFilePath;
+            reportOptions.OutputReportFilePath = ModelPathTransformer.TransformPathToOriginal(
+                _originalOutputReportFilePath, OutputReportFilePath
+            );
 
             ConfigOptions.SetOptions(reportOptions);
         }

@@ -47,9 +47,14 @@ namespace AlgorithmAnalysis.Common.Files
                 );
             }
 
-            return options.UnifyDirectorySeparatorChars
-                ? PathHelper.UnifyDirectorySeparatorChars(resolvedPath)
-                : resolvedPath;
+            if (options.UnifyDirectorySeparatorChars)
+            {
+                return options.UsePlatformIndependentDirectorySeparatorChar
+                    ? PathHelper.UnifyDirectorySeparatorCharsPlatformIndependent(resolvedPath)
+                    : PathHelper.UnifyDirectorySeparatorChars(resolvedPath);
+            }
+
+            return resolvedPath;
         }
 
         public string Resolve(string unresolvedPath)
