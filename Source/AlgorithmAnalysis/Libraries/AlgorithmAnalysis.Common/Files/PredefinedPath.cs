@@ -11,7 +11,9 @@ namespace AlgorithmAnalysis.Common.Files
             Path.Combine("/etc", "algorithm_analysis", CommonConstants.ConfigFilename);
 
         public static string DefaultWorkingPath { get; } =
-            PathHelper.CreateSpecificPath(CommonConstants.CommonApplicationData, appendAdppFolder: true);
+            PathHelper.CreateSpecificResolvedPath(
+                CommonConstants.CommonApplicationData, appendAppFolder: true
+            );
 
         public static string DefaultLogFolderPath { get; } =
             Path.Combine(DefaultWorkingPath, "logs");

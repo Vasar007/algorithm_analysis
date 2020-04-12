@@ -106,7 +106,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             CellCreationMode = reportOptions.CellCreationMode;
             LibraryProvider = reportOptions.LibraryProvider;
             ExcelVersion = reportOptions.ExcelVersion;
-            OutputReportFilePath = PathHelper.ResolvePath(reportOptions.OutputReportFilePath);
+            OutputReportFilePath = PathHelper.ResolveRelativePath(
+                reportOptions.OutputReportFilePath
+            );
         }
 
         public void Validate()

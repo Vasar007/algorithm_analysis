@@ -37,7 +37,9 @@ namespace AlgorithmAnalysis.Models
             OutputFilenamePattern = outputFilenamePattern.ThrowIfNullOrWhiteSpace(nameof(outputFilenamePattern));
         }
 
-        public static AlgorithmType Create(AlgorithmTypeValue algorithmValue)
+        public static AlgorithmType Create(
+            AlgorithmTypeValue algorithmValue,
+            int index)
         {
             string minFormulaFormat = ParsingManager.TransformRawFormulaToFormulaFormat(
                 algorithmValue.MinFormula
@@ -53,7 +55,7 @@ namespace AlgorithmAnalysis.Models
 
             return new AlgorithmType(
                 description: algorithmValue.Description,
-                value: algorithmValue.Value,
+                value: index,
                 minFormulaFormat: minFormulaFormat,
                 averageFormulaFormat: averageFormulaFormat,
                 maxFormulaFormat: maxFormulaFormat,

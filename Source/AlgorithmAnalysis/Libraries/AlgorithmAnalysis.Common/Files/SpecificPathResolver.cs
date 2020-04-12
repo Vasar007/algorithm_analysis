@@ -6,34 +6,66 @@ namespace AlgorithmAnalysis.Common.Files
 {
     public sealed class SpecificPathResolver : IPathResolver
     {
-        public SpecificPathResolver()
+        private readonly SpecificValueProcessor _specificProcessor;
+
+        public char SpecificStartingChar { get; }
+
+        public char SpecificEndingChar { get; }
+
+
+        public SpecificPathResolver(
+            char specialStartingChar,
+            char specialEndingChar)
         {
+            SpecificStartingChar = specialStartingChar;
+            SpecificEndingChar = specialEndingChar;
+
+            _specificProcessor = new SpecificValueProcessor(specialStartingChar, specialEndingChar);
+        }
+
+        public static SpecificPathResolver CreateDefault()
+        {
+            return new SpecificPathResolver(
+                specialStartingChar: CommonConstants.SpecificStartingChar,
+                specialEndingChar: CommonConstants.SpecificEndingChar
+            );
         }
 
         #region IPathResolver Implementation
 
-        public string Resolve(string unresolvedPath)
+        public string Resolve(string unresolvedPath, PathResolutionOptions? options)
         {
             unresolvedPath.ThrowIfNullOrWhiteSpace(nameof(unresolvedPath));
+            options ??= new PathResolutionOptions();
 
             string resolvedPath = unresolvedPath;
             if (ShouldBeParsed(unresolvedPath))
             {
-                resolvedPath = ParseSpecificPath(unresolvedPath);
+                // Currently, we support only specific value for common application data.
+                resolvedPath = ParseSpecificPath(
+                    unresolvedPath, specificValue: CommonConstants.CommonApplicationData, options
+                );
             }
 
-            return PathHelper.UnifyDirectorySeparatorChars(resolvedPath);
+            return options.UnifyDirectorySeparatorChars
+                ? PathHelper.UnifyDirectorySeparatorChars(resolvedPath)
+                : resolvedPath;
+        }
+
+        public string Resolve(string unresolvedPath)
+        {
+            return Resolve(unresolvedPath, options: null);
         }
 
         #endregion
 
-        private static bool ShouldBeParsed(string unresolvedPath)
+        private bool ShouldBeParsed(string unresolvedPath)
         {
             int startingCharsNumber = unresolvedPath.Count(
-                ch => ch.Equals(CommonConstants.SpecificStartingChar)
+                ch => ch.Equals(SpecificStartingChar)
             );
             int endingCharsNumber = unresolvedPath.Count(
-                ch => ch.Equals(CommonConstants.SpecificEndingChar)
+                ch => ch.Equals(SpecificEndingChar)
             );
 
             if (startingCharsNumber == 0 && endingCharsNumber == 0) return false;
@@ -47,20 +79,31 @@ namespace AlgorithmAnalysis.Common.Files
             throw new ArgumentException(message, nameof(unresolvedPath));
         }
 
-        private static string ParseSpecificPath(string unresolvedPath)
+        private string ParseSpecificPath(string unresolvedPath, string specificValue,
+            PathResolutionOptions options)
         {
-            if (unresolvedPath.Contains(CommonConstants.CommonApplicationData))
-            {
-                string valueToReplace =
-                    CommonConstants.SpecificStartingChar +
-                    CommonConstants.CommonApplicationData +
-                    CommonConstants.SpecificEndingChar;
+            string wrappedSpecificValue = _specificProcessor.WrapSpecificValue(specificValue);
 
-                string newValue = Environment.GetFolderPath(
-                    Environment.SpecialFolder.CommonApplicationData
+            bool containsSpecific = unresolvedPath.Contains(
+                wrappedSpecificValue, StringComparison.InvariantCulture
+            );
+
+            if (containsSpecific)
+            {
+                if (options.ReturnRelativePath)
+                {
+                    string resolvedPath = unresolvedPath.Replace(
+                        wrappedSpecificValue, string.Empty
+                    );
+
+                    return PathHelper.TrimStartDirectorySeparatorChar(resolvedPath);
+                }
+
+                string resolvedSpecificValue = _specificProcessor.ResolveSpecificValue(
+                    specificValue
                 );
 
-                return unresolvedPath.Replace(valueToReplace, newValue);
+                return unresolvedPath.Replace(wrappedSpecificValue, resolvedSpecificValue);
             }
 
             string message =

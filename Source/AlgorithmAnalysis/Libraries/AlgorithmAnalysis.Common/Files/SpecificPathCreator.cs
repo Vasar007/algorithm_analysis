@@ -5,7 +5,9 @@ namespace AlgorithmAnalysis.Common.Files
 {
     public sealed class SpecificPathCreator : IPathCreator
     {
-        private readonly SpecificPathResolver _pathResolver;
+        private readonly IPathResolver _pathResolver;
+
+        private readonly SpecificValueProcessor _specificProcessor;
 
         public string ApplicationName { get; }
 
@@ -15,62 +17,79 @@ namespace AlgorithmAnalysis.Common.Files
 
 
         public SpecificPathCreator(
+            IPathResolver pathResolver,
             string applicationName,
             char specialStartingChar,
             char specialEndingChar)
         {
+            _pathResolver = pathResolver.ThrowIfNull(nameof(pathResolver));
             ApplicationName = applicationName.ThrowIfNullOrWhiteSpace(nameof(applicationName));
             SpecificStartingChar = specialStartingChar;
             SpecificEndingChar = specialEndingChar;
 
-            _pathResolver = new SpecificPathResolver();
+            _specificProcessor = new SpecificValueProcessor(specialStartingChar, specialEndingChar);
         }
 
         public static SpecificPathCreator CreateDefault()
         {
+            char specialStartingChar = CommonConstants.SpecificStartingChar;
+            char specialEndingChar = CommonConstants.SpecificEndingChar;
+
+            var specificPathResolver = new SpecificPathResolver(
+                specialStartingChar, specialEndingChar
+            );
+
             return new SpecificPathCreator(
+                pathResolver: specificPathResolver,
                 applicationName: CommonConstants.ApplicationName,
-                specialStartingChar: CommonConstants.SpecificStartingChar,
-                specialEndingChar: CommonConstants.SpecificEndingChar
+                specialStartingChar: specialStartingChar,
+                specialEndingChar: specialEndingChar
             );
         }
 
         #region IPathCreator Implementation
 
-        public string CreateSpecificPath(string specificValue, string? path, bool appendAdppFolder)
+        public string CreateSpecificPath(string specificValue, string? additionalPath,
+            PathCreationOptions? options)
         {
             specificValue.ThrowIfNullOrWhiteSpace(nameof(specificValue));
+            options ??= new PathCreationOptions();
 
-            string wrappedValue = WrapSpecificValue(specificValue);
-            string resolvedPath = _pathResolver.Resolve(wrappedValue);
+            string wrappedValue = _specificProcessor.WrapSpecificValue(specificValue);
 
-            return CombineFinalPath(resolvedPath, path, appendAdppFolder);
+            string mainPartOfPath = options.ShouldResolvePath
+                ? _pathResolver.Resolve(wrappedValue)
+                : wrappedValue;
+
+            return CombineFinalPath(mainPartOfPath, additionalPath, options);
         }
 
-        public string CreateSpecificPath(string specificValue, bool appendAdppFolder)
+        public string CreateSpecificPath(string specificValue,
+            PathCreationOptions? options)
         {
-            return CreateSpecificPath(specificValue, path: null, appendAdppFolder);
+            return CreateSpecificPath(specificValue, additionalPath: null, options);
+        }
+
+        public string CreateSpecificPath(string specificValue)
+        {
+            return CreateSpecificPath(specificValue, additionalPath: null, options: null);
         }
 
         #endregion
 
-        private string WrapSpecificValue(string specificValue)
+        private string CombineFinalPath(string mainPartOfPath, string? additionalPath,
+            PathCreationOptions options)
         {
-            return $"{SpecificStartingChar}{specificValue}{SpecificEndingChar}";
-        }
-
-        private string CombineFinalPath(string resolvedPath, string? path, bool appendAdppFolder)
-        {
-            if (string.IsNullOrWhiteSpace(path))
+            if (string.IsNullOrWhiteSpace(additionalPath))
             {
-                return appendAdppFolder
-                    ? Path.Combine(resolvedPath, ApplicationName)
-                    : resolvedPath;
+                return options.AppendAppFolder
+                    ? Path.Combine(mainPartOfPath, ApplicationName)
+                    : mainPartOfPath;
             }
 
-            return appendAdppFolder
-                ? Path.Combine(resolvedPath, ApplicationName, path)
-                : Path.Combine(resolvedPath, path);
+            return options.AppendAppFolder
+                ? Path.Combine(mainPartOfPath, ApplicationName, additionalPath)
+                : Path.Combine(mainPartOfPath, additionalPath);
         }
     }
 }

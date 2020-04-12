@@ -51,7 +51,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         {
             LoggerOptions loggerOptions = ConfigOptions.Logger;
 
-            LogFolderPath = PathHelper.ResolvePath(loggerOptions.LogFolderPath);
+            LogFolderPath = PathHelper.ResolveRelativePath(loggerOptions.LogFolderPath);
             EnableLogForExcelLibrary = loggerOptions.EnableLogForExcelLibrary;
             LogFilesExtension = loggerOptions.LogFilesExtension;
             LogFilenameSeparator = loggerOptions.LogFilenameSeparator;

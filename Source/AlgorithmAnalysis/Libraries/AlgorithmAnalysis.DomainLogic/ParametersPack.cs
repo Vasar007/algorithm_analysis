@@ -78,7 +78,7 @@ namespace AlgorithmAnalysis.DomainLogic
                 extrapolationSegmentValue: extrapolationSegmentValue,
                 launchesNumber: launchesNumber,
                 step: step,
-                outputFilenamePattern: PathHelper.ResolvePath(algorithmType.OutputFilenamePattern),
+                outputFilenamePattern: PathHelper.ResolveFullPath(algorithmType.OutputFilenamePattern),
                 commonAnalysisFilenameSuffix: analysisOptions.CommonAnalysisFilenameSuffix,
                 outputFileExtension: analysisOptions.OutputFileExtension
             );

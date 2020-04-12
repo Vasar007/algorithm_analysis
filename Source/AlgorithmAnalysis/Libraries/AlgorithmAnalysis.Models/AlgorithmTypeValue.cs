@@ -6,8 +6,6 @@ namespace AlgorithmAnalysis.Models
     {
         public string Description { get; set; } = string.Empty;
 
-        public int Value { get; set; } = default;
-
         public string MinFormula { get; set; } = string.Empty;
 
         public string AverageFormula { get; set; } = string.Empty;
@@ -23,7 +21,8 @@ namespace AlgorithmAnalysis.Models
         {
         }
 
-        public static AlgorithmTypeValue Create(AlgorithmType algorithmValue)
+        public static AlgorithmTypeValue Create(
+            AlgorithmType algorithmValue)
         {
             string rawMinFormula = ParsingManager.TransformFormulaFormatToRawFormula(
                 algorithmValue.MinFormulaFormat
@@ -40,7 +39,6 @@ namespace AlgorithmAnalysis.Models
             return new AlgorithmTypeValue
             {
                 Description = algorithmValue.Description,
-                Value = algorithmValue.Value,
                 MinFormula = rawMinFormula,
                 AverageFormula = rawAverageFormula,
                 MaxFormula = rawMaxFormula,

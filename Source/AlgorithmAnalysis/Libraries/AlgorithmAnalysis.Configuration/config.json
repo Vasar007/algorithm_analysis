@@ -7,7 +7,6 @@
     "AvailableAlgorithms": [
       {
         "Description": "Pallottino's algorithm",
-        "Value": "0",
         "MinFormula": "x",
         "AverageFormula": "x * x * (x - 1) / 2",
         "MaxFormula": "x * x * x * (x - 1) / 2",
@@ -16,7 +15,6 @@
       },
       {
         "Description": "Insertion sort",
-        "Value": "1",
         "MinFormula": "x",
         "AverageFormula": "x^2",
         "MaxFormula": "x^2",
@@ -25,7 +23,6 @@
       },
       {
         "Description": "Bubble sort",
-        "Value": "2",
         "MinFormula": "x",
         "AverageFormula": "x^2",
         "MaxFormula": "x^2",
@@ -41,7 +38,7 @@
     "CellCreationMode": "Centerized",
     "LibraryProvider": "EPPlus",
     "ExcelVersion": "V2007",
-    "OutputExcelFilePath": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/results/results.xlsx"
+    "OutputReportFilePath": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/results/results.xlsx"
   },
 
   "LoggerOptions": {

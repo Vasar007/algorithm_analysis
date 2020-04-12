@@ -12,7 +12,7 @@ namespace AlgorithmAnalysis.Logging
         {
             loggerOptions.ThrowIfNull(nameof(loggerOptions));
 
-            return PathHelper.ResolvePath(loggerOptions.LogFolderPath);
+            return PathHelper.ResolveFullPath(loggerOptions.LogFolderPath);
         }
 
         public static string GetOrCreateLogFolder(LoggerOptions loggerOptions)
