@@ -18,6 +18,9 @@
             <system:Double x:Key="DefaultBottomPanelWidth">
                 300
             </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
         </ResourceDictionary>
     </UserControl.Resources>
 

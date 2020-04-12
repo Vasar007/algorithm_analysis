@@ -44,6 +44,9 @@
             <system:Double x:Key="DefaultBottomPanelWidth">
                 300
             </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -80,9 +83,9 @@
 
                     <StackPanel Orientation="Vertical">
                         <TextBlock HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontSize="22"
-                                       Text="{Binding Path=Title}" />
+                                   VerticalAlignment="Center"
+                                   FontSize="22"
+                                   Text="{Binding Path=Title}" />
 
                         <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
                     </StackPanel>
@@ -115,6 +118,7 @@
                     <Button Margin="8"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
+                            FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                             Content="{x:Static properties:DesktopAppStrings.RunAnalysisButtonText}"
                             ToolTip="{x:Static properties:DesktopAppStrings.RunAnalysisButtonToolTip}"
                             Command="{Binding Path=RunAnalysisCommand}">
@@ -161,6 +165,7 @@
                     <Button Margin="8"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
+                            FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                             Content="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonText}"
                             ToolTip="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonToolTip}"
                             Command="{Binding Path=ResetParametersCommand}" />

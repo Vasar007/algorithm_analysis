@@ -19,6 +19,9 @@
             <system:Double x:Key="DefaultMaxWidth">
                 200
             </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -38,6 +41,7 @@
                           materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.CellCreationModeHint}"
                           HorizontalAlignment="Stretch"
                           Margin="16"
+                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                           MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                           MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                           SelectedIndex="0"
@@ -64,6 +68,7 @@
                           materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LibraryProviderHint}"
                           HorizontalAlignment="Stretch"
                           Margin="16"
+                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                           MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                           MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                           SelectedIndex="0"
@@ -90,6 +95,7 @@
                           materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.ExcelVersionHint}"
                           HorizontalAlignment="Stretch"
                           Margin="16"
+                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                           MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                           MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                           SelectedIndex="0"
@@ -115,6 +121,7 @@
                 <TextBox x:Name="OutputExcelFilePathTextBox"
                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.OutputExcelFilePathHint}"
                          Margin="16"
+                         FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"

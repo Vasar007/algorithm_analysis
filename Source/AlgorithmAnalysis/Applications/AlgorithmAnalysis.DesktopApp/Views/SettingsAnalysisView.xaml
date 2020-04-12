@@ -20,6 +20,9 @@
             <system:Double x:Key="DefaultMaxWidth">
                 250
             </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
 
             <!-- Use proxy object to bind data context for additional dialogs. -->
             <domain:BindingProxy x:Key="Proxy" Data="{Binding Path=.}" />
@@ -41,9 +44,11 @@
 
                 <TextBlock Margin="16">
                     <TextBlock Text="{Binding Path=Settings.Analysis.SpecifiedAlgorithmsStatusText,
-                                        Mode=OneWay}" />
+                                      Mode=OneWay}"
+                               FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}" />
 
                     <Hyperlink TextDecorations="Underline"
+                               FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                                Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
                                materialDesign:DialogHost.DialogOpenedAttached="SettingsAlgorithmsView_DialogOpened"
                                materialDesign:DialogHost.DialogClosingAttached="SettingsAlgorithmsView_DialogClosing">
@@ -66,6 +71,7 @@
                 <TextBox x:Name="CommonAnalysisFilenameSuffixTextBox"
                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.CommonAnalysisFilenameSuffixHint}"
                          Margin="16"
+                         FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
@@ -74,6 +80,7 @@
                 <TextBox x:Name="OutputFileExtensionTextBox"
                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.OutputFileExtensionHint}"
                          Margin="16"
+                         FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"

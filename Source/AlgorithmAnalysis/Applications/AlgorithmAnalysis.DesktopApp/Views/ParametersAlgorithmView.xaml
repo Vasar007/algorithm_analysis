@@ -15,10 +15,13 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <system:Double x:Key="DefaultMinWidth">
-                475
+                425
             </system:Double>
             <system:Double x:Key="DefaultMaxWidth">
-                475
+                425
+            </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
             </system:Double>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -66,6 +69,7 @@
             <TextBox x:Name="FirstValueTextBox"
                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.FirstValueHint}"
                      Margin="16"
+                     FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
@@ -84,6 +88,7 @@
             <TextBox x:Name="LastValueTextBox"
                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LastValueHint}"
                      Margin="16"
+                     FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
@@ -102,6 +107,7 @@
             <TextBox x:Name="LastExtrapolationValueTextBox"
                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LastExtrapolationValueHint}"
                      Margin="16"
+                     FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
@@ -120,6 +126,7 @@
             <TextBox x:Name="LaunchesNumberTextBox"
                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LaunchesNumberHint}"
                      Margin="16"
+                     FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
@@ -138,6 +145,7 @@
             <TextBox x:Name="StepValueTextBox"
                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.StepValueHint}"
                      Margin="16"
+                     FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">

@@ -14,10 +14,13 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <system:Double x:Key="DefaultMinWidth">
-                300
+                350
             </system:Double>
             <system:Double x:Key="DefaultMaxWidth">
-                300
+                350
+            </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
             </system:Double>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -38,6 +41,7 @@
                       materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AnalysisPhaseOnePartOneHint}"
                       HorizontalAlignment="Stretch"
                       Margin="16"
+                      FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                       MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                       SelectedIndex="0"
@@ -64,6 +68,7 @@
                       materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AnalysisPhaseOnePartTwoHint}"
                       HorizontalAlignment="Stretch"
                       Margin="16"
+                      FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                       MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                       SelectedIndex="0"
@@ -90,6 +95,7 @@
                       materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AnalysisPhaseTwoHint}"
                       HorizontalAlignment="Stretch"
                       Margin="16"
+                      FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                       MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                       SelectedIndex="0"
@@ -116,6 +122,7 @@
                       materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.GoodnessOfFitHint}"
                       HorizontalAlignment="Stretch"
                       Margin="16"
+                      FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                       MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                       MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                       SelectedIndex="0"
