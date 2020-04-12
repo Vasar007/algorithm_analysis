@@ -18,6 +18,10 @@ namespace AlgorithmAnalysis.Common
 
         public static char SpecificEndingChar { get; } = '}';
 
+        public static string FormulaSymbol { get; } = "x";
+
+        public static string StringFormatZero { get; } = "{0}";
+
         public static string CommonApplicationData { get; } = "SpecialFolder.CommonApplicationData";
 
         public static string DefaultLogFilenameExtensions { get; } = ".log";

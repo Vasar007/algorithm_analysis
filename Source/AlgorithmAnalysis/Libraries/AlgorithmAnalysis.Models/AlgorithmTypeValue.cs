@@ -1,4 +1,6 @@
-﻿namespace AlgorithmAnalysis.Models
+﻿using AlgorithmAnalysis.Common.Parsing;
+
+namespace AlgorithmAnalysis.Models
 {
     public sealed class AlgorithmTypeValue
     {
@@ -23,13 +25,25 @@
 
         public static AlgorithmTypeValue Create(AlgorithmType algorithmValue)
         {
+            string rawMinFormula = ParsingManager.TransformFormulaFormatToRawFormula(
+                algorithmValue.MinFormulaFormat
+            );
+
+            string rawAverageFormula = ParsingManager.TransformFormulaFormatToRawFormula(
+                algorithmValue.AverageFormulaFormat
+            );
+
+            string rawMaxFormula = ParsingManager.TransformFormulaFormatToRawFormula(
+                algorithmValue.MaxFormulaFormat
+            );
+
             return new AlgorithmTypeValue
             {
                 Description = algorithmValue.Description,
                 Value = algorithmValue.Value,
-                //MinFormulaFormat = TransformRawFormulaToFormulaFormat(algorithmValue.MinFormula),
-                //AverageFormulaFormat = TransformRawFormulaToFormulaFormat(algorithmValue.AverageFormula),
-                //MaxFormulaFormat = TransformRawFormulaToFormulaFormat(algorithmValue.MaxFormula),
+                MinFormula = rawMinFormula,
+                AverageFormula = rawAverageFormula,
+                MaxFormula = rawMaxFormula,
                 AnalysisProgramName = algorithmValue.AnalysisProgramName,
                 OutputFilenamePattern = algorithmValue.OutputFilenamePattern
             };
