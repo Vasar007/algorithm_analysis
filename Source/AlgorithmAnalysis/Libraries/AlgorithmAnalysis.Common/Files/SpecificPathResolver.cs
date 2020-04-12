@@ -4,11 +4,13 @@ using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Common.Files
 {
-    public sealed class SpecificPathResolver
+    public sealed class SpecificPathResolver : IPathResolver
     {
         public SpecificPathResolver()
         {
         }
+
+        #region IPathResolver Implementation
 
         public string Resolve(string unresolvedPath)
         {
@@ -22,6 +24,8 @@ namespace AlgorithmAnalysis.Common.Files
 
             return PathHelper.UnifyDirectorySeparatorChars(resolvedPath);
         }
+
+        #endregion
 
         private static bool ShouldBeParsed(string unresolvedPath)
         {
@@ -43,7 +47,7 @@ namespace AlgorithmAnalysis.Common.Files
             throw new ArgumentException(message, nameof(unresolvedPath));
         }
 
-        public static string ParseSpecificPath(string unresolvedPath)
+        private static string ParseSpecificPath(string unresolvedPath)
         {
             if (unresolvedPath.Contains(CommonConstants.CommonApplicationData))
             {

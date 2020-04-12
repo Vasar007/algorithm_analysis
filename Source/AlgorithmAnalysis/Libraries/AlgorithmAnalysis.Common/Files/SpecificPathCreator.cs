@@ -3,7 +3,7 @@ using Acolyte.Assertions;
 
 namespace AlgorithmAnalysis.Common.Files
 {
-    public sealed class SpecificPathCreator
+    public sealed class SpecificPathCreator : IPathCreator
     {
         private readonly SpecificPathResolver _pathResolver;
 
@@ -35,6 +35,8 @@ namespace AlgorithmAnalysis.Common.Files
             );
         }
 
+        #region IPathCreator Implementation
+
         public string CreateSpecificPath(string specificValue, string? path, bool appendAdppFolder)
         {
             specificValue.ThrowIfNullOrWhiteSpace(nameof(specificValue));
@@ -49,6 +51,8 @@ namespace AlgorithmAnalysis.Common.Files
         {
             return CreateSpecificPath(specificValue, path: null, appendAdppFolder);
         }
+
+        #endregion
 
         private string WrapSpecificValue(string specificValue)
         {

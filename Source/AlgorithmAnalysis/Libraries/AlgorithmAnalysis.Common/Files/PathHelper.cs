@@ -8,26 +8,45 @@ namespace AlgorithmAnalysis.Common.Files
         // ResolvePath and CreateSpecificPath is paired methods: result one of them can be
         // converted back with another.
 
+        public static string ResolvePath(string unresolvedPath, IPathResolver pathResolver)
+        {
+            pathResolver.ThrowIfNull(nameof(pathResolver));
+
+            return pathResolver.Resolve(unresolvedPath);
+        }
+
         public static string ResolvePath(string unresolvedPath)
         {
-            unresolvedPath.ThrowIfNullOrWhiteSpace(nameof(unresolvedPath));
-
             var pathResolver = new SpecificPathResolver();
-            return pathResolver.Resolve(unresolvedPath);
+            return ResolvePath(unresolvedPath, pathResolver);
+        }
+
+        public static string CreateSpecificPath(string specificValue, string? path,
+            bool appendAdppFolder, IPathCreator pathCreator)
+        {
+            pathCreator.ThrowIfNull(nameof(pathCreator));
+
+            return pathCreator.CreateSpecificPath(specificValue, path, appendAdppFolder);
         }
 
         public static string CreateSpecificPath(string specificValue, string? path,
             bool appendAdppFolder)
         {
-            specificValue.ThrowIfNullOrWhiteSpace(nameof(specificValue));
-
             var pathCreator = SpecificPathCreator.CreateDefault();
-            return pathCreator.CreateSpecificPath(specificValue, path, appendAdppFolder);
+            return CreateSpecificPath(specificValue, path, appendAdppFolder, pathCreator);
+        }
+
+        public static string CreateSpecificPath(string specificValue, bool appendAdppFolder,
+            IPathCreator pathCreator)
+        {
+            pathCreator.ThrowIfNull(nameof(pathCreator));
+
+            return pathCreator.CreateSpecificPath(specificValue, appendAdppFolder);
         }
 
         public static string CreateSpecificPath(string specificValue, bool appendAdppFolder)
         {
-            return CreateSpecificPath(specificValue, path: null, appendAdppFolder);
+            return CreateSpecificPath(specificValue, appendAdppFolder);
         }
 
         public static string GetOrCreateFolder(string potentialFolderPath)
