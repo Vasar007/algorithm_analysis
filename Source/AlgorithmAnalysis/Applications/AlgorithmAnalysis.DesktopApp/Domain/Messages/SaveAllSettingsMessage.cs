@@ -2,9 +2,9 @@
 
 namespace AlgorithmAnalysis.DesktopApp.Domain.Messages
 {
-    internal sealed class SaveSettingsMessage : PubSubEvent
+    internal sealed class SaveAllSettingsMessage : PubSubEvent
     {
-        public SaveSettingsMessage()
+        public SaveAllSettingsMessage()
         {
         }
     }

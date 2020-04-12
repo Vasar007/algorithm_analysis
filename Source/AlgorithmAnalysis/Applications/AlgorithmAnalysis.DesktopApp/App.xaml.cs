@@ -7,6 +7,8 @@ using Prism.Modularity;
 using Prism.Unity;
 using AlgorithmAnalysis.DesktopApp.Views;
 using AlgorithmAnalysis.Logging;
+using AlgorithmAnalysis.DesktopApp.Domain;
+using Prism.Regions;
 
 namespace AlgorithmAnalysis.DesktopApp
 {
@@ -37,6 +39,13 @@ namespace AlgorithmAnalysis.DesktopApp
 
         protected override Window CreateShell()
         {
+            var regionManager = Container.Resolve<IRegionManager>();
+
+            regionManager.RegisterViewWithRegion(
+                RegionNames.SettingsAnalysis,
+                typeof(SettingsAnalysisView)
+            );
+
             return Container.Resolve<MainWindow>();
         }
 

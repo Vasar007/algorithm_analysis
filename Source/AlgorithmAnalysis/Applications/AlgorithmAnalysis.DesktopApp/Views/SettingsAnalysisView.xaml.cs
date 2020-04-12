@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Controls;
+using Acolyte.Assertions;
+using AlgorithmAnalysis.DesktopApp.Domain.Messages;
 using MaterialDesignThemes.Wpf;
+using Prism.Events;
 
 namespace AlgorithmAnalysis.DesktopApp.Views
 {
@@ -9,8 +12,14 @@ namespace AlgorithmAnalysis.DesktopApp.Views
     /// </summary>
     public sealed partial class SettingsAnalysisView : UserControl
     {
-        public SettingsAnalysisView()
+        private readonly IEventAggregator _eventAggregator;
+
+
+        public SettingsAnalysisView(
+            IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator.ThrowIfNull(nameof(eventAggregator));
+
             InitializeComponent();
         }
 
@@ -26,16 +35,28 @@ namespace AlgorithmAnalysis.DesktopApp.Views
             // Use different types to publish different events.
             switch (eventArgs.Parameter)
             {
-                case bool _:
+                case bool value when value:
+                    break;
+
+                case bool value when !value:
+                    // Reset algorithm settings and close dialog.
+                    ResetAlgorithmSettings();
                     break;
 
                 default:
                     string typeName = eventArgs.Parameter?.GetType().Name ?? "NULL";
                     throw new ArgumentOutOfRangeException(
-                              nameof(eventArgs), eventArgs.Parameter,
-                              $"Unknwon parameter type: '{typeName}'."
-                          );
+                        nameof(eventArgs), eventArgs.Parameter,
+                        $"Unknwon parameter type: '{typeName}'."
+                    );
             }
+        }
+
+        private void ResetAlgorithmSettings()
+        {
+            _eventAggregator
+                .GetEvent<ResetAlgorithmSettingsMessage>()
+                .Publish();
         }
     }
 }

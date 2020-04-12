@@ -21,7 +21,8 @@ namespace AlgorithmAnalysis.DesktopApp.Views
         private readonly IEventAggregator _eventAggregator;
 
 
-        public MainWindow(IEventAggregator eventAggregator)
+        public MainWindow(
+            IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator.ThrowIfNull(nameof(eventAggregator));
 
@@ -55,35 +56,35 @@ namespace AlgorithmAnalysis.DesktopApp.Views
             switch (eventArgs.Parameter)
             {
                 case SettingsModel _:
-                    // Save settings to config file and close dialog.
-                    SaveSettings();
+                    // Save all settings to config file and close dialog.
+                    SaveAllSettings();
                     break;
 
                 case SettingsViewModel _:
-                    // Reset settings and close dialog.
-                    ResetSettings();
+                    // Reset all settings and close dialog.
+                    ResetAllSettings();
                     break;
 
                 default:
                     string typeName = eventArgs.Parameter?.GetType().Name ?? "NULL";
                     throw new ArgumentOutOfRangeException(
-                              nameof(eventArgs), eventArgs.Parameter,
-                              $"Unknwon parameter type: '{typeName}'."
-                          );
+                        nameof(eventArgs), eventArgs.Parameter,
+                        $"Unknwon parameter type: '{typeName}'."
+                    );
             }
         }
 
-        private void SaveSettings()
+        private void SaveAllSettings()
         {
             _eventAggregator
-                .GetEvent<SaveSettingsMessage>()
+                .GetEvent<SaveAllSettingsMessage>()
                 .Publish();
         }
 
-        private void ResetSettings()
+        private void ResetAllSettings()
         {
             _eventAggregator
-                .GetEvent<ResetSettingsMessage>()
+                .GetEvent<ResetAllSettingsMessage>()
                 .Publish();
         }
     }

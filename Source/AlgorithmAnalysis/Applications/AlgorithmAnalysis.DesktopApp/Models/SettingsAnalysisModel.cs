@@ -14,9 +14,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
     {
         #region Algorithms
 
-        // Initializes through Reset method in ctor.
-        public ObservableCollection<AlgorithmTypeValueModel> SpecifiedAlgorithms { get; private set; } =
-            default!;
+        public ObservableCollection<AlgorithmTypeValueModel> SpecifiedAlgorithms { get; private set; }
 
         public int SpecifiedAlgorithmsNumber => SpecifiedAlgorithms.Count;
 
@@ -52,6 +50,8 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public SettingsAnalysisModel()
         {
+            SpecifiedAlgorithms = new ObservableCollection<AlgorithmTypeValueModel>();
+
             Reset();
         }
 
@@ -61,8 +61,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         {
             AnalysisOptions analysisOptions = ConfigOptions.Analysis;
 
-            var algorithmTypes = analysisOptions.AvailableAlgorithms.Select(AlgorithmTypeValueModel.Create);
-            SpecifiedAlgorithms = new ObservableCollection<AlgorithmTypeValueModel>(algorithmTypes);
+            ResetAlgorithmSettings(analysisOptions);
             CommonAnalysisFilenameSuffix = analysisOptions.CommonAnalysisFilenameSuffix;
             OutputFileExtension = analysisOptions.OutputFileExtension;
         }
@@ -96,6 +95,15 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         }
 
         #endregion
+
+        public void ResetAlgorithmSettings(AnalysisOptions analysisOptions)
+        {
+            SpecifiedAlgorithms.Clear();
+
+            var algorithmTypes = analysisOptions.AvailableAlgorithms
+                .Select(AlgorithmTypeValueModel.Create);
+            SpecifiedAlgorithms.AddRange(algorithmTypes);
+        }
 
         private string SpecifiedAlgorithmsStatusTextFormat()
         {

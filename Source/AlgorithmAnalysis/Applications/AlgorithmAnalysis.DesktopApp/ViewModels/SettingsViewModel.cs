@@ -8,6 +8,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.Common.Processes;
+using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.Commands;
 using AlgorithmAnalysis.DesktopApp.Domain.Messages;
@@ -32,14 +33,15 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         public ICommand ResetSettingsCommand { get; }
 
 
-        public SettingsViewModel(IEventAggregator eventAggregator)
+        public SettingsViewModel(
+            IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator.ThrowIfNull(nameof(eventAggregator));
 
             Settings = new SettingsModel();
 
             OpenConfigFileCommand = new AsyncRelayCommand(OpenConfigFileAsync);
-            ResetSettingsCommand = new DelegateCommand(ResetSettingsSafe);
+            ResetSettingsCommand = new DelegateCommand(ResetAllSettingsSafe);
 
             SubscribeOnEvents();
         }
@@ -47,17 +49,21 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         private void SubscribeOnEvents()
         {
             _eventAggregator
-               .GetEvent<SaveSettingsMessage>()
-               .Subscribe(SaveSettingsSafe);
+               .GetEvent<SaveAllSettingsMessage>()
+               .Subscribe(SaveAllSettingsSafe);
 
             _eventAggregator
-               .GetEvent<ResetSettingsMessage>()
-               .Subscribe(ResetSettingsSafe);
+               .GetEvent<ResetAllSettingsMessage>()
+               .Subscribe(ResetAllSettingsSafe);
+
+            _eventAggregator
+               .GetEvent<ResetAlgorithmSettingsMessage>()
+               .Subscribe(ResetAlgorithmSettingsSafe);
         }
 
-        private void SaveSettingsSafe()
+        private void SaveAllSettingsSafe()
         {
-            _logger.Info("Saving settings to configuration file.");
+            _logger.Info("Saving all settings to configuration file.");
 
             try
             {
@@ -65,16 +71,16 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
             catch (Exception ex)
             {
-                string message = $"Failed to save settings to configuration file: {ex.Message}";
+                string message = $"Failed to save all settings to configuration file: {ex.Message}";
 
                 _logger.Error(ex, message);
                 MessageBoxProvider.ShowError(message);
             }
         }
 
-        private void ResetSettingsSafe()
+        private void ResetAllSettingsSafe()
         {
-            _logger.Info("Resetting settings to default values (as in config file).");
+            _logger.Info("Resetting all settings to default values (as in config file).");
 
             try
             {
@@ -82,7 +88,26 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
             catch (Exception ex)
             {
-                string message = $"Failed to reset settings: {ex.Message}";
+                string message = $"Failed to all reset settings: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
+            }
+        }
+
+        private void ResetAlgorithmSettingsSafe()
+        {
+            _logger.Info("Resetting algorithm settings to default values (as in config file).");
+
+            try
+            {
+                AnalysisOptions analysisOptions = ConfigOptions.Analysis;
+
+                Settings.Analysis.ResetAlgorithmSettings(analysisOptions);
+            }
+            catch (Exception ex)
+            {
+                string message = $"Failed to reset algorithm settings: {ex.Message}";
 
                 _logger.Error(ex, message);
                 MessageBoxProvider.ShowError(message);

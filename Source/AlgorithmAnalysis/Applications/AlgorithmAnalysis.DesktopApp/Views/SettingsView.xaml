@@ -65,7 +65,8 @@
 
                 <views:SettingsAppearenceView x:Name="SettingsAppearenceView" />
 
-                <views:SettingsAnalysisView x:Name="SettingsAnalysisView" />
+                <ContentControl x:Name="SettingsAnalysisView"
+                                prism:RegionManager.RegionName="SettingsAnalysis" />
 
                 <views:SettingsReportView x:Name="SettingsReportView" />
 
