@@ -194,7 +194,7 @@
     <comment>Hint for cell creation mode combo box.</comment>
   </data>
   <data name="CloseAlgorithmSettingsButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Cancel</value>
     <comment>Text for close button to close algorithm settings dialog.</comment>
   </data>
   <data name="CloseAlgorithmSettingsToolTip" xml:space="preserve">
@@ -202,7 +202,7 @@
     <comment>Tool tip for close button to close algorithm settings dialog.</comment>
   </data>
   <data name="CloseSettingsButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>Cancel</value>
     <comment>Text for close button to close settings dialog.</comment>
   </data>
   <data name="CloseSettingsButtonToolTip" xml:space="preserve">

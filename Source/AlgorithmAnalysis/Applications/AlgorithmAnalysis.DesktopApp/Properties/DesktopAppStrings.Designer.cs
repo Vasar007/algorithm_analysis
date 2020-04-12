@@ -232,7 +232,7 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close.
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string CloseAlgorithmSettingsButtonText {
             get {
@@ -250,7 +250,7 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close.
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string CloseSettingsButtonText {
             get {
