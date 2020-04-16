@@ -34,11 +34,11 @@ namespace AlgorithmAnalysis.Logging
         {
             type.ThrowIfNull(nameof(type));
 
-            string fullName = loggerOptions.UseFullyQualifiedNames
+            string loggerName = loggerOptions.UseFullyQualifiedNames
                 ? type.FullName
                 : type.Name;
 
-            return new NLogLoggerAdapter(fullName, loggerOptions);
+            return new NLogLoggerAdapter(loggerName, loggerOptions);
         }
 
         /// <summary>
