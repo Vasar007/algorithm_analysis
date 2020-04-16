@@ -26,12 +26,12 @@ namespace Acolyte.Common
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this T value)
         {
-            return ToList(value);
+            return value.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(this T value)
         {
-            return ToList(value);
+            return value.ToList();
         }
     }
 }

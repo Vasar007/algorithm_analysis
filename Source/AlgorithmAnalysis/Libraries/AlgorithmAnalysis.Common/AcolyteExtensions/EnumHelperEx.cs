@@ -13,7 +13,7 @@ namespace Acolyte.Common
         {
             return EnumerableExtensions.ToReadOnlyList(EnumHelper.GetValues<TEnum>()
                 .Select(enumValue => enumValue.GetDescription())
-);
+            );
         }
 
         public static TEnum GetEnumValueByDescription<TEnum>(string enumDescription)

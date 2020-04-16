@@ -21,8 +21,7 @@ namespace Microsoft.Extensions.Configuration
         public static IConfigurationBuilder AddWritableJsonFile(
             this IConfigurationBuilder builder, string path)
         {
-            return AddWritableJsonFile(
-                builder: builder,
+            return builder.AddWritableJsonFile(
                 provider: null,
                 path: path,
                 optional: false,
@@ -44,8 +43,7 @@ namespace Microsoft.Extensions.Configuration
         public static IConfigurationBuilder AddWritableJsonFile(
             this IConfigurationBuilder builder, string path, bool optional)
         {
-            return AddWritableJsonFile(
-                builder: builder,
+            return builder.AddWritableJsonFile(
                 provider: null,
                 path: path,
                 optional: optional,
@@ -68,8 +66,7 @@ namespace Microsoft.Extensions.Configuration
         public static IConfigurationBuilder AddWritableJsonFile(
             this IConfigurationBuilder builder, string path, bool optional, bool reloadOnChange)
         {
-            return AddWritableJsonFile(
-                builder: builder,
+            return builder.AddWritableJsonFile(
                 provider: null,
                 path: path,
                 optional: optional,

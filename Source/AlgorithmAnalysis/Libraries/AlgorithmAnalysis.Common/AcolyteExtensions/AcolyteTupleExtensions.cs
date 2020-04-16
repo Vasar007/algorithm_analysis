@@ -12,37 +12,37 @@ namespace Acolyte.Common
 
         public static IEnumerable<T> ToEnumerable<T>(this Tuple<T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this Tuple<T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this Tuple<T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this Tuple<T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this Tuple<T, T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this Tuple<T, T, T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this Tuple<T, T, T, T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         #endregion
@@ -241,37 +241,37 @@ namespace Acolyte.Common
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this Tuple<T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this Tuple<T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this Tuple<T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this Tuple<T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this Tuple<T, T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this Tuple<T, T, T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this Tuple<T, T, T, T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         #endregion
@@ -280,40 +280,40 @@ namespace Acolyte.Common
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(this Tuple<T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(this Tuple<T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(this Tuple<T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(this Tuple<T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(
             this Tuple<T, T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(
             this Tuple<T, T, T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(
             this Tuple<T, T, T, T, T, T, T> tuple)
         {
-            return ToList(tuple);
+            return tuple.ToList();
         }
 
         #endregion

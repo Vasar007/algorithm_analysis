@@ -24,18 +24,18 @@ namespace AlgorithmAnalysis.Common.Processes
 
         public static Task WaitForExitAsync(this Process process, TimeSpan delay)
         {
-            return WaitForExitAsync(process, delay, CancellationToken.None);
+            return process.WaitForExitAsync(delay, CancellationToken.None);
         }
 
         public static Task WaitForExitAsync(this Process process,
             CancellationToken cancellationToken)
         {
-            return WaitForExitAsync(process, DefaultDelay, cancellationToken);
+            return process.WaitForExitAsync(DefaultDelay, cancellationToken);
         }
 
         public static Task WaitForExitAsync(this Process process)
         {
-            return WaitForExitAsync(process, DefaultDelay, CancellationToken.None);
+            return process.WaitForExitAsync(DefaultDelay, CancellationToken.None);
         }
     }
 }
