@@ -370,6 +370,10 @@ Otherwise, settings will be reset to default values.</value>
     <value>The size of step for function segment</value>
     <comment>Hint for step value text box.</comment>
   </data>
+  <data name="UseFullyQualifiedEntityNamesText" xml:space="preserve">
+    <value>Use fully qualified entity names in logs</value>
+    <comment>Text for check box to use fully qualified entity names in logs.</comment>
+  </data>
   <data name="WarningInsufficientNumberOfResourcesText" xml:space="preserve">
     <value>Warning: you cannot specify degree of parallelism.
 PC has insufficient number of resources.</value>

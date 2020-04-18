@@ -42,7 +42,8 @@
             <StackPanel Orientation="Vertical"
                         Margin="8">
 
-                <TextBlock Margin="16">
+                <TextBlock Margin="16"
+                           Visibility="Visible">
                     <TextBlock Text="{Binding Path=Settings.Analysis.SpecifiedAlgorithmsStatusText,
                                       Mode=OneWay}"
                                FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}" />
@@ -71,6 +72,7 @@
                 <TextBox x:Name="CommonAnalysisFilenameSuffixTextBox"
                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.CommonAnalysisFilenameSuffixHint}"
                          Margin="16"
+                         Visibility="Visible"
                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
@@ -80,6 +82,7 @@
                 <TextBox x:Name="OutputFileExtensionTextBox"
                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.OutputFileExtensionHint}"
                          Margin="16"
+                         Visibility="Visible"
                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"

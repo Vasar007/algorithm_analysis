@@ -41,6 +41,7 @@
                           materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.CellCreationModeHint}"
                           HorizontalAlignment="Stretch"
                           Margin="16"
+                          Visibility="Collapsed"
                           FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                           MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                           MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
@@ -58,6 +59,7 @@
 
                 <!--
                 Show warning about no availbale cell creation mode.
+                This warning should not be visible if there are no issues with domain libarary.
                 -->
                 <views:WarningOnEmptyControlView Visibility="{Binding Path=Settings.Report.IsHintForCellCreationModeVisible,
                                                               Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
@@ -68,6 +70,7 @@
                           materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LibraryProviderHint}"
                           HorizontalAlignment="Stretch"
                           Margin="16"
+                          Visibility="Collapsed"
                           FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                           MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                           MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
@@ -85,6 +88,7 @@
 
                 <!--
                 Show warning about no availbale library provider.
+                This warning should not be visible if there are no issues with domain libarary.
                 -->
                 <views:WarningOnEmptyControlView Visibility="{Binding Path=Settings.Report.IsHintForLibraryProviderVisible,
                                                               Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
@@ -95,6 +99,7 @@
                           materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.ExcelVersionHint}"
                           HorizontalAlignment="Stretch"
                           Margin="16"
+                          Visibility="Collapsed"
                           FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                           MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                           MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
@@ -112,6 +117,7 @@
 
                 <!--
                 Show warning about no availbale cell excel version.
+                This warning should not be visible if there are no issues with domain libarary.
                 -->
                 <views:WarningOnEmptyControlView Visibility="{Binding Path=Settings.Report.IsHintForExcelVersionVisible,
                                                               Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
@@ -121,6 +127,7 @@
                 <TextBox x:Name="OutputExcelFilePathTextBox"
                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.OutputExcelFilePathHint}"
                          Margin="16"
+                         Visibility="Visible"
                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"

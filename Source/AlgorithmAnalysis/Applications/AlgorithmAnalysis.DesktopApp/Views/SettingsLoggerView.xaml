@@ -39,6 +39,7 @@
                 <TextBox x:Name="LogFolderPathTextBox"
                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LogFolderPathHint}"
                          Margin="16"
+                         Visibility="Collapsed"
                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
@@ -48,12 +49,14 @@
                 <CheckBox Content="{x:Static properties:DesktopAppStrings.EnableLogForExcelLibraryText}"
                           HorizontalAlignment="Stretch"
                           Margin="16 8"
+                          Visibility="Visible"
                           FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                           IsChecked="{Binding Path=Settings.Logger.EnableLogForExcelLibrary}" />
 
                 <TextBox x:Name="LogFilesExtensionTextBox"
                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LogFilesExtensionHint}"
                          Margin="16"
+                         Visibility="Collapsed"
                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
@@ -63,11 +66,19 @@
                 <TextBox x:Name="LogFilenameSeparatorTextBox"
                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LogFilenameSeparatorHint}"
                          Margin="16"
+                         Visibility="Collapsed"
                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
                          Text="{Binding Path=Settings.Logger.LogFilenameSeparator}" />
+
+                <CheckBox Content="{x:Static properties:DesktopAppStrings.UseFullyQualifiedEntityNamesText}"
+                          HorizontalAlignment="Stretch"
+                          Margin="16 8"
+                          Visibility="Collapsed"
+                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                          IsChecked="{Binding Path=Settings.Logger.UseFullyQualifiedEntityNames}" />
 
             </StackPanel>
         </StackPanel>

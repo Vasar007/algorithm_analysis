@@ -14,7 +14,7 @@ namespace AlgorithmAnalysis.Configuration
 
         public string LogFilenameSeparator { get; set; } = CommonConstants.DefaultLogFilenameSeparator;
 
-        public bool UseFullyQualifiedNames { get; set; } = false;
+        public bool UseFullyQualifiedEntityNames { get; set; } = false;
 
 
         public LoggerOptions()

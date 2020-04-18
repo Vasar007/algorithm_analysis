@@ -28,6 +28,7 @@
             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
 
             <StackPanel Orientation="Horizontal"
+                        Visibility="Visible"
                         Margin="8">
                 <TextBlock VerticalAlignment="Center"
                            FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"

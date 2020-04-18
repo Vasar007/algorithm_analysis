@@ -41,6 +41,13 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             set => SetProperty(ref _logFilenameSeparator, value.ThrowIfNull(nameof(value)));
         }
 
+        private bool _useFullyQualifiedEntityNames;
+        public bool UseFullyQualifiedEntityNames
+        {
+            get => _useFullyQualifiedEntityNames;
+            set => SetProperty(ref _useFullyQualifiedEntityNames, value);
+        }
+
 
         public SettingsLoggerModel()
         {
@@ -86,6 +93,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             loggerOptions.EnableLogForExcelLibrary = EnableLogForExcelLibrary;
             loggerOptions.LogFilesExtension = LogFilesExtension;
             loggerOptions.LogFilenameSeparator = LogFilenameSeparator;
+            loggerOptions.UseFullyQualifiedEntityNames = UseFullyQualifiedEntityNames;
 
             ConfigOptions.SetOptions(loggerOptions);
         }

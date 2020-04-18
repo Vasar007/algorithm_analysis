@@ -34,7 +34,7 @@ namespace AlgorithmAnalysis.Logging
         {
             type.ThrowIfNull(nameof(type));
 
-            string loggerName = loggerOptions.UseFullyQualifiedNames
+            string loggerName = loggerOptions.UseFullyQualifiedEntityNames
                 ? type.FullName
                 : type.Name;
 

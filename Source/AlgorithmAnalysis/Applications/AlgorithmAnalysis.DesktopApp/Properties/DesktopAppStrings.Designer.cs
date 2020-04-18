@@ -629,6 +629,15 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use fully qualified entity names in logs.
+        /// </summary>
+        public static string UseFullyQualifiedEntityNamesText {
+            get {
+                return ResourceManager.GetString("UseFullyQualifiedEntityNamesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warning: you cannot specify degree of parallelism.
         ///PC has insufficient number of resources..
         /// </summary>
