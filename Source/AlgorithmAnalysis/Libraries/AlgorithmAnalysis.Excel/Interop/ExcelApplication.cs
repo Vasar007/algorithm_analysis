@@ -5,7 +5,7 @@ namespace AlgorithmAnalysis.Excel.Interop
 {
     internal static class ExcelApplication
     {
-        private static readonly object SyncRoot = new object();
+        private static readonly object _syncRoot = new object();
 
         private static Application? _application;
         public static Application Instance
@@ -14,7 +14,7 @@ namespace AlgorithmAnalysis.Excel.Interop
             {
                 if (_application is null)
                 {
-                    lock (SyncRoot)
+                    lock (_syncRoot)
                     {
                         if (_application is null)
                         {

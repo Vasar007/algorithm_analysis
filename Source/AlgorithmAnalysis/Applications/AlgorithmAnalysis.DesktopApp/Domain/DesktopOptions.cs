@@ -16,6 +16,18 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
 
         public static int MaxDegreeOfParallelism { get; } = Environment.ProcessorCount;
 
+        /// <summary>
+        /// Duratioin of message on config reload event.
+        /// Default value is big because it is necessary to show message "infinitely"
+        /// (as long as possible).
+        /// </summary>
+        public static TimeSpan MessageOnConfigReloadDuration { get; } = TimeSpan.FromDays(30);
+
+        /// <summary>
+        /// Delay to resubscribe on config reload event if user changed it through settings.
+        /// </summary>
+        public static TimeSpan DelayToResubscribeOnConfigReload { get; } = TimeSpan.FromSeconds(3);
+
         public static IReadOnlyList<PhaseOnePartOneAnalysisKind> AvailableAnalysisKindForPhaseOnePartOne =>
             AnalysisHelper.GetAvailableAnalysisKindForPhaseOnePartOne();
 

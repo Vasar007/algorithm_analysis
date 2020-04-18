@@ -5,11 +5,13 @@ using Acolyte.Assertions;
 using MaterialDesignThemes.Wpf;
 using Prism.Events;
 using AlgorithmAnalysis.Configuration;
+using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.Messages;
 using AlgorithmAnalysis.DesktopApp.ViewModels;
 using AlgorithmAnalysis.Logging;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.DesktopApp.Properties;
+using System.Threading.Tasks;
 
 namespace AlgorithmAnalysis.DesktopApp.Views
 {
@@ -22,7 +24,7 @@ namespace AlgorithmAnalysis.DesktopApp.Views
 
         private readonly IEventAggregator _eventAggregator;
 
-        private readonly SnackbarMessageQueue _messageQueue;
+        private readonly ISnackbarMessageQueue _messageQueue;
 
         public MainWindow(
             IEventAggregator eventAggregator)
@@ -49,9 +51,25 @@ namespace AlgorithmAnalysis.DesktopApp.Views
 
         private void ShowMessageOnConfigReload(object state)
         {
-            if (!(state is SnackbarMessageQueue messageQueue))
+            if (!(state is ISnackbarMessageQueue messageQueue))
             {
                 throw new ArgumentException("Argument must be message queue.", nameof(state));
+            }
+
+            if (GlobalSettingsTracker.HasSettingsChanged)
+            {
+                _logger.Info("Configuration file was reload when settings changed.");
+
+                // Reset flag and resubscribe to reload event.
+                GlobalSettingsTracker.HasSettingsChanged = false;
+
+                // If we resubscribe immediately, we instantly get another message.
+                // That is why need to make a delay for subscription.
+                _ = SubscribeOnConfigReloadWithDelayAsync(
+                    DesktopOptions.DelayToResubscribeOnConfigReload
+                );
+
+                return;
             }
 
             // Use the message queue to send a message.
@@ -62,18 +80,27 @@ namespace AlgorithmAnalysis.DesktopApp.Views
                 actionHandler: actionArgument => ReloadParameters(),
                 actionArgument: null,
                 promote: true,
-                neverConsiderToBeDuplicate: false
+                neverConsiderToBeDuplicate: true,
+                durationOverride: DesktopOptions.MessageOnConfigReloadDuration
             );
-
-            // Callback is called only one time, need to resubscribe.
-            SubscribeOnConfigReload();
         }
 
         private void ReloadParameters()
         {
             _eventAggregator
-                .GetEvent<ConfigOptionsWereChangedMessage>()
+                .GetEvent<ConfigOptionsWereChangedManuallyMessage>()
                 .Publish();
+
+            // Callback is called only one time, need to resubscribe.
+            SubscribeOnConfigReload();
+        }
+
+        private async Task SubscribeOnConfigReloadWithDelayAsync(TimeSpan delay)
+        {
+            await Task.Delay(delay);
+
+            // Callback is called only one time, need to resubscribe.
+            SubscribeOnConfigReload();
         }
 
         private void OnCopy(object sender, ExecutedRoutedEventArgs eventArgs)

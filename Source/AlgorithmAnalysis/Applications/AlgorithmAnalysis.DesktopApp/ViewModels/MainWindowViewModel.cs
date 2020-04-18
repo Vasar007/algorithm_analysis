@@ -74,7 +74,11 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         private void SubscribeOnEvents()
         {
             _eventAggregator
-               .GetEvent<ConfigOptionsWereChangedMessage>()
+               .GetEvent<ConfigOptionsWereChangedThroughSettingsMessage>()
+               .Subscribe(async () => await ReloadControlsSafeAsync());
+
+            _eventAggregator
+               .GetEvent<ConfigOptionsWereChangedManuallyMessage>()
                .Subscribe(async () => await ReloadControlsSafeAsync());
         }
 

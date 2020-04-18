@@ -63,7 +63,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                .Subscribe(ResetAlgorithmSettingsSafe);
 
             _eventAggregator
-              .GetEvent<ConfigOptionsWereChangedMessage>()
+              .GetEvent<ConfigOptionsWereChangedManuallyMessage>()
               .Subscribe(ResetAppearenceSettingsSafe);
         }
 
@@ -73,7 +73,10 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
             try
             {
+                GlobalSettingsTracker.HasSettingsChanged = true;
+
                 Settings.SaveToConfigFile();
+                // Theme has already changed.
             }
             catch (Exception ex)
             {
@@ -84,7 +87,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
 
             _eventAggregator
-                .GetEvent<ConfigOptionsWereChangedMessage>()
+                .GetEvent<ConfigOptionsWereChangedThroughSettingsMessage>()
                 .Publish();
         }
 

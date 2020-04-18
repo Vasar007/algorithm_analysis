@@ -52,52 +52,50 @@
 
     <materialDesign:DialogHost x:Name="MainWindowDialogHost"
                                Style="{StaticResource MaterialDesignEmbeddedDialogHost}"
+                               SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}"
                                Identifier="RootDialog"
                                CloseOnClickAway="False"
                                DialogTheme="Inherit">
 
-        <DockPanel LastChildFill="True"
-                   IsEnabled="{Binding Path=CanExecuteAnalysis}">
-            <materialDesign:ColorZone Mode="Standard"
-                                      Padding="16"
-                                      DockPanel.Dock="Top">
-                <DockPanel>
-                    <materialDesign:PopupBox DockPanel.Dock="Right"
-                                             PlacementMode="BottomAndAlignRightEdges"
-                                             StaysOpen="False">
-                        <StackPanel>
-                            <Button Content="{x:Static properties:DesktopAppStrings.SettingsButtonText}"
-                                    ToolTip="{x:Static properties:DesktopAppStrings.SettingsButtonToolTip}"
-                                    Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-                                    materialDesign:DialogHost.DialogOpenedAttached="Settings_DialogOpened"
-                                    materialDesign:DialogHost.DialogClosingAttached="Settings_DialogClosing">
-                                <Button.CommandParameter>
-                                    <views:SettingsView />
-                                </Button.CommandParameter>
-                            </Button>
+        <Grid>
+
+            <DockPanel LastChildFill="True"
+                       IsEnabled="{Binding Path=CanExecuteAnalysis}">
+                <materialDesign:ColorZone Mode="Standard"
+                                          Padding="16"
+                                          DockPanel.Dock="Top">
+                    <DockPanel>
+                        <materialDesign:PopupBox DockPanel.Dock="Right"
+                                                 PlacementMode="BottomAndAlignRightEdges"
+                                                 StaysOpen="False">
+                            <StackPanel>
+                                <Button Content="{x:Static properties:DesktopAppStrings.SettingsButtonText}"
+                                        ToolTip="{x:Static properties:DesktopAppStrings.SettingsButtonToolTip}"
+                                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                        materialDesign:DialogHost.DialogOpenedAttached="Settings_DialogOpened"
+                                        materialDesign:DialogHost.DialogClosingAttached="Settings_DialogClosing">
+                                    <Button.CommandParameter>
+                                        <views:SettingsView />
+                                    </Button.CommandParameter>
+                                </Button>
+
+                                <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+                                <Button Content="{x:Static properties:DesktopAppStrings.ExitButtonText}" 
+                                        Command="{Binding Path=AppCloseCommand}"
+                                        ToolTip="{x:Static properties:DesktopAppStrings.ExitButtonToolTip}" />
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="22"
+                                       Text="{Binding Path=Title}" />
 
                             <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
-                            <Button Content="{x:Static properties:DesktopAppStrings.ExitButtonText}" 
-                                    Command="{Binding Path=AppCloseCommand}"
-                                    ToolTip="{x:Static properties:DesktopAppStrings.ExitButtonToolTip}" />
                         </StackPanel>
-                    </materialDesign:PopupBox>
-
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   FontSize="22"
-                                   Text="{Binding Path=Title}" />
-
-                        <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
-                    </StackPanel>
-                </DockPanel>
-            </materialDesign:ColorZone>
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+                    </DockPanel>
+                </materialDesign:ColorZone>
 
                 <StackPanel Orientation="Vertical"
                             VerticalAlignment="Stretch"
@@ -117,13 +115,15 @@
 
                     </StackPanel>
 
-                    <UniformGrid Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
+                    <UniformGrid Margin="0 8 0 0"
+                                 Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
                                  Rows="1"
                                  Columns="2">
 
-                        <Button Margin="8"
+                        <Button Margin="0 0 8 0"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
+                                Visibility="Visible"
                                 FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                                 Content="{x:Static properties:DesktopAppStrings.RunAnalysisButtonText}"
                                 ToolTip="{x:Static properties:DesktopAppStrings.RunAnalysisButtonToolTip}"
@@ -168,9 +168,10 @@
                             </Button.IsEnabled>
                         </Button>
 
-                        <Button Margin="8"
+                        <Button Margin="8 0 0 0"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
+                                Visibility="Visible"
                                 FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                                 Content="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonText}"
                                 ToolTip="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonToolTip}"
@@ -180,15 +181,14 @@
 
                 </StackPanel>
 
-                <materialDesign:Snackbar x:Name="MainSnackbar"
-                                         Grid.Row="0"
-                                         IsActive="False"
-                                         Visibility="Visible"
-                                         ActionButtonStyle="{StaticResource ResourceKey=MaterialDesignSnackbarActionMidButton}"
-                                         MessageQueue="{materialDesign:MessageQueue}" />
-            </Grid>
+            </DockPanel>
 
-        </DockPanel>
+            <materialDesign:Snackbar x:Name="MainSnackbar"
+                                     Visibility="Visible"
+                                     ActionButtonStyle="{StaticResource ResourceKey=MaterialDesignSnackbarActionMidButton}"
+                                     MessageQueue="{materialDesign:MessageQueue}" />
+
+        </Grid>
 
     </materialDesign:DialogHost>
 

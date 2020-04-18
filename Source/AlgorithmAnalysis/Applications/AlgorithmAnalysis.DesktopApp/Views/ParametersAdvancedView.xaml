@@ -33,12 +33,14 @@
             <CheckBox Content="{x:Static properties:DesktopAppStrings.ShowAnalysisWindowText}"
                       HorizontalAlignment="Stretch"
                       Margin="16 8"
+                      Visibility="Visible"
                       FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                       IsChecked="{Binding Path=Parameters.Advanced.ShowAnalysisWindow}" />
 
             <CheckBox Content="{x:Static properties:DesktopAppStrings.OpenAnalysisResultsText}"
                       HorizontalAlignment="Stretch"
                       Margin="16 8"
+                      Visibility="Visible"
                       FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
                       IsChecked="{Binding Path=Parameters.Advanced.OpenAnalysisResults}" />
         </StackPanel>

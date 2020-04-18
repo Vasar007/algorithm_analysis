@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace AlgorithmAnalysis.Common
+﻿namespace AlgorithmAnalysis.Common
 {
     public static class CommonConstants
     {
