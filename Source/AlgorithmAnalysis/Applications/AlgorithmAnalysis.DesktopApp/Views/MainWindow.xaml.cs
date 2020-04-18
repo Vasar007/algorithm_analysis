@@ -4,10 +4,12 @@ using System.Windows.Input;
 using Acolyte.Assertions;
 using MaterialDesignThemes.Wpf;
 using Prism.Events;
+using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain.Messages;
 using AlgorithmAnalysis.DesktopApp.ViewModels;
 using AlgorithmAnalysis.Logging;
 using AlgorithmAnalysis.DesktopApp.Models;
+using AlgorithmAnalysis.DesktopApp.Properties;
 
 namespace AlgorithmAnalysis.DesktopApp.Views
 {
@@ -20,6 +22,7 @@ namespace AlgorithmAnalysis.DesktopApp.Views
 
         private readonly IEventAggregator _eventAggregator;
 
+        private readonly SnackbarMessageQueue _messageQueue;
 
         public MainWindow(
             IEventAggregator eventAggregator)
@@ -28,7 +31,49 @@ namespace AlgorithmAnalysis.DesktopApp.Views
 
             InitializeComponent();
 
+            _messageQueue = MainSnackbar.MessageQueue;
+
             _logger.Info("Main window was created.");
+
+            SubscribeOnConfigReload();
+        }
+
+        private void SubscribeOnConfigReload()
+        {
+            var rootChangeToken = ConfigOptions.GetReloadToken();
+
+            rootChangeToken.RegisterChangeCallback(
+                ShowMessageOnConfigReload, state: _messageQueue
+            );
+        }
+
+        private void ShowMessageOnConfigReload(object state)
+        {
+            if (!(state is SnackbarMessageQueue messageQueue))
+            {
+                throw new ArgumentException("Argument must be message queue.", nameof(state));
+            }
+
+            // Use the message queue to send a message.
+            // The message queue can be called from any thread.
+            messageQueue.Enqueue(
+                content: DesktopAppStrings.SnackBarOnConfigReloadMessage,
+                actionContent: DesktopAppStrings.SnackBarOnConfigReloadActionText,
+                actionHandler: actionArgument => ReloadParameters(),
+                actionArgument: null,
+                promote: true,
+                neverConsiderToBeDuplicate: false
+            );
+
+            // Callback is called only one time, need to resubscribe.
+            SubscribeOnConfigReload();
+        }
+
+        private void ReloadParameters()
+        {
+            _eventAggregator
+                .GetEvent<ConfigOptionsWereChangedMessage>()
+                .Publish();
         }
 
         private void OnCopy(object sender, ExecutedRoutedEventArgs eventArgs)

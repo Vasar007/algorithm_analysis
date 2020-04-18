@@ -61,6 +61,10 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             _eventAggregator
                .GetEvent<ResetAlgorithmSettingsMessage>()
                .Subscribe(ResetAlgorithmSettingsSafe);
+
+            _eventAggregator
+              .GetEvent<ConfigOptionsWereChangedMessage>()
+              .Subscribe(ResetAppearenceSettingsSafe);
         }
 
         private void SaveAllSettingsSafe()
@@ -80,7 +84,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
 
             _eventAggregator
-                .GetEvent<AllSettingsWereSavedMessage>()
+                .GetEvent<ConfigOptionsWereChangedMessage>()
                 .Publish();
         }
 
@@ -94,7 +98,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
             catch (Exception ex)
             {
-                string message = $"Failed to all reset settings: {ex.Message}";
+                string message = $"Failed to reset all settings: {ex.Message}";
 
                 _logger.Error(ex, message);
                 MessageBoxProvider.ShowError(message);
@@ -131,6 +135,23 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             catch (Exception ex)
             {
                 string message = $"Failed to reset algorithm settings: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
+            }
+        }
+
+        private void ResetAppearenceSettingsSafe()
+        {
+            _logger.Info("Resetting appearence settings to default values (as in config file).");
+
+            try
+            {
+                Settings.Appearence.Reset();
+            }
+            catch (Exception ex)
+            {
+                string message = $"Failed to reset appearence settings: {ex.Message}";
 
                 _logger.Error(ex, message);
                 MessageBoxProvider.ShowError(message);

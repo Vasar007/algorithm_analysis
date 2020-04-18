@@ -350,6 +350,14 @@ Otherwise, settings will be reset to default values.</value>
     <value>Show analysis window</value>
     <comment>Text for check box to show analysis window during analysis process.</comment>
   </data>
+  <data name="SnackBarOnConfigReloadActionText" xml:space="preserve">
+    <value>Reload</value>
+    <comment>Text for snack bar action on configuration file reload.</comment>
+  </data>
+  <data name="SnackBarOnConfigReloadMessage" xml:space="preserve">
+    <value>Configuration file was changed, please reload to update parameters.</value>
+    <comment>Text for snack bar message on configuration file reload.</comment>
+  </data>
   <data name="SpecifiedAlgorithmsClickViewText" xml:space="preserve">
     <value>View</value>
     <comment>Text for specified algorithm node hyperlink in settings to edit algorithms.</comment>

@@ -584,6 +584,24 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reload.
+        /// </summary>
+        public static string SnackBarOnConfigReloadActionText {
+            get {
+                return ResourceManager.GetString("SnackBarOnConfigReloadActionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration file was changed, please reload to update parameters..
+        /// </summary>
+        public static string SnackBarOnConfigReloadMessage {
+            get {
+                return ResourceManager.GetString("SnackBarOnConfigReloadMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View.
         /// </summary>
         public static string SpecifiedAlgorithmsClickViewText {

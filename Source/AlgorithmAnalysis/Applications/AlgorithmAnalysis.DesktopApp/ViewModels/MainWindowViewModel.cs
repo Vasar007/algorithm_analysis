@@ -74,8 +74,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         private void SubscribeOnEvents()
         {
             _eventAggregator
-               .GetEvent<AllSettingsWereSavedMessage>()
-               .Subscribe(async () => await ReloadParametersSafeAsync());
+               .GetEvent<ConfigOptionsWereChangedMessage>()
+               .Subscribe(async () => await ReloadControlsSafeAsync());
         }
 
         private async Task LaunchAnalysisSafeAsync()
@@ -111,9 +111,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
         }
 
-        private async Task ReloadParametersSafeAsync()
+        private async Task ReloadControlsSafeAsync()
         {
-            _logger.Info("Reloading parameters.");
+            _logger.Info("Reloading controls.");
             CanExecuteAnalysis = false;
 
             try
@@ -124,14 +124,14 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
             catch (Exception ex)
             {
-                string message = $"Failed to reload parameters: {ex.Message}";
+                string message = $"Failed to reload controls: {ex.Message}";
 
                 _logger.Error(ex, message);
                 MessageBoxProvider.ShowError(message);
             }
             finally
             {
-                _logger.Info("Parameters were reloaded.");
+                _logger.Info("Controls were reloaded.");
                 CanExecuteAnalysis = true;
             }
         }
