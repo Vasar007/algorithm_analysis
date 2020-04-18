@@ -10,6 +10,12 @@ namespace AlgorithmAnalysis.Common
 
         public static string ConfigFilename { get; } = "config.json";
 
+        /// <summary>
+        /// Number of milliseconds that reload will wait before calling Load. This helps
+        /// avoid triggering reload before a file is completely written. Default is 250.
+        /// </summary>
+        public static int ConfigReloadDelay { get; } = 250;
+
         public static int EmptyCollectionCount { get; } = 0;
 
         public static int MinimumProcessorCount { get; } = 1;

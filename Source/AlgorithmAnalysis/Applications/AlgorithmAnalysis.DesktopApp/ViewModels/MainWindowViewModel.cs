@@ -6,6 +6,7 @@ using Acolyte.Assertions;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Common.Processes;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
@@ -73,12 +74,13 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         private void SubscribeOnEvents()
         {
             _eventAggregator
-               .GetEvent<SaveAllSettingsMessage>()
-               .Subscribe(ReloadParameters);
+               .GetEvent<AllSettingsWereSavedMessage>()
+               .Subscribe(async () => await ReloadParametersSafeAsync());
         }
 
         private async Task LaunchAnalysisSafeAsync()
         {
+            _logger.Info("Launching analysis.");
             CanExecuteAnalysis = false;
 
             try
@@ -104,13 +106,34 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
             finally
             {
+                _logger.Info("Analysis completed.");
                 CanExecuteAnalysis = true;
             }
         }
 
-        private void ReloadParameters()
+        private async Task ReloadParametersSafeAsync()
         {
-            Parameters.Reload();
+            _logger.Info("Reloading parameters.");
+            CanExecuteAnalysis = false;
+
+            try
+            {
+                await Task.Delay(CommonConstants.ConfigReloadDelay * 2);
+
+                Parameters.Reload();
+            }
+            catch (Exception ex)
+            {
+                string message = $"Failed to reload parameters: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
+            }
+            finally
+            {
+                _logger.Info("Parameters were reloaded.");
+                CanExecuteAnalysis = true;
+            }
         }
 
         private void ResetParameters()

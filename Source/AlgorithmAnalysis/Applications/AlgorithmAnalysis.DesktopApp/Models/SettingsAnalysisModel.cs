@@ -17,15 +17,25 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public int SpecifiedAlgorithmsNumber => SpecifiedAlgorithms.Count;
 
-        public string SpecifiedAlgorithmsStatusText =>
-            string.Format(SpecifiedAlgorithmsStatusTextFormat(), SpecifiedAlgorithmsNumber);
+        // Initializes through Reset method in ctor.
+        private string _specifiedAlgorithmsStatusText = default!;
+        public string SpecifiedAlgorithmsStatusText
+        {
+            get => _specifiedAlgorithmsStatusText;
+            set => SetProperty(ref _specifiedAlgorithmsStatusText, value.ThrowIfNull(nameof(value)));
+        }
 
         public bool IsAnyAlgorithmSpecified => SpecifiedAlgorithms.IsNotEmpty();
 
         /// <summary>
         /// Shows warning about no availbale algorithms to analyze.
         /// </summary>
-        public bool IsHintForAlgorithmVisible => !IsAnyAlgorithmSpecified;
+        private bool _isHintForAlgorithmVisible;
+        public bool IsHintForAlgorithmVisible
+        {
+            get => _isHintForAlgorithmVisible;
+            set => SetProperty(ref _isHintForAlgorithmVisible, value);
+        }
 
         #endregion
 
@@ -39,7 +49,6 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         // Initializes through Reset method in ctor.
         private string _outputFileExtension = default!;
-
         public string OutputFileExtension
         {
             get => _outputFileExtension;
@@ -102,6 +111,17 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             var algorithmTypes = analysisOptions.AvailableAlgorithms
                 .Select(AlgorithmTypeValueModel.Create);
             SpecifiedAlgorithms.AddRange(algorithmTypes);
+
+            UpdateAlgorithmsStatus();
+        }
+
+        public void UpdateAlgorithmsStatus()
+        {
+            SpecifiedAlgorithmsStatusText = string.Format(
+                SpecifiedAlgorithmsStatusTextFormat(), SpecifiedAlgorithmsNumber
+            );
+
+            IsHintForAlgorithmVisible = !IsAnyAlgorithmSpecified;
         }
 
         private string SpecifiedAlgorithmsStatusTextFormat()

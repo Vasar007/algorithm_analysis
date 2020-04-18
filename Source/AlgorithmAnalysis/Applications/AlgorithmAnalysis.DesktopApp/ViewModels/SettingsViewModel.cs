@@ -55,6 +55,10 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                .Subscribe(ResetAllSettingsSafe);
 
             _eventAggregator
+               .GetEvent<PartiallySaveAlgorithmSettingsMessage>()
+               .Subscribe(PartiallySaveAlgorithmSettingsSafe);
+
+            _eventAggregator
                .GetEvent<ResetAlgorithmSettingsMessage>()
                .Subscribe(ResetAlgorithmSettingsSafe);
         }
@@ -74,6 +78,10 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 _logger.Error(ex, message);
                 MessageBoxProvider.ShowError(message);
             }
+
+            _eventAggregator
+                .GetEvent<AllSettingsWereSavedMessage>()
+                .Publish();
         }
 
         private void ResetAllSettingsSafe()
@@ -87,6 +95,23 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             catch (Exception ex)
             {
                 string message = $"Failed to all reset settings: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
+            }
+        }
+
+        private void PartiallySaveAlgorithmSettingsSafe()
+        {
+            _logger.Info("Partially saving algorithm settings (just update some data).");
+
+            try
+            {
+                Settings.Analysis.UpdateAlgorithmsStatus();
+            }
+            catch (Exception ex)
+            {
+                string message = $"Failed to partially save algorithm settings: {ex.Message}";
 
                 _logger.Error(ex, message);
                 MessageBoxProvider.ShowError(message);

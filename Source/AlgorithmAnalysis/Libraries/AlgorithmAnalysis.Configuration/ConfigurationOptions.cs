@@ -2,16 +2,19 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
-using AlgorithmAnalysis.Common.Json;
 using AlgorithmAnalysis.Common.Files;
+using AlgorithmAnalysis.Common.Json;
 
 namespace AlgorithmAnalysis.Configuration
 {
     public static class ConfigOptions
     {
-        private static readonly Lazy<IConfigurationRoot> Root =
+        private static readonly Lazy<IConfigurationRoot> LazyRoot =
             new Lazy<IConfigurationRoot>(LoadOptions);
+
+        private static IConfigurationRoot Root => LazyRoot.Value;
 
         public static string DefaultOptionsPath => PredefinedPaths.DefaultOptionsPath;
 
@@ -63,11 +66,23 @@ namespace AlgorithmAnalysis.Configuration
             section.Value = output;
         }
 
+        public static IChangeToken GetReloadToken()
+        {
+            return Root.GetReloadToken();
+        }
+
+        public static IChangeToken GetReloadToken<TOptions>()
+            where TOptions : class, IOptions, new()
+        {
+            IConfigurationSection section = GetConfigurationSection<TOptions>();
+            return section.GetReloadToken();
+        }
+
         [return: NotNull]
         private static IConfigurationSection GetConfigurationSection<TOptions>()
             where TOptions : class, IOptions, new()
         {
-            return Root.Value.GetSection(typeof(TOptions).Name);
+            return Root.GetSection(typeof(TOptions).Name);
         }
 
         private static IConfigurationRoot LoadOptions()

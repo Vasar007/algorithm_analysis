@@ -1,5 +1,6 @@
 ﻿using System;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Common;
 using Microsoft.Extensions.Configuration.Json.Writable;
 using Microsoft.Extensions.FileProviders;
 
@@ -103,6 +104,7 @@ namespace Microsoft.Extensions.Configuration
                 source.Path = path;
                 source.Optional = optional;
                 source.ReloadOnChange = reloadOnChange;
+                source.ReloadDelay = CommonConstants.ConfigReloadDelay;
                 source.ResolveFileProvider();
             });
         }

@@ -36,6 +36,8 @@ namespace AlgorithmAnalysis.DesktopApp.Views
             switch (eventArgs.Parameter)
             {
                 case bool value when value:
+                    // Have not save algorithm settings yet but update some UI controls.
+                    PartiallySaveAlgorithmSettings();
                     break;
 
                 case bool value when !value:
@@ -50,6 +52,13 @@ namespace AlgorithmAnalysis.DesktopApp.Views
                         $"Unknwon parameter type: '{typeName}'."
                     );
             }
+        }
+
+        private void PartiallySaveAlgorithmSettings()
+        {
+            _eventAggregator
+                .GetEvent<PartiallySaveAlgorithmSettingsMessage>()
+                .Publish();
         }
 
         private void ResetAlgorithmSettings()

@@ -1,7 +1,7 @@
 ﻿using System;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.Configuration;
 using NLog;
+using AlgorithmAnalysis.Configuration;
 
 namespace AlgorithmAnalysis.Logging
 {

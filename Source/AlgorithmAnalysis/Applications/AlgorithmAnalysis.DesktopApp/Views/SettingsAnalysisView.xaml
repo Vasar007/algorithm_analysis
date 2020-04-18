@@ -44,8 +44,7 @@
 
                 <TextBlock Margin="16"
                            Visibility="Visible">
-                    <TextBlock Text="{Binding Path=Settings.Analysis.SpecifiedAlgorithmsStatusText,
-                                      Mode=OneWay}"
+                    <TextBlock Text="{Binding Path=Settings.Analysis.SpecifiedAlgorithmsStatusText}"
                                FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}" />
 
                     <Hyperlink TextDecorations="Underline"
