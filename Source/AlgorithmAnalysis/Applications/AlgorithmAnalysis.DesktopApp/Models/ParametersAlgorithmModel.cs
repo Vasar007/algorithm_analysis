@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Acolyte.Assertions;
 using Acolyte.Collections;
@@ -9,11 +10,11 @@ using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class ParametersAlgorithmModel : BindableBase, IChangeable
+    internal sealed class ParametersAlgorithmModel : BindableBase, IParametersModel
     {
         #region Algorithms
 
-        public IReadOnlyList<AlgorithmType> AvailableAlgorithms { get; }
+        public ObservableCollection<AlgorithmType> AvailableAlgorithms { get; }
 
         private AlgorithmType? _selectedAlgorithmType;
         public AlgorithmType? SelectedAlgorithmType
@@ -76,16 +77,18 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public ParametersAlgorithmModel()
         {
-            AvailableAlgorithms = DesktopOptions.AvailableAlgorithms;
+            AvailableAlgorithms = new ObservableCollection<AlgorithmType>(
+                DesktopOptions.AvailableAlgorithms
+            );
 
             Reset();
         }
 
-        #region IChangeableModel Implementation
+        #region IChangeable Implementation
 
         public void Reset()
         {
-            SelectedAlgorithmType = AvailableAlgorithms.FirstOrDefault();
+            ResetAlgorithmType();
             StartValue = "80";
             EndValue = "320";
             ExtrapolationSegmentValue = "2560";
@@ -101,5 +104,22 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         }
 
         #endregion
+
+        #region IRealoadable Implementation
+
+        public void Reload()
+        {
+            AvailableAlgorithms.Clear();
+            AvailableAlgorithms.AddRange(DesktopOptions.AvailableAlgorithms);
+
+            ResetAlgorithmType();
+        }
+
+        #endregion
+
+        private void ResetAlgorithmType()
+        {
+            SelectedAlgorithmType = AvailableAlgorithms.FirstOrDefault();
+        }
     }
 }

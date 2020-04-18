@@ -2,12 +2,15 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Prism.Mvvm;
+using Acolyte.Assertions;
 using Prism.Commands;
+using Prism.Events;
+using Prism.Mvvm;
 using AlgorithmAnalysis.Common.Processes;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.Commands;
+using AlgorithmAnalysis.DesktopApp.Domain.Messages;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.DomainLogic.Analysis;
@@ -19,6 +22,8 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
     {
         private static readonly ILogger _logger =
             LoggerFactory.CreateLoggerFor<MainWindowViewModel>();
+
+        private readonly IEventAggregator _eventAggregator;
 
         private readonly ResultWrapper _result;
 
@@ -42,8 +47,11 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
         public ICommand ResetParametersCommand { get; }
 
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(
+            IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator.ThrowIfNull(nameof(eventAggregator));
+
             _result = ResultWrapper.Create(ConfigOptions.Report);
             _performer = new AnalysisPerformer();
 
@@ -57,7 +65,16 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             );
 
             RunAnalysisCommand = new AsyncRelayCommand(LaunchAnalysisSafeAsync);
-            ResetParametersCommand = new DelegateCommand(ResetFields);
+            ResetParametersCommand = new DelegateCommand(ResetParameters);
+
+            SubscribeOnEvents();
+        }
+
+        private void SubscribeOnEvents()
+        {
+            _eventAggregator
+               .GetEvent<SaveAllSettingsMessage>()
+               .Subscribe(ReloadParameters);
         }
 
         private async Task LaunchAnalysisSafeAsync()
@@ -91,7 +108,12 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             }
         }
 
-        private void ResetFields()
+        private void ReloadParameters()
+        {
+            Parameters.Reload();
+        }
+
+        private void ResetParameters()
         {
             Parameters.Reset();
         }

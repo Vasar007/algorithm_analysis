@@ -44,6 +44,7 @@ namespace AlgorithmAnalysis.Configuration
         {
             TOptions? options = FindOptions<TOptions>();
 
+            // Sometimes options can be null because configuration data is reloading.
             if (options is null) return new TOptions();
 
             return options;
@@ -64,7 +65,7 @@ namespace AlgorithmAnalysis.Configuration
 
         [return: NotNull]
         private static IConfigurationSection GetConfigurationSection<TOptions>()
-              where TOptions : class, IOptions, new()
+            where TOptions : class, IOptions, new()
         {
             return Root.Value.GetSection(typeof(TOptions).Name);
         }

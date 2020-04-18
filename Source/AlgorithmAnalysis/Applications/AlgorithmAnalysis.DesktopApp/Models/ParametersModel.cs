@@ -2,12 +2,11 @@
 using Acolyte.Assertions;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Configuration;
-using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DomainLogic;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class ParametersModel : BindableBase, IChangeable
+    internal sealed class ParametersModel : BindableBase, IParametersModel
     {
         public ParametersAlgorithmModel Algorithm { get; }
 
@@ -25,7 +24,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             // Internal model should call Reset method in ctors themself.
         }
 
-        #region IChangeableModel Implementation
+        #region IChangeable Implementation
 
         public void Reset()
         {
@@ -39,6 +38,17 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Algorithm.Validate();
             Analysis.Validate();
             Advanced.Validate();
+        }
+
+        #endregion
+
+        #region IRealoadable Implementation
+
+        public void Reload()
+        {
+            Algorithm.Reload();
+            Analysis.Reload();
+            Advanced.Reload();
         }
 
         #endregion

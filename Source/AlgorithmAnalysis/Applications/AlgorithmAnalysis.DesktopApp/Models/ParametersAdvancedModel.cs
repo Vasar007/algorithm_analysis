@@ -1,9 +1,8 @@
 ﻿using Prism.Mvvm;
-using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class ParametersAdvancedModel : BindableBase, IChangeable
+    internal sealed class ParametersAdvancedModel : BindableBase, IParametersModel
     {
         private bool _showAnalysisWindow;
         public bool ShowAnalysisWindow
@@ -25,7 +24,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Reset();
         }
 
-        #region IChangeableModel Implementation
+        #region IChangeable Implementation
 
         public void Reset()
         {
@@ -36,6 +35,15 @@ namespace AlgorithmAnalysis.DesktopApp.Models
         public void Validate()
         {
             // Nothing to validate.
+        }
+
+        #endregion
+
+        #region IRealoadable Implementation
+
+        public void Reload()
+        {
+            // Nothing to reload.
         }
 
         #endregion

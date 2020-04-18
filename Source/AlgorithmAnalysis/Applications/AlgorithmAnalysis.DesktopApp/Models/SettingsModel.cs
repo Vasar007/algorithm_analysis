@@ -1,9 +1,8 @@
 ﻿using Prism.Mvvm;
-using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsModel : BindableBase, IChangeable, ISaveable
+    internal sealed class SettingsModel : BindableBase, ISettingsModel
     {
         public SettingsAppearenceModel Appearence { get; }
 
@@ -24,7 +23,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             // Internal model should call Reset method in ctors themself.
         }
 
-        #region IChangeableModel Implementation
+        #region IChangeable Implementation
 
         public void Reset()
         {

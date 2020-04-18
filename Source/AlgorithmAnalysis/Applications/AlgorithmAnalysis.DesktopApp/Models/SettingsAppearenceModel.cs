@@ -1,11 +1,10 @@
 ﻿using Prism.Mvvm;
 using AlgorithmAnalysis.Configuration;
-using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.MaterialDesign;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsAppearenceModel : BindableBase, IChangeable, ISaveable
+    internal sealed class SettingsAppearenceModel : BindableBase, ISettingsModel
     {
         // Initializes through Reset method in ctor.
         public ThemeWrapper CurrentTheme { get; private set; } = default!;
@@ -28,7 +27,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Reset();
         }
 
-        #region IChangeableModel Implementation
+        #region IChangeable Implementation
 
         public void Reset()
         {

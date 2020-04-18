@@ -10,7 +10,7 @@ using AlgorithmAnalysis.Models;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsReportModel : BindableBase, IChangeable, ISaveable
+    internal sealed class SettingsReportModel : BindableBase, ISettingsModel
     {
         #region Cell Creation Mode
 
@@ -99,7 +99,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Reset();
         }
 
-        #region IChangeableModel Implementation
+        #region IChangeable Implementation
 
         public void Reset()
         {

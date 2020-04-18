@@ -5,16 +5,15 @@ using Acolyte.Assertions;
 using Acolyte.Collections;
 using Prism.Mvvm;
 using AlgorithmAnalysis.Configuration;
-using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Properties;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsAnalysisModel : BindableBase, IChangeable, ISaveable
+    internal sealed class SettingsAnalysisModel : BindableBase, ISettingsModel
     {
         #region Algorithms
 
-        public ObservableCollection<AlgorithmTypeValueModel> SpecifiedAlgorithms { get; private set; }
+        public ObservableCollection<AlgorithmTypeValueModel> SpecifiedAlgorithms { get; }
 
         public int SpecifiedAlgorithmsNumber => SpecifiedAlgorithms.Count;
 
@@ -55,7 +54,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Reset();
         }
 
-        #region IChangeableModel Implementation
+        #region IChangeable Implementation
 
         public void Reset()
         {

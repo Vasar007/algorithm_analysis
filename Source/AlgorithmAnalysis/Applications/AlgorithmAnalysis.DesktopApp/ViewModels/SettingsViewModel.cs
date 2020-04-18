@@ -19,8 +19,6 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
     internal sealed class SettingsViewModel : BindableBase
     {
-        // TODO: allow to save into config all setting values.
-
         private static readonly ILogger _logger =
             LoggerFactory.CreateLoggerFor<SettingsViewModel>();
 

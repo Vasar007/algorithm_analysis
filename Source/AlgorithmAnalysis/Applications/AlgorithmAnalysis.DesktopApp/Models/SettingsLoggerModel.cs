@@ -5,7 +5,7 @@ using AlgorithmAnalysis.DesktopApp.Domain;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class SettingsLoggerModel : BindableBase, IChangeable, ISaveable
+    internal sealed class SettingsLoggerModel : BindableBase, ISettingsModel
     {
         // Initializes through Reset method in ctor.
         private string _originalLogFolderPath = default!;

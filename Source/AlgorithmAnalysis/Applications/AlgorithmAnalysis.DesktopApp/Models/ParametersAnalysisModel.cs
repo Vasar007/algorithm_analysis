@@ -10,7 +10,7 @@ using AlgorithmAnalysis.Math;
 
 namespace AlgorithmAnalysis.DesktopApp.Models
 {
-    internal sealed class ParametersAnalysisModel : BindableBase, IChangeable
+    internal sealed class ParametersAnalysisModel : BindableBase, IParametersModel
     {
         #region Analysis Kind Phase One Part One
 
@@ -143,7 +143,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             Reset();
         }
 
-        #region IChangeableModel Implementation
+        #region IChangeable Implementation
 
         public void Reset()
         {
@@ -189,6 +189,15 @@ namespace AlgorithmAnalysis.DesktopApp.Models
                 invalidDegreeValuesAssertMessage
             );
             
+        }
+
+        #endregion
+
+        #region IRealoadable Implementation
+
+        public void Reload()
+        {
+            // Nothing to reload.
         }
 
         #endregion
