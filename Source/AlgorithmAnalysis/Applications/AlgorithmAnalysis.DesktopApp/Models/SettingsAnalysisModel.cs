@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Acolyte.Assertions;
 using Acolyte.Collections;
 using Prism.Mvvm;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Properties;
 
@@ -15,6 +17,9 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public ObservableCollection<AlgorithmTypeValueModel> SpecifiedAlgorithms { get; }
 
+        /// <summary>
+        /// Shows how many algorithms specified for analysis.
+        /// </summary>
         public int SpecifiedAlgorithmsNumber => SpecifiedAlgorithms.Count;
 
         // Initializes through Reset method in ctor.
@@ -124,6 +129,32 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             IsHintForAlgorithmVisible = !IsAnyAlgorithmSpecified;
         }
 
+        public void AddNewAlgorithm()
+        {
+            // Add empty model to the end of collection.
+            var newEmptyModel = AlgorithmTypeValueModel.CreateEmpty(SpecifiedAlgorithms.Count);
+            SpecifiedAlgorithms.Add(newEmptyModel);
+        }
+
+        public void RemoveAlgorithm(IReadOnlyList<AlgorithmTypeValueModel> selectedItems)
+        {
+            if (SpecifiedAlgorithms.IsEmpty()) return;
+
+            // When there are no selected items, remove the last value.
+            if (selectedItems.IsEmpty())
+            {
+                SpecifiedAlgorithms.RemoveAt(SpecifiedAlgorithms.Count - 1);
+                return;
+            }
+
+            // Otherwise, remove selected item because user can select only one row.
+            AlgorithmTypeValueModel algorithmTypeValue = selectedItems.Single();
+
+            SpecifiedAlgorithms.Remove(algorithmTypeValue);
+
+            UpdateAlgorithmIndecies();
+        }
+
         private string SpecifiedAlgorithmsStatusTextFormat()
         {
             return SpecifiedAlgorithmsNumber switch
@@ -139,6 +170,15 @@ namespace AlgorithmAnalysis.DesktopApp.Models
                          $"Unexpected algorithms number: '{SpecifiedAlgorithmsNumber.ToString()}'."
                      )
             };
+        }
+
+        private void UpdateAlgorithmIndecies()
+        {
+            for (int index = 0; index < SpecifiedAlgorithms.Count; ++index)
+            {
+                // Start indexing for UI with 1 instead of 0.
+                SpecifiedAlgorithms[index].Index = index.UseOneBasedIndexing();
+            }
         }
     }
 }

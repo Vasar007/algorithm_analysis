@@ -21,7 +21,10 @@
             <system:Double x:Key="DefaultMinWidth">
                 50
             </system:Double>
-            <system:Double x:Key="DefaultMaxWidth">
+            <system:Double x:Key="DefaultMaxShortWidth">
+                140
+            </system:Double>
+            <system:Double x:Key="DefaultMaxLongWidth">
                 165
             </system:Double>
             <system:Double x:Key="DefaultTextBoxFontSize">
@@ -35,74 +38,112 @@
                 HorizontalAlignment="Stretch"
                 Margin="16">
 
-        <!--
-        Example of algorithm data:
-            "Description": "Pallottino's algorithm",
-            "MinFormula": "x",
-            "AverageFormula": "x * x * (x - 1) / 2",
-            "MaxFormula": "x * x * x * (x - 1) / 2",
-            "AnalysisProgramName": "algorithm_analysis.exe",
-            "OutputFilenamePattern": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/data/tests_average_"
-        -->
-        <DataGrid x:Name="AlgorithmDataGrid"
-                  CanUserAddRows="True"
-                  CanUserDeleteRows="True"
-                  CanUserReorderColumns="False"
-                  CanUserResizeColumns="False"
-                  CanUserResizeRows="False"
-                  CanUserSortColumns="False"
-                  AllowDrop="False"
-                  ItemsSource="{Binding Path=Settings.Analysis.SpecifiedAlgorithms}"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <!-- Setup width to avoid main window resize. -->
-                <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmNumberGridColumnName}"
-                                    IsReadOnly="True"
-                                    MinWidth="{StaticResource ResourceKey=DefaultWidthForIndex}"
-                                    MaxWidth="{StaticResource ResourceKey=DefaultWidthForIndex}"
-                                    Binding="{Binding Path=Index}" />
+        <UniformGrid Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
+                     Rows="1"
+                     Columns="2">
 
-                <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmDescriptionGridColumnName}"
-                                    IsReadOnly="False"
-                                    MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
-                                    MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                                    Binding="{Binding Path=Description}" />
+            <Button Margin="8"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                    Content="{x:Static properties:DesktopAppStrings.AddNewAlgorithmValueButtonText}"
+                    ToolTip="{x:Static properties:DesktopAppStrings.AddNewAlgorithmValueButtonToolTip}"
+                    Command="{Binding Path=AddNewAlgorithmCommand}" />
 
-                <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmMinFormulaGridColumnName}"
-                                    IsReadOnly="False"
-                                    MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
-                                    MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                                    Binding="{Binding Path=MinFormula}" />
+            <Button Margin="8"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                    Content="{x:Static properties:DesktopAppStrings.RemoveAlgorithmValueButtonText}"
+                    ToolTip="{x:Static properties:DesktopAppStrings.RemoveAlgorithmValueButtonToolTip}"
+                    Command="{Binding Path=RemoveAlgorithmCommand}"
+                    CommandParameter="{Binding Path=SelectedItems, ElementName=AlgorithmDataGrid}" />
+        </UniformGrid>
 
-                <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmAverageFormulaGridColumnName}"
-                                    IsReadOnly="False"
-                                    MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
-                                    MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                                    Binding="{Binding Path=AverageFormula}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="221" />
+            </Grid.RowDefinitions>
 
-                <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmMaxFormulaGridColumnName}"
-                                    IsReadOnly="False"
-                                    MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
-                                    MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                                    Binding="{Binding Path=MaxFormula}" />
+            <!--
+            Example of algorithm data:
+                "Description": "Pallottino's algorithm",
+                "MinFormula": "x",
+                "AverageFormula": "x * x * (x - 1) / 2",
+                "MaxFormula": "x * x * x * (x - 1) / 2",
+                "AnalysisProgramName": "algorithm_analysis.exe",
+                "OutputFilenamePattern": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/data/tests_average_"
+            -->
+            <DataGrid x:Name="AlgorithmDataGrid"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      CanUserAddRows="True"
+                      CanUserDeleteRows="True"
+                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="False"
+                      CanUserResizeRows="False"
+                      CanUserSortColumns="False"
+                      AllowDrop="False"
+                      IsReadOnly="False"
+                      SelectionMode="Single"
+                      SelectionUnit="FullRow"
+                      ItemsSource="{Binding Path=Settings.Analysis.SpecifiedAlgorithms}"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <!-- Setup width to avoid main window resize. -->
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmNumberGridColumnName}"
+                                        IsReadOnly="True"
+                                        MinWidth="{StaticResource ResourceKey=DefaultWidthForIndex}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultWidthForIndex}"
+                                        Binding="{Binding Path=Index}" />
 
-                <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmProgramNameGridColumnName}"
-                                    IsReadOnly="False"
-                                    MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
-                                    MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                                    Binding="{Binding Path=AnalysisProgramName}" />
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmDescriptionGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        Binding="{Binding Path=Description}" />
 
-                <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmFilenamePatternGridColumnName}"
-                                    IsReadOnly="False"
-                                    MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
-                                    MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                                    Binding="{Binding Path=RelativeOutputFilenamePattern}" />
-            </DataGrid.Columns>
-        </DataGrid>
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmMinFormulaGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        Binding="{Binding Path=MinFormula}" />
+
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmAverageFormulaGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        Binding="{Binding Path=AverageFormula}" />
+
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmMaxFormulaGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        Binding="{Binding Path=MaxFormula}" />
+
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmProgramNameGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxLongWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxLongWidth}"
+                                        Binding="{Binding Path=AnalysisProgramName}" />
+
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmFilenamePatternGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxLongWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxLongWidth}"
+                                        Binding="{Binding Path=RelativeOutputFilenamePattern}" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
 
         <UniformGrid Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
                      Rows="1"
                      Columns="2">
+
             <Button IsDefault="True"
                     Margin="8"
                     HorizontalContentAlignment="Center"

@@ -61,6 +61,24 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string AddNewAlgorithmValueButtonText {
+            get {
+                return ResourceManager.GetString("AddNewAlgorithmValueButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new algorithm to table.
+        /// </summary>
+        public static string AddNewAlgorithmValueButtonToolTip {
+            get {
+                return ResourceManager.GetString("AddNewAlgorithmValueButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Advanced parameters.
         /// </summary>
         public static string AdvancedParametersHeader {
@@ -286,7 +304,7 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save algorithm settings.
+        ///   Looks up a localized string similar to Keep algorithm settings (you should click &quot;Apply&quot; button to save them).
         /// </summary>
         public static string ConfirmAlgorithmButtonToolTip {
             get {
@@ -508,6 +526,24 @@ namespace AlgorithmAnalysis.DesktopApp.Properties {
         public static string ReloadSettingButtonToolTip {
             get {
                 return ResourceManager.GetString("ReloadSettingButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string RemoveAlgorithmValueButtonText {
+            get {
+                return ResourceManager.GetString("RemoveAlgorithmValueButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove algorithm from table.
+        /// </summary>
+        public static string RemoveAlgorithmValueButtonToolTip {
+            get {
+                return ResourceManager.GetString("RemoveAlgorithmValueButtonToolTip", resourceCulture);
             }
         }
         

@@ -105,13 +105,6 @@ namespace AlgorithmAnalysis.Excel
 
         #endregion
 
-        public static int UseOneBasedIndexing(this int zeroBasedIndex)
-        {
-            zeroBasedIndex.ThrowIfValueIsOutOfRange(nameof(zeroBasedIndex), 0, int.MaxValue);
-
-            return zeroBasedIndex + 1;
-        }
-
         public static int SkipHeader(this int oneBasedIndex)
         {
             oneBasedIndex.ThrowIfValueIsOutOfRange(nameof(oneBasedIndex), 1, int.MaxValue);

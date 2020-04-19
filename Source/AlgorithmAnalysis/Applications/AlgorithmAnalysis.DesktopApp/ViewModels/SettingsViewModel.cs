@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Acolyte.Assertions;
@@ -14,6 +16,7 @@ using AlgorithmAnalysis.DesktopApp.Domain.Commands;
 using AlgorithmAnalysis.DesktopApp.Domain.Messages;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.Logging;
+using Acolyte.Collections;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
@@ -30,6 +33,10 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
         public ICommand ResetSettingsCommand { get; }
 
+        public ICommand AddNewAlgorithmCommand { get; }
+
+        public ICommand RemoveAlgorithmCommand { get; }
+
 
         public SettingsViewModel(
             IEventAggregator eventAggregator)
@@ -40,6 +47,9 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
 
             OpenConfigFileCommand = new AsyncRelayCommand(OpenConfigFileAsync);
             ResetSettingsCommand = new DelegateCommand(ResetAllSettingsSafe);
+
+            AddNewAlgorithmCommand = new DelegateCommand(AddNewAlgorithmSafe);
+            RemoveAlgorithmCommand = new DelegateCommand<IList<object>>(RemoveAlgorithmSafe);
 
             SubscribeOnEvents();
         }
@@ -155,6 +165,44 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             catch (Exception ex)
             {
                 string message = $"Failed to reset appearence settings: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
+            }
+        }
+
+        private void AddNewAlgorithmSafe()
+        {
+            _logger.Info("Addiing new algorithm value to table.");
+
+            try
+            {
+                Settings.Analysis.AddNewAlgorithm();
+            }
+            catch (Exception ex)
+            {
+                string message = $"Failed to add new algorithm value: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
+            }
+        }
+
+        private void RemoveAlgorithmSafe(IList<object> selectedItems)
+        {
+            _logger.Info("Remove algorithm value from table.");
+
+            try
+            {
+                var convertedItems = selectedItems
+                    .Cast<AlgorithmTypeValueModel>()
+                    .ToReadOnlyList();
+
+                Settings.Analysis.RemoveAlgorithm(convertedItems);
+            }
+            catch (Exception ex)
+            {
+                string message = $"Failed to remove algorithm value: {ex.Message}";
 
                 _logger.Error(ex, message);
                 MessageBoxProvider.ShowError(message);

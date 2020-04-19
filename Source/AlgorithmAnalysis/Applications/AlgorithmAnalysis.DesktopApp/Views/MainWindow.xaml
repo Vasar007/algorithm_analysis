@@ -52,7 +52,7 @@
 
     <materialDesign:DialogHost x:Name="MainWindowDialogHost"
                                Style="{StaticResource MaterialDesignEmbeddedDialogHost}"
-                               SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}"
+                               SnackbarMessageQueue="{Binding Path=MessageQueue, ElementName=MainSnackbar}"
                                Identifier="RootDialog"
                                CloseOnClickAway="False"
                                DialogTheme="Inherit">

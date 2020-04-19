@@ -8,6 +8,7 @@
              xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
              xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
              xmlns:domain="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain"
+             xmlns:converters="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Converters"
              xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
@@ -23,6 +24,8 @@
             <system:Double x:Key="DefaultTextBoxFontSize">
                 14
             </system:Double>
+
+            <converters:CustomBooleanToVisibilityConverter x:Key="CustomBooleanToVisibilityConverter" />
 
             <!-- Use proxy object to bind data context for additional dialogs. -->
             <domain:BindingProxy x:Key="Proxy" Data="{Binding Path=.}" />
@@ -41,6 +44,26 @@
 
             <StackPanel Orientation="Vertical"
                         Margin="8">
+
+                <TextBox x:Name="CommonAnalysisFilenameSuffixTextBox"
+                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.CommonAnalysisFilenameSuffixHint}"
+                         Margin="16"
+                         Visibility="Visible"
+                         FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding Path=Settings.Analysis.CommonAnalysisFilenameSuffix}" />
+
+                <TextBox x:Name="OutputFileExtensionTextBox"
+                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.OutputFileExtensionHint}"
+                         Margin="16"
+                         Visibility="Visible"
+                         FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding Path=Settings.Analysis.OutputFileExtension}" />
 
                 <TextBlock Margin="16"
                            Visibility="Visible">
@@ -64,29 +87,9 @@
                 Show warning about no availbale algorithms to analyze.
                 -->
                 <views:WarningOnEmptyControlView Visibility="{Binding Path=Settings.Analysis.IsHintForAlgorithmVisible,
-                                                                Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                                                              Converter={StaticResource ResourceKey=CustomBooleanToVisibilityConverter}}">
                     <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAlgorithmsInSettingsText}" />
                 </views:WarningOnEmptyControlView>
-
-                <TextBox x:Name="CommonAnalysisFilenameSuffixTextBox"
-                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.CommonAnalysisFilenameSuffixHint}"
-                         Margin="16"
-                         Visibility="Visible"
-                         FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
-                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
-                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
-                         Text="{Binding Path=Settings.Analysis.CommonAnalysisFilenameSuffix}" />
-
-                <TextBox x:Name="OutputFileExtensionTextBox"
-                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.OutputFileExtensionHint}"
-                         Margin="16"
-                         Visibility="Visible"
-                         FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
-                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
-                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
-                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
-                         Text="{Binding Path=Settings.Analysis.OutputFileExtension}" />
 
             </StackPanel>
         </StackPanel>

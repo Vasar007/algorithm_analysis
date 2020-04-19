@@ -1,5 +1,6 @@
 ﻿using Acolyte.Assertions;
 using Prism.Mvvm;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Models;
 using AlgorithmAnalysis.DesktopApp.Domain;
 
@@ -92,7 +93,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
             return new AlgorithmTypeValueModel(
                 description: algorithmTypeValue.Description,
-                index: index + 1, // Start indexing for UI with 1 instead of 0.
+                index: index.UseOneBasedIndexing(), // Start indexing for UI with 1 instead of 0.
                 minFormula: algorithmTypeValue.MinFormula,
                 averageFormula: algorithmTypeValue.AverageFormula,
                 maxFormula: algorithmTypeValue.MaxFormula,
@@ -104,9 +105,19 @@ namespace AlgorithmAnalysis.DesktopApp.Models
 
         public AlgorithmTypeValue Convert()
         {
-            string newOutputFilenamePattern = ModelPathTransformer.TransformPathToOriginal(
-                _originalOutputFilenamePattern, RelativeOutputFilenamePattern
-            );
+            string newOutputFilenamePattern;
+            if (!string.IsNullOrWhiteSpace(_originalOutputFilenamePattern))
+            {
+                newOutputFilenamePattern = ModelPathTransformer.TransformPathToOriginal(
+                    _originalOutputFilenamePattern, RelativeOutputFilenamePattern
+                );
+            }
+            else
+            {
+                newOutputFilenamePattern = ModelPathTransformer.TransformPathToOriginal(
+                    RelativeOutputFilenamePattern
+                );
+            }
 
             return new AlgorithmTypeValue
             {
@@ -117,6 +128,20 @@ namespace AlgorithmAnalysis.DesktopApp.Models
                 AnalysisProgramName = AnalysisProgramName,
                 OutputFilenamePattern = newOutputFilenamePattern
             };
+        }
+
+        public static AlgorithmTypeValueModel CreateEmpty(int elementsInCollection)
+        {
+            return new AlgorithmTypeValueModel(
+                description: string.Empty,
+                index: elementsInCollection.UseOneBasedIndexing(), // Start indexing for UI with 1 instead of 0.
+                minFormula: string.Empty,
+                averageFormula: string.Empty,
+                maxFormula: string.Empty,
+                analysisProgramName: string.Empty,
+                relativeOutputFilenamePattern: string.Empty,
+                originalOutputFilenamePattern: string.Empty
+            );
         }
     }
 }

@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNewAlgorithmValueButtonText" xml:space="preserve">
+    <value>Add</value>
+    <comment>Text for button to add new algorithm value in settings.</comment>
+  </data>
+  <data name="AddNewAlgorithmValueButtonToolTip" xml:space="preserve">
+    <value>Add new algorithm to table</value>
+    <comment>Tool tip for button to add new algorithm value in settings.</comment>
+  </data>
   <data name="AdvancedParametersHeader" xml:space="preserve">
     <value>Advanced parameters</value>
     <comment>Header text for advanced parameters panel.</comment>
@@ -218,8 +226,8 @@
     <comment>Text for confirm button to save algorithm info in settings.</comment>
   </data>
   <data name="ConfirmAlgorithmButtonToolTip" xml:space="preserve">
-    <value>Save algorithm settings</value>
-    <comment>Tool tip for confirm button to save algorithm info in settings.</comment>
+    <value>Keep algorithm settings (you should click "Apply" button to save them)</value>
+    <comment>Tool tip for confirm button to keep algorithm info in settings.</comment>
   </data>
   <data name="DarkMode" xml:space="preserve">
     <value>Dark</value>
@@ -317,6 +325,14 @@
     <value>Reload settings from configuration file on disk if it exists
 Otherwise, settings will be reset to default values.</value>
     <comment>Tool tip for reload button to reload settings from configuration file.</comment>
+  </data>
+  <data name="RemoveAlgorithmValueButtonText" xml:space="preserve">
+    <value>Remove</value>
+    <comment>Text for button to remove algorithm value in settings.</comment>
+  </data>
+  <data name="RemoveAlgorithmValueButtonToolTip" xml:space="preserve">
+    <value>Remove algorithm from table</value>
+    <comment>Tool tip for button to remove algorithm value in settings.</comment>
   </data>
   <data name="ReportOptionsHeader" xml:space="preserve">
     <value>Report</value>
