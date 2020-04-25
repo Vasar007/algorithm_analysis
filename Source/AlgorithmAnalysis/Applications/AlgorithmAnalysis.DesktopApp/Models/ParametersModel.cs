@@ -88,7 +88,7 @@ namespace AlgorithmAnalysis.DesktopApp.Models
             return new AnalysisLaunchContext(
                 showAnalysisWindow: Advanced.ShowAnalysisWindow,
                 maxDegreeOfParallelism: Analysis.SelectedMaxDegreeOfParallelism,
-                showResults: Advanced.ShowAnalysisWindow
+                showResults: Advanced.OpenAnalysisResults
             );
         }
     }
