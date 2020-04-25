@@ -25,7 +25,7 @@ namespace AlgorithmAnalysis.Excel.NPOI
 
         internal NpoiExcelSheet(
             ISheet sheet,
-            ExcelOptions excelOptions,
+            ReportOptions excelOptions,
             IExcelFormulaProvider formulaProvider)
             : base(excelOptions, formulaProvider)
         {

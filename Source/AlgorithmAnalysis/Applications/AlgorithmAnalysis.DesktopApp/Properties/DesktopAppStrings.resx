@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddNewAlgorithmValueButtonText" xml:space="preserve">
+    <value>Add</value>
+    <comment>Text for button to add new algorithm value in settings.</comment>
+  </data>
+  <data name="AddNewAlgorithmValueButtonToolTip" xml:space="preserve">
+    <value>Add new algorithm to table</value>
+    <comment>Tool tip for button to add new algorithm value in settings.</comment>
+  </data>
+  <data name="AdvancedParametersHeader" xml:space="preserve">
+    <value>Advanced parameters</value>
+    <comment>Header text for advanced parameters panel.</comment>
+  </data>
+  <data name="AlgorithmAverageFormulaGridColumnName" xml:space="preserve">
+    <value>Average formula</value>
+    <comment>Name for algorithm averge formula column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AlgorithmDescriptionGridColumnName" xml:space="preserve">
+    <value>Description</value>
+    <comment>Name for algorithm description column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AlgorithmFilenamePatternGridColumnName" xml:space="preserve">
+    <value>Output filename pattern</value>
+    <comment>Name for algorithm output filename pattern column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AlgorithmHint" xml:space="preserve">
+    <value>Algorithm</value>
+    <comment>Hint for algorithm combo box.</comment>
+  </data>
+  <data name="AlgorithmMaxFormulaGridColumnName" xml:space="preserve">
+    <value>Max formula</value>
+    <comment>Name for algorithm max formula column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AlgorithmMinFormulaGridColumnName" xml:space="preserve">
+    <value>Min formula</value>
+    <comment>Name for algorithm min formula column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AlgorithmNumberGridColumnName" xml:space="preserve">
+    <value>№</value>
+    <comment>Name for algorithm number column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AlgorithmParametersHeader" xml:space="preserve">
+    <value>Algorithms parameters</value>
+    <comment>Header text for algorithm parameters panel.</comment>
+  </data>
+  <data name="AlgorithmProgramNameGridColumnName" xml:space="preserve">
+    <value>Analysis program name</value>
+    <comment>Name for algorithm analysis program name column on algorithm settings dialog.</comment>
+  </data>
+  <data name="AnalysisOptionsHeader" xml:space="preserve">
+    <value>Analysis</value>
+    <comment>Header text for analysis card in settings.</comment>
+  </data>
+  <data name="AnalysisParametersHeader" xml:space="preserve">
+    <value>Analysis parameters</value>
+    <comment>Header text for analysis parameters panel.</comment>
+  </data>
+  <data name="AnalysisPhaseOnePartOneHint" xml:space="preserve">
+    <value>Analysis kind for phase one part one</value>
+    <comment>Hint for analysis kind for phase one part one combo box.</comment>
+  </data>
+  <data name="AnalysisPhaseOnePartTwoHint" xml:space="preserve">
+    <value>Analysis kind for phase one part two</value>
+    <comment>Hint for analysis kind for phase one part two combo box.</comment>
+  </data>
+  <data name="AnalysisPhaseTwoHint" xml:space="preserve">
+    <value>Analysis kind for phase two</value>
+    <comment>Hint for analysis kind for phase two combo box.</comment>
+  </data>
+  <data name="AppearenceOptionsHeader" xml:space="preserve">
+    <value>Appearence</value>
+    <comment>Header text for appearence card in settings.</comment>
+  </data>
+  <data name="ApplySettingsButtonText" xml:space="preserve">
+    <value>Apply</value>
+    <comment>Text for apply button to save settings.</comment>
+  </data>
+  <data name="ApplySettingsButtonToolTip" xml:space="preserve">
+    <value>Apply all settings</value>
+    <comment>Tool tip for apply button to save settings.</comment>
+  </data>
+  <data name="CellCreationModeHint" xml:space="preserve">
+    <value>Cell creation mode</value>
+    <comment>Hint for cell creation mode combo box.</comment>
+  </data>
+  <data name="CloseAlgorithmSettingsButtonText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Text for close button to close algorithm settings dialog.</comment>
+  </data>
+  <data name="CloseAlgorithmSettingsToolTip" xml:space="preserve">
+    <value>Close algorithm settings without saving</value>
+    <comment>Tool tip for close button to close algorithm settings dialog.</comment>
+  </data>
+  <data name="CloseSettingsButtonText" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Text for close button to close settings dialog.</comment>
+  </data>
+  <data name="CloseSettingsButtonToolTip" xml:space="preserve">
+    <value>Close settings without saving</value>
+    <comment>Tool tip for close button to close settings dialog.</comment>
+  </data>
+  <data name="CommonAnalysisFilenameSuffixHint" xml:space="preserve">
+    <value>Common analysis filename suffix</value>
+    <comment>Hint for common analysis filename suffix text box.</comment>
+  </data>
+  <data name="ConfirmAlgorithmButtonText" xml:space="preserve">
+    <value>Ok</value>
+    <comment>Text for confirm button to save algorithm info in settings.</comment>
+  </data>
+  <data name="ConfirmAlgorithmButtonToolTip" xml:space="preserve">
+    <value>Keep algorithm settings (you should click "Apply" button to save them)</value>
+    <comment>Tool tip for confirm button to keep algorithm info in settings.</comment>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Dark</value>
+    <comment>Text for dark mode on appearence card.</comment>
+  </data>
+  <data name="EnableLogForExcelLibraryText" xml:space="preserve">
+    <value>Enable logging for Excel library</value>
+    <comment>Text for check box to enable loggin for Excel library.</comment>
+  </data>
+  <data name="ExcelVersionHint" xml:space="preserve">
+    <value>Excel version</value>
+    <comment>Hint for Excel version combo box.</comment>
+  </data>
+  <data name="ExitButtonText" xml:space="preserve">
+    <value>Exit</value>
+    <comment>Text for exit button to close app.</comment>
+  </data>
+  <data name="ExitButtonToolTip" xml:space="preserve">
+    <value>Close app</value>
+    <comment>Tool tip for exit button to close app.</comment>
+  </data>
+  <data name="FirstValueHint" xml:space="preserve">
+    <value>The first value of function segment to analyze</value>
+    <comment>Hint for first value text box.</comment>
+  </data>
+  <data name="GoodnessOfFitHint" xml:space="preserve">
+    <value>Goodness of fit</value>
+    <comment>Hint for goddness of fit combo box.</comment>
+  </data>
+  <data name="LastExtrapolationValueHint" xml:space="preserve">
+    <value>The last extrapolation value of function segment to analyze</value>
+    <comment>Hint for last extrapolation value text box.</comment>
+  </data>
+  <data name="LastValueHint" xml:space="preserve">
+    <value>The last value of function segment to analyze</value>
+    <comment>Hint for last value text box.</comment>
+  </data>
+  <data name="LaunchesNumberHint" xml:space="preserve">
+    <value>The initial launches number</value>
+    <comment>Hint for initial launches number text box.</comment>
+  </data>
+  <data name="LibraryProviderHint" xml:space="preserve">
+    <value>Library provider</value>
+    <comment>Hint for library provider combo box.</comment>
+  </data>
+  <data name="LightMode" xml:space="preserve">
+    <value>Light</value>
+    <comment>Text for light mode on appearence card.</comment>
+  </data>
+  <data name="LogFilenameSeparatorHint" xml:space="preserve">
+    <value>Log filename separator</value>
+    <comment>Hing for log filename separator.</comment>
+  </data>
+  <data name="LogFilesExtensionHint" xml:space="preserve">
+    <value>Log files extension</value>
+    <comment>Hint for log files extension text box.</comment>
+  </data>
+  <data name="LogFolderPathHint" xml:space="preserve">
+    <value>Folder path to store app logs</value>
+    <comment>Hint for log folder path text box.</comment>
+  </data>
+  <data name="LoggerOptionsHeader" xml:space="preserve">
+    <value>Logger</value>
+    <comment>Header text for logger card in settings.</comment>
+  </data>
+  <data name="MaxDegreeOfParallerismText" xml:space="preserve">
+    <value>Max degree of parallerism</value>
+    <comment>Text for max degree of parallerism text block.</comment>
+  </data>
+  <data name="OpenAnalysisResultsText" xml:space="preserve">
+    <value>Open analysis results</value>
+    <comment>Text for check box to open analysis results when analysis will be completed.</comment>
+  </data>
+  <data name="OpenConfigFileButtonText" xml:space="preserve">
+    <value>Open configuration file</value>
+    <comment>Text for open config button to open config file.</comment>
+  </data>
+  <data name="OpenConfigFileButtonToolTip" xml:space="preserve">
+    <value>Open configuration file on disk if it exists</value>
+    <comment>Tool tipfor open config button to open config file.</comment>
+  </data>
+  <data name="OutputExcelFilePathHint" xml:space="preserve">
+    <value>Output Excel file path</value>
+    <comment>Hint for output Excel file path text box.</comment>
+  </data>
+  <data name="OutputFileExtensionHint" xml:space="preserve">
+    <value>Output file extension</value>
+    <comment>Hint for output file extension.</comment>
+  </data>
+  <data name="ReloadSettingButtonText" xml:space="preserve">
+    <value>Reload</value>
+    <comment>Text for reload button to reload settings from configuration file.</comment>
+  </data>
+  <data name="ReloadSettingButtonToolTip" xml:space="preserve">
+    <value>Reload settings from configuration file on disk if it exists
+Otherwise, settings will be reset to default values.</value>
+    <comment>Tool tip for reload button to reload settings from configuration file.</comment>
+  </data>
+  <data name="RemoveAlgorithmValueButtonText" xml:space="preserve">
+    <value>Remove</value>
+    <comment>Text for button to remove algorithm value in settings.</comment>
+  </data>
+  <data name="RemoveAlgorithmValueButtonToolTip" xml:space="preserve">
+    <value>Remove algorithm from table</value>
+    <comment>Tool tip for button to remove algorithm value in settings.</comment>
+  </data>
+  <data name="ReportOptionsHeader" xml:space="preserve">
+    <value>Report</value>
+    <comment>Header text for report card in settings.</comment>
+  </data>
+  <data name="ResetAnalysisButtonText" xml:space="preserve">
+    <value>Reset</value>
+    <comment>Text for reset button to restore default analysis parameters.</comment>
+  </data>
+  <data name="ResetAnalysisButtonToolTip" xml:space="preserve">
+    <value>Reset analysis parameters</value>
+    <comment>Tool tip for reset button to restore default analysis parameters.</comment>
+  </data>
+  <data name="RunAnalysisButtonText" xml:space="preserve">
+    <value>Run</value>
+    <comment>Text for run button to execute analysis.</comment>
+  </data>
+  <data name="RunAnalysisButtonToolTip" xml:space="preserve">
+    <value>Run analysis (window will be blocked)</value>
+    <comment>Tool tip for run button to execute analysis.</comment>
+  </data>
+  <data name="SettingsButtonText" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Text for settigns button to open app settings.</comment>
+  </data>
+  <data name="SettingsButtonToolTip" xml:space="preserve">
+    <value>Open app settings</value>
+    <comment>Tool tip for settigns button to open app settings.</comment>
+  </data>
+  <data name="ShowAnalysisWindowText" xml:space="preserve">
+    <value>Show analysis window</value>
+    <comment>Text for check box to show analysis window during analysis process.</comment>
+  </data>
+  <data name="SnackBarOnConfigReloadActionText" xml:space="preserve">
+    <value>Reload</value>
+    <comment>Text for snack bar action on configuration file reload.</comment>
+  </data>
+  <data name="SnackBarOnConfigReloadMessage" xml:space="preserve">
+    <value>Configuration file was changed, please reload to update parameters.</value>
+    <comment>Text for snack bar message on configuration file reload.</comment>
+  </data>
+  <data name="SpecifiedAlgorithmsClickViewText" xml:space="preserve">
+    <value>View</value>
+    <comment>Text for specified algorithm node hyperlink in settings to edit algorithms.</comment>
+  </data>
+  <data name="SpecifiedAlgorithmsManyText" xml:space="preserve">
+    <value>Found {0} algorithms.</value>
+    <comment>Text for specified algorithm node in settings when there are more than one specified algorithm.</comment>
+  </data>
+  <data name="SpecifiedAlgorithmsNotFoundText" xml:space="preserve">
+    <value>Not found any algorithms.</value>
+    <comment>Text for specified algorithm node in settings when there are no specified algorithms.</comment>
+  </data>
+  <data name="SpecifiedAlgorithmsSingleText" xml:space="preserve">
+    <value>Found {0} algorithm.</value>
+    <comment>Text for specified algorithm node in settings when there is only one specified algorithm.</comment>
+  </data>
+  <data name="StepValueHint" xml:space="preserve">
+    <value>The size of step for function segment</value>
+    <comment>Hint for step value text box.</comment>
+  </data>
+  <data name="UseFullyQualifiedEntityNamesText" xml:space="preserve">
+    <value>Use fully qualified entity names in logs</value>
+    <comment>Text for check box to use fully qualified entity names in logs.</comment>
+  </data>
+  <data name="WarningInsufficientNumberOfResourcesText" xml:space="preserve">
+    <value>Warning: you cannot specify degree of parallelism.
+PC has insufficient number of resources.</value>
+    <comment>Text for warning control when there are insufficient number of resources.</comment>
+  </data>
+  <data name="WarningNoAlgorithmsInSettingsText" xml:space="preserve">
+    <value>Warning: currently, there are no algorithms
+to analyze. Please, specify at least one
+algorithm to enable analysis.</value>
+    <comment>Text for warning control when there are no algorithms in settings.</comment>
+  </data>
+  <data name="WarningNoAlgorithmsToAnalyseText" xml:space="preserve">
+    <value>Warning: there are no available algorithms to analyze.
+Please, specify at least one algorithm in configuration.</value>
+    <comment>Text for warning control when there are no available algorithms.</comment>
+  </data>
+  <data name="WarningNoAnalysisKindForPhaseOnePartOneText" xml:space="preserve">
+    <value>Warning: there are no analysis kind for phase one part one.
+Please, check configuration and restart application.</value>
+    <comment>Text for warning control when there are no analysis kind for phase one part one.</comment>
+  </data>
+  <data name="WarningNoAnalysisKindForPhaseOnePartTwoText" xml:space="preserve">
+    <value>Warning: there are no analysis kind for phase one part two.
+Please, check configuration and restart application.</value>
+    <comment>Text for warning control when there are no analysis kind for phase one part two.</comment>
+  </data>
+  <data name="WarningNoAnalysisKindForPhaseTwoText" xml:space="preserve">
+    <value>Warning: there are no analysis kind for phase two.
+Please, check configuration and restart application.</value>
+    <comment>Text for warning control when there are no analysis kind for phase two.</comment>
+  </data>
+  <data name="WarningNoCellCreationModeText" xml:space="preserve">
+    <value>Warning: there are no available cell creation mode.
+Please, check configuration and restart application.</value>
+    <comment>Text for warning control when there are no available cell creation modes.</comment>
+  </data>
+  <data name="WarningNoExcelVersionText" xml:space="preserve">
+    <value>Warning: there are no available Excel versions.
+Please, check configuration and restart application.</value>
+    <comment>Text for warning control when there are no available Excel versions.</comment>
+  </data>
+  <data name="WarningNoGoodnessOfFitMethodsText" xml:space="preserve">
+    <value>Warning: there are no goodness of fit methods.
+Please, check configuration and restart application.</value>
+    <comment>Text for warning control when there are no goodness of fit methods.</comment>
+  </data>
+  <data name="WarningNoLibraryProviderText" xml:space="preserve">
+    <value>Warning: there are no available library providers.
+Please, check configuration and restart application.</value>
+    <comment>Text for warning control when there are no available library providers.</comment>
+  </data>
+  <data name="WarningPathsAreRelativeText" xml:space="preserve">
+    <value>Warning: displayed paths are relative.
+If you want to specify full paths, edit configuration file.</value>
+    <comment>Text for warning control to notify that displayed paths are relative.</comment>
+  </data>
+</root>

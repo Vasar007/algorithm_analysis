@@ -17,7 +17,20 @@ namespace AlgorithmAnalysis.Common
 
         public static void SetTraceListener(string traceLogFilename, string listenerName)
         {
-            SetTraceListener(traceLogFilename, listenerName, autoFlush: true);
+            SetTraceListener(
+                traceLogFilename: traceLogFilename,
+                listenerName: listenerName,
+                autoFlush: true
+            );
+        }
+
+        public static void SetTraceListener(string traceLogFilePath)
+        {
+            SetTraceListener(
+                traceLogFilename: traceLogFilePath,
+                listenerName: CommonConstants.TextLogTraceListenerName, 
+                autoFlush: true
+            );
         }
     }
 }

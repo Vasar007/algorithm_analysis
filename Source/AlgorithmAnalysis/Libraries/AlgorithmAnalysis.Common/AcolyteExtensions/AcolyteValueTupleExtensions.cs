@@ -12,37 +12,37 @@ namespace Acolyte.Common
 
         public static IEnumerable<T> ToEnumerable<T>(this ValueTuple<T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this ValueTuple<T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this ValueTuple<T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this ValueTuple<T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this ValueTuple<T, T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this ValueTuple<T, T, T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IEnumerable<T> ToEnumerable<T>(this ValueTuple<T, T, T, T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         #endregion
@@ -241,37 +241,37 @@ namespace Acolyte.Common
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this ValueTuple<T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this ValueTuple<T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this ValueTuple<T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this ValueTuple<T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this ValueTuple<T, T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this ValueTuple<T, T, T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyList<T> ToReadOnlyList<T>(this ValueTuple<T, T, T, T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         #endregion
@@ -280,41 +280,41 @@ namespace Acolyte.Common
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(this ValueTuple<T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(this ValueTuple<T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(this ValueTuple<T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(
             this ValueTuple<T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(
             this ValueTuple<T, T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(
             this ValueTuple<T, T, T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         public static IReadOnlyCollection<T> ToReadOnlyCollection<T>(
             this ValueTuple<T, T, T, T, T, T, T> valueTuple)
         {
-            return ToList(valueTuple);
+            return valueTuple.ToList();
         }
 
         #endregion

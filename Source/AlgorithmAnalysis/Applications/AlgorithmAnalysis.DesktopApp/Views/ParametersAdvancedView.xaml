@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="AlgorithmAnalysis.DesktopApp.Views.ParametersAdvancedView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
+             xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <materialDesign:Card Padding="8"
+                         Margin="8"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch">
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center">
+            <TextBlock Margin="16 16 12 0"
+                       FontSize="18"
+                       Text="{x:Static properties:DesktopAppStrings.AdvancedParametersHeader}" />
+
+            <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+
+            <CheckBox Content="{x:Static properties:DesktopAppStrings.ShowAnalysisWindowText}"
+                      HorizontalAlignment="Stretch"
+                      Margin="16 8"
+                      Visibility="Visible"
+                      FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                      IsChecked="{Binding Path=Parameters.Advanced.ShowAnalysisWindow}" />
+
+            <CheckBox Content="{x:Static properties:DesktopAppStrings.OpenAnalysisResultsText}"
+                      HorizontalAlignment="Stretch"
+                      Margin="16 8"
+                      Visibility="Visible"
+                      FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                      IsChecked="{Binding Path=Parameters.Advanced.OpenAnalysisResults}" />
+        </StackPanel>
+    </materialDesign:Card>
+
+</UserControl>

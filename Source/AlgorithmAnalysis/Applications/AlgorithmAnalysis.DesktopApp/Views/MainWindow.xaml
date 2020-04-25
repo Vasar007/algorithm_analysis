@@ -1,13 +1,15 @@
 ﻿<Window x:Class="AlgorithmAnalysis.DesktopApp.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
-        xmlns:validation="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Validation"
+        xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
         xmlns:converters="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Converters"
+        xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
         Title="{Binding Path=Title, Mode=OneWay}"
@@ -35,330 +37,167 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        
-            <converters:InverseAndBooleansToBooleanConverter x:Key="InverseAndBooleansToBooleanConverter" />
+
+            <converters:BooleansToBooleanInverseConverter x:Key="BooleansToBooleanInverseConverter" />
+            <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+            <system:Double x:Key="DefaultBottomPanelWidth">
+                300
+            </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
         </ResourceDictionary>
     </Window.Resources>
 
-    <StackPanel VerticalAlignment="Stretch"
-                HorizontalAlignment="Stretch"
-                Orientation="Vertical"
-                Margin="16"
-                IsEnabled="{Binding Path=CanExecuteAnalysis}">
+    <materialDesign:DialogHost x:Name="MainWindowDialogHost"
+                               Style="{StaticResource MaterialDesignEmbeddedDialogHost}"
+                               SnackbarMessageQueue="{Binding Path=MessageQueue, ElementName=MainSnackbar}"
+                               Identifier="RootDialog"
+                               CloseOnClickAway="False"
+                               DialogTheme="Inherit">
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Orientation="Horizontal">
-        
-            <materialDesign:Card Padding="8"
-                                 Margin="8"
-                                 VerticalAlignment="Stretch"
-                                 HorizontalAlignment="Stretch">
-                <StackPanel Orientation="Vertical"
-                            HorizontalAlignment="Center"
-                            x:Name="AlgorithmPanel">
-                    <TextBlock Margin="16 16 12 0"
-                               FontSize="16">
-                        Algorithm parameters
-                    </TextBlock>
+        <Grid>
 
-                    <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+            <DockPanel LastChildFill="True"
+                       IsEnabled="{Binding Path=CanExecuteAnalysis}">
 
-                    <ComboBox materialDesign:HintAssist.Hint="Algorithm"
-                              HorizontalAlignment="Stretch"
-                              Margin="16"
-                              SelectedIndex="0"
-                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAlgorithms}"
-                              SelectedItem="{Binding Path=SelectiveParameters.SelectedAlgorithmType}"
-                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
+                <materialDesign:ColorZone Mode="Standard"
+                                          Padding="16"
+                                          DockPanel.Dock="Top">
+                    <DockPanel>
+                        <materialDesign:PopupBox DockPanel.Dock="Right"
+                                                 PlacementMode="BottomAndAlignRightEdges"
+                                                 StaysOpen="False">
+                            <StackPanel>
+                                <Button Content="{x:Static properties:DesktopAppStrings.SettingsButtonText}"
+                                        ToolTip="{x:Static properties:DesktopAppStrings.SettingsButtonToolTip}"
+                                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                        materialDesign:DialogHost.DialogOpenedAttached="Settings_DialogOpened"
+                                        materialDesign:DialogHost.DialogClosingAttached="Settings_DialogClosing">
+                                    <Button.CommandParameter>
+                                        <views:SettingsView />
+                                    </Button.CommandParameter>
+                                </Button>
 
-                    <TextBox x:Name="FirstValueTextBox"
-                            materialDesign:HintAssist.Hint="The first value of function segment to analyze"
-                            Margin="16"
-                            FontSize="18"
-                            MaxWidth="500"
-                            Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding Path="RawParameters.StartValue"
-                                    UpdateSourceTrigger="PropertyChanged"
-                                    Mode="TwoWay">
-                                <Binding.ValidationRules>
-                                    <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                    ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-
-                    <TextBox x:Name="LastValueTextBox"
-                             materialDesign:HintAssist.Hint="The last value of function segment to analyze"
-                             Margin="16"
-                             FontSize="18"
-                             MaxWidth="500"
-                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding Path="RawParameters.EndValue"
-                                     UpdateSourceTrigger="PropertyChanged"
-                                     Mode="TwoWay">
-                                <Binding.ValidationRules>
-                                    <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                     ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-
-                    <TextBox x:Name="LastExtrapolationValueTextBox"
-                             materialDesign:HintAssist.Hint="The last extrapolation value of function segment to analyze"
-                             Margin="16"
-                             FontSize="18"
-                             MaxWidth="500"
-                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding Path="RawParameters.ExtrapolationSegmentValue"
-                                     UpdateSourceTrigger="PropertyChanged"
-                                     Mode="TwoWay">
-                                <Binding.ValidationRules>
-                                    <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                     ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-
-                    <TextBox x:Name="LaunchesNumberTextBox"
-                             materialDesign:HintAssist.Hint="The initial launches number"
-                             Margin="16"
-                             FontSize="18"
-                             MaxWidth="500"
-                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding Path="RawParameters.LaunchesNumber"
-                                     UpdateSourceTrigger="PropertyChanged"
-                                     Mode="TwoWay">
-                                <Binding.ValidationRules>
-                                    <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                     ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-
-                    <TextBox x:Name="StepValueTextBox"
-                             materialDesign:HintAssist.Hint="The size of step for function segment"
-                             Margin="16"
-                             FontSize="18"
-                             MaxWidth="500"
-                             Style="{DynamicResource ResourceKey=MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding Path="RawParameters.Step"
-                                     UpdateSourceTrigger="PropertyChanged"
-                                     Mode="TwoWay">
-                                <Binding.ValidationRules>
-                                    <validation:NumberValidationRule ValidationStep="CommittedValue"
-                                                                     ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-
-                </StackPanel>
-            </materialDesign:Card>
-
-            <materialDesign:Card Padding="8"
-                                 Margin="8"
-                                 VerticalAlignment="Stretch"
-                                 HorizontalAlignment="Stretch">
-                <StackPanel Orientation="Vertical"
-                            HorizontalAlignment="Center">
-                    <TextBlock Margin="16 16 12 0"
-                               FontSize="16">
-                        Analysis parameters
-                    </TextBlock>
-
-                    <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
-
-                    <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part one"
-                              HorizontalAlignment="Stretch"
-                              Margin="16"
-                              SelectedIndex="0"
-                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseOnePartOne}"
-                              SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseOnePartOne}"
-                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-
-                    <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase one part two"
-                              HorizontalAlignment="Stretch"
-                              Margin="16"
-                              SelectedIndex="0"
-                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseOnePartTwo}"
-                              SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseOnePartTwo}"
-                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-
-                    <!-- TODO: reset selected index when implement normal distribution. -->
-                    <ComboBox materialDesign:HintAssist.Hint="Analysis kind for phase two"
-                              HorizontalAlignment="Stretch"
-                              Margin="16"
-                              SelectedIndex="1"
-                              ItemsSource="{Binding Path=SelectiveParameters.AvailableAnalysisKindForPhaseTwo}"
-                              SelectedItem="{Binding Path=SelectiveParameters.SelectedPhaseTwo}"
-                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-
-                    <ComboBox materialDesign:HintAssist.Hint="Goodness of fit"
-                              HorizontalAlignment="Stretch"
-                              Margin="16"
-                              SelectedIndex="0"
-                              ItemsSource="{Binding Path=SelectiveParameters.AvailableGoodnessOfFitKinds}"
-                              SelectedItem="{Binding Path=SelectiveParameters.SelectedGoodnessOfFitKind}"
-                              Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-
-                    <TextBlock Text="Max degree of parallerism"
-                               HorizontalAlignment="Center"
-                               Margin="0 8 0 4" />
-                    <Slider TickPlacement="BottomRight"
-                            IsSnapToTickEnabled="True"
-                            Margin="16 0"
-                            HorizontalAlignment="Stretch"
-                            Minimum="{Binding Path=RawParameters.MinDegreeOfParallelism}"
-                            Maximum="{Binding Path=RawParameters.MaxDegreeOfParallelism}"
-                            Value="{Binding Path=RawParameters.SelectedMaxDegreeOfParallelism}"
-                            SmallChange="1"
-                            AutoToolTipPlacement="BottomRight"
-                            AutoToolTipPrecision="0"
-                            IsEnabled="{Binding Path=RawParameters.IsDegreeOfParallelismSelectable}" />
-
-                    <DockPanel Margin="18 8"
-                               HorizontalAlignment="Stretch"
-                               VerticalAlignment="Stretch">
-                        <TextBlock Text="{Binding Path=RawParameters.MinDegreeOfParallelism}"
-                                   DockPanel.Dock="Left"
-                                   HorizontalAlignment="Left"
-                                   Visibility="{Binding Path=RawParameters.IsDegreeOfParallelismSelectable,
-                                                Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
-                        <TextBlock Text="{Binding Path=RawParameters.MaxDegreeOfParallelism}"
-                                   DockPanel.Dock="Right"
-                                   HorizontalAlignment="Right" />
-
-                        <!--
-                        Show warning about restriction to select degree of parallelism when PC has
-                        only one CPU.
-                        
-                        May be later we change minimum value of parallelism. 
-                        -->
-                        <Border Background="GhostWhite"
-                                BorderBrush="Gainsboro"
-                                BorderThickness="1"
-                                Margin="8 16 8 8"
-                                Visibility="{Binding Path=RawParameters.IsHintForDegreeOfParallelismVisible,
-                                                Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
-                            <StackPanel Orientation="Horizontal"
-                                        Margin="8">
-                                <materialDesign:PackIcon Kind="Exclamation"
-                                                         Foreground="Red" />
-
-                                <TextBlock Margin="8 0 0 0"
-                                           DockPanel.Dock="Bottom">
-                                Warning: you cannot specify degree of parallelism<LineBreak />
-                                because PC has insufficient number of resources.
-                                </TextBlock>
+                                <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+                                <Button Content="{x:Static properties:DesktopAppStrings.ExitButtonText}" 
+                                        Command="{Binding Path=AppCloseCommand}"
+                                        ToolTip="{x:Static properties:DesktopAppStrings.ExitButtonToolTip}" />
                             </StackPanel>
-                        </Border>
+                        </materialDesign:PopupBox>
+
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="22"
+                                       Text="{Binding Path=Title}" />
+
+                            <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+                        </StackPanel>
                     </DockPanel>
-                </StackPanel>
-            </materialDesign:Card>
+                </materialDesign:ColorZone>
 
-            <materialDesign:Card Padding="8"
-                                 Margin="8"
-                                 VerticalAlignment="Stretch"
-                                 HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Vertical"
-                            HorizontalAlignment="Center">
-                    <TextBlock Margin="16 16 12 0"
-                               FontSize="16">
-                        Advanced parameters
-                    </TextBlock>
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Grid.Row="0"
+                            Margin="16">
 
-                    <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
 
-                    <CheckBox Content="Show analysis window"
-                              HorizontalAlignment="Stretch"
-                              Margin="16 8"
-                              IsChecked="{Binding Path=RawParameters.ShowAnalysisWindow}" />
+                        <views:ParametersAlgorithmView x:Name="ParametersAlgorithmView" />
 
-                    <CheckBox Content="Open analysis results"
-                              HorizontalAlignment="Stretch"
-                              Margin="16 8"
-                              IsChecked="{Binding Path=AnalysisSpecific.OpenAnalysisResults}" />
+                        <views:ParametersAnalysisView x:Name="ParametersAnalysisView" />
+
+                        <views:ParametersAdvancedView x:Name="ParametersAdvancedView" />
+
+                    </StackPanel>
+
+                    <UniformGrid Margin="0 8 0 0"
+                                 Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
+                                 Rows="1"
+                                 Columns="2">
+
+                        <Button Margin="0 0 8 0"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Visibility="Visible"
+                                FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                                Content="{x:Static properties:DesktopAppStrings.RunAnalysisButtonText}"
+                                ToolTip="{x:Static properties:DesktopAppStrings.RunAnalysisButtonToolTip}"
+                                Command="{Binding Path=RunAnalysisCommand}">
+                            <Button.IsEnabled>
+                                <MultiBinding Converter="{StaticResource ResourceKey=BooleansToBooleanInverseConverter}"
+                                              Mode="OneWay">
+                                    <!-- Algorithm parameters panel -->
+                                    <Binding ElementName="ParametersAlgorithmView"
+                                             Path="AlgorithmComboBoxProxy.SelectedItem"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="ParametersAlgorithmView"
+                                             Path="FirstValueTextBoxProxy.(Validation.HasError)"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="ParametersAlgorithmView"
+                                             Path="LastValueTextBoxProxy.(Validation.HasError)"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="ParametersAlgorithmView"
+                                             Path="LastExtrapolationValueTextBoxProxy.(Validation.HasError)"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="ParametersAlgorithmView"
+                                             Path="LaunchesNumberTextBoxProxy.(Validation.HasError)"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="ParametersAlgorithmView"
+                                             Path="StepValueTextBoxProxy.(Validation.HasError)"
+                                             Mode="OneWay" />
+
+                                    <!-- Analysis parameters panel -->
+                                    <Binding ElementName="ParametersAnalysisView"
+                                             Path="AnalysisPhaseOnePartOneComboBoxProxy.SelectedItem"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="ParametersAnalysisView"
+                                             Path="AnalysisPhaseOnePartTwoComboBoxProxy.SelectedItem"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="ParametersAnalysisView"
+                                             Path="AnalysisPhaseTwoComboBoxProxy.SelectedItem"
+                                             Mode="OneWay" />
+                                    <Binding ElementName="ParametersAnalysisView"
+                                             Path="GoodnessOfFitComboBoxProxy.SelectedItem"
+                                             Mode="OneWay" />
+                                </MultiBinding>
+                            </Button.IsEnabled>
+                        </Button>
+
+                        <Button Margin="8 0 0 0"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Visibility="Visible"
+                                FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                                Content="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonText}"
+                                ToolTip="{x:Static properties:DesktopAppStrings.ResetAnalysisButtonToolTip}"
+                                Command="{Binding Path=ResetParametersCommand}" />
+
+                    </UniformGrid>
+
                 </StackPanel>
-            </materialDesign:Card>
-        </StackPanel>
 
-        <StackPanel Width="300"
-                    Orientation="Vertical">
-            <UniformGrid Rows="1"
-                         Columns="2">
-                <Button Command="{Binding Path=RunCommand}"
-                        Margin="8"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        ToolTip="Run analysis (window will be blocked)">
-                    <Button.IsEnabled>
-                        <MultiBinding Converter="{StaticResource ResourceKey=InverseAndBooleansToBooleanConverter}"
-                                      Mode="TwoWay">
-                            <Binding ElementName="FirstValueTextBox"
-                                     Path="(Validation.HasError)" />
-                            <Binding ElementName="LastValueTextBox"
-                                     Path="(Validation.HasError)" />
-                            <Binding ElementName="LastExtrapolationValueTextBox"
-                                     Path="(Validation.HasError)" />
-                            <Binding ElementName="LaunchesNumberTextBox"
-                                     Path="(Validation.HasError)" />
-                            <Binding ElementName="StepValueTextBox"
-                                     Path="(Validation.HasError)" />
-                        </MultiBinding>
-                    </Button.IsEnabled>
-                    Run
-                </Button>
-                <Button Command="{Binding Path=ResetCommand}"
-                        Margin="8"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        ToolTip="Reset analysis parameters">
-                    Reset
-                </Button>
-            </UniformGrid>
-        </StackPanel>
+            </DockPanel>
 
-    </StackPanel>
+            <views:ProgressView x:Name="ProgressView"
+                                Visibility="{Binding Path=DataContext.CanExecuteAnalysis,
+                                             RelativeSource={RelativeSource Mode=FindAncestor,
+                                                             AncestorType={x:Type Window}},
+                                             Converter={StaticResource ResourceKey=InverseBooleanToVisibilityConverter}}"/>
+
+            <materialDesign:Snackbar x:Name="MainSnackbar"
+                                     Visibility="Visible"
+                                     ActionButtonStyle="{StaticResource ResourceKey=MaterialDesignSnackbarActionMidButton}"
+                                     MessageQueue="{materialDesign:MessageQueue}" />
+
+        </Grid>
+
+    </materialDesign:DialogHost>
 
 </Window>

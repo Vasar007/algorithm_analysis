@@ -76,7 +76,7 @@ namespace AlgorithmAnalysis.DesktopApp.Domain.Validation
         public static T EvaluateOrDefault<T>(this BindingExpression bindingExpression,
             [AllowNull] T defaultValue)
         {
-            if (TryEvaluate(bindingExpression, out T result)) return result;
+            if (bindingExpression.TryEvaluate(out T result)) return result;
 
             return defaultValue;
         }

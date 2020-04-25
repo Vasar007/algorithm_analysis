@@ -96,11 +96,13 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
 
             return functionType switch
             {
-                FunctionType.Exponential => formulaProvider.GetFormulaByName(nameof(IExcelFormulaProvider.Exp)),
+                FunctionType.Exponential =>
+                    formulaProvider.GetFormulaByName(nameof(IExcelFormulaProvider.Exp)),
 
                 FunctionType.Line => string.Empty,
 
-                FunctionType.Logarithm => formulaProvider.GetFormulaByName(nameof(IExcelFormulaProvider.Ln)),
+                FunctionType.Logarithm =>
+                    formulaProvider.GetFormulaByName(nameof(IExcelFormulaProvider.Ln)),
 
                 FunctionType.Polynomial => string.Empty,
 
@@ -116,34 +118,36 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis
         public static string Min(IExcelSheet sheet, ExcelColumnIndex columnIndex, int rowIndex,
             AlgorithmType algorithmType)
         {
-            sheet.ThrowIfNull(nameof(sheet));
-            rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
             algorithmType.ThrowIfNull(nameof(algorithmType));
 
-            string cell = sheet[columnIndex, rowIndex].Address;
-            return string.Format(algorithmType.MinFormulaFormat, cell);
+            return FormatFormula(sheet, columnIndex, rowIndex, algorithmType.MinFormulaFormat);
         }
 
         public static string Average(IExcelSheet sheet, ExcelColumnIndex columnIndex,
             int rowIndex, AlgorithmType algorithmType)
         {
-            sheet.ThrowIfNull(nameof(sheet));
-            rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
             algorithmType.ThrowIfNull(nameof(algorithmType));
 
-            string cell = sheet[columnIndex, rowIndex].Address;
-            return string.Format(algorithmType.AverageFormulaFormat, cell);
+            return FormatFormula(sheet, columnIndex, rowIndex, algorithmType.AverageFormulaFormat);
         }
 
         public static string Max(IExcelSheet sheet, ExcelColumnIndex columnIndex, int rowIndex,
             AlgorithmType algorithmType)
         {
-            sheet.ThrowIfNull(nameof(sheet));
-            rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
             algorithmType.ThrowIfNull(nameof(algorithmType));
 
+            return FormatFormula(sheet, columnIndex, rowIndex, algorithmType.MaxFormulaFormat);
+        }
+
+        private static string FormatFormula(IExcelSheet sheet, ExcelColumnIndex columnIndex,
+            int rowIndex, string formatString)
+        {
+            sheet.ThrowIfNull(nameof(sheet));
+            rowIndex.ThrowIfValueIsOutOfRange(nameof(rowIndex), 1, int.MaxValue);
+            formatString.ThrowIfNullOrWhiteSpace(nameof(formatString));
+
             string cell = sheet[columnIndex, rowIndex].Address;
-            return string.Format(algorithmType.MaxFormulaFormat, cell);
+            return string.Format(formatString, cell);
         }
     }
 }

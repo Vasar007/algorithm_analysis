@@ -1,0 +1,192 @@
+﻿<UserControl x:Class="AlgorithmAnalysis.DesktopApp.Views.ParametersAnalysisView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
+             xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
+             xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultMinWidth">
+                425
+            </system:Double>
+            <system:Double x:Key="DefaultMaxWidth">
+                425
+            </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <materialDesign:Card Padding="8"
+                         Margin="8"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch">
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center">
+            <TextBlock Margin="16 16 12 0"
+                       FontSize="18"
+                       Text="{x:Static properties:DesktopAppStrings.AnalysisParametersHeader}" />
+
+            <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+
+            <ComboBox x:Name="AnalysisPhaseOnePartOneComboBox"
+                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AnalysisPhaseOnePartOneHint}"
+                      HorizontalAlignment="Stretch"
+                      Margin="16"
+                      Visibility="Visible"
+                      FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                      SelectedIndex="0"
+                      ItemsSource="{Binding Path=Parameters.Analysis.AvailableAnalysisKindForPhaseOnePartOne}"
+                      SelectedItem="{Binding Path=Parameters.Analysis.SelectedPhaseOnePartOne}"
+                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
+                      IsEnabled="{Binding Path=Parameters.Analysis.IsAnalysisKindForPhaseOnePartOneSelectable}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+
+            <!--
+            Show warning about no availbale analysis kind of phase one part one.
+            -->
+            <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Analysis.IsHintForAnalysisKindForPhaseOnePartOneVisible,
+                                                          Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAnalysisKindForPhaseOnePartOneText}" />
+            </views:WarningOnEmptyControlView>
+
+            <ComboBox x:Name="AnalysisPhaseOnePartTwoComboBox"
+                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AnalysisPhaseOnePartTwoHint}"
+                      HorizontalAlignment="Stretch"
+                      Margin="16"
+                      Visibility="Visible"
+                      FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                      SelectedIndex="0"
+                      ItemsSource="{Binding Path=Parameters.Analysis.AvailableAnalysisKindForPhaseOnePartTwo}"
+                      SelectedItem="{Binding Path=Parameters.Analysis.SelectedPhaseOnePartTwo}"
+                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
+                      IsEnabled="{Binding Path=Parameters.Analysis.IsAnalysisKindForPhaseOnePartTwoSelectable}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+
+            <!--
+            Show warning about no availbale analysis kind of phase one part two.
+            -->
+            <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Analysis.IsHintForAnalysisKindForPhaseOnePartTwoVisible,
+                                                          Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAnalysisKindForPhaseOnePartTwoText}" />
+            </views:WarningOnEmptyControlView>
+
+            <ComboBox x:Name="AnalysisPhaseTwoComboBox"
+                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AnalysisPhaseTwoHint}"
+                      HorizontalAlignment="Stretch"
+                      Margin="16"
+                      Visibility="Visible"
+                      FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                      SelectedIndex="0"
+                      ItemsSource="{Binding Path=Parameters.Analysis.AvailableAnalysisKindForPhaseTwo}"
+                      SelectedItem="{Binding Path=Parameters.Analysis.SelectedPhaseTwo}"
+                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
+                      IsEnabled="{Binding Path=Parameters.Analysis.IsAnalysisKindForPhaseTwoSelectable}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+
+            <!--
+            Show warning about no availbale analysis kind of phase two.
+            -->
+            <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Analysis.IsHintForAnalysisKindForPhaseTwoVisible,
+                                                          Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAnalysisKindForPhaseTwoText}" />
+            </views:WarningOnEmptyControlView>
+
+            <ComboBox x:Name="GoodnessOfFitComboBox"
+                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.GoodnessOfFitHint}"
+                      HorizontalAlignment="Stretch"
+                      Margin="16"
+                      Visibility="Visible"
+                      FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                      SelectedIndex="0"
+                      ItemsSource="{Binding Path=Parameters.Analysis.AvailableGoodnessOfFitKinds}"
+                      SelectedItem="{Binding Path=Parameters.Analysis.SelectedGoodnessOfFitKind}"
+                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
+                      IsEnabled="{Binding Path=Parameters.Analysis.IsGoodnessOfFitSelectable}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+
+            <!--
+            Show warning about no availbale goodness of fit methods.
+            -->
+            <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Analysis.IsHintForGoodnessOfFitVisible,
+                                                          Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoGoodnessOfFitMethodsText}" />
+            </views:WarningOnEmptyControlView>
+
+            <TextBlock Text="{x:Static properties:DesktopAppStrings.MaxDegreeOfParallerismText}"
+                       HorizontalAlignment="Center"
+                       Margin="0 8 0 4" />
+            <Slider TickPlacement="BottomRight"
+                    IsSnapToTickEnabled="True"
+                    Margin="16 0"
+                    Visibility="Visible"
+                    HorizontalAlignment="Stretch"
+                    Minimum="{Binding Path=Parameters.Analysis.MinDegreeOfParallelism}"
+                    Maximum="{Binding Path=Parameters.Analysis.MaxDegreeOfParallelism}"
+                    Value="{Binding Path=Parameters.Analysis.SelectedMaxDegreeOfParallelism}"
+                    SmallChange="1"
+                    AutoToolTipPlacement="BottomRight"
+                    AutoToolTipPrecision="0"
+                    IsEnabled="{Binding Path=Parameters.Analysis.IsDegreeOfParallelismSelectable}" />
+
+            <DockPanel Margin="16 4"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch">
+                <TextBlock Text="{Binding Path=Parameters.Analysis.MinDegreeOfParallelism}"
+                           DockPanel.Dock="Left"
+                           HorizontalAlignment="Left"
+                           Visibility="{Binding Path=Parameters.Analysis.IsDegreeOfParallelismSelectable,
+                                        Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}" />
+                <TextBlock Text="{Binding Path=Parameters.Analysis.MaxDegreeOfParallelism}"
+                           DockPanel.Dock="Right"
+                           HorizontalAlignment="Right" />
+            </DockPanel>
+
+            <!--
+            Show warning about restriction to select degree of parallelism when PC has only one
+            CPU. May be later we change minimum value of parallelism. 
+            -->
+            <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Analysis.IsHintForDegreeOfParallelismVisible,
+                                                          Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningInsufficientNumberOfResourcesText}" />
+            </views:WarningOnEmptyControlView>
+        </StackPanel>
+    </materialDesign:Card>
+
+</UserControl>

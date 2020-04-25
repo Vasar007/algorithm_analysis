@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="AlgorithmAnalysis.DesktopApp.Views.SettingsAnalysisView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
+             xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
+             xmlns:domain="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain"
+             xmlns:converters="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Converters"
+             xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultMinWidth">
+                250
+            </system:Double>
+            <system:Double x:Key="DefaultMaxWidth">
+                250
+            </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
+
+            <converters:CustomBooleanToVisibilityConverter x:Key="CustomBooleanToVisibilityConverter" />
+
+            <!-- Use proxy object to bind data context for additional dialogs. -->
+            <domain:BindingProxy x:Key="Proxy" Data="{Binding Path=.}" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <materialDesign:Card Padding="8"
+                         Margin="8">
+
+        <StackPanel Orientation="Vertical">
+            <TextBlock Margin="16 16 12 0"
+                       FontSize="18"
+                       Text="{x:Static properties:DesktopAppStrings.AnalysisOptionsHeader}" />
+
+            <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+
+            <StackPanel Orientation="Vertical"
+                        Margin="8">
+
+                <TextBox x:Name="CommonAnalysisFilenameSuffixTextBox"
+                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.CommonAnalysisFilenameSuffixHint}"
+                         Margin="16"
+                         Visibility="Visible"
+                         FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding Path=Settings.Analysis.CommonAnalysisFilenameSuffix}" />
+
+                <TextBox x:Name="OutputFileExtensionTextBox"
+                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.OutputFileExtensionHint}"
+                         Margin="16"
+                         Visibility="Visible"
+                         FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding Path=Settings.Analysis.OutputFileExtension}" />
+
+                <TextBlock Margin="16"
+                           Visibility="Visible">
+                    <TextBlock Text="{Binding Path=Settings.Analysis.SpecifiedAlgorithmsStatusText}"
+                               FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}" />
+
+                    <Hyperlink TextDecorations="Underline"
+                               FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                               Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                               materialDesign:DialogHost.DialogOpenedAttached="SettingsAlgorithmsView_DialogOpened"
+                               materialDesign:DialogHost.DialogClosingAttached="SettingsAlgorithmsView_DialogClosing">
+                        <Hyperlink.CommandParameter>
+                            <views:SettingsAlgorithmsView DataContext="{Binding Path=Data, Source={StaticResource Proxy}}" />
+                        </Hyperlink.CommandParameter>
+
+                        <TextBlock Text="{x:Static properties:DesktopAppStrings.SpecifiedAlgorithmsClickViewText}" />
+                    </Hyperlink>
+                </TextBlock>
+
+                <!--
+                Show warning about no availbale algorithms to analyze.
+                -->
+                <views:WarningOnEmptyControlView Visibility="{Binding Path=Settings.Analysis.IsHintForAlgorithmVisible,
+                                                              Converter={StaticResource ResourceKey=CustomBooleanToVisibilityConverter}}">
+                    <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAlgorithmsInSettingsText}" />
+                </views:WarningOnEmptyControlView>
+
+            </StackPanel>
+        </StackPanel>
+
+    </materialDesign:Card>
+
+</UserControl>

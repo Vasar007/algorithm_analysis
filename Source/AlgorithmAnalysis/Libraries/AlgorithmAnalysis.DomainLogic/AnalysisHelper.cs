@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Acolyte.Assertions;
-using AlgorithmAnalysis.Common;
+using AlgorithmAnalysis.Common.Files;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartOne;
 using AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseOne.PartTwo;
@@ -56,14 +56,16 @@ namespace AlgorithmAnalysis.DomainLogic
 
         public static IReadOnlyList<AlgorithmType> GetAvailableAlgorithms()
         {
-            return ConfigOptions.Analysis.GetAlgorithmTypes();
+            return ConfigOptions.Analysis.AvailableAlgorithms.GetAlgorithmTypes();
         }
 
         internal static string GetOrCreateDataFolder(ParametersPack args)
         {
             args.ThrowIfNull(nameof(args));
 
-            return Utils.GetOrCreateFolderUsingFilePath(args.OutputFilenamePattern);
+            return PathHelper.GetOrCreateFolderUsingFilePath(
+                args.OutputFilenamePattern, PredefinedPaths.DefaultDataFolderPath
+            );
         }
 
         internal static IAnalysisPhaseOnePartOne CreateAnalysisPhaseOnePartOne(

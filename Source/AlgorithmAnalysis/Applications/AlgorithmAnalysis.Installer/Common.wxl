@@ -11,7 +11,7 @@
   <String Id="Comments">Open source AlgorithmAnalysis project.</String>
   <String Id="Keywords">analysis, algorithms, math, statistics, empirical-analysis excel, dotnet</String>
 
-  <String Id="DowngradeErrorMessage">A newer version of Console App is already installed.</String>
+  <String Id="DowngradeErrorMessage">A newer version of Algorithm Analysis System is already installed.</String>
   
   <String Id="Language">1033</String>
   

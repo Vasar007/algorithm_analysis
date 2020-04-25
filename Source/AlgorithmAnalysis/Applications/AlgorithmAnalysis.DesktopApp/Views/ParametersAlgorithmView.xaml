@@ -1,0 +1,173 @@
+﻿<UserControl x:Class="AlgorithmAnalysis.DesktopApp.Views.ParametersAlgorithmView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
+             xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
+             xmlns:validation="clr-namespace:AlgorithmAnalysis.DesktopApp.Domain.Validation"
+             xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultMinWidth">
+                400
+            </system:Double>
+            <system:Double x:Key="DefaultMaxWidth">
+                400
+            </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <materialDesign:Card x:Name="MainCard"
+                         Padding="8"
+                         Margin="8"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch">
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    x:Name="AlgorithmPanel">
+            <TextBlock Margin="16 16 12 0"
+                       FontSize="18"
+                       Text="{x:Static properties:DesktopAppStrings.AlgorithmParametersHeader}" />
+
+            <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+
+            <ComboBox x:Name="AlgorithmComboBox"
+                      materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.AlgorithmHint}"
+                      HorizontalAlignment="Stretch"
+                      Margin="16"
+                      Visibility="Visible"
+                      MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                      MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                      SelectedIndex="0"
+                      ItemsSource="{Binding Path=Parameters.Algorithm.AvailableAlgorithms}"
+                      SelectedItem="{Binding Path=Parameters.Algorithm.SelectedAlgorithmType}"
+                      Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
+                      IsEnabled="{Binding Path=Parameters.Algorithm.IsAlgorithmSelectable}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+            </ComboBox>
+
+            <!--
+            Show warning about no availbale algorithms to analyze.
+            -->
+            <views:WarningOnEmptyControlView Visibility="{Binding Path=Parameters.Algorithm.IsHintForAlgorithmVisible,
+                                                          Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                <Run Text="{x:Static properties:DesktopAppStrings.WarningNoAlgorithmsToAnalyseText}" />
+            </views:WarningOnEmptyControlView>
+
+            <TextBox x:Name="FirstValueTextBox"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.FirstValueHint}"
+                     Margin="16"
+                     Visibility="Visible"
+                     FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                     MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                     MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                     Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Parameters.Algorithm.StartValue"
+                             UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                             ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox x:Name="LastValueTextBox"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LastValueHint}"
+                     Margin="16"
+                     Visibility="Visible"
+                     FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                     MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                     MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                     Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Parameters.Algorithm.EndValue"
+                             UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                             ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox x:Name="LastExtrapolationValueTextBox"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LastExtrapolationValueHint}"
+                     Margin="16"
+                     Visibility="Visible"
+                     FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                     MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                     MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                     Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Parameters.Algorithm.ExtrapolationSegmentValue"
+                             UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                             ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox x:Name="LaunchesNumberTextBox"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LaunchesNumberHint}"
+                     Margin="16"
+                     Visibility="Visible"
+                     FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                     MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                     MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                     Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Parameters.Algorithm.LaunchesNumber"
+                             UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                             ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBox x:Name="StepValueTextBox"
+                     materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.StepValueHint}"
+                     Margin="16"
+                     Visibility="Visible"
+                     FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                     MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                     MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                     Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}">
+                <TextBox.Text>
+                    <Binding Path="Parameters.Algorithm.Step"
+                             UpdateSourceTrigger="PropertyChanged"
+                             Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <validation:NumberValidationRule ValidationStep="CommittedValue"
+                                                             ValidatesOnTargetUpdated="True" />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+        </StackPanel>
+    </materialDesign:Card>
+
+</UserControl>

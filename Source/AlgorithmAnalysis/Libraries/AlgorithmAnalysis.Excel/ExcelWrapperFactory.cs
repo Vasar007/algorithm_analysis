@@ -13,77 +13,77 @@ namespace AlgorithmAnalysis.Excel
     {
         #region Workbook
 
-        public static IExcelWorkbook CreateWorkbook(FileInfo outputExcelFile,
-            ExcelOptions excelOptions)
+        public static IExcelWorkbook CreateWorkbook(FileInfo outputReportFile,
+            ReportOptions reportOptions)
         {
-            excelOptions.ThrowIfNull(nameof(excelOptions));
+            reportOptions.ThrowIfNull(nameof(reportOptions));
 
-            return excelOptions.LibraryProvider switch
+            return reportOptions.LibraryProvider switch
             {
                 ExcelLibraryProvider.NPOI =>
-                    new NpoiExcelWorkbook(outputExcelFile, excelOptions),
+                    new NpoiExcelWorkbook(outputReportFile, reportOptions),
 
                 ExcelLibraryProvider.EPPlus =>
-                    new EpplusExcelWorkbook(outputExcelFile, excelOptions),
+                    new EpplusExcelWorkbook(outputReportFile, reportOptions),
 
                 _ => throw new ArgumentOutOfRangeException(
-                         nameof(excelOptions), excelOptions.LibraryProvider,
-                         $"Unknown Excel library provider: '{excelOptions.LibraryProvider.ToString()}'."
+                         nameof(reportOptions), reportOptions.LibraryProvider,
+                         $"Unknown Excel library provider: '{reportOptions.LibraryProvider.ToString()}'."
                      )
             };
         }
 
-        public static IExcelWorkbook CreateWorkbook(ExcelOptions excelOptions)
+        public static IExcelWorkbook CreateWorkbook(ReportOptions reportOptions)
         {
-            excelOptions.ThrowIfNull(nameof(excelOptions));
+            reportOptions.ThrowIfNull(nameof(reportOptions));
 
-            return excelOptions.LibraryProvider switch
+            return reportOptions.LibraryProvider switch
             {
-                ExcelLibraryProvider.NPOI => new NpoiExcelWorkbook(excelOptions),
+                ExcelLibraryProvider.NPOI => new NpoiExcelWorkbook(reportOptions),
 
-                ExcelLibraryProvider.EPPlus => new EpplusExcelWorkbook(excelOptions),
+                ExcelLibraryProvider.EPPlus => new EpplusExcelWorkbook(reportOptions),
 
                 _ => throw new ArgumentOutOfRangeException(
-                         nameof(excelOptions), excelOptions.LibraryProvider,
-                         $"Unknown Excel library provider: '{excelOptions.LibraryProvider.ToString()}'."
+                         nameof(reportOptions), reportOptions.LibraryProvider,
+                         $"Unknown Excel library provider: '{reportOptions.LibraryProvider.ToString()}'."
                      )
             };
         }
 
-        public static IExcelWorkbook CreateWorkbook(FileInfo outputExcelFile)
+        public static IExcelWorkbook CreateWorkbook(FileInfo outputReportFile)
         {
-            return CreateWorkbook(outputExcelFile, ConfigOptions.Excel);
+            return CreateWorkbook(outputReportFile, ConfigOptions.Report);
         }
 
         public static IExcelWorkbook CreateWorkbook()
         {
-            return CreateWorkbook(ConfigOptions.Excel);
+            return CreateWorkbook(ConfigOptions.Report);
         }
 
         #endregion
 
         #region Formula provider
 
-        public static IExcelFormulaProvider CreateFormulaProvider(ExcelOptions excelOptions)
+        public static IExcelFormulaProvider CreateFormulaProvider(ReportOptions reportOptions)
         {
-            excelOptions.ThrowIfNull(nameof(excelOptions));
+            reportOptions.ThrowIfNull(nameof(reportOptions));
 
-            return excelOptions.Version switch
+            return reportOptions.ExcelVersion switch
             {
-                ExcelVersion.V2007 => new ExcelFormulaProvider(excelOptions.Version),
+                ExcelVersion.V2007 => new ExcelFormulaProvider(reportOptions.ExcelVersion),
 
-                ExcelVersion.V2019 => new ExcelFormulaProvider(excelOptions.Version),
+                ExcelVersion.V2019 => new ExcelFormulaProvider(reportOptions.ExcelVersion),
 
                 _ => throw new ArgumentOutOfRangeException(
-                         nameof(excelOptions), excelOptions.Version,
-                         $"Unknown Excel version: '{excelOptions.Version.ToString()}'."
+                         nameof(reportOptions), reportOptions.ExcelVersion,
+                         $"Unknown Excel version: '{reportOptions.ExcelVersion.ToString()}'."
                      )
             };
         }
 
         public static IExcelFormulaProvider CreateFormulaProvider()
         {
-            return CreateFormulaProvider(ConfigOptions.Excel);
+            return CreateFormulaProvider(ConfigOptions.Report);
         }
 
         #endregion

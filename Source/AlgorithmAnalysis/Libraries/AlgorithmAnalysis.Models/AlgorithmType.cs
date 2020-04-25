@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Common.Parsing;
 
 namespace AlgorithmAnalysis.Models
 {
@@ -36,14 +37,28 @@ namespace AlgorithmAnalysis.Models
             OutputFilenamePattern = outputFilenamePattern.ThrowIfNullOrWhiteSpace(nameof(outputFilenamePattern));
         }
 
-        public static AlgorithmType Create(AlgorithmTypeValue algorithmValue)
+        public static AlgorithmType Create(
+            AlgorithmTypeValue algorithmValue,
+            int index)
         {
+            string minFormulaFormat = ParsingManager.TransformRawFormulaToFormulaFormat(
+                algorithmValue.MinFormula
+            );
+
+            string averageFormulaFormat = ParsingManager.TransformRawFormulaToFormulaFormat(
+                algorithmValue.AverageFormula
+            );
+
+            string maxFormulaFormat = ParsingManager.TransformRawFormulaToFormulaFormat(
+                algorithmValue.MaxFormula
+            );
+
             return new AlgorithmType(
                 description: algorithmValue.Description,
-                value: algorithmValue.Value,
-                minFormulaFormat: TransformRawFormulaToFormulaFormat(algorithmValue.MinFormula),
-                averageFormulaFormat: TransformRawFormulaToFormulaFormat(algorithmValue.AverageFormula),
-                maxFormulaFormat: TransformRawFormulaToFormulaFormat(algorithmValue.MaxFormula),
+                value: index,
+                minFormulaFormat: minFormulaFormat,
+                averageFormulaFormat: averageFormulaFormat,
+                maxFormulaFormat: maxFormulaFormat,
                 analysisProgramName: algorithmValue.AnalysisProgramName,
                 outputFilenamePattern: algorithmValue.OutputFilenamePattern
             );
@@ -107,12 +122,5 @@ namespace AlgorithmAnalysis.Models
         }
 
         #endregion
-
-        private static string TransformRawFormulaToFormulaFormat(string rawFormula)
-        {
-            rawFormula.ThrowIfNullOrWhiteSpace(nameof(rawFormula));
-
-            return rawFormula.Replace("x", "{0}", StringComparison.InvariantCultureIgnoreCase);
-        }
     }
 }

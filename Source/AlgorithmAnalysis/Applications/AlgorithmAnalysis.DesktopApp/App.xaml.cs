@@ -7,8 +7,8 @@ using Prism.Modularity;
 using Prism.Unity;
 using AlgorithmAnalysis.DesktopApp.Views;
 using AlgorithmAnalysis.Logging;
-using AlgorithmAnalysis.Common;
-using AlgorithmAnalysis.Configuration;
+using AlgorithmAnalysis.DesktopApp.Domain;
+using Prism.Regions;
 
 namespace AlgorithmAnalysis.DesktopApp
 {
@@ -18,8 +18,6 @@ namespace AlgorithmAnalysis.DesktopApp
     public partial class App : PrismApplication
     {
         private static readonly ILogger _logger = LoggerFactory.CreateLoggerFor<App>();
-
-        private static readonly string TraceLogFilename = LogHelper.CreateLogFilename("trace");
 
 
         public App()
@@ -34,14 +32,20 @@ namespace AlgorithmAnalysis.DesktopApp
                 )
             );
 
-            string logFilePath = LogHelper.GetLogFilePath(ConfigOptions.Logger, TraceLogFilename);
-            TraceHelper.SetTraceListener(logFilePath, "TextLogTraceListener");
+            LogHelper.SetTraceLogger(logName: "trace");
 
             _logger.PrintHeader("Desktop client application started.");
         }
 
         protected override Window CreateShell()
         {
+            var regionManager = Container.Resolve<IRegionManager>();
+
+            regionManager.RegisterViewWithRegion(
+                RegionNames.SettingsAnalysis,
+                typeof(SettingsAnalysisView)
+            );
+
             return Container.Resolve<MainWindow>();
         }
 

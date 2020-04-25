@@ -9,7 +9,7 @@ Prepare environment to work with project.
 See requirements section [here](https://github.com/Vasar007/algorithm_analysis/tree/master/Examples).
 Open your favorite IDE or any other program to work with source code.
 
-Download source code via cloning repository: `git clone https://github.com/Vasar007/algorithm_analysis.git`.
+You can download source code via cloning repository: `git clone https://github.com/Vasar007/algorithm_analysis.git`.
 
 ## Implementing algorithm
 
@@ -18,6 +18,8 @@ I'd like to notice that I try to cut the corners and keep things as simple as po
 So, you should pay more attention to module architecture and your algorithm performance.
 
 ### Defining the algorithm
+
+**Note:** Bubble Sort has already included in `AlgorithmAnalysis` system but this example shoes how you can add your own algorithm module.
 
 I choose Bubble Sort to show you basic approach how `AlgorithmAnalysis` system works with external modules and how you can include own algorithm module in the system.
 Suppose that we should perform empirical analysis for Bubble Sort.
@@ -213,75 +215,133 @@ Build and create module app using command `dotnet publish -r win-x64 -c Release 
 
 Well, now we have built module in `bin\Release\netcoreapp3.1\win-x64\publish\` folder.
 Executable file will have the same name as folder where `Program.cs` exists.
-Let's rename final module to "BubbleSort.exe".
+I rename final module to "AlgorithmAnalysis.Examples.NewAlgorithm.exe" but you can name module as you want.
+But do not forget to set correct "Analysis program name" (or "AnalysisProgramName" in configuration file) value when you will add new algorithm!
 
 ## Use module
 
 So, we almost finished our way.
-But you should build `AlgorithmAnalysis` solution (TODO: add `AlgorithmAnalysis` installer).
 Copy "BubbleSort.exe" module to the folder with `AlgorithmAnalysis` app.
 
 Start `AlgorithmAnalysis` app and select `Algorithm` combobox.
-You can see the following picture:
+You can see the picture:
 
-![UI before adding](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/before_adding.jpg?raw=true)
+![UI before adding](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/before_adding.png?raw=true)
 
-Open `config.json` and paste following code:
+There are 2 ways to add new algorithm implementation:
+
+- open app settings and add algorithm through UI;
+- manually add new algorithm through configuration file.
+
+### Add algorithm through UI (easy way)
+
+1) Click on three dots in right corner, in popup menu select "Settings":
+![Open settings](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/open_settings.png?raw=true)
+
+2) Click "View" button on the "Analysis" settings panel to open algorithm settings:
+![View algorithms](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/view_algorithms.png?raw=true)
+
+3) Click "Add" button to create algorithm template:
+![Add algorithm](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/add_algorithm.png?raw=true)
+
+4) Fill algorithm parameters and click "Ok" button to save added algorithm:
+![View algorithm](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/save_added_algorithm.png?raw=true)
+
+5) Click "Apply" button to save and apply new settings:
+![View algorithm](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/save_settings.png?raw=true)
+
+Open `config.json` and paste code below.
+
+### Add algorithm through configuration file (hard way)
+
+App has configuration file with specified or default options.
+All this options are saved to configuration file.
+Although Algorithm Analysis can work without configuration file (in that case app will use default options) almost always this file exists.
+You can open configuration file though UI:
+
+1) Click on three dots in right corner, in popup menu select "Settings":
+
+![Open settings](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/open_settings.png?raw=true)
+
+2) Click "Open configuration file" button:
+
+![Open config](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/open_config.png?raw=true)
+
+Open `config.json` and paste code below.
+
+<details>
+<summary><strong>Content of config file [click to expand]</strong></summary>
+<p>
 
 ```json
 {
+  "AppearanceOptions": {
+    "Theme": "Light"
+  },
+
   "AnalysisOptions": {
     "AvailableAlgorithms": [
       {
         "Description": "Pallottino's algorithm",
-        "Value": "0",
         "MinFormula": "x",
         "AverageFormula": "x * x * (x - 1) / 2",
         "MaxFormula": "x * x * x * (x - 1) / 2",
         "AnalysisProgramName": "algorithm_analysis.exe",
-        "OutputFilenamePattern": "output_"
+        "OutputFilenamePattern": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/data/tests_average_"
       },
       {
         "Description": "Insertion sort",
-        "Value": "1",
         "MinFormula": "x",
         "AverageFormula": "x^2",
         "MaxFormula": "x^2",
         "AnalysisProgramName": "algorithm_analysis.exe",
-        "OutputFilenamePattern": "output_"
+        "OutputFilenamePattern": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/data/tests_average_"
       },
       {
         "Description": "Bubble sort",
-        "Value": "2",
         "MinFormula": "x",
         "AverageFormula": "x^2",
         "MaxFormula": "x^2",
-        "AnalysisProgramName": "BubbleSort.exe",
-        "OutputFilenamePattern": "output_"
+        "AnalysisProgramName": "AlgorithmAnalysis.Examples.NewAlgorithm.exe",
+        "OutputFilenamePattern": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/data/tests_average_"
       }
     ],
     "CommonAnalysisFilenameSuffix": "series",
     "OutputFileExtension": ".txt"
   },
 
-  "ExcelOptions": {
+  "ReportOptions": {
     "CellCreationMode": "Centerized",
     "LibraryProvider": "EPPlus",
-    "Version": "V2007",
-    "OutputExcelFilename": "results.xlsx"
+    "ExcelVersion": "V2007",
+    "OutputReportFilePath": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/results/results.xlsx"
   },
 
   "LoggerOptions": {
-    "RelativeLogFolderPath": "logs",
-    "EnableLogForExcelLibrary": "false"
+    "LogFolderPath": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/logs",
+    "EnableLogForExcelLibrary": "false",
+    "LogFilesExtension": ".log",
+    "LogFilenameSeparator": "-",
+    "UseFullyQualifiedEntityNames": "false"
   }
 }
 
 ```
 
+</p>
+</details>
+
+Pay attention that section "AvailableAlgorithms" contains "Bubble sort" algorithm and its options.
+
+When you finished with configuration file, you should restart app or click "Reload" button on notification at the bottom of window:
+
+![Reload changes](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/reload_changes.png?raw=true)
+
+### See the results
+
 Start `AlgorithmAnalysis` app and select `Algorithm` combobox again.
-Now you can select "Bubble sort" in algorithms and execute analysis:
+Now you can select "Bubble sort" in algorithms:
 
-![UI after adding](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/after_adding.jpg?raw=true)
+![UI after adding](https://github.com/Vasar007/algorithm_analysis/blob/master/Media/after_adding.png?raw=true)
 
-The end.
+Well, you can specify parameters, execute analysis and see the results.

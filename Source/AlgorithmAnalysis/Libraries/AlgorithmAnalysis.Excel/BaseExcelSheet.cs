@@ -7,7 +7,7 @@ namespace AlgorithmAnalysis.Excel
 {
     internal abstract class BaseExcelSheet : IExcelSheet
     {
-        protected readonly ExcelOptions _excelOptions;
+        protected readonly ReportOptions _excelOptions;
 
         public IExcelFormulaProvider FormulaProvider { get; }
 
@@ -15,7 +15,7 @@ namespace AlgorithmAnalysis.Excel
             ExcelWrapperHelper.GetCellHolder(this, columnIndex, rowIndex, _excelOptions);
 
 
-        protected BaseExcelSheet(ExcelOptions excelOptions, IExcelFormulaProvider provider)
+        protected BaseExcelSheet(ReportOptions excelOptions, IExcelFormulaProvider provider)
         {
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
             FormulaProvider = provider.ThrowIfNull(nameof(provider));

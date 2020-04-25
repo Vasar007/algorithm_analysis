@@ -2,31 +2,37 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Prism.Mvvm;
+using Acolyte.Assertions;
 using Prism.Commands;
+using Prism.Events;
+using Prism.Mvvm;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.Common.Processes;
 using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.DesktopApp.Domain;
 using AlgorithmAnalysis.DesktopApp.Domain.Commands;
+using AlgorithmAnalysis.DesktopApp.Domain.Messages;
 using AlgorithmAnalysis.DesktopApp.Models;
 using AlgorithmAnalysis.DomainLogic;
 using AlgorithmAnalysis.DomainLogic.Analysis;
+using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.DesktopApp.ViewModels
 {
     internal sealed class MainWindowViewModel : BindableBase
     {
+        private static readonly ILogger _logger =
+            LoggerFactory.CreateLoggerFor<MainWindowViewModel>();
+
+        private readonly IEventAggregator _eventAggregator;
+
         private readonly ResultWrapper _result;
 
         private readonly AnalysisPerformer _performer;
 
         public string Title { get; }
 
-        public AnalysisSpecificModel AnalysisSpecific { get; }
-
-        public RawParametersPack RawParameters { get; }
-
-        public SelectiveParametersModel SelectiveParameters { get; }
+        public ParametersModel Parameters { get; }
 
         private bool _canExecuteAnalysis;
         public bool CanExecuteAnalysis
@@ -35,38 +41,57 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             set => SetProperty(ref _canExecuteAnalysis, value);
         }
 
-        public ICommand RunCommand { get; }
+        public ICommand AppCloseCommand { get; }
 
-        public ICommand ResetCommand { get; }
+        public ICommand RunAnalysisCommand { get; }
+
+        public ICommand ResetParametersCommand { get; }
 
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(
+            IEventAggregator eventAggregator)
         {
-            _result = ResultWrapper.Create(ConfigOptions.Excel);
+            _eventAggregator = eventAggregator.ThrowIfNull(nameof(eventAggregator));
+
+            _result = ResultWrapper.Create(ConfigOptions.Report);
             _performer = new AnalysisPerformer();
 
             Title = DesktopOptions.Title;
 
-            AnalysisSpecific = new AnalysisSpecificModel();
-            RawParameters = new RawParametersPack();
-            SelectiveParameters = new SelectiveParametersModel();
+            Parameters = new ParametersModel();
             CanExecuteAnalysis = true;
 
-            RunCommand = new AsyncRelayCommand(LaunchAnalysis);
-            ResetCommand = new DelegateCommand(ResetFields);
+            AppCloseCommand = new DelegateCommand(
+                ApplicationCloseCommand.Execute, ApplicationCloseCommand.CanExecute
+            );
+
+            RunAnalysisCommand = new AsyncRelayCommand(LaunchAnalysisSafeAsync);
+            ResetParametersCommand = new DelegateCommand(ResetParameters);
+
+            SubscribeOnEvents();
         }
 
-        private async Task LaunchAnalysis()
+        private void SubscribeOnEvents()
         {
+            _eventAggregator
+               .GetEvent<ConfigOptionsWereChangedThroughSettingsMessage>()
+               .Subscribe(async () => await ReloadControlsSafeAsync());
+
+            _eventAggregator
+               .GetEvent<ConfigOptionsWereChangedManuallyMessage>()
+               .Subscribe(async () => await ReloadControlsSafeAsync());
+        }
+
+        private async Task LaunchAnalysisSafeAsync()
+        {
+            _logger.Info("Launching analysis.");
             CanExecuteAnalysis = false;
 
             try
             {
                 // TODO: display waiting message (and progress bar, if it's possible).
 
-                AnalysisContext context = RawParameters.CreateContext(
-                    _result.OutputExcelFile, SelectiveParameters
-                );
+                AnalysisContext context = Parameters.CreateContext(_result.OutputReportFile);
 
                 CheckOutputFile();
 
@@ -74,42 +99,69 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 AnalysisResult result = await Task.Run(() => _performer.PerformAnalysisAsync(context))
                     .ConfigureAwait(false);
 
-                ProcessResult(result);
+                _ = ProcessResultAsync(context, result);
             }
             catch (Exception ex)
             {
-                MessageBoxProvider.ShowError($"Analysis failed. Exception occurred: {ex.Message}");
+                string message = $"Failed to perform analysis: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
             }
             finally
             {
+                _logger.Info("Analysis completed.");
                 CanExecuteAnalysis = true;
             }
         }
 
-        private void ResetFields()
+        private async Task ReloadControlsSafeAsync()
         {
-            AnalysisSpecific.Reset();
-            RawParameters.Reset();
-            SelectiveParameters.Reset();
+            _logger.Info("Reloading controls.");
+            CanExecuteAnalysis = false;
+
+            try
+            {
+                await Task.Delay(CommonConstants.ConfigReloadDelay * 2);
+
+                Parameters.Reload();
+            }
+            catch (Exception ex)
+            {
+                string message = $"Failed to reload controls: {ex.Message}";
+
+                _logger.Error(ex, message);
+                MessageBoxProvider.ShowError(message);
+            }
+            finally
+            {
+                _logger.Info("Controls were reloaded.");
+                CanExecuteAnalysis = true;
+            }
+        }
+
+        private void ResetParameters()
+        {
+            Parameters.Reset();
         }
 
         private void CheckOutputFile()
         {
             // Use static File methods because FileInfo can have out-of-date state.
-            if (!File.Exists(_result.OutputExcelFile.FullName)) return;
+            if (!File.Exists(_result.OutputReportFile.FullName)) return;
 
-            // TODO: check final excel file and ASK user to delete file or change output name.
+            // TODO: check final report file and ASK user to delete file or change output name.
             string message =
                 "There are file with the same name as output analysis file " +
-                $"('{_result}'). " +
+                $"('{_result.OutputReportFile.Name}'). " +
                 "This file will be removed.";
 
             MessageBoxProvider.ShowInfo(message);
 
-            File.Delete(_result.OutputExcelFile.FullName);
+            File.Delete(_result.OutputReportFile.FullName);
         }
 
-        private void ProcessResult(AnalysisResult result)
+        private async Task ProcessResultAsync(AnalysisContext context, AnalysisResult result)
         {
             if (result.Success)
             {
@@ -120,14 +172,14 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
                 MessageBoxProvider.ShowError(result.Message);
             }
 
-            OpenResultsIfNeeded();
+            await OpenResultsIfNeededAsync(context);
         }
 
-        private void OpenResultsIfNeeded()
+        private async Task OpenResultsIfNeededAsync(AnalysisContext context)
         {
-            if (AnalysisSpecific.OpenAnalysisResults)
+            if (context.LaunchContext.ShowResults)
             {
-                _ = ProcessManager.OpenFileWithAssociatedAppAsync(_result.OutputExcelFile);
+                await ProcessManager.OpenFileWithAssociatedAppAsync(_result.OutputReportFile);
             }
         }
     }

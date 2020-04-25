@@ -1,5 +1,6 @@
 ﻿using System;
 using Acolyte.Assertions;
+using AlgorithmAnalysis.Common;
 using AlgorithmAnalysis.DomainLogic.Properties;
 using AlgorithmAnalysis.Excel;
 using AlgorithmAnalysis.Logging;

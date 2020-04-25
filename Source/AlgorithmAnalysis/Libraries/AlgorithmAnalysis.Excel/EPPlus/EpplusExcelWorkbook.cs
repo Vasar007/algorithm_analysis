@@ -5,38 +5,36 @@ using AlgorithmAnalysis.Configuration;
 using AlgorithmAnalysis.Excel.EPPlus.Functions;
 using AlgorithmAnalysis.Excel.Interop;
 using AlgorithmAnalysis.Excel.Formulas;
-using AlgorithmAnalysis.Common;
-using AlgorithmAnalysis.Logging;
 
 namespace AlgorithmAnalysis.Excel.EPPlus
 {
     internal sealed class EpplusExcelWorkbook : IExcelWorkbook
     {
-        private static readonly string EpplusLibLogFilename = LogHelper.CreateLogFilename("epplus");
-
         private readonly ExcelPackage _package;
 
         private readonly IExcelFormulaProvider _formulaProvider;
 
-        private readonly ExcelOptions _excelOptions;
+        private readonly ReportOptions _excelOptions;
+
+        private readonly EpplusLogger _epplusLogger;
 
         private bool _disposed;
 
 
-
-        public EpplusExcelWorkbook(ExcelOptions excelOptions)
+        public EpplusExcelWorkbook(ReportOptions excelOptions)
         {
             InitPackageLicence();
 
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
             _package = new ExcelPackage();
             _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
+            _epplusLogger = new EpplusLogger(_package, ConfigOptions.Logger);
 
-            AttachLogger(ConfigOptions.Logger);
+            _epplusLogger.AttachLogger();
             RegisterFunctionModules();
         }
 
-        public EpplusExcelWorkbook(FileInfo pathToWorkbook, ExcelOptions excelOptions)
+        public EpplusExcelWorkbook(FileInfo pathToWorkbook, ReportOptions excelOptions)
         {
             pathToWorkbook.ThrowIfNull(nameof(pathToWorkbook));
 
@@ -45,8 +43,9 @@ namespace AlgorithmAnalysis.Excel.EPPlus
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
             _package = new ExcelPackage(pathToWorkbook);
             _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
+            _epplusLogger = new EpplusLogger(_package, ConfigOptions.Logger);
 
-            AttachLogger(ConfigOptions.Logger);
+            _epplusLogger.AttachLogger();
             RegisterFunctionModules();
         }
 
@@ -56,7 +55,7 @@ namespace AlgorithmAnalysis.Excel.EPPlus
         {
             if (_disposed) return;
 
-            _package.Workbook.FormulaParserManager.DetachLogger();
+            _epplusLogger.DetachLogger();
 
             _package.Dispose();
             ExcelApplication.Dispose();
@@ -98,18 +97,6 @@ namespace AlgorithmAnalysis.Excel.EPPlus
         private void RegisterFunctionModules()
         {
             _package.Workbook.FormulaParserManager.LoadFunctionModule(new ExtendedFunctionModule());
-        }
-
-        private void AttachLogger(LoggerOptions loggerOptions)
-        {
-            loggerOptions.ThrowIfNull(nameof(loggerOptions));
-
-            if (!loggerOptions.EnableLogForExcelLibrary) return;
-
-            string logFilePath = LogHelper.GetLogFilePath(loggerOptions, EpplusLibLogFilename);
-
-            var logfile = new FileInfo(logFilePath);
-            _package.Workbook.FormulaParserManager.AttachLogger(logfile);
         }
     }
 }

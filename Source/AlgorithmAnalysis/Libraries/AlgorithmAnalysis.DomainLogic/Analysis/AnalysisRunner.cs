@@ -63,12 +63,12 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
 
         public async static Task PerformFullAnalysisForPhaseTwoAsync(ParametersPack args,
             AnalysisLaunchContext launchContext, LocalFileWorker fileWorker,
-            Action<FileObject> callback)
+            Func<FileObject, Task> asyncCallback)
         {
             args.ThrowIfNull(nameof(args));
             launchContext.ThrowIfNull(nameof(launchContext));
             fileWorker.ThrowIfNull(nameof(fileWorker));
-            callback.ThrowIfNull(nameof(callback));
+            asyncCallback.ThrowIfNull(nameof(asyncCallback));
 
             _logger.Info("Preparing to run full analysis for phase two.");
 
@@ -104,7 +104,7 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
             }
 
             await Task.WhenAll(
-                processingTasks.Select(task => AwaitAndProcessAsync(task, callback))
+                processingTasks.Select(task => AwaitAndProcessAsync(task, asyncCallback))
             );
         }
 
@@ -158,13 +158,13 @@ namespace AlgorithmAnalysis.DomainLogic.Analysis
         }
 
         private static async Task AwaitAndProcessAsync(Task<FileObject> task,
-            Action<FileObject> callback)
+            Func<FileObject, Task> asyncCallback)
         {
             _ = task.ThrowIfNull(nameof(task));
-            callback.ThrowIfNull(nameof(callback));
+            asyncCallback.ThrowIfNull(nameof(asyncCallback));
 
             using FileObject fileObject = await task;
-            callback(fileObject);
+            await asyncCallback(fileObject);
         }
     }
 }

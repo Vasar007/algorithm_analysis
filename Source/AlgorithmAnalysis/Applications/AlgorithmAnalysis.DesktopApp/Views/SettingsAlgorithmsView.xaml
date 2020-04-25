@@ -1,0 +1,181 @@
+﻿<UserControl x:Class="AlgorithmAnalysis.DesktopApp.Views.SettingsAlgorithmsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
+             xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultBottomPanelWidth">
+                300
+            </system:Double>
+            <system:Double x:Key="DefaultWidthForIndex">
+                50
+            </system:Double>
+            <system:Double x:Key="DefaultMinWidth">
+                50
+            </system:Double>
+            <system:Double x:Key="DefaultMaxShortWidth">
+                140
+            </system:Double>
+            <system:Double x:Key="DefaultMaxLongWidth">
+                165
+            </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Margin="16">
+
+        <UniformGrid Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
+                     Rows="1"
+                     Columns="2">
+
+            <Button Margin="8"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                    Content="{x:Static properties:DesktopAppStrings.AddNewAlgorithmValueButtonText}"
+                    ToolTip="{x:Static properties:DesktopAppStrings.AddNewAlgorithmValueButtonToolTip}"
+                    Command="{Binding Path=AddNewAlgorithmCommand}" />
+
+            <Button Margin="8"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                    Content="{x:Static properties:DesktopAppStrings.RemoveAlgorithmValueButtonText}"
+                    ToolTip="{x:Static properties:DesktopAppStrings.RemoveAlgorithmValueButtonToolTip}"
+                    Command="{Binding Path=RemoveAlgorithmCommand}"
+                    CommandParameter="{Binding Path=SelectedItems, ElementName=AlgorithmDataGrid}" />
+        </UniformGrid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="221" />
+            </Grid.RowDefinitions>
+
+            <!--
+            Example of algorithm data:
+                "Description": "Pallottino's algorithm",
+                "MinFormula": "x",
+                "AverageFormula": "x * x * (x - 1) / 2",
+                "MaxFormula": "x * x * x * (x - 1) / 2",
+                "AnalysisProgramName": "algorithm_analysis.exe",
+                "OutputFilenamePattern": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/data/tests_average_"
+            -->
+            <DataGrid x:Name="AlgorithmDataGrid"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      CanUserAddRows="True"
+                      CanUserDeleteRows="True"
+                      CanUserReorderColumns="False"
+                      CanUserResizeColumns="False"
+                      CanUserResizeRows="False"
+                      CanUserSortColumns="False"
+                      AllowDrop="False"
+                      IsReadOnly="False"
+                      SelectionMode="Single"
+                      SelectionUnit="FullRow"
+                      ItemsSource="{Binding Path=Settings.Analysis.SpecifiedAlgorithms}"
+                      AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <!-- Setup width to avoid main window resize. -->
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmNumberGridColumnName}"
+                                        IsReadOnly="True"
+                                        MinWidth="{StaticResource ResourceKey=DefaultWidthForIndex}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultWidthForIndex}"
+                                        Binding="{Binding Path=Index}" />
+
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmDescriptionGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        Binding="{Binding Path=Description}" />
+
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmMinFormulaGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        Binding="{Binding Path=MinFormula}" />
+
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmAverageFormulaGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        Binding="{Binding Path=AverageFormula}" />
+
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmMaxFormulaGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxShortWidth}"
+                                        Binding="{Binding Path=MaxFormula}" />
+
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmProgramNameGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxLongWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxLongWidth}"
+                                        Binding="{Binding Path=AnalysisProgramName}" />
+
+                    <DataGridTextColumn Header="{x:Static properties:DesktopAppStrings.AlgorithmFilenamePatternGridColumnName}"
+                                        IsReadOnly="False"
+                                        MinWidth="{StaticResource ResourceKey=DefaultMaxLongWidth}"
+                                        MaxWidth="{StaticResource ResourceKey=DefaultMaxLongWidth}"
+                                        Binding="{Binding Path=RelativeOutputFilenamePattern}" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+
+        <UniformGrid Width="{StaticResource ResourceKey=DefaultBottomPanelWidth}"
+                     Rows="1"
+                     Columns="2">
+
+            <Button IsDefault="True"
+                    Margin="8"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                    Content="{x:Static properties:DesktopAppStrings.ConfirmAlgorithmButtonText}"
+                    ToolTip="{x:Static properties:DesktopAppStrings.ConfirmAlgorithmButtonToolTip}"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                <Button.CommandParameter>
+                    <system:Boolean>
+                        True
+                    </system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+
+            <Button IsCancel="True"
+                    Margin="8"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                    Content="{x:Static properties:DesktopAppStrings.CloseAlgorithmSettingsButtonText}"
+                    ToolTip="{x:Static properties:DesktopAppStrings.CloseAlgorithmSettingsToolTip}"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                <Button.CommandParameter>
+                    <system:Boolean>
+                        False
+                    </system:Boolean>
+                </Button.CommandParameter>
+            </Button>
+
+        </UniformGrid>
+
+    </StackPanel>
+
+</UserControl>

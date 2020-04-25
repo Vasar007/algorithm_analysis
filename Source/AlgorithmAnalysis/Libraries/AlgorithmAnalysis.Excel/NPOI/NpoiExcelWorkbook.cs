@@ -16,17 +16,17 @@ namespace AlgorithmAnalysis.Excel.NPOI
 
         private readonly IExcelFormulaProvider _formulaProvider;
         
-        private readonly ExcelOptions _excelOptions;
+        private readonly ReportOptions _excelOptions;
 
 
-        public NpoiExcelWorkbook(ExcelOptions excelOptions)
+        public NpoiExcelWorkbook(ReportOptions excelOptions)
         {
             _excelOptions = excelOptions.ThrowIfNull(nameof(excelOptions));
             _workbook = new XSSFWorkbook();
             _formulaProvider = ExcelWrapperFactory.CreateFormulaProvider(excelOptions);
         }
 
-        public NpoiExcelWorkbook(FileInfo pathToWorkbook, ExcelOptions excelOptions)
+        public NpoiExcelWorkbook(FileInfo pathToWorkbook, ReportOptions excelOptions)
         {
             pathToWorkbook.ThrowIfNull(nameof(pathToWorkbook));
 

@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="AlgorithmAnalysis.DesktopApp.Views.SettingsReportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:views="clr-namespace:AlgorithmAnalysis.DesktopApp.Views"
+             xmlns:viewModels="clr-namespace:AlgorithmAnalysis.DesktopApp.ViewModels"
+             xmlns:properties="clr-namespace:AlgorithmAnalysis.DesktopApp.Properties"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Double x:Key="DefaultMinWidth">
+                200
+            </system:Double>
+            <system:Double x:Key="DefaultMaxWidth">
+                200
+            </system:Double>
+            <system:Double x:Key="DefaultTextBoxFontSize">
+                14
+            </system:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <materialDesign:Card Padding="8"
+                         Margin="8">
+        <StackPanel>
+            <TextBlock Margin="16 16 12 0"
+                       FontSize="18"
+                       Text="{x:Static properties:DesktopAppStrings.ReportOptionsHeader}" />
+
+            <Separator Style="{StaticResource ResourceKey=MaterialDesignSeparator}" />
+
+            <StackPanel Orientation="Vertical"
+                        Margin="8">
+
+                <ComboBox x:Name="CellCreationModeComboBox"
+                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.CellCreationModeHint}"
+                          HorizontalAlignment="Stretch"
+                          Margin="16"
+                          Visibility="Collapsed"
+                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                          SelectedIndex="0"
+                          ItemsSource="{Binding Path=Settings.Report.AvailableCellCreationModes}"
+                          SelectedItem="{Binding Path=Settings.Report.CellCreationMode}"
+                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
+                          IsEnabled="{Binding Path=Settings.Report.IsCellCreationModeSelectable}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
+                <!--
+                Show warning about no availbale cell creation mode.
+                This warning should not be visible if there are no issues with domain libarary.
+                -->
+                <views:WarningOnEmptyControlView Visibility="{Binding Path=Settings.Report.IsHintForCellCreationModeVisible,
+                                                              Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                    <Run Text="{x:Static properties:DesktopAppStrings.WarningNoCellCreationModeText}" />
+                </views:WarningOnEmptyControlView>
+
+                <ComboBox x:Name="LibraryProviderComboBox"
+                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.LibraryProviderHint}"
+                          HorizontalAlignment="Stretch"
+                          Margin="16"
+                          Visibility="Collapsed"
+                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                          SelectedIndex="0"
+                          ItemsSource="{Binding Path=Settings.Report.AvailableLibraryProviders}"
+                          SelectedItem="{Binding Path=Settings.Report.LibraryProvider}"
+                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
+                          IsEnabled="{Binding Path=Settings.Report.IsLibraryProviderSelectable}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
+                <!--
+                Show warning about no availbale library provider.
+                This warning should not be visible if there are no issues with domain libarary.
+                -->
+                <views:WarningOnEmptyControlView Visibility="{Binding Path=Settings.Report.IsHintForLibraryProviderVisible,
+                                                              Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                    <Run Text="{x:Static properties:DesktopAppStrings.WarningNoLibraryProviderText}" />
+                </views:WarningOnEmptyControlView>
+
+                <ComboBox x:Name="ExcelVersionComboBox"
+                          materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.ExcelVersionHint}"
+                          HorizontalAlignment="Stretch"
+                          Margin="16"
+                          Visibility="Collapsed"
+                          FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                          MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                          MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                          SelectedIndex="0"
+                          ItemsSource="{Binding Path=Settings.Report.AvailableExcelVersions}"
+                          SelectedItem="{Binding Path=Settings.Report.ExcelVersion}"
+                          Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}"
+                          IsEnabled="{Binding Path=Settings.Report.IsExcelVersionSelectable}">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
+                <!--
+                Show warning about no availbale cell excel version.
+                This warning should not be visible if there are no issues with domain libarary.
+                -->
+                <views:WarningOnEmptyControlView Visibility="{Binding Path=Settings.Report.IsHintForExcelVersionVisible,
+                                                              Converter={StaticResource ResourceKey=BooleanToVisibilityConverter}}">
+                    <Run Text="{x:Static properties:DesktopAppStrings.WarningNoExcelVersionText}" />
+                </views:WarningOnEmptyControlView>
+
+                <TextBox x:Name="OutputExcelFilePathTextBox"
+                         materialDesign:HintAssist.Hint="{x:Static properties:DesktopAppStrings.OutputExcelFilePathHint}"
+                         Margin="16"
+                         Visibility="Visible"
+                         FontSize="{StaticResource ResourceKey=DefaultTextBoxFontSize}"
+                         MinWidth="{StaticResource ResourceKey=DefaultMinWidth}"
+                         MaxWidth="{StaticResource ResourceKey=DefaultMaxWidth}"
+                         Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTextBox}"
+                         Text="{Binding Path=Settings.Report.OutputReportFilePath}" />
+
+            </StackPanel>
+        </StackPanel>
+    </materialDesign:Card>
+
+</UserControl>

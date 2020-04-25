@@ -1,7 +1,9 @@
 ﻿namespace AlgorithmAnalysis.DesktopApp.Domain
 {
-    internal interface IResetable
+    internal interface IChangeable
     {
         void Reset();
+
+        void Validate();
     }
 }

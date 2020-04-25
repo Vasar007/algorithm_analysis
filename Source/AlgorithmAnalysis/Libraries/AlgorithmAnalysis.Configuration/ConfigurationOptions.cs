@@ -1,32 +1,88 @@
 ﻿using System;
-using System.IO;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
+using AlgorithmAnalysis.Common.Files;
+using AlgorithmAnalysis.Common.Json;
 
 namespace AlgorithmAnalysis.Configuration
 {
-    public static partial class ConfigOptions
+    public static class ConfigOptions
     {
-        private static readonly Lazy<IConfigurationRoot> Root =
+        private static readonly Lazy<IConfigurationRoot> LazyRoot =
             new Lazy<IConfigurationRoot>(LoadOptions);
 
-        public static string ConfigFilename { get; } = "config.json";
+        private static IConfigurationRoot Root => LazyRoot.Value;
+
+        public static string DefaultOptionsPath => PredefinedPaths.DefaultOptionsPath;
+
+        public static string AlternativeOptionsPath => PredefinedPaths.AlternativeOptionsPath;
+
+        #region Options
+
+        public static AppearanceOptions Appearence => GetOptions<AppearanceOptions>();
 
         public static AnalysisOptions Analysis => GetOptions<AnalysisOptions>();
 
-        public static ExcelOptions Excel => GetOptions<ExcelOptions>();
+        public static ReportOptions Report => GetOptions<ReportOptions>();
 
         public static LoggerOptions Logger => GetOptions<LoggerOptions>();
 
+        #endregion
 
-        public static T GetOptions<T>()
-            where T : IOptions, new()
+
+        [return: MaybeNull]
+        public static TOptions FindOptions<TOptions>()
+            where TOptions : class, IOptions, new()
         {
-            T section = Root.Value.GetSection(typeof(T).Name).Get<T>();
+            IConfigurationSection section = GetConfigurationSection<TOptions>();
+            return section.Get<TOptions>();
+        }
 
-            if (section == null) return new T();
+        [return: NotNull]
+        public static TOptions GetOptions<TOptions>()
+            where TOptions : class, IOptions, new()
+        {
+            TOptions? options = FindOptions<TOptions>();
 
-            return section;
+            // Sometimes options can be null because configuration data is reloading.
+            if (options is null) return new TOptions();
+
+            return options;
+        }
+
+        public static void SetOptions<TOptions>([AllowNull] TOptions options)
+            where TOptions : class, IOptions, new()
+        {
+            if (options is null) return;
+
+            IConfigurationSection section = GetConfigurationSection<TOptions>();
+
+            string output = JsonConvert.SerializeObject(
+                options, JsonHelper.DefaultSerializerSettings
+            );
+            section.Value = output;
+        }
+
+        public static IChangeToken GetReloadToken()
+        {
+            return Root.GetReloadToken();
+        }
+
+        public static IChangeToken GetReloadToken<TOptions>()
+            where TOptions : class, IOptions, new()
+        {
+            IConfigurationSection section = GetConfigurationSection<TOptions>();
+            return section.GetReloadToken();
+        }
+
+        [return: NotNull]
+        private static IConfigurationSection GetConfigurationSection<TOptions>()
+            where TOptions : class, IOptions, new()
+        {
+            return Root.GetSection(typeof(TOptions).Name);
         }
 
         private static IConfigurationRoot LoadOptions()
@@ -34,10 +90,15 @@ namespace AlgorithmAnalysis.Configuration
             var configurationBuilder = new ConfigurationBuilder();
 
             string configPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? Path.Combine(Directory.GetCurrentDirectory(), ConfigFilename)
-                : $"/etc/algorithm_analysis/{ConfigFilename}";
+                ? DefaultOptionsPath
+                : AlternativeOptionsPath;
 
-            configurationBuilder.AddJsonFile(configPath, optional: false, reloadOnChange: true);
+            configurationBuilder.AddWritableJsonFile(
+                path: configPath,
+                optional: true,
+                reloadOnChange: true
+            );
+
             return configurationBuilder.Build();
         }
     }

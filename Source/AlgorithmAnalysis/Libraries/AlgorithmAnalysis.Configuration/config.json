@@ -1,9 +1,12 @@
 {
+  "AppearanceOptions": {
+    "Theme": "Light"
+  },
+
   "AnalysisOptions": {
     "AvailableAlgorithms": [
       {
         "Description": "Pallottino's algorithm",
-        "Value": "0",
         "MinFormula": "x",
         "AverageFormula": "x * x * (x - 1) / 2",
         "MaxFormula": "x * x * x * (x - 1) / 2",
@@ -12,7 +15,6 @@
       },
       {
         "Description": "Insertion sort",
-        "Value": "1",
         "MinFormula": "x",
         "AverageFormula": "x^2",
         "MaxFormula": "x^2",
@@ -21,7 +23,6 @@
       },
       {
         "Description": "Bubble sort",
-        "Value": "2",
         "MinFormula": "x",
         "AverageFormula": "x^2",
         "MaxFormula": "x^2",
@@ -33,17 +34,18 @@
     "OutputFileExtension": ".txt"
   },
 
-  "ExcelOptions": {
+  "ReportOptions": {
     "CellCreationMode": "Centerized",
     "LibraryProvider": "EPPlus",
-    "Version": "V2007",
-    "OutputExcelFilename": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/results/results.xlsx"
+    "ExcelVersion": "V2007",
+    "OutputReportFilePath": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/results/results.xlsx"
   },
 
   "LoggerOptions": {
     "LogFolderPath": "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/logs",
     "EnableLogForExcelLibrary": "false",
     "LogFilesExtension": ".log",
-    "LogNameSeparator": "-"
+    "LogFilenameSeparator": "-",
+    "UseFullyQualifiedEntityNames": "false"
   }
 }
