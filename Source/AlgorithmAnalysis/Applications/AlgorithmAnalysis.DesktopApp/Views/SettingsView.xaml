@@ -57,9 +57,9 @@
                 Show warning about relative paths.
                 -->
                 <views:WarningOnEmptyControlView Visibility="Visible"
-                                                    DockPanel.Dock="Top"
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center">
+                                                 DockPanel.Dock="Top"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center">
                     <Run Text="{x:Static properties:DesktopAppStrings.WarningPathsAreRelativeText}" />
                 </views:WarningOnEmptyControlView>
 

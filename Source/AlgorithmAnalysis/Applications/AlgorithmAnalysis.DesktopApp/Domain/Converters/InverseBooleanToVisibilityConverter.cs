@@ -5,9 +5,9 @@ using System.Windows.Data;
 
 namespace AlgorithmAnalysis.DesktopApp.Domain.Converters
 {
-    internal sealed class CustomBooleanToVisibilityConverter : IValueConverter
+    internal sealed class InverseBooleanToVisibilityConverter : IValueConverter
     {
-        public CustomBooleanToVisibilityConverter()
+        public InverseBooleanToVisibilityConverter()
         {
         }
 
@@ -17,7 +17,7 @@ namespace AlgorithmAnalysis.DesktopApp.Domain.Converters
         {
             bool flag = ConverterHelper.ToBoolean(value);
 
-            return flag ? Visibility.Visible : Visibility.Hidden;
+            return !flag ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter,

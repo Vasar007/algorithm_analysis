@@ -39,6 +39,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BooleansToBooleanInverseConverter x:Key="BooleansToBooleanInverseConverter" />
+            <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
             <system:Double x:Key="DefaultBottomPanelWidth">
@@ -61,6 +62,7 @@
 
             <DockPanel LastChildFill="True"
                        IsEnabled="{Binding Path=CanExecuteAnalysis}">
+
                 <materialDesign:ColorZone Mode="Standard"
                                           Padding="16"
                                           DockPanel.Dock="Top">
@@ -182,6 +184,12 @@
                 </StackPanel>
 
             </DockPanel>
+
+            <views:ProgressView x:Name="ProgressView"
+                                Visibility="{Binding Path=DataContext.CanExecuteAnalysis,
+                                             RelativeSource={RelativeSource Mode=FindAncestor,
+                                                             AncestorType={x:Type Window}},
+                                             Converter={StaticResource ResourceKey=InverseBooleanToVisibilityConverter}}"/>
 
             <materialDesign:Snackbar x:Name="MainSnackbar"
                                      Visibility="Visible"
