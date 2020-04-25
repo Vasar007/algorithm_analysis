@@ -19,7 +19,6 @@
     <Package InstallerVersion="200"
              Compressed="yes"
              InstallScope="perMachine"
-             AdminImage="yes"
              InstallPrivileges="elevated"
              Platform="$(var.Platform)"
              Manufacturer="!(loc.Company)"
