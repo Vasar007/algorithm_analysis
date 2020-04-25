@@ -153,7 +153,7 @@ namespace AlgorithmAnalysis.DesktopApp.ViewModels
             // TODO: check final report file and ASK user to delete file or change output name.
             string message =
                 "There are file with the same name as output analysis file " +
-                $"('{_result}'). " +
+                $"('{_result.OutputReportFile.Name}'). " +
                 "This file will be removed.";
 
             MessageBoxProvider.ShowInfo(message);
