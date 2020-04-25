@@ -8,17 +8,19 @@
   <?define UpgradeCode = "{8C197FE6-57DF-41FD-A0CD-84B5D3B97BDC}" ?>
 
   <!-- Define main product -->
-  <Product Id="$(var.ProductCode)" 
+  <Product Id="$(var.ProductCode)"
            Name="!(loc.ProductName_$(var.Platform))"
-           Language="!(loc.Language)" 
+           Language="!(loc.Language)"
            Version="$(var.BuildVersion)"
-           Manufacturer="!(loc.Company)" 
+           Manufacturer="!(loc.Company)"
            UpgradeCode="$(var.UpgradeCode)">
     
     <!-- Provide package details -->
-    <Package InstallerVersion="200" 
-             Compressed="yes" 
-             InstallScope="perMachine" 
+    <Package InstallerVersion="200"
+             Compressed="yes"
+             InstallScope="perMachine"
+             AdminImage="yes"
+             InstallPrivileges="elevated"
              Platform="$(var.Platform)"
              Manufacturer="!(loc.Company)"
              Description="!(loc.Description)"

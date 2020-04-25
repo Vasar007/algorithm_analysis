@@ -45,6 +45,10 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="MaterialDesignColors" Version="1.2.3" />
     <PackageReference Include="MaterialDesignThemes" Version="3.1.0" />
@@ -70,6 +74,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="app.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>app.manifest</DependentUpon>
+    </Compile>
     <Compile Update="Properties\DesktopAppStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -82,6 +91,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DesktopAppStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="app.manifest">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>app.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>
