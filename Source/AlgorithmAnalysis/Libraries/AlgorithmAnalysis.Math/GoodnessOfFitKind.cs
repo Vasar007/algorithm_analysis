@@ -10,9 +10,6 @@ namespace AlgorithmAnalysis.Math
         public static GoodnessOfFitKind CoefficientOfDetermination { get; } = 
             new GoodnessOfFitKind("Coefficient of determination", 1);
 
-        public static GoodnessOfFitKind RSquaredValue { get; } =
-            new GoodnessOfFitKind("r\u00B2 value (Pearson's coefficient)", 2);
-
 
         private GoodnessOfFitKind(string description, int value)
             : base(description, value)

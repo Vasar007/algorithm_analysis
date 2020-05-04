@@ -49,8 +49,7 @@ namespace AlgorithmAnalysis.DomainLogic
         {
             return new List<GoodnessOfFitKind>
             {
-                GoodnessOfFitKind.CoefficientOfDetermination,
-                GoodnessOfFitKind.RSquaredValue
+                GoodnessOfFitKind.CoefficientOfDetermination
             };
         }
 
@@ -147,10 +146,6 @@ namespace AlgorithmAnalysis.DomainLogic
             if (GoodnessOfFitKind.CoefficientOfDetermination.Equals(goodnessOfFit))
             {
                 return new FunctionSelectorBasedOnCoefficientOfDetermination();
-            }
-            if (GoodnessOfFitKind.RSquaredValue.Equals(goodnessOfFit))
-            {
-                return new FunctionSelectorBasedOnRSquaredValue();
             }
 
             throw new ArgumentOutOfRangeException(
