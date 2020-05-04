@@ -127,11 +127,11 @@
   </data>
   <data name="AlphaNColumnName" xml:space="preserve">
     <value>α(n)</value>
-    <comment>Column name ([%% + 1]_1).</comment>
+    <comment>Column name ([%% + 3]_1).</comment>
   </data>
   <data name="AnalysisValuesColumnName" xml:space="preserve">
     <value>Значения анализа</value>
-    <comment>Column name ([%% + 3]_1).</comment>
+    <comment>Column name ([%% + 5]_1).</comment>
   </data>
   <data name="BetaColumnName" xml:space="preserve">
     <value>Бета</value>
@@ -139,15 +139,15 @@
   </data>
   <data name="BetaNColumnName" xml:space="preserve">
     <value>β(n)</value>
-    <comment>Column name ([%% + 2]_1).</comment>
+    <comment>Column name ([%% + 4]_1).</comment>
   </data>
   <data name="ComparisonColumnName" xml:space="preserve">
     <value>Сравнение (max / fγ(n))</value>
-    <comment>Column name ([%% + 7]_1).</comment>
+    <comment>Column name ([%% + 9]_1).</comment>
   </data>
   <data name="ComplexityFunctionColumnName" xml:space="preserve">
     <value>fγ(n)</value>
-    <comment>Column name ([%% + 6]_1).</comment>
+    <comment>Column name ([%% + 8]_1).</comment>
   </data>
   <data name="ConfidenceFactorValue" xml:space="preserve">
     <value>0.95</value>
@@ -155,7 +155,7 @@
   </data>
   <data name="LeftYQuantileColumnName" xml:space="preserve">
     <value>Xγ(n)</value>
-    <comment>Column name ([%% + 5]_1).</comment>
+    <comment>Column name ([%% + 7]_1).</comment>
   </data>
   <data name="NColumnName" xml:space="preserve">
     <value>n</value>
@@ -165,7 +165,15 @@
     <value>Нормированное среднее</value>
     <comment>Column name ([% + 8]_1).</comment>
   </data>
-  <data name="NormalizedVarienceColumnName" xml:space="preserve">
+  <data name="NormalizedNMeanColumnName" xml:space="preserve">
+    <value>Нормированное среднее</value>
+    <comment>Column name ([% + 1]_1).</comment>
+  </data>
+  <data name="NormalizedNVarianceColumnName" xml:space="preserve">
+    <value>Нормированная дисперсия</value>
+    <comment>Column name ([% + 2]_1).</comment>
+  </data>
+  <data name="NormalizedVarianceColumnName" xml:space="preserve">
     <value>Нормированная дисперсия</value>
     <comment>Column name ([% + 9]_1).</comment>
   </data>

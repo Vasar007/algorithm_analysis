@@ -169,11 +169,29 @@ namespace AlgorithmAnalysis.DomainLogic.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Нормированное среднее.
+        /// </summary>
+        internal static string NormalizedNMeanColumnName {
+            get {
+                return ResourceManager.GetString("NormalizedNMeanColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Нормированная дисперсия.
         /// </summary>
-        internal static string NormalizedVarienceColumnName {
+        internal static string NormalizedNVarianceColumnName {
             get {
-                return ResourceManager.GetString("NormalizedVarienceColumnName", resourceCulture);
+                return ResourceManager.GetString("NormalizedNVarianceColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Нормированная дисперсия.
+        /// </summary>
+        internal static string NormalizedVarianceColumnName {
+            get {
+                return ResourceManager.GetString("NormalizedVarianceColumnName", resourceCulture);
             }
         }
         

@@ -26,9 +26,9 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
 
         private readonly ExcelColumnIndex _theoreticalMaxColumn;
 
-        private readonly ExcelColumnIndex _alphaColumn;
+        private readonly ExcelColumnIndex _normalizedMeanColumn;
 
-        private readonly ExcelColumnIndex _betaColumn;
+        private readonly ExcelColumnIndex _normalizedVarianceColumn;
 
 
         public BetaDistributionAnalysisPhaseTwo(ParametersPack args, IRegression regression)
@@ -42,8 +42,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             _sampleSizeColumnIndex = ExcelWrapperForPhaseTwo.GetSampleSizeColumn(_iterationsNumber);
             _theoreticalMinColumn = ExcelWrapperForPhaseTwo.GetTheoreticalMinColumn(_iterationsNumber);
             _theoreticalMaxColumn = ExcelWrapperForPhaseTwo.GetTheoreticalMaxColumn(_iterationsNumber);
-            _alphaColumn = GetAlphaColumn();
-            _betaColumn = GetBetaColumn();
+            _normalizedMeanColumn = GetNormalizedMeanColumn();
+            _normalizedVarianceColumn = GetNormalizedVarianceColumn();
         }
 
         #region IAnalysisPhaseTwo Implementation
@@ -79,20 +79,20 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
 
         #endregion
 
-        private ExcelColumnIndex GetAlphaColumn()
+        private ExcelColumnIndex GetNormalizedMeanColumn()
         {
-            const int columnsBetweenDataAndAlpha = 10;
+            const int columnsBetweenDataAndNormalizedMean = 8;
 
-            int columnIndex = _iterationsNumber + columnsBetweenDataAndAlpha;
+            int columnIndex = _iterationsNumber + columnsBetweenDataAndNormalizedMean;
             return columnIndex.AsEnum<ExcelColumnIndex>();
         }
 
-        private ExcelColumnIndex GetBetaColumn()
+        private ExcelColumnIndex GetNormalizedVarianceColumn()
         {
-            const int columnsBetweenAlphaAndBeta = 0;
+            const int columnsBetweenNormalozedMeanAndVariance = 0;
 
-            int alphaColumn = GetAlphaColumn().AsInt32().UseOneBasedIndexing();
-            return alphaColumn.AsEnum<ExcelColumnIndex>(columnsBetweenAlphaAndBeta);
+            int alphaColumn = GetNormalizedMeanColumn().AsInt32().UseOneBasedIndexing();
+            return alphaColumn.AsEnum<ExcelColumnIndex>(columnsBetweenNormalozedMeanAndVariance);
         }
 
         private IExcelCellHolder GetConfidenceFactorCell(IExcelSheet sheet)
@@ -136,8 +136,8 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             var normalizedMeanColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[normalizedMeanColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NormalizedMeanColumnName);
 
-            var normalizedVarienceColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
-            sheet[normalizedVarienceColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NormalizedVarienceColumnName);
+            var normalizedVarianceColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[normalizedVarianceColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NormalizedVarianceColumnName);
 
             var alphaColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[alphaColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.AlphaColumnName);
@@ -177,11 +177,11 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
                 string normalizedMeanFormula = sheet.FormulaProvider.Average(normalizedDataRange);
                 sheet[normalizedMeanColumnIndex, rowIndex].SetFormula(normalizedMeanFormula);
 
-                string normalizedVarienceFormula = sheet.FormulaProvider.Var(normalizedDataRange);
-                sheet[normalizedVarienceColumnIndex, rowIndex].SetFormula(normalizedVarienceFormula);
+                string normalizedVarianceFormula = sheet.FormulaProvider.Var(normalizedDataRange);
+                sheet[normalizedVarianceColumnIndex, rowIndex].SetFormula(normalizedVarianceFormula);
 
                 string normalizedMeanAddress = sheet[normalizedMeanColumnIndex, rowIndex].Address;
-                string normalizedVarienceAddress = sheet[normalizedVarienceColumnIndex, rowIndex].Address;
+                string normalizedVarienceAddress = sheet[normalizedVarianceColumnIndex, rowIndex].Address;
 
                 string alphaFormula = ManualFormulaProvider.Alpha(
                     normalizedMeanAddress, normalizedVarienceAddress
@@ -200,7 +200,7 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             sheet.AutoSizeColumn(sampleVarianceColumnIndex);
             sheet.AutoSizeColumn(sampleDeviationColumnIndex);
             sheet.AutoSizeColumn(normalizedMeanColumnIndex);
-            sheet.AutoSizeColumn(normalizedVarienceColumnIndex);
+            sheet.AutoSizeColumn(normalizedVarianceColumnIndex);
             sheet.AutoSizeColumn(alphaColumnIndex);
             sheet.AutoSizeColumn(betaColumnIndex);
         }
@@ -211,6 +211,12 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
 
             var nColumnColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[nColumnColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NColumnName);
+
+            var normalizedMeanNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[normalizedMeanNColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NormalizedNMeanColumnName);
+
+            var normalizedVarianceNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
+            sheet[normalizedVarianceNColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.NormalizedNVarianceColumnName);
 
             var alphaNColumnIndex = currentColumnIndex++.AsEnum<ExcelColumnIndex>();
             sheet[alphaNColumnIndex, rowIndex].SetValue(ExcelStringsPhaseTwo.AlphaNColumnName);
@@ -235,14 +241,18 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
 
             IExcelCellHolder confidenceFactorCell = GetConfidenceFactorCell(sheet);
 
-            IModelledFunction alphaOptimalFunction = GetOptimalFunction(sheet, _alphaColumn);
+            IModelledFunction normalizedMeanOptimalFunction = GetOptimalFunction(
+                sheet, _normalizedMeanColumn
+            );
             string formulaForAlphaFunction = ManualFormulaProvider.GetFormulaForFunction(
-                sheet.FormulaProvider, alphaOptimalFunction.Type
+                sheet.FormulaProvider, normalizedMeanOptimalFunction.Type
             );
 
-            IModelledFunction betaOptimalFunction = GetOptimalFunction(sheet, _betaColumn);
+            IModelledFunction normalizedVarienceOptimalFunction = GetOptimalFunction(
+                sheet, _normalizedVarianceColumn
+            );
             string formulaForBetaFunction = ManualFormulaProvider.GetFormulaForFunction(
-                sheet.FormulaProvider, betaOptimalFunction.Type
+                sheet.FormulaProvider, normalizedVarienceOptimalFunction.Type
             );
 
             ++rowIndex;
@@ -253,14 +263,29 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
                 IExcelCellHolder nColumnCell = sheet[nColumnColumnIndex, rowIndex];
                 nColumnCell.SetValue(launchesNumber);
 
-                string alphaNFormula = alphaOptimalFunction.ToFormulaString(
+                string normalizedMeanNFormula = normalizedMeanOptimalFunction.ToFormulaString(
                     nColumnCell.Address, formulaForAlphaFunction
+                );
+                IExcelCellHolder normalizedMeanNCell = sheet[normalizedMeanNColumnIndex, rowIndex];
+                normalizedMeanNCell.SetFormula(normalizedMeanNFormula);
+
+                string normalizedVarianceNFormula = normalizedVarienceOptimalFunction.ToFormulaString(
+                    nColumnCell.Address, formulaForBetaFunction
+                );
+                IExcelCellHolder normalizedVarianceNCell = sheet[normalizedVarianceNColumnIndex, rowIndex];
+                normalizedVarianceNCell.SetFormula(normalizedVarianceNFormula);
+
+                string normalizedMeanNAddress = sheet[normalizedMeanNColumnIndex, rowIndex].Address;
+                string normalizedVarianceNAddress = sheet[normalizedVarianceNColumnIndex, rowIndex].Address;
+
+                string alphaNFormula = ManualFormulaProvider.Alpha(
+                    normalizedMeanNAddress, normalizedVarianceNAddress
                 );
                 IExcelCellHolder alphaNCell = sheet[alphaNColumnIndex, rowIndex];
                 alphaNCell.SetFormula(alphaNFormula);
 
-                string betaNFormula = betaOptimalFunction.ToFormulaString(
-                    nColumnCell.Address, formulaForBetaFunction
+                string betaNFormula = ManualFormulaProvider.Beta(
+                    normalizedMeanNAddress, normalizedVarianceNAddress
                 );
                 IExcelCellHolder betaNCell = sheet[betaNColumnIndex, rowIndex];
                 betaNCell.SetFormula(betaNFormula);
@@ -287,22 +312,24 @@ namespace AlgorithmAnalysis.DomainLogic.Excel.Analysis.PhaseTwo
             }
 
             string alphaPearsonFormula = sheet.FormulaProvider.Pearson(
-                $"{sheet[_alphaColumn, 2].Address}:" +
-                $"{sheet[_alphaColumn, _lastSegmentValueRowIndex].Address}",
+                $"{sheet[_normalizedMeanColumn, 2].Address}:" +
+                $"{sheet[_normalizedMeanColumn, _lastSegmentValueRowIndex].Address}",
                 $"{sheet[alphaNColumnIndex, 2].Address}:" +
                 $"{sheet[alphaNColumnIndex, _lastSegmentValueRowIndex].Address}"
             );
             sheet[analysisValuesColumnIndex, 2].SetFormula(alphaPearsonFormula);
 
             string betaPearsonFormula = sheet.FormulaProvider.Pearson(
-                $"{sheet[_betaColumn, 2].Address}:" +
-                $"{sheet[_betaColumn, _lastSegmentValueRowIndex].Address}",
+                $"{sheet[_normalizedVarianceColumn, 2].Address}:" +
+                $"{sheet[_normalizedVarianceColumn, _lastSegmentValueRowIndex].Address}",
                 $"{sheet[betaNColumnIndex, 2].Address}:" +
                 $"{sheet[betaNColumnIndex, _lastSegmentValueRowIndex].Address}"
             );
             sheet[analysisValuesColumnIndex, 3].SetFormula(betaPearsonFormula);
 
             sheet.AutoSizeColumn(nColumnColumnIndex);
+            sheet.AutoSizeColumn(normalizedMeanNColumnIndex);
+            sheet.AutoSizeColumn(normalizedVarianceNColumnIndex);
             sheet.AutoSizeColumn(alphaNColumnIndex);
             sheet.AutoSizeColumn(betaNColumnIndex);
             sheet.AutoSizeColumn(analysisValuesColumnIndex);
