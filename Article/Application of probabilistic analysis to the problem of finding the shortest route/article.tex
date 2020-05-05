@@ -103,19 +103,19 @@ Currently, the most widely used estimate is the complexity function on average, 
 
 However, the problem is that the average estimate, being statistical and point, does not provide any information about the behavior of the algorithm at specific inputs, which is important for both large-scale problems and real-time systems. The use of estimates in the worst case leads to a significant overestimation of the time forecast due to the low probability of inputs that provide maximum complexity at a fixed dimensionality of the problem. Thus, the problem of constructing a practically significant interval estimation of the algorithm complexity is of interest.
 
-It is also worth noting the methods of machine learning, which has been actively improved in recent decades and are used in various fields, such as medicine, economics, computer vision, bioinformatics, information retrieval, etc. Their applications have been used to improve algorithms based on input data \cite{berube}. We assume that this method of research of algorithms deserves attention and will actively develop in the future, competing with classical approaches.
+It is also worth noting the methods of machine learning, which has been actively improved in recent decades and are used in various fields, such as medicine, economics, computer vision, bioinformatics, information retrieval, etc. Their applications have been used to improve algorithms based on input data~\cite{berube}. We assume that this method of research of algorithms deserves attention and will actively develop in the future, competing with classical approaches.
 
 Another possible solution to the problem of improving the algorythm empirical analysis results accuracy is related to the consideration of the algorithm complexity at a fixed input length as a discrete bounded random variable having some unknown distribution. The approach consists in the construction of a confidence interval of labor intensity based on the approximation of the unknown discrete distribution of labor intensity values by a continuous distribution with limited variation, which is proposed to use the beta distribution. The resulting solution allows to specify a more real right boundary of the algorithm complexity at a fixed input length with a given confidence probability.
 
-This method includes two stages~--- the stage of preliminary research, the purpose of which is to test the hypothesis about the law of distribution of the algorithm's labor intensity values as a discrete limited random variable \cite{petrushyn_ulyanov_planning}, and the stage of the main study, which determines the values of the confidence labor intensity $f_\gamma(n)$ as a function of the input length of the algorithm \cite{petrushyn_ulyanov_analysis}.
+This method includes two stages~--- the stage of preliminary research, the purpose of which is to test the hypothesis about the law of distribution of the algorithm's labor intensity values as a discrete limited random variable~\cite{petrushyn_ulyanov_planning}, and the stage of the main study, which determines the values of the confidence labor intensity $f_\gamma(n)$ as a function of the input length of the algorithm~\cite{petrushyn_ulyanov_analysis}.
 
 As an algorithm for the study, we take one of the algorithms for finding the shortest paths in the graph~--- the Pallottino algorithm.
 
-Finding the shortest path from one vertex to all the others is one of the basic network optimization problems. There are several common and well-known algorithms that solve this problem. One category consists of the Dijkstra algorithm \cite{dijkstra} and its modifications, the other category contains the Bellman\,--\,Ford\,--\,Moore algorithm \cite{bellman, ford, moore} and its modifications. There are also a number of other algorithms that are not included in these categories, but they will not be reviewed by the authors.
+Finding the shortest path from one vertex to all the others is one of the basic network optimization problems. There are several common and well-known algorithms that solve this problem. One category consists of the Dijkstra algorithm~\cite{dijkstra} and its modifications, the other category contains the Bellman\,--\,Ford\,--\,Moore algorithm~\cite{bellman, ford, moore} and its modifications. There are also a number of other algorithms that are not included in these categories, but they will not be reviewed by the authors.
 
 Pallottino algorithm~--- the algorithm that finds the shortest distance from one of the vertices to all the others on graphs without loops, it is a modification of the Bellman\,--\,Ford\,--\,Moore algorithm. This algorithm also works for graphs with edges of negative weight under certain conditions. It is widely used to solve the problems of optimal distribution of cargo traffic on the transport network and the choice of the most profitable ways of its development.
 
-In the literature there is a little confusion with the naming of this algorithm. Pape developed a suggestion of D’Esopo \cite{desopo} and proposed improved algorithm \cite{pape}. At the same time Levit and Livshits developed their own version with the same idea \cite{levit_livshits}. Thus, we have D’Esopo\,--\,Pape\,--\,Levit algorithm which uses a deque to maintain the labeled vertices in the graph. Later Pallottino suggested using two queues instead of a deque to avoid the exponential complexity of the algorithm \cite{pallottino}. And the last one is the algorithm that we investigate using probabilistic analysis methods.
+In the literature there is a little confusion with the naming of this algorithm. Pape developed a suggestion of D’Esopo~\cite{desopo} and proposed improved algorithm~\cite{pape}. At the same time Levit and Livshits developed their own version with the same idea~\cite{levit_livshits}. Thus, we have D’Esopo\,--\,Pape\,--\,Levit algorithm which uses a deque to maintain the labeled vertices in the graph. Later Pallottino suggested using two queues instead of a deque to avoid the exponential complexity of the algorithm~\cite{pallottino}. And the last one is the algorithm that we investigate using probabilistic analysis methods.
 
 For the analysis of the Pallottino algorithm, we used a generator of random graphs and the graph of real geographical roads of St. Petersburg.
 
@@ -133,12 +133,12 @@ The main purpose of the experimental study of the algorithm complexity is to obt
 
 As for the generation of the algorithm inputs, the main task is to ensure the representativeness of the sample, i.~e. the generation of such inputs, which in probability correspond to the peculiarities of the application of this algorithm in the designed software system.
 
-Let us examine the planning stage of the pilot study in greater detail \cite{petrushyn_ulyanov_planning}. The main objective of this stage is to determine the rational sample size at a fixed input length. In this paper, we assume that the complexity function of the Pallottino algorithm has beta distribution. The main stages of the preliminary study:
+Let us examine the planning stage of the pilot study in greater detail~\cite{petrushyn_ulyanov_planning}. The main objective of this stage is to determine the rational sample size at a fixed input length. In this paper, we assume that the complexity function of the Pallottino algorithm has beta distribution. The main stages of the preliminary study:
 
 \begin{enumerate}
 	\item Fixing some value of the input length $n$ from the real segment of lengths in the field of application of the Pallottino algorithm. In this case $n = 80$;
 	
-	\item Determination of the required number of experiments m with software implementation to obtain a histogram of the relative frequencies of the labor intensity values, for example, by the method described in paper \cite{petrushyn_ulyanov_planning}. In this case $m = 52992$ (see section with the results);
+	\item Determination of the required number of experiments m with software implementation to obtain a histogram of the relative frequencies of the labor intensity values, for example, by the method described in paper~\cite{petrushyn_ulyanov_planning}. In this case $m = 52992$ (see section with the results);
 	
 	\item Conducting experimental research and obtaining the values \\$f_i = f_A(D_i), i = \overline{1, m}$;
 	
@@ -168,7 +168,7 @@ Let us examine the planning stage of the pilot study in greater detail \cite{pet
 	
 	\item Selection of the input length change step in the experimental study. In this case, the step value is 10;
 	
-	\item Selection of the required number of experiments with the software implementation of the algorithm with a fixed input length, for example, by the method described in paper \cite{petrushyn_ulyanov_planning}, to determine the sample mean and variance. In this case, $m = 52992$ (see the section with the results);
+	\item Selection of the required number of experiments with the software implementation of the algorithm with a fixed input length, for example, by the method described in paper~\cite{petrushyn_ulyanov_planning}, to determine the sample mean and variance. In this case, $m = 52992$ (see the section with the results);
 	
 	\item Calculation based on experimental data of sample mean and variance values for each $n$ value. In this case, $n$ changes from 80 to 320 in increments of 10;
 
@@ -183,7 +183,7 @@ Let us examine the planning stage of the pilot study in greater detail \cite{pet
 
 \section{Results} \label{sec:results}
 
-Для оценки необходимого числа экспериментов с программной реализацией алгоритма Паллоттино для фиксированной длины входа в соответствие с методикой, изложенной в \cite{petrushyn_ulyanov_planning}, был выбран путь вычисления данного числа на основе нормального распределения с надёжностью $\gamma = 0.95$. Стоит отметить, что в работе \cite{petrushyn_ulyanov_planning} авторы показывают, что решение на основе бета-распределения даёт результат, который примерно на 40\% меньше значения необходимого числа экспериментов решения на основе нормального распределения. Однако в данной работе был использован более простой вариант решения на основе нормального распределения.
+Для оценки необходимого числа экспериментов с программной реализацией алгоритма Паллоттино для фиксированной длины входа в соответствие с методикой, изложенной в~\cite{petrushyn_ulyanov_planning}, был выбран путь вычисления данного числа на основе нормального распределения с надёжностью $\gamma = 0.95$. Стоит отметить, что в работе~\cite{petrushyn_ulyanov_planning} авторы показывают, что решение на основе бета-распределения даёт результат, который примерно на 40\% меньше значения необходимого числа экспериментов решения на основе нормального распределения. Однако в данной работе был использован более простой вариант решения на основе нормального распределения.
 
 Для определения необходимого числа экспериментов было проведено предварительное исследование алгоритма Паллоттино с объёмом выборки равным 200, вычислен коэффициент вариации $V_f$, и вычислено значение $m_{(1)}^*$, результаты приведены в таблице 1.
 
