@@ -47,7 +47,7 @@
 \hyphenation{SPbU}
 
 \author{Vasilyev~V.\:V., Nikiforov~K.\:A.}
-\title{Evaluating the complexity of the algorithm based on empirical analysis}
+\title{Empirically based assessment of the algorithm complexity}
 
 %\renewcommand{\thefootnote}{ }
 %{\footnotetext{{\it E"=mail addresses} : vasar007@yandex.ru (Vasilyev~V.\:V.), k.nikiforov@spbu.ru (Nikiforov~K.\:A.)}}
@@ -60,7 +60,6 @@
 	\textbf{Санкт"=Петербургский государственный университет}\\
 	\hfill \break
 	\hfill \break
-	\hfill \break
 	\textbf{Васильев Василий Васильевич}\\
 	\hfill \break
 	\hfill \break
@@ -68,8 +67,6 @@
 	\hfill \break
 	\Large{\textbf{Оценка трудоемкости алгоритма на основе эмпирического анализа}}\\
 \end{center}
-
-\hfill \break
 
 \begin{center}
 	Направление 02.03.02\\
@@ -87,8 +84,14 @@
 	Никифоров Константин Аркадьевич
 \end{flushright}
 
-\hfill \break
-\hfill \break
+\begin{flushright}
+	Рецензент:\\
+	кандидат физ."=мат. наук, доцент\\
+	кафедры теории систем управления\\
+	и электрофизической аппаратурой:\\
+	Шмыров Василий Александрович
+\end{flushright}
+
 \hfill \break
 
 \begin{center}
@@ -173,9 +176,9 @@
 
 \section{Обзор существующих решений}\label{sec:exisiting_solutions_review}
 
-В ранних работах системы автоматизированной оценки эффективности алгоритмов на основе анализа программных реализаций~\cite{functional_nuprl, functional_automation} ограничивались использованием специальных языков программирования (Nuprl и функциональный язык), что не подходит для реализаций алгоритмов, разработанных с помощью других систем или языков программирования. Более поздние системы на основе машинного обучения~\cite{runtime_prediction} работают как с параметризованными алгоритмами, так и без параметров, причем обладают большой гибкостью при построении регрессионных моделей на основе эмпирического анализа программных реализаций на различных языках программирования. В последнее время в области вычислительного интеллекта развиваются альтернативы статистическим подходам в выборе наилучшего или более подходящего алгоритма для решения конкретной задачи~\cite{intelligence_forecasting}.
+В работах~\cite{functional_nuprl, functional_automation} системы автоматизированной оценки эффективности алгоритмов на основе анализа программных реализаций ограничивались использованием специальных языков программирования (Nuprl и функциональный язык), что не подходит для реализаций алгоритмов, разработанных с помощью других систем или языков программирования. Более поздние системы на основе машинного обучения~\cite{runtime_prediction} работают как с параметризованными алгоритмами, так и без параметров, причем обладают большой гибкостью при построении регрессионных моделей на основе эмпирического анализа программных реализаций на различных языках программирования. В последнее время в области вычислительного интеллекта развиваются альтернативы статистическим подходам в выборе наилучшего или более подходящего алгоритма для решения конкретной задачи~\cite{intelligence_forecasting}.
 
-Однако, в упомянутых системах даются лишь точечные оценки трудоемкости (мода, медиана, математическое ожидание, коэффициент вариации), что не позволяет получить какие"=либо сведения о поведении алгоритма на конкретном входе. Преимущество предлагаемой автоматизированной системы заключается в использовании доверительной трудоемкости, как гарантирующей оценки, повышающей точность результатов эмпирического анализа
+Однако, в упомянутых системах даются лишь точечные оценки трудоемкости (мода, медиана, математическое ожидание, коэффициент вариации), что не позволяет получить какие"=либо сведения о поведении алгоритма на конкретном входе. Преимущество предлагаемой автоматизированной системы заключается в использовании доверительной трудоемкости как гарантирующей оценки, повышающей точность результатов эмпирического анализа
 
 \section{Исследование трудоемкости}\label{sec:complexity_research}
 
@@ -855,19 +858,16 @@
 
 Одной из главных задач является проектирование системы с учетом поддержки наибольшего количества программных реализаций алгоритмов для проведения анализа.
 
-Для выполнения этого требования программный модуль должен иметь определенный интерфейс, т.\,е. принимать аргументы из командной строки. Они требуются для проведения экспериментальных исследований трудоемкости в различных конфигурациях алгоритма.
+Для выполнения этого требования программный модуль должен иметь определенный интерфейс, т.\,е. принимать аргументы из командной строки. Они требуются для проведения экспериментальных исследований трудоемкости в различных конфигурациях алгоритма. При этом функциональность, связанная с генерацией допустимых входных данных также должна находиться в программном модуле. Система передает только параметры, содержащие размер требуемой выборки и границы сегментов для проведения экспериментов.
 
 В процессе разработки использованы следующие технологии: Windows Presentation Foundation (WPF) для реализации пользовательского интерфейса, EPPlus для формирования отчета в виде документа пакета Microsoft Excel~\cite{excel}. Такой стек технологий позволяет вести разработку и поддержку специалисту, владеющему только одним языком программирования. Схема архитектуры прототипа представлена на рис.~\ref{fig:arhitecture}.
 
 \begin{figure}[h]
-	\center{\includegraphics[width=0.8\linewidth]{arhitecture.png}}
+	\center{\includegraphics[width=0.98\linewidth]{arhitecture.png}}
 	\caption{Схема архитектуры системы}
 	\label{fig:arhitecture}
 \end{figure}
-
-\
-
-\
+\vskip4mm
 
 \subsection{Описание реализации}\label{sec:implementation}
 
@@ -878,24 +878,22 @@
 Система имеет предопределенный набор программных реализаций алгоритмов, которые можно использовать для анализа. Для добавления новой реализации достаточно поместить разработанный модуль в каталог с установленной системой. При запуске система автоматически обнаружит новый модуль и добавит его в качестве одного из вариантов для проведения анализа.
 
 \begin{figure}[h]
-	\center{\includegraphics[width=0.66\linewidth]{interface.png}}
+	\center{\includegraphics[width=0.9\linewidth]{interface.png}}
 	\caption{Интерфейс настройки параметров анализа}
 	\label{fig:interface}
 \end{figure}
-
-\
-
-\
+\vskip6mm
 
 Предусмотрена возможность настройки системы и выбора желаемых методов расчета количества полусегментов гистограммы относительных частот, размера выборки и т.\,д. Практически все описанные в работе методы присутствуют в системе и доступны для использования. Это позволяет исследователям проверять различные гипотезы при анализе функции трудоемкости для программных реализаций алгоритмов.
 
-Параметры для экспериментальных исследований формирует система на основе пользовательского ввода и передает их программе в качестве аргументов командной строки при запуске. Пример набора параметров показан на рис.~\ref{fig:interface}. Результаты многократного запуска исследуемой программной реализации сохраняются во временный файл, из которого потом загружаются в систему для проведения основного этапа исследования. По окончании анализа формируется отчет с подробным описанием полученных оценок эффективности (рис.~\ref{fig:results}).
-
 \begin{figure}[h]
-	\center{\includegraphics[width=0.8\linewidth]{results.png}}
+	\center{\includegraphics[width=0.95\linewidth]{results.png}}
 	\caption{Пример результатов анализа}
 	\label{fig:results}
 \end{figure}
+\vskip5mm
+
+Параметры для экспериментальных исследований формирует система на основе пользовательского ввода и передает их программе в качестве аргументов командной строки при запуске. Пример набора параметров показан на рис.~\ref{fig:interface}. Результаты многократного запуска исследуемой программной реализации сохраняются во временный файл, из которого потом загружаются в систему для проведения основного этапа исследования. По окончании анализа формируется отчет с подробным описанием полученных оценок эффективности (рис.~\ref{fig:results}).
 
 \specialsection{Выводы}\label{sec:conclusion}
 
@@ -953,22 +951,22 @@
 	\bibitem{juraj} Juraj~H. Theoretical computer science: introduction to Automata, computability, complexity, algorithmics, randomization, communication, and cryptography // Springer. 2004. P.~177--178.
 
 	% №12
-	\bibitem{berube} Berube~P., Amaral~J.\:N. Combined profiling: A methodology to capture varied program behavior across multiple inputs // ISPASS 2012~--- IEEE International Symposium on Performance Analysis of Systems and Software. 2012. \No~6189227. P.~210--220.
+	\bibitem{berube} Berube~P., Amaral~J.\:N. Combined profiling: A methodology to capture varied program behavior across multiple inputs // ISPASS 2012~--- IEEE International Symposium on Performance Analysis of Systems and Software. 2012. No~6189227. P.~210--220.
 
 	% №13
-	\bibitem{runtime_prediction} Hutter~F., Xu~L. Hoos~H., Leyton\,--\,Brown~K. Algorithm runtime prediction: Methods \& evaluation // Artificial Intelligence. 2014. Vol.~206. \No~1. P.~79--111.
+	\bibitem{runtime_prediction} Hutter~F., Xu~L. Hoos~H., Leyton\,--\,Brown~K. Algorithm runtime prediction: Methods \& evaluation // Artificial Intelligence. 2014. Vol.~206. No~1. P.~79--111.
 
 	% №14
-	\bibitem{intelligence_forecasting} Oprea~M. A general framework and guidelines for benchmarking computational intelligence algorithms applied to forecasting problems derived from an application domain-oriented survey // Applied Soft Computing. 2020. Vol.~89. \No~4. P. 106--103.
+	\bibitem{intelligence_forecasting} Oprea~M. A general framework and guidelines for benchmarking computational intelligence algorithms applied to forecasting problems derived from an application domain-oriented survey // Applied Soft Computing. 2020. Vol.~89. No~4. P. 106--103.
 
 	% №15
 	\bibitem{petrushyn_ulyanov_planning} Петрушин~В.\:Н., Ульянов~М.\:В. Планирование экспериментального исследования трудоемкости алгоритмов на основе бета"=распределения // Информационные технологии и вычислительные системы. 2008. \No~2. С.~81--91.
 
 	% №16
-	\bibitem{functional_nuprl} Benzinger~R. Automated complexity analysis of Nuprl extracted programs // Journal of Functional Programming. 2001. Vol.~11. \No~1. P.~3--31.
+	\bibitem{functional_nuprl} Benzinger~R. Automated complexity analysis of Nuprl extracted programs // Journal of Functional Programming. 2001. Vol.~11. No~1. P.~3--31.
 	
 	% №17
-	\bibitem{functional_automation} Hickey~T., Cohen~J. Automating program analysis // Journal of the ACM. 1988. Vol.~35. \No~1. P.~185--220.
+	\bibitem{functional_automation} Hickey~T., Cohen~J. Automating program analysis // Journal of the ACM. 1988. Vol.~35. No~1. P.~185--220.
 
 	% №18
 	\bibitem{petrushyn_ulyanov_definitions} Петрушин~В.\:Н., Ульянов~М.\:В. Информационная чувствительность компьютерных алгоритмов. М.: Физматлит, 2010.
