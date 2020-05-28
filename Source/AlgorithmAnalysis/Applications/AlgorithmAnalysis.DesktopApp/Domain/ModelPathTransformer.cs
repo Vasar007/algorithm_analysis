@@ -13,18 +13,34 @@ namespace AlgorithmAnalysis.DesktopApp.Domain
 
         public static string TransformPathToOriginal(string originalPath, string newPath)
         {
+            // Unify directory separator chars at the beginning and at the end.
             string originalPathUnified =
                 PathHelper.UnifyDirectorySeparatorCharsPlatformIndependent(originalPath);
+
+            // Convert original path with specfic value to relative path.
+            // input: "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/results/results.xlsx"
+            // output: "AlgorithmAnalysis/results/results.xlsx"
             string originalRelativePath = TransformPathToRelative(originalPath);
 
+            // Determine commom path at the beginning.
+            // At least this variable should contain specific value.
+            // input: "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/results/results.xlsx"
+            // output: "{SpecialFolder.CommonApplicationData}/"
             string remainingOriginalPath = originalPathUnified.Replace(
                 originalRelativePath, string.Empty
             );
 
+            // Unify directory separator chars at the beginning and at the end.
             string newPathUnified =
                 PathHelper.UnifyDirectorySeparatorCharsPlatformIndependent(newPath);
+
+            // Create new final path
+            // input1: "AlgorithmAnalysis/results.xlsx"
+            // input2: "{SpecialFolder.CommonApplicationData}/"
+            // output: "{SpecialFolder.CommonApplicationData}/AlgorithmAnalysis/results.xlsx"
             string finalNewPath = Path.Combine(remainingOriginalPath, newPathUnified);
 
+            // Unify directory separator chars at the beginning and at the end.
             return PathHelper.UnifyDirectorySeparatorCharsPlatformIndependent(finalNewPath);
         }
 
