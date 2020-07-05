@@ -1,0 +1,243 @@
+% --------------------- Стандарт СПбГУ для ВКР --------------------------
+% Автор: Тоскин Николай, itonik@me.com
+% Если заметили ошибку, напишите на email
+% Если хотите добавить изменение самостоятельно, GitHub: 
+% PR-s welcome!
+% Использованы материалы:
+% habr.com/ru/post/144648/
+% cpsconf.ru
+% meta.math.spbu.ru/ru/template.shtml
+% Текст:
+% http://edu.spbu.ru/images/data/normativ_acts/local/20181030_10432_1.pdf
+% Титульный лист:
+% http://edu.spbu.ru/images/data/normativ_acts/local/20180703_6616_1.pdf
+% -----------------------------------------------------------------------
+
+% Глобальные поля
+\usepackage[left=30mm, top=20mm, right=15mm, bottom=20mm, nohead, includefoot, footskip=35pt]{geometry}
+
+% Язык, кодировка, шрифт
+% Порядок подключения пакетов важен!
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english, russian]{babel}
+
+% Межстрочный интервал = 1.5pt
+\usepackage{setspace}
+\onehalfspacing
+
+% Абзацный отступ = 1.25см
+\usepackage{indentfirst}
+\setlength\parindent{12.5mm}
+
+% Пакет для содержания
+\usepackage{tocloft}
+
+% Команда для специальных разделов (введение, обзор литературы, etc)
+% Не нумеруются в содержании, по уровню вложенности: 
+\newcommand{\specialsection}[1]{
+	\clearpage
+    \phantomsection
+    \bigskip\smallskip\hspace{-12.5mm}
+    \normalfont\fontsize{18}{18}\textbf{#1}
+    \par\bigskip\normalfont\normalsize
+    \addcontentsline{toc}{section}{#1}
+}
+
+% Размеры заголовков разделов и подразделов
+\usepackage{titlesec}
+% Раздел: 18pt, добавляем слово "Глава"
+\titleformat{\section}
+{\normalfont\fontsize{18}{18}\bfseries}{\thesection. \hskip-1em}{1em}{}
+% Подраздел: 16pt
+\titleformat{\subsection}
+{\normalfont\fontsize{16}{16}\bfseries}{\thesubsection}{1em}{}
+
+% Содержание
+% Выравнивание заголовка по центру (да, да, хак с отступом слева \hspace{0.31\textwidth})
+% т.к. окружение center и \centering не работают
+\renewcommand{\cfttoctitlefont}{\hspace{0.31\textwidth} \bfseries\Large}
+\renewcommand{\cftbeforetoctitleskip}{-1em}
+% Строки с точками
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+% Точки после цифр в в содержании
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+% Подровнять subsection под точку главы
+% (если глав будет больше десяти, будет чуть хуже)
+\setlength{\cftsubsecindent}{2.68em}
+% Интервал глав
+\setlength{\cftbeforesecskip}{4pt}
+
+\renewcommand{\cftsecpagefont}{\normalfont}
+
+% Шрифт подписи (caption) = 12pt
+% (Повезло, что small как раз равен 12pt)
+\usepackage[font=small,labelfont=bf]{caption}
+
+% Пакет, который позволяет собирать один документ TeX из нескольких
+\usepackage{import}
+
+% Пакет, реализующий гиперссылки. Никакого расскрашивания
+\usepackage[colorlinks=false,unicode=true]{hyperref}
+
+% Списки
+\newcommand{\ITEM}{\vspace{-0.2cm}\item}
+\newcommand{\MList}[1]{\par\begin{itemize}#1\end{itemize}}
+\newcommand{\NList}[1]{\par\begin{enumerate}#1\end{enumerate}}
+
+% Таблицы
+\newcounter{c_tab}
+\setcounter{c_tab}{0}
+\newcommand{\tabn}{\arabic{c_tab}}
+\newcommand{\nextline}{\tabularnewline\hline}
+\newcommand{\Table}[5][numbered]{\par\vspace{-0.3cm}\begin{flushright}\ifthenelse{\equal{#1}{numbered}}%
+		{\addtocounter{c_tab}{+1}{\footnotesize\textbf{Таблица\,\,\tabn.} #2}}%
+		{{\footnotesize\textbf{Таблица.} #2}}%
+	\end{flushright}\vspace{-0.5cm}\par{\footnotesize\begin{center}\begin{tabular}{#3}\hline#4\end{tabular}\end{center}}}%
+
+% Рисунки
+\renewcommand{\@makecaption}[2]{%
+	\abovecaptionskip=-5pt
+	\belowcaptionskip=-27pt
+	\vspace{\abovecaptionskip}%
+	\sbox{\@tempboxa}{{\footnotesize {\textbf{#1.}} #2}}
+	\ifdim \wd\@tempboxa > \hsize
+	\begin{center} {\footnotesize {\textbf{#1.}} #2} \par \end{center}
+	\else
+	\global\@minipagefalse
+	\hbox to \hsize {\footnotesize \hfil{\textbf{#1.}} #2\hfil}%
+	\fi
+	\vspace{\belowcaptionskip}}
+
+\newcommand{\Figure}[3]{\begin{figure}[h]\begin{center}\includegraphics[width=#1]{#2}\caption{#3\vspace{ 1cm}}\end{center}\end{figure}}
+
+\newcommand{\WrapFigure}[5]{\begin{wrapfigure}[#1]{l}{#2}
+		\includegraphics[width=#3]{#4}\caption{#5}
+	\end{wrapfigure}\vspace{0.3cm}}
+
+\newcommand{\WrapFigureR}[5]{\begin{wrapfigure}[#1]{r}{#2}
+		\includegraphics[width=#3]{#4}\caption{#5}
+	\end{wrapfigure}\vspace{0.3cm}}
+
+% Пакет для русских букв в формулах
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+% Теоремы, определения, леммы
+\usepackage{ifthen}
+
+\newcounter{c_teo}
+\setcounter{c_teo}{0}
+\newcounter{c_lem}
+\setcounter{c_lem}{0}
+\newcounter{c_gip}
+\setcounter{c_gip}{0}
+\newcounter{c_utv}
+\setcounter{c_utv}{0}
+\newcounter{c_opr}
+\setcounter{c_opr}{0}
+\newcounter{c_zam}
+\setcounter{c_zam}{0}
+\newcounter{c_pri}
+\setcounter{c_pri}{0}
+\newcounter{c_sle}
+\setcounter{c_sle}{0}
+
+\newcommand{\theorn}{\arabic{c_teo}}
+\newcommand{\Theorem}[2][numbered]{\par\setcounter{c_sle}{0}\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_teo}{+1}\par\textbf{Теорема\,\,\theorn.}\textit{ #2}}%
+	{\par\textbf{Теорема.}\textit{ #2}}}%
+\newcommand{\TheoremCite}[3][numbered]{\par\setcounter{c_sle}{0}\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_teo}{+1}\par\textbf{Теорема\,\,\theorn}\,\,\cite{#2}.\textit{ #3}}%
+	{\par\textbf{Теорема}\,\,\cite{#2}.\textit{ #3}}}%
+
+\newcommand{\lemman}{\arabic{c_lem}}
+\newcommand{\Lemma}[2][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_lem}{+1}\par\textbf{Лемма\,\,\lemman.}\textit{ #2}}%
+	{\par\textbf{Лемма.}\textit{ #2}}}%
+\newcommand{\LemmaCite}[3][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_lem}{+1}\par\textbf{Лемма\,\,\lemman}\,\,\cite{#2}.\textit{ #3}}%
+	{\par\textbf{Лемма}\,\,\cite{#2}.\textit{ #3}}}%
+
+\newcommand{\hypotn}{\arabic{c_gip}}
+\newcommand{\Hypothesis}[2][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_gip}{+1}\par\textbf{Гипотеза\,\,\hypotn.}\textit{ #2}}%
+	{\par\textbf{Гипотеза.}\textit{ #2}}}%
+\newcommand{\HypothesisCite}[3][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_gip}{+1}\par\textbf{Гипотеза\,\,\hypotn}\,\,\cite{#2}.\textit{ #3}}%
+	{\par\textbf{Гипотеза}\,\,\cite{#2}.\textit{ #3}}}%
+
+\newcommand{\staten}{\arabic{c_utv}}
+\newcommand{\Statement}[2][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_utv}{+1}\par\textbf{Утверждение\,\,\staten.}\textit{ #2}}%
+	{\par\textbf{Утверждение.}\textit{ #2}}}%
+\newcommand{\StatementCite}[3][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_utv}{+1}\par\textbf{Утверждение\,\,\staten}\,\,\cite{#2}.\textit{ #3}}%
+	{\par\textbf{Утверждение}\,\,\cite{#2}.\textit{ #3}}}%
+
+\newcommand{\definn}{\arabic{c_opr}}
+\newcommand{\Definition}[1][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_opr}{+1}\par\textbf{Определение\,\,\definn.\,}}%
+	{\par\textbf{Определение.}}}%
+\newcommand{\DefinitionCite}[2][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_opr}{+1}\par\textbf{Определение\,\,\definn}\,\,\cite{#2}.}%
+	{\par\textbf{Определение}\,\,\cite{#2}.}}%
+
+\newcommand{\Proof}{\par\textbf{Доказательство.} }
+
+\newcommand{\exampn}{\arabic{c_pri}}
+\newcommand{\Example}[1][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_pri}{+1}\par\textbf{Пример\,\,\exampn.}}%
+	{\par\textbf{Пример.}}}%
+\newcommand{\ExampleCite}[2][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_pri}{+1}\par\textbf{Пример\,\,\exampn}\,\,\cite{#2}.}%
+	{\par\textbf{Пример}\,\,\cite{#2}.}}%
+
+\newcommand{\remrkn}{\arabic{c_zam}}
+\newcommand{\Remark}[1][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_zam}{+1}\par\textbf{Замечание\,\,\remrkn.}}%
+	{\par\textbf{Замечание.}}}%
+\newcommand{\RemarkCite}[2][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_zam}{+1}\par\textbf{Замечание\,\,\remrkn}\,\,\cite{#2}.}%
+	{\par\textbf{Замечание}\,\,\cite{#2}.}}%
+
+\newcommand{\coroln}{\arabic{c_sle}}
+\newcommand{\Corollary}[2][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_sle}{+1}\par\textbf{Следствие\,\,\coroln.}\textit{ #2}}%
+	{\par\textbf{Следствие.}\textit{ #2}}}%
+\newcommand{\CorollaryCite}[3][numbered]{\par\ifthenelse{\equal{#1}{numbered}}%
+	{\addtocounter{c_sle}{+1}\par\textbf{Следствие,\,\coroln}\,\,\cite{#2}.\textit{ #3}}%
+	{\par\textbf{Следствие}\,\,\cite{#2}.\textit{ #3}}}%
+
+% Нумерация только тех формул, на которые в тексте присутствует ссылка
+\usepackage{autonum}
+
+% Доп. математические символы
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\newcommand\round[1]{\left[#1\right]}
+
+% Список литературы
+\renewenvironment{thebibliography}[1]
+    {\bigskip
+    {\centering\large\bf Список литературы\par}%
+    \addcontentsline{toc}{section}{Список литературы}
+    \smallskip
+    \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+        \leftmargin\labelwidth
+        \advance\leftmargin\labelsep
+        \@openbib@code
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty
+        \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+    \sloppy
+    \clubpenalty4000
+    \@clubpenalty \clubpenalty
+    \widowpenalty4000%
+    \sfcode`\.\@m}
+    {\def\@noitemerr{\@latex@warning{Empty `thebibliography' environment}}%
+    \endlist}
