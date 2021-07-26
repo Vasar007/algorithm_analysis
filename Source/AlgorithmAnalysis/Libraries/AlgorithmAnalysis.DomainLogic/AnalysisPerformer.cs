@@ -58,7 +58,7 @@ namespace AlgorithmAnalysis.DomainLogic
 
             AnalysisHelper.GetOrCreateDataFolder(context.Args);
 
-            AnalysisResult result = AnalysisResult.CreateDefault(context);
+            var result = AnalysisResult.CreateDefault(context);
             foreach (IAnalysis analysis in _analyses)
             {
                 result = await analysis.AnalyzeAsync(result.Context);

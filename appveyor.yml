@@ -1,11 +1,14 @@
 version: '{build}'
 image: Visual Studio 2019
 
-branches:
-  only:
-    - master
-    - develop
+# Do not build on tags (GitHub, Bitbucket, GitLab, Gitea).
+skip_tags: true
 
+shallow_clone: true
+
+# All branches are built by default.
+
+# Build platform, i.e. x86, x64, Any CPU. This setting is optional.
 platform:
   - x64
 
@@ -17,8 +20,7 @@ matrix:
   fast_finish: true
 
 before_build:
-  - cmd: cd Source/AlgorithmAnalysis
-  - cmd: dotnet restore
+  - ps: dotnet restore Source/AlgorithmAnalysis
 
 build:
   verbosity: minimal

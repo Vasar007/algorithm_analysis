@@ -1,41 +1,25 @@
-﻿using AlgorithmAnalysis.Common;
+﻿using Acolyte.Common;
+using AlgorithmAnalysis.Common;
 using Microsoft.Office.Interop.Excel;
 
 namespace AlgorithmAnalysis.Excel.Interop
 {
     internal static class ExcelApplication
     {
-        private static readonly object _syncRoot = new object();
+        private static readonly ResetableLazy<Application> _application =
+            new ResetableLazy<Application>(() => new Application());
 
-        private static Application? _application;
-        public static Application Instance
-        {
-            get
-            {
-                if (_application is null)
-                {
-                    lock (_syncRoot)
-                    {
-                        if (_application is null)
-                        {
-                            _application = new Application();
-                        }
-                    }
-                }
-
-                return _application;
-            }
-        }
+        public static Application Instance => _application.Value;
 
         public static void Dispose()
         {
-            if (_application is null)
+            if (!_application.IsValueCreated)
                 return;
 
-            ComObjectHelper.ReleaseComObjectSafe(_application.WorksheetFunction);
-            _application.Quit();
-            ComObjectHelper.ReleaseComObjectSafe(_application);
-            _application = null;
+            ComObjectHelper.ReleaseComObjectSafe(Instance.WorksheetFunction);
+            Instance.Quit();
+            ComObjectHelper.ReleaseComObjectSafe(Instance);
+            _application.Reset();
         }
     }
 }
