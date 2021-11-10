@@ -68,7 +68,7 @@ namespace AlgorithmAnalysis.Common.Processes
 
             try
             {
-                CancellationTokenSource cts = new CancellationTokenSource(delay);
+                using var cts = new CancellationTokenSource(delay);
                 Task waitingTask = _process.WaitForExitAsync(cts.Token);
 
                 await waitingTask;
