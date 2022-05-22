@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
+using AlgorithmAnalysis.Common.Files;
+using AlgorithmAnalysis.Common.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
-using AlgorithmAnalysis.Common.Files;
-using AlgorithmAnalysis.Common.Json;
 
 namespace AlgorithmAnalysis.Configuration
 {
@@ -17,8 +16,6 @@ namespace AlgorithmAnalysis.Configuration
         private static IConfigurationRoot Root => LazyRoot.Value;
 
         public static string DefaultOptionsPath => PredefinedPaths.DefaultOptionsPath;
-
-        public static string AlternativeOptionsPath => PredefinedPaths.AlternativeOptionsPath;
 
         #region Options
 
@@ -89,12 +86,8 @@ namespace AlgorithmAnalysis.Configuration
         {
             var configurationBuilder = new ConfigurationBuilder();
 
-            string configPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? DefaultOptionsPath
-                : AlternativeOptionsPath;
-
             configurationBuilder.AddWritableJsonFile(
-                path: configPath,
+                path: DefaultOptionsPath,
                 optional: true,
                 reloadOnChange: true
             );

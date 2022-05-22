@@ -7,9 +7,6 @@ namespace AlgorithmAnalysis.Common.Files
         public static string DefaultOptionsPath { get; } =
             Path.Combine(Directory.GetCurrentDirectory(), CommonConstants.ConfigFilename);
 
-        public static string AlternativeOptionsPath { get; } =
-            Path.Combine("/etc", "algorithm_analysis", CommonConstants.ConfigFilename);
-
         public static string DefaultWorkingPath { get; } =
             PathHelper.CreateSpecificResolvedPath(
                 CommonConstants.CommonApplicationData, appendAppFolder: true
